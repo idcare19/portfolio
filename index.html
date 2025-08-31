@@ -630,26 +630,42 @@
 
 
   <!-- Contact -->
-  <section id="contact">
-    <div class="container contact">
-      <div class="form">
-        <h2 class="title" style="margin-top:0">Let’s build something great</h2>
-        <p class="muted">Drop a message — I’ll reply within 24 hours.</p>
-        <form onsubmit="event.preventDefault(); alert('Thanks! I will get back to you soon.');">
-          <div class="field">
-            <label for="name">Name</label>
-            <input class="input" id="name" name="name" placeholder="Your name" required />
-          </div>
-          <div class="field">
-            <label for="email">Email</label>
-            <input class="input" id="email" type="email" name="email" placeholder="you@example.com" required />
-          </div>
-          <div class="field">
-            <label for="msg">Message</label>
-            <textarea class="textarea" id="msg" name="message" placeholder="Tell me about your project" required></textarea>
-          </div>
-          <button class="btn btn--primary" type="submit">Send message</button>
-        </form>
+  <!-- Contact -->
+<section id="contact">
+  <div class="container contact">
+    <div class="form">
+      <h2 class="title" style="margin-top:0">Let’s build something great</h2>
+      <p class="muted">Drop a message — I’ll reply within 24 hours.</p>
+
+      <form id="contact-form">
+        <div class="field">
+          <label for="name">Name</label>
+          <input class="input" id="name" name="name" placeholder="Your name" required />
+        </div>
+
+        <div class="field">
+          <label for="email">Email</label>
+          <input class="input" id="email" type="email" name="email" placeholder="you@example.com" required />
+        </div>
+
+        <div class="field">
+          <label for="msg">Message</label>
+          <textarea class="textarea" id="msg" name="message" placeholder="Tell me about your project" required></textarea>
+        </div>
+
+        <!-- Subject ke liye template me {{title}} use kiya hai -->
+        <input type="hidden" name="title" value="New message from Portfolio" />
+
+        <button class="btn btn--primary" id="sendBtn" type="submit">Send message</button>
+      </form>
+
+      <p id="form-status" class="muted" style="margin-top:.6rem;"></p>
+    </div>
+    <!-- ...right side socials as-is... -->
+  </div>
+</section>
+
+
       </div>
       <div class="socials">
         <a class="social" href="mailto:your@email.com"><span>Email</span><span>dream1mm113@email.com</span></a>
@@ -681,5 +697,40 @@
     // Current year
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
+  <!-- EmailJS SDK -->
+<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+<script>
+  // 👉 yahan apni keys/IDs daalo
+  const PUBLIC_KEY  = "Oo7hrtU2VMZI4zOhn";          // e.g. user_xxxxx
+  const SERVICE_ID  = "service_x0gvizj";          // tumhara Gmail service
+  const TEMPLATE_ID = "template_ifdpbew";         // template_xxxxx
+
+  // init
+  (function(){ emailjs.init(PUBLIC_KEY); })();
+
+  // form submit handler
+  const form = document.getElementById("contact-form");
+  const statusEl = document.getElementById("form-status");
+  const sendBtn = document.getElementById("sendBtn");
+
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
+    sendBtn.disabled = true;
+    statusEl.textContent = "Sending…";
+
+    try {
+      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this);
+      statusEl.textContent = "Thanks! Your message has been sent.";
+      form.reset();
+    } catch (err) {
+      console.error(err);
+      statusEl.textContent = "Sorry, sending failed. Please try again later.";
+      alert("Failed: " + (err?.text || JSON.stringify(err)));
+    } finally {
+      sendBtn.disabled = false;
+    }
+  });
+</script>
+
 </body>
 </html>
