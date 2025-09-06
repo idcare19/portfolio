@@ -6,7 +6,7 @@
   <title>Portfolio • ABHISHEK</title>
   <meta name="description" content="Portfolio of Your Name – Developer & Designer." />
   <meta name="color-scheme" content="dark light">
-<link rel="icon" type="image/png" href="https://i.ibb.co/xxxxxxx/yourimage.png">
+  <link rel="shortcut icon" href="image.png" type="image/x-icon">
 <style>
    /* Typography: iPhone-like system font stack */
  :root {
@@ -106,10 +106,9 @@
  }
 
  .brand__dot {
-   width: .7rem;
-   height: .7rem;
-   border-radius: 999px;
-   background: linear-gradient(135deg, var(--brand), var(--brand-2));
+   width: 30PX;
+   height: 30px ;  border-radius: 999px;
+   /* background: linear-gradient(135deg, var(--brand), var(--brand-2)); */
    box-shadow: 0 0 0 6px rgba(124, 156, 255, 0.15);
  }
 
@@ -456,6 +455,101 @@
      padding-top: 5.5rem;
    }
  }
+ .nav {
+   position: sticky;
+   top: 0;
+   z-index: 50;
+   backdrop-filter: saturate(180%) blur(12px);
+   background: color-mix(in hsl, var(--bg) 80%, transparent);
+   border-bottom: var(--outline);
+ }
+.nav__inner {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   padding: .9rem 0;
+}
+.brand {
+   display: flex;
+   align-items: center;
+   gap: .6rem;
+   font-weight: 700;
+   letter-spacing: .3px;
+}
+.brand__dot {
+   width: 30px;
+   height: 30px;
+   border-radius: 999px;
+   box-shadow: 0 0 0 6px rgba(124, 156, 255, 0.15);
+}
+.nav__links {
+   display: flex;
+   gap: 1rem;
+}
+.nav__links a {
+   padding: .5rem .75rem;
+   border-radius: 999px;
+   opacity: .9;
+}
+.nav__links a.active,
+.nav__links a:hover {
+   background: rgba(124, 156, 255, 0.12);
+   outline: 1px solid rgba(124, 156, 255, 0.25);
+}
+
+/* Hamburger Button */
+.hamburger {
+  display: none;
+  font-size: 1.8rem;
+  background: none;
+  border: none;
+  color: var(--text);
+  cursor: pointer;
+}
+@media (max-width: 920px) {
+  #navLinks {
+    display: none;
+  }
+}
+
+/* Mobile styles */
+@media (max-width: 768px) {
+  .hamburger { display: block; }
+
+  .nav__links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    width: 240px;
+    height: 100vh;
+    background: var(--bg);
+    box-shadow: var(--shadow);
+    flex-direction: column;
+    padding: 4rem 1.5rem;
+    gap: 1.5rem;
+    transition: right 0.3s ease-in-out;
+  }
+  .nav__links.active { right: 100px; }
+  .nav__links a {
+    font-size: 1.2rem;
+    display: block;
+  }
+}
+
+/* Hero (rest styles unchanged)... */
+.hero {
+   padding: 7.5rem 0 4rem;
+   display: grid;
+   align-items: center;
+   gap: 2rem;
+   grid-template-columns: 1.3fr .9fr;
+}
+.hero__title {
+   font-size: clamp(2rem, 4.8vw, 3.8rem);
+   line-height: 1.15;
+   letter-spacing: -.02em;
+   margin: 0;
+}
 </style>
   <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
@@ -463,8 +557,11 @@
   <!-- Nav -->
   <nav class="nav">
     <div class="container nav__inner">
-      <div class="brand"><span class="brand__dot"></span> <span>Abhishek.</span></div>
-      <div class="nav__links">
+      <div class="brand"><img class="brand__dot" src="image.png" alt=""> <span>Abhishek.</span></div>
+  <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+
+      <!-- Links -->
+      <div class="nav__links" id="navLinks">
         <a href="#about">About</a>
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
@@ -496,7 +593,7 @@
       </div>
       <div class="hero__stats">
         <div class="stat"><div class="num">20+</div><div class="muted">Projects</div></div>
-        <div class="stat"><div class="num">3 yrs</div><div class="muted">Experience</div></div>
+        <div class="stat"><div class="num">1 yr</div><div class="muted">Experience</div></div>
         <div class="stat"><div class="num">5★</div><div class="muted">Client rating</div></div>
       </div>
     </div>
@@ -521,7 +618,7 @@
           <div class="card__body">
             <h3>What I do</h3>
             <p>Design and build responsive websites, React apps, and component libraries. I collaborate end‑to‑end: discovery, UX, UI, development, and iteration.</p>
-            <div class="card__tags"><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Figma</span></div>
+            <div class="card__tags"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">Figma</span></div>
           </div>
         </article>
         <article class="card">
@@ -558,11 +655,11 @@
         </article>
         <!-- Project 2 -->
         <article class="card">
-          <div class="card__media" style="background-image:url('https://images.unsplash.com/photo-1554941829-202a0b2403b0?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;"></div>
+          <div class="card__media" style="background-image:url('https://images.unsplash.com/photo-1688561807440-8a57dfa77ee3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); background-size:cover; background-position:center;"></div>
           <div class="card__body">
             <h3>Shoply – Minimal e‑commerce UI</h3>
             <p>Clean storefront with cart, filters, and checkout flow. Focused on clarity and conversion.</p>
-            <div class="card__tags"><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Stripe</span></div>
+            <div class="card__tags"><span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">JavaScript</span></div>
             <div class="card__actions">
               <a class="btn btn--primary" href="#" target="_blank" rel="noreferrer">Live</a>
               <a class="btn btn--ghost" href="#" target="_blank" rel="noreferrer">Code</a>
@@ -596,8 +693,8 @@
       <div class="skills">
         <div class="skill"><b>HTML/CSS</b><div class="meter"><i style="width: 95%"></i></div></div>
         <div class="skill"><b>JavaScript</b><div class="meter"><i style="width: 90%"></i></div></div>
-        <div class="skill"><b>React/Next.js</b><div class="meter"><i style="width: 85%"></i></div></div>
-        <div class="skill"><b>Node/Express</b><div class="meter"><i style="width: 75%"></i></div></div>
+        <!-- <div class="skill"><b>React/Next.js</b><div class="meter"><i style="width: 85%"></i></div></div>
+        <div class="skill"><b>Node/Express</b><div class="meter"><i style="width: 75%"></i></div></div> -->
         <div class="skill"><b>Design (Figma)</b><div class="meter"><i style="width: 80%"></i></div></div>
         <div class="skill"><b>Testing</b><div class="meter"><i style="width: 70%"></i></div></div>
       </div>
@@ -678,62 +775,9 @@
   </section>
 
   <footer>
-    <div class="container">© <span id="year"></span> ABHISHEK • Built with Avi Ke Sang</div>
+    <div class="container">© <span id="year"></span> Your Name • Built avi ke sang</div>
   </footer>
 
-  <script>
-    // Active link highlighting on scroll
-    const links = document.querySelectorAll('.nav__links a');
-    const sections = [...links].map(a => document.querySelector(a.getAttribute('href')));
-
-    const onScroll = () => {
-      const y = window.scrollY + 120;
-      let activeIndex = 0;
-      sections.forEach((sec, i) => { if (sec && y >= sec.offsetTop) activeIndex = i; });
-      links.forEach((a, i) => a.classList.toggle('active', i === activeIndex));
-    };
-    document.addEventListener('scroll', onScroll, { passive: true });
-    onScroll();
-
-    // Current year
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
-  <!-- EmailJS SDK -->
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  // 👉 yahan apni keys/IDs daalo
-  const PUBLIC_KEY  = "Oo7hrtU2VMZI4zOhn";          // e.g. user_xxxxx
-  const SERVICE_ID  = "service_x0gvizj";          // tumhara Gmail service
-  const TEMPLATE_ID = "template_ifdpbew";         // template_xxxxx
-
-  // init
-  (function(){ emailjs.init(PUBLIC_KEY); })();
-
-  // form submit handler
-  const form = document.getElementById("contact-form");
-  const statusEl = document.getElementById("form-status");
-  const sendBtn = document.getElementById("sendBtn");
-
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-    sendBtn.disabled = true;
-    statusEl.textContent = "Sending…";
-
-    try {
-      await emailjs.sendForm(SERVICE_ID, TEMPLATE_ID, this);
-      statusEl.textContent = "Thanks! Your message has been sent.";
-      form.reset();
-    } catch (err) {
-      console.error(err);
-      statusEl.textContent = "Sorry, sending failed. Please try again later.";
-      alert("Failed: " + (err?.text || JSON.stringify(err)));
-    } finally {
-      sendBtn.disabled = false;
-    }
-  });
-</script>
 
 </body>
 </html>
-
-
