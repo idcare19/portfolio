@@ -7,6 +7,91 @@
   <meta name="description" content="Portfolio of Your Name – Developer & Designer." />
   <meta name="color-scheme" content="dark light">
   <link rel="shortcut icon" href="image.png" type="image/x-icon">
+  <style>
+:root {
+  --bg:#0b0f14;
+  --bg-soft:#10161f;
+  --card:#0f141b;
+  --text:#e6ebf2;
+  --muted:#a9b2c3;
+  --brand:#7c9cff;
+  --brand-2:#9bffd1;
+  --outline:1px solid rgba(255,255,255,.06);
+  --shadow:0 10px 30px rgba(0,0,0,.35);
+  --radius:20px;
+}
+
+body{
+  margin:0;
+  font-family:system-ui,-apple-system,BlinkMacSystemFont;
+  background:var(--bg);
+  color:var(--text);
+}
+
+.container{
+  width:min(1100px,92vw);
+  margin:auto;
+}
+
+/* ---------------- CONTACT ---------------- */
+.contact{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:1rem;
+}
+
+/* Socials */
+.socials{
+  display:grid;
+  gap:.8rem;
+}
+
+.social{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  background:var(--card);
+  border:var(--outline);
+  border-radius:14px;
+  padding:.9rem 1rem;
+  transition:.2s ease;
+}
+
+.social:hover{
+  transform:translateY(-2px);
+  background:rgba(124,156,255,.08);
+}
+
+.social span:last-child{
+  color:var(--muted);
+  font-size:.95rem;
+}
+
+/* Mobile Responsive */
+@media(max-width:768px){
+  .contact{
+    grid-template-columns:1fr;
+  }
+
+  .social{
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.25rem;
+  }
+
+  .social span:last-child{
+    word-break:break-all;
+    font-size:.9rem;
+  }
+}
+
+/* Footer */
+footer{
+  padding:3rem 0;
+  text-align:center;
+  color:var(--muted);
+}
+</style>
 <style>
    /* Typography: iPhone-like system font stack */
  :root {
@@ -735,43 +820,50 @@
 
   <!-- Contact -->
   <!-- Contact -->
+
 <section id="contact">
   <div class="container contact">
-    <div class="form">
-      <h2 class="title" style="margin-top:0">Let’s build something great</h2>
-      <p class="muted">Drop a message — I’ll reply within 24 hours.</p>
 
-      <form id="contact-form">
-        <div class="field">
-          <div class="container">
-        <div class="form">
-            <a href="contact.html">
-                <h2>Contact Me</h2>
-            </a>
+    <!-- Left -->
+    <div>
+      <h2>Let’s build something great</h2>
+      <p style="color:var(--muted)">Drop a message — I’ll reply within 24 hours.</p>
+      <a href="contact.html" style="color:var(--brand)">Open contact form →</a>
+    </div>
 
-        </div>
+    <!-- Right (SOCIALS FIXED) -->
+    <div class="socials">
+      <a class="social" href="mailto:dream1mm113@email.com">
+        <span>Email</span>
+        <span>dream1mm113@email.com</span>
+      </a>
+
+      <a class="social" href="https://github.com/idcare19" target="_blank">
+        <span>GitHub</span>
+        <span>@idcare19</span>
+      </a>
+
+      <a class="social" href="https://linkedin.com/in/abhishekidcare19" target="_blank">
+        <span>LinkedIn</span>
+        <span>/in/abhishekidcare19</span>
+      </a>
+
+      <a class="social" href="https://twitter.com/idcare19_" target="_blank">
+        <span>Twitter / X</span>
+        <span>@idcare19_</span>
+      </a>
     </div>
-    </div>
-    <!-- ...right side socials as-is... -->
+
   </div>
 </section>
 
-
-      </div>
-      <div class="socials">
-        <a class="social" href="mailto:your@email.com"><span>Email</span><span>dream1mm113@email.com</span></a>
-        <a class="social" href="https://github.com/idcare19" target="_blank" rel="noreferrer"><span>GitHub</span><span>@idcare19</span></a>
-        <a class="social" href="https://linkedin.com/in/abhishekidcare19" target="_blank" rel="noreferrer"><span>LinkedIn</span><span>/in/abhishek</span></a>
-        <a class="social" href="https://twitter.com/idcare19_" target="_blank" rel="noreferrer"><span>Twitter/X</span><span>@idcare19_</span></a>
-      </div>
-    </div>
-  </section>
 
   <footer>
     <div class="container">© <span id="year"></span> Abhishek</div>
   </footer>
 </body>
 </html>
+
 
 
 
