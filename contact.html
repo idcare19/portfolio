@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Portfolio • Abhishek</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont;
+            background: #0b0f14;
+            color: #e6ebf2;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 4rem auto;
+            padding: 1rem;
+        }
+        
+        .form {
+            background: #10161f;
+            padding: 1.5rem;
+            border-radius: 16px;
+        }
+        
+        .field {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: .3rem;
+            color: #a9b2c3;
+        }
+        
+        .input,
+        .textarea {
+            width: 100%;
+            padding: .75rem;
+            border-radius: 10px;
+            border: none;
+            background: #0f141b;
+            color: #fff;
+            outline: none;
+        }
+        
+        .textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .btn {
+            padding: .8rem 1.2rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            background: linear-gradient(135deg, #7c9cff, #9bffd1);
+            color: #0b1120;
+        }
+        
+        .status {
+            margin-top: .8rem;
+            font-size: .95rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <form id="contact-form" class="form">
+
+            <div class="field">
+                <label>Name</label>
+                <input type="text" name="name" class="input" required>
+            </div>
+
+            <div class="field">
+                <label>Email</label>
+                <input type="email" id="email" name="email" class="input" required>
+            </div>
+
+            <div class="field">
+                <label>Message</label>
+                <textarea name="message" class="textarea" required></textarea>
+            </div>
+
+            <button type="submit" id="sendBtn" class="btn">Send Message</button>
+
+            <div id="form-status" class="status"></div>
+        </form>
+    </div>
+
+    <!-- EMAILJS -->
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            emailjs.init("Oo7hrtU2VMZI4zOhn"); // PUBLIC KEY
+
+            const form = document.getElementById("contact-form");
+            const emailInput = document.getElementById("email");
+            const statusText = document.getElementById("form-status");
+            const sendBtn = document.getElementById("sendBtn");
+
+            function isValidEmail(email) {
+                return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email);
+            }
+
+            emailInput.addEventListener("input", () => {
+                emailInput.style.outline = isValidEmail(emailInput.value) ?
+                    "2px solid #9bffd1" :
+                    "2px solid #ff6b6b";
+            });
+
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                if (!isValidEmail(emailInput.value)) {
+                    statusText.textContent = "Please enter a valid email ❌";
+                    statusText.style.color = "#ff6b6b";
+                    return;
+                }
+
+                sendBtn.disabled = true;
+                sendBtn.textContent = "Sending...";
+
+                emailjs.sendForm(
+                    "service_x0gvizj", // SERVICE ID
+                    "template_ifdpbew", // ❗ TEMPLATE ID (replace)
+                    this
+                ).then(() => {
+                    statusText.textContent = "Message sent successfully ✅";
+                    statusText.style.color = "#9bffd1";
+                    form.reset();
+                    sendBtn.textContent = "Send Message";
+                    sendBtn.disabled = false;
+                    emailInput.style.outline = "none";
+                }).catch(err => {
+                    statusText.textContent = "Failed to send message ❌";
+                    statusText.style.color = "#ff6b6b";
+                    console.error(err);
+                    sendBtn.textContent = "Send Message";
+                    sendBtn.disabled = false;
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>
