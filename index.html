@@ -700,6 +700,33 @@
             letter-spacing: -.02em;
             margin: 0;
         }
+        .popup{
+position:fixed;
+inset:0;
+display:none;
+align-items:center;
+justify-content:center;
+background:rgba(0,0,0,.6);
+z-index:999;
+}
+
+.popup-box{
+background:var(--card);
+padding:22px 26px;
+border-radius:18px;
+border:var(--outline);
+text-align:center;
+box-shadow:var(--shadow);
+}
+
+.popup-box button{
+margin-top:12px;
+padding:8px 16px;
+border:none;
+border-radius:10px;
+cursor:pointer;
+background:linear-gradient(135deg,var(--brand),var(--brand-2));
+}
     </style>
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
@@ -847,7 +874,7 @@
                     </div>
                 </article>
                 <!-- Project 3 -->
-                <article class="card reveal">
+                <article class="card reveal" onclick="showPopup()">
                     <div class="card__media"
                         style="background-image:url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=1200&auto=format&fit=crop'); background-size:cover; background-position:center;">
                     </div>
@@ -855,11 +882,11 @@
                         <h3>DashX – Analytics Dashboard</h3>
                         <p>Responsive dashboard with charts, dark mode, and keyboard navigation. 100 Lighthouse scores.
                         </p>
-                        <div class="card__tags"><span class="chip">Next.js</span><span class="chip">Chart.js</span><span
-                                class="chip">A11y</span></div>
+                        <div class="card__tags"><span class="chip">React</span><span class="chip">laravel<span><span
+                                class="chip"></span></div>
                         <div class="card__actions">
-                            <a class="btn btn--primary" href="#" target="_blank" rel="noreferrer">Live</a>
-                            <a class="btn btn--ghost" href="#" target="_blank" rel="noreferrer">Code</a>
+                            <a class="btn btn--primary" href="#" onclick="showPopup()">Live</a>
+                          <a class="btn btn--primary" href="#" onclick="showPopup()">Code</a>
                         </div>
                     </div>
                 </article>
@@ -973,7 +1000,23 @@
     <footer>
         <div class="container">© <span id="year"></span> Abhishek</div>
     </footer>
-    <script>
+                            <!-- DASHBOARD POPUP -->
+<div id="popup" class="popup">
+  <div class="popup-box">
+    <p>🚧 Dashboard project is under working</p>
+    <button onclick="closePopup()">Close</button>
+  </div>
+</div>
+   
+</body>
+ <script>
+     function showPopup(){
+document.getElementById("popup").style.display="flex"
+}
+
+function closePopup(){
+document.getElementById("popup").style.display="none"
+}
         // scroll reveal
         const observer = new IntersectionObserver(entries => {
             entries.forEach(entry => {
@@ -997,6 +1040,5 @@
         // footer year
         document.getElementById("year").textContent = new Date().getFullYear()
     </script>
-</body>
-
 </html>
+
