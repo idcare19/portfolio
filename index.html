@@ -727,6 +727,18 @@ border-radius:10px;
 cursor:pointer;
 background:linear-gradient(135deg,var(--brand),var(--brand-2));
 }
+        .skill-top{
+display:flex;
+align-items:center;
+gap:10px;
+margin-bottom:6px;
+}
+
+.skill-top img{
+width:22px;
+height:22px;
+object-fit:contain;
+}
     </style>
     <!-- <link rel="stylesheet" href="style.css"> -->
 </head>
@@ -895,50 +907,109 @@ background:linear-gradient(135deg,var(--brand),var(--brand-2));
     </section>
 
     <!-- Skills -->
-    <section id="skills" class="reveal">
-        <div class="container">
-            <div class="section__head">
-                <h2 class="title">Skills</h2>
-                <p class="muted">Comfortable across the stack</p>
-            </div>
-            <div class="skills">
-                <div class="skill reveal"><b>HTML/CSS</b>
-                    <div class="meter"><i style="width: 95%"></i></div>
-                </div>
-              
-                <div class="skill reveal"><b>JavaScript</b>
-                    <div class="meter"><i style="width: 70%"></i></div>
-                </div>
-                
-                <div class="skill reveal"><b>Php </b>
-                    <div class="meter"><i style="width: 85%"></i></div>
-                </div>
-                <div class="skill reveal"><b>Mysql</b>
-                    <div class="meter"><i style="width: 85%"></i></div>
-                </div>
-                <div class="skill reveal"><b>Wordpress</b>
-                    <div class="meter"><i style="width: 90%"></i></div>
-                </div>
-                <div class="skill reveal"><b>Git & Github</b>
-                    <div class="meter"><i style="width: 96%"></i></div>
-                </div>
-                <div class="skill reveal"><b>Design (photoshop)</b>
-                    <div class="meter"><i style="width: 80%"></i></div>
-                </div>
-                <div class="skill reveal"><b>Laravel</b>
-                    <div class="meter"><i style="width: 60%"></i></div>
-                </div>
-                  <div class="skill reveal"><b>React</b>
-                    <div class="meter"><i style="width: 59%"></i></div>
-                </div>
-                <div class="skill reveal"><b>Testing</b>
-                    <div class="meter"><i style="width: 70%"></i></div>
-                </div>
+   <section id="skills" class="reveal">
+  <div class="container">
 
-            </div>
+    <div class="section__head">
+      <h2 class="title">Skills</h2>
+      <p class="muted">Comfortable across the stack</p>
+    </div>
+
+    <div class="skills">
+
+      <!-- HTML CSS -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg">
+          <b>HTML/CSS</b>
         </div>
-    </section>
+        <div class="meter"><i style="width:95%"></i></div>
+      </div>
 
+      <!-- JS -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg">
+          <b>JavaScript</b>
+        </div>
+        <div class="meter"><i style="width:70%"></i></div>
+      </div>
+
+      <!-- PHP -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg">
+          <b>PHP</b>
+        </div>
+        <div class="meter"><i style="width:85%"></i></div>
+      </div>
+
+      <!-- MySQL -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg">
+          <b>MySQL</b>
+        </div>
+        <div class="meter"><i style="width:85%"></i></div>
+      </div>
+
+      <!-- WordPress -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-original.svg">
+          <b>WordPress</b>
+        </div>
+        <div class="meter"><i style="width:90%"></i></div>
+      </div>
+
+      <!-- Git -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg">
+          <b>Git & Github</b>
+        </div>
+        <div class="meter"><i style="width:96%"></i></div>
+      </div>
+
+      <!-- Photoshop -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/photoshop/photoshop-line.svg">
+          <b>Design (Photoshop)</b>
+        </div>
+        <div class="meter"><i style="width:80%"></i></div>
+      </div>
+
+      <!-- Laravel -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg">
+          <b>Laravel</b>
+        </div>
+        <div class="meter"><i style="width:60%"></i></div>
+      </div>
+
+      <!-- React -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg">
+          <b>React</b>
+        </div>
+        <div class="meter"><i style="width:59%"></i></div>
+      </div>
+
+      <!-- Testing -->
+      <div class="skill reveal">
+        <div class="skill-top">
+          <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jest/jest-plain.svg">
+          <b>Testing</b>
+        </div>
+        <div class="meter"><i style="width:70%"></i></div>
+      </div>
+
+    </div>
+  </div>
+</section>
     <!-- Experience -->
     <!-- Experience -->
     <section id="experience" class="reveal">
@@ -1046,6 +1117,7 @@ document.getElementById("popup").style.display="none"
         document.getElementById("year").textContent = new Date().getFullYear()
     </script>
 </html>
+
 
 
 
