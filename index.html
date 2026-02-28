@@ -13,7 +13,7 @@
         .reveal {
             opacity: 0;
             transform: translateY(40px);
-            transition: opacity .7s ease, transform .7s ease;
+            transition: opacity .8s ease, transform .8s ease;
             will-change: opacity, transform;
         }
 
@@ -37,19 +37,19 @@
 
         /* stagger */
         .card.reveal:nth-child(1) {
-            transition-delay: .1s
-        }
-
-        .card.reveal:nth-child(2) {
             transition-delay: .2s
         }
 
-        .card.reveal:nth-child(3) {
+        .card.reveal:nth-child(2) {
             transition-delay: .3s
         }
 
-        .card.reveal:nth-child(4) {
+        .card.reveal:nth-child(3) {
             transition-delay: .4s
+        }
+
+        .card.reveal:nth-child(4) {
+            transition-delay: .5s
         }
 
         :root {
@@ -1108,6 +1108,7 @@ document.getElementById("popup").style.display="none"
         document.getElementById("year").textContent = new Date().getFullYear()
     </script>
 </html>
+
 
 
 
