@@ -9,6 +9,37 @@
     <meta name="color-scheme" content="dark light">
     <link rel="shortcut icon" href="image.png" type="image/x-icon">
     <style>
+        /* Mobile styles */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block;
+    }
+
+    #navLinks {
+        display: flex;          /* make it flex for column layout */
+        flex-direction: column;
+        position: fixed;
+        top: 0;
+        right: -100%;           /* hidden off-screen initially */
+        width: 240px;
+        height: 100vh;
+        background: var(--bg);
+        box-shadow: var(--shadow);
+        padding: 4rem 1.5rem;
+        gap: 1.5rem;
+        transition: right 0.3s ease-in-out;
+        z-index: 999;
+    }
+
+    .nav__links.active {
+        right: 0;               /* slide in fully */
+    }
+
+    .nav__links a {
+        font-size: 1.2rem;
+        display: block;
+    }
+}
         /* ===== REVEAL ANIMATION ===== */
         .reveal {
             opacity: 0;
@@ -1098,11 +1129,12 @@ document.getElementById("popup").style.display="none"
         })
 
         // mobile nav toggle
-        const hamburger = document.getElementById("hamburger")
-        const navLinks = document.getElementById("navLinks")
-        if (hamburger) {
-            hamburger.onclick = () => navLinks.classList.toggle("active")
-        }
+      const hamburger = document.getElementById("hamburger");
+const navLinks = document.getElementById("navLinks");
+
+hamburger.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
 
         // footer year
         document.getElementById("year").textContent = new Date().getFullYear()
