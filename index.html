@@ -780,25 +780,28 @@ object-fit:contain;
 
 <body>
     <!-- Nav -->
-    <nav class="nav">
-        <div class="container nav__inner">
-            <div class="brand"><img class="brand__dot" src="image.png" alt=""> <span>Abhishek.</span></div>
-             <!-- Hamburger using Bootstrap -->
+<nav class="nav">
+  <div class="container nav__inner d-flex justify-content-between align-items-center">
+    <div class="brand d-flex align-items-center gap-2">
+      <img class="brand__dot" src="image.png" alt="">
+      <span>Abhishek.</span>
+    </div>
+
+    <!-- Hamburger using Bootstrap -->
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks" aria-controls="navLinks" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
 
-
-            <!-- Links -->
-            <div class="nav__links" id="navLinks">
-                <a href="#about">About</a>
-                <a href="#projects">Projects</a>
-                <a href="#skills">Skills</a>
-                <a href="#experience">Experience</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
-    </nav>
+    <!-- Links -->
+    <div class="nav__links collapse" id="navLinks">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
 
     <!-- Hero -->
     <header class="container hero" id="home">
@@ -1142,6 +1145,7 @@ document.getElementById("popup").style.display="none"
         document.getElementById("year").textContent = new Date().getFullYear()
     </script>
 </html>
+
 
 
 
