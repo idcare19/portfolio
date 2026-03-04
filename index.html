@@ -10,11 +10,15 @@
     <link rel="shortcut icon" href="image.png" type="image/x-icon">
     <style>
         /* Mobile styles */
-@media (max-width: 768px) {
-    .hamburger {
-        display: block;
-    }
+.navbar-toggler {
+  border: none;
+  padding: 0.25rem 0.5rem;
+  color: var(--text);
+}
 
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,<svg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'><path stroke='rgba(255,255,255,0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/></svg>");
+}
     #navLinks {
         display: flex;          /* make it flex for column layout */
         flex-direction: column;
@@ -779,7 +783,11 @@ object-fit:contain;
     <nav class="nav">
         <div class="container nav__inner">
             <div class="brand"><img class="brand__dot" src="image.png" alt=""> <span>Abhishek.</span></div>
-            <button class="hamburger" id="hamburger" aria-label="Menu">☰</button>
+             <!-- Hamburger using Bootstrap -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks" aria-controls="navLinks" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
 
             <!-- Links -->
             <div class="nav__links" id="navLinks">
@@ -1129,17 +1137,12 @@ document.getElementById("popup").style.display="none"
         })
 
         // mobile nav toggle
-      const hamburger = document.getElementById("hamburger");
-const navLinks = document.getElementById("navLinks");
-
-hamburger.addEventListener("click", () => {
-    navLinks.classList.toggle("active");
-});
-
+   
         // footer year
         document.getElementById("year").textContent = new Date().getFullYear()
     </script>
 </html>
+
 
 
 
