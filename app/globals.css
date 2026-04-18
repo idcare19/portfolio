@@ -118,12 +118,10 @@ body {
   0% {
     opacity: 0;
     transform: translateY(10px) scale(0.992);
-    filter: blur(4px);
   }
   100% {
     opacity: 1;
     transform: translateY(0) scale(1);
-    filter: blur(0);
   }
 }
 
@@ -209,5 +207,17 @@ body {
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-blob {
+    filter: blur(32px);
+    opacity: 0.88;
+  }
+
+  .glass,
+  .panel {
+    backdrop-filter: blur(10px);
   }
 }

@@ -9,6 +9,7 @@ type RevealProps = {
   delay?: number;
   y?: number;
   once?: boolean;
+  immediate?: boolean;
 };
 
 const buildVariants = (y: number): Variants => ({
@@ -20,7 +21,15 @@ const buildVariants = (y: number): Variants => ({
   },
 });
 
-export function ScrollReveal({ children, className, delay = 0, y = 24, once = true }: RevealProps) {
+export function ScrollReveal({ children, className, delay = 0, y = 24, once = true, immediate = false }: RevealProps) {
+  if (immediate) {
+    return (
+      <motion.div className={cn(className)} initial={false} animate="visible" variants={buildVariants(y)} transition={{ delay }}>
+        {children}
+      </motion.div>
+    );
+  }
+
   return (
     <motion.div
       className={cn(className)}

@@ -20,8 +20,8 @@ export function SplitText({ text, className, delay = 0 }: SplitTextProps) {
             <motion.span
               key={`${char}-${charIndex}`}
               className="inline-block"
-              initial={prefersReducedMotion ? false : { opacity: 0, y: 28, filter: "blur(10px)" }}
-              animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+              initial={false}
+              animate={prefersReducedMotion ? undefined : { y: [12, 0], opacity: [0.96, 1] }}
               transition={{
                 duration: 0.55,
                 ease: [0.22, 1, 0.36, 1],

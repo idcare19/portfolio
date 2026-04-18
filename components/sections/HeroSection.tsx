@@ -29,25 +29,25 @@ export function HeroSection() {
 
       <div className="section-wrap grid items-center gap-10 pb-20 lg:grid-cols-[1.08fr_0.92fr]">
         <div>
-          <FadeInUp>
+          <FadeInUp immediate>
             <p className="mb-4 inline-flex rounded-full border border-blue-200 bg-blue-50/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
               {portfolioData.owner.identityLine}
             </p>
           </FadeInUp>
-          <FadeInUp delay={0.06}>
+          <FadeInUp delay={0.06} immediate>
             <h1 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
               <SplitText text={`Hi, I'm ${portfolioData.owner.name}`} className="block" />
               <motion.span
                 className="text-gradient-animated mt-2 block"
-                initial={prefersReducedMotion ? false : { opacity: 0, y: 24, filter: "blur(8px)" }}
-                animate={prefersReducedMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
-                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.38 }}
+                initial={false}
+                animate={prefersReducedMotion ? undefined : { y: [12, 0], opacity: [0.96, 1] }}
+                transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.26 }}
               >
                 {portfolioData.owner.role}
               </motion.span>
             </h1>
           </FadeInUp>
-          <FadeInUp delay={0.12}>
+          <FadeInUp delay={0.12} immediate>
             <p className="mt-6 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-lg">{portfolioData.owner.tagline}</p>
           </FadeInUp>
 
