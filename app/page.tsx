@@ -27,31 +27,31 @@ export default function HomePage() {
       <div>
         <HeroSection />
 
-        <DeferredSection className="min-h-[680px]">
+        <DeferredSection id="collaboration" className="min-h-[680px]">
           <CollaborationSection />
         </DeferredSection>
 
-        <DeferredSection className="min-h-[720px]">
+        <DeferredSection id="about" className="min-h-[720px]">
           <AboutSection />
         </DeferredSection>
 
-        <DeferredSection className="min-h-[820px]">
+        <DeferredSection id="skills" className="min-h-[820px]">
           <SkillsSection />
         </DeferredSection>
 
-        <DeferredSection className="min-h-[980px]">
+        <DeferredSection id="projects" className="min-h-[980px]">
           <ProjectsSection />
         </DeferredSection>
 
-        <DeferredSection className="min-h-[680px]">
+        <DeferredSection id="reviews" className="min-h-[680px]">
           <ReviewsSection />
         </DeferredSection>
 
-        <DeferredSection className="min-h-[720px]">
+        <DeferredSection id="journey" className="min-h-[720px]">
           <JourneySection />
         </DeferredSection>
 
-        <DeferredSection className="min-h-[760px]">
+        <DeferredSection id="contact" className="min-h-[760px]">
           <ContactSection />
         </DeferredSection>
 

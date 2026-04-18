@@ -1,7 +1,6 @@
 "use client";
 
 import { FadeInUp } from "@/components/effects/FadeInUp";
-import { SplitText } from "@/components/effects/SplitText";
 import { Button } from "@/components/ui/Button";
 import { portfolioData } from "@/data/portfolio";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
@@ -20,16 +19,16 @@ export function HeroSection() {
       <motion.div style={{ y: parallaxB }} className="hero-blob -right-16 top-10 -z-10 h-64 w-64 bg-cyan-300/40" />
       <motion.div style={{ y: parallaxA }} className="hero-blob bottom-12 left-1/3 -z-10 h-44 w-44 bg-violet-300/30" />
 
-      <div className="section-wrap grid items-center gap-10 pb-20 lg:grid-cols-[1.08fr_0.92fr]">
-        <div>
+      <div className="section-wrap pb-20">
+        <div className="mx-auto max-w-4xl text-center">
           <FadeInUp immediate>
             <p className="mb-4 inline-flex rounded-full border border-blue-200 bg-blue-50/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-blue-700">
               {portfolioData.owner.identityLine}
             </p>
           </FadeInUp>
           <FadeInUp delay={0.06} immediate>
-            <h1 className="text-3xl font-bold leading-tight tracking-tight text-slate-900 sm:text-5xl lg:text-6xl">
-              <SplitText text={`Hi, I'm ${portfolioData.owner.name}`} className="block" />
+            <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
+              <span className="block">{`Hi, I'm ${portfolioData.owner.name}`}</span>
               <motion.span
                 className="text-gradient-animated mt-2 block"
                 initial={false}
@@ -41,12 +40,12 @@ export function HeroSection() {
             </h1>
           </FadeInUp>
           <FadeInUp delay={0.12} immediate>
-            <p className="mt-6 max-w-xl text-sm leading-relaxed text-slate-600 sm:text-lg">{portfolioData.owner.tagline}</p>
+            <p className="mx-auto mt-6 max-w-2xl text-sm leading-relaxed text-slate-600 sm:text-lg">{portfolioData.owner.tagline}</p>
           </FadeInUp>
 
           <FadeInUp delay={0.18}>
             <motion.div
-              className="mt-8 flex flex-wrap gap-3"
+              className="mt-8 flex flex-wrap justify-center gap-3"
               animate={prefersReducedMotion ? undefined : { y: [0, -2, 0] }}
               transition={{ duration: 2.6, repeat: Infinity, ease: "easeInOut" }}
             >
@@ -58,7 +57,7 @@ export function HeroSection() {
           </FadeInUp>
 
           <FadeInUp delay={0.24}>
-            <div className="mt-8 flex flex-wrap gap-2">
+            <div className="mt-8 flex flex-wrap justify-center gap-2">
               {portfolioData.owner.badges.map((badge) => (
                 <motion.span
                   key={badge}
@@ -84,7 +83,7 @@ export function HeroSection() {
           </FadeInUp>
 
           <FadeInUp delay={0.28}>
-            <div className="mt-7 grid max-w-xl grid-cols-1 gap-3 sm:grid-cols-3">
+            <div className="mx-auto mt-7 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
               {portfolioData.about.stats.map((stat) => (
                 <div key={stat.label} className="panel p-3 text-center">
                   <p className="text-xl font-bold text-slate-900">{stat.value}</p>
@@ -95,7 +94,7 @@ export function HeroSection() {
           </FadeInUp>
 
           <motion.div
-            className="mt-10 hidden items-center gap-3 text-xs text-slate-500 md:flex"
+            className="mt-10 hidden items-center justify-center gap-3 text-xs text-slate-500 md:flex"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 0.55 }}

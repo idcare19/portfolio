@@ -5,14 +5,16 @@ import { useEffect, useRef, useState } from "react";
 
 type DeferredSectionProps = {
   children: React.ReactNode;
+  id?: string;
   className?: string;
   rootMargin?: string;
 };
 
 export function DeferredSection({
   children,
+  id,
   className,
-  rootMargin = "320px 0px",
+  rootMargin = "120px 0px",
 }: DeferredSectionProps) {
   const [visible, setVisible] = useState(false);
   const placeholderRef = useRef<HTMLDivElement | null>(null);
@@ -50,8 +52,8 @@ export function DeferredSection({
   }, [rootMargin, visible]);
 
   if (!visible) {
-    return <div ref={placeholderRef} className={cn("deferred-section", className)} aria-hidden="true" />;
+    return <div id={id} ref={placeholderRef} className={cn("deferred-section", className)} aria-hidden="true" />;
   }
 
-  return <div className={className}>{children}</div>;
+  return <div id={id} className={className}>{children}</div>;
 }
