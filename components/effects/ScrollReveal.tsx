@@ -35,9 +35,9 @@ export function ScrollReveal({ children, className, delay = 0, y = 24, once = tr
     return () => media.removeEventListener("change", sync);
   }, []);
 
-  const revealDuration = isMobile ? 0.34 : 0.6;
-  const revealY = isMobile ? Math.min(y, 14) : y;
-  const revealDelay = isMobile ? delay * 0.65 : delay;
+  const revealDuration = isMobile ? 0.2 : 0.6;
+  const revealY = isMobile ? Math.min(y, 10) : y;
+  const revealDelay = isMobile ? delay * 0.35 : delay;
 
   if (immediate) {
     return (
