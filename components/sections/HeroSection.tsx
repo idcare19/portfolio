@@ -13,13 +13,6 @@ export function HeroSection() {
   const prefersReducedMotion = useReducedMotion();
   const parallaxA = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : -80]);
   const parallaxB = useTransform(scrollYProgress, [0, 1], [0, prefersReducedMotion ? 0 : 100]);
-  const codeLines = [
-    "const portfolio = createPremiumExperience();",
-    "portfolio.addAnimation('smooth-fade-up');",
-    "portfolio.optimize({ performance: 'high' });",
-    "deploy('vercel');",
-    "portfolio.monitor('core-web-vitals');",
-  ];
 
   return (
     <section id="home" ref={ref} className="relative overflow-hidden pt-28 sm:pt-32">
@@ -118,93 +111,6 @@ export function HeroSection() {
           </motion.div>
         </div>
 
-        <FadeInUp delay={0.18} className="mx-auto w-full max-w-sm sm:max-w-md">
-          <motion.div
-            animate={prefersReducedMotion ? undefined : { y: [0, -10, 0] }}
-            transition={{ duration: 4.8, repeat: Infinity, ease: "easeInOut" }}
-            whileHover={{ rotate: 1.2, y: -6 }}
-            className="panel relative overflow-hidden p-4"
-          >
-            <div className="absolute -right-10 -top-10 h-36 w-36 rounded-full bg-blue-400/25 blur-2xl" />
-            <div className="absolute -bottom-10 -left-10 h-32 w-32 rounded-full bg-cyan-300/25 blur-2xl" />
-
-            <div className="relative h-[360px] w-full overflow-hidden rounded-2xl border border-slate-200/80 bg-gradient-to-b from-slate-900 to-slate-800 p-3 shadow-inner sm:h-[420px] sm:p-4">
-              <motion.div
-                className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-blue-400/20"
-                animate={prefersReducedMotion ? undefined : { rotate: 360 }}
-                transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-              />
-              <motion.div
-                className="absolute -bottom-12 -left-10 h-40 w-40 rounded-full bg-cyan-400/20"
-                animate={prefersReducedMotion ? undefined : { rotate: -360 }}
-                transition={{ duration: 24, repeat: Infinity, ease: "linear" }}
-              />
-
-              <div className="relative z-10 rounded-xl border border-slate-600/60 bg-slate-900/80 p-4 backdrop-blur-sm">
-                <div className="mb-4 flex items-center justify-between gap-2">
-                  <div className="flex items-center gap-2">
-                    <span className="h-2.5 w-2.5 rounded-full bg-rose-400" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-amber-300" />
-                    <span className="h-2.5 w-2.5 rounded-full bg-emerald-400" />
-                  </div>
-                  <motion.span
-                    className="rounded-full border border-cyan-300/40 bg-cyan-300/10 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-cyan-200"
-                    animate={prefersReducedMotion ? undefined : { opacity: [0.5, 1, 0.5] }}
-                    transition={{ duration: 1.6, repeat: Infinity }}
-                  >
-                    Live Build
-                  </motion.span>
-                </div>
-
-                {codeLines.map((line, index) => (
-                  <motion.p
-                    key={`${line}-${index}`}
-                    className="mb-2 flex items-start gap-2 font-mono text-[11px] text-slate-200 sm:text-xs"
-                    initial={{ opacity: 0.35 }}
-                    animate={prefersReducedMotion ? undefined : { opacity: [0.35, 1, 0.35] }}
-                    transition={{ duration: 2.6, repeat: Infinity, delay: index * 0.35 }}
-                  >
-                    <span className="w-5 text-right text-slate-500">{String(index + 1).padStart(2, "0")}</span>
-                    <span className={`break-all ${index === codeLines.length - 1 ? "text-cyan-200" : "text-slate-200"}`}>{line}</span>
-                    {index === codeLines.length - 1 ? (
-                      <motion.span
-                        className="inline-block h-3 w-px bg-cyan-300"
-                        animate={prefersReducedMotion ? undefined : { opacity: [0, 1, 0] }}
-                        transition={{ duration: 1, repeat: Infinity }}
-                      />
-                    ) : null}
-                  </motion.p>
-                ))}
-              </div>
-
-              <motion.div
-                className="absolute bottom-4 left-4 right-4 h-1.5 overflow-hidden rounded-full bg-slate-700"
-                initial={{ opacity: 0.8 }}
-              >
-                <motion.div
-                  className="h-full rounded-full bg-gradient-to-r from-blue-400 via-cyan-300 to-violet-400"
-                  animate={prefersReducedMotion ? undefined : { x: ["-100%", "100%"] }}
-                  transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-                />
-              </motion.div>
-            </div>
-
-            {portfolioData.heroTech.map((tech, index) => (
-              <motion.span
-                key={tech}
-                className="absolute hidden rounded-full border border-slate-200 bg-white/90 px-2.5 py-1 text-[10px] font-semibold text-slate-700 sm:inline-flex"
-                style={{
-                  top: `${12 + (index % 3) * 26}%`,
-                  left: `${index % 2 === 0 ? 6 : 68}%`,
-                }}
-                animate={prefersReducedMotion ? undefined : { y: [0, -6, 0] }}
-                transition={{ duration: 2.2, repeat: Infinity, delay: index * 0.15 }}
-              >
-                {tech}
-              </motion.span>
-            ))}
-          </motion.div>
-        </FadeInUp>
       </div>
     </section>
   );
