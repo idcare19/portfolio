@@ -4,8 +4,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { HeroSection } from "@/components/sections/HeroSection";
 
-const CollaborationSection = dynamic(() =>
-  import("@/components/sections/CollaborationSection").then((module) => module.CollaborationSection)
+const LightMotionSection = dynamic(() =>
+  import("@/components/sections/LightMotionSection").then((module) => module.LightMotionSection)
 );
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection").then((module) => module.AboutSection));
 const SkillsSection = dynamic(() => import("@/components/sections/SkillsSection").then((module) => module.SkillsSection));
@@ -27,8 +27,8 @@ export default function HomePage() {
       <div>
         <HeroSection />
 
-        <DeferredSection id="collaboration" className="min-h-[680px]">
-          <CollaborationSection />
+        <DeferredSection id="light-motion" className="min-h-[360px]">
+          <LightMotionSection />
         </DeferredSection>
 
         <DeferredSection id="about" className="min-h-[720px]">

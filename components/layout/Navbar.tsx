@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 
 const sectionMap = [
   { id: "home", href: "#home" },
-  { id: "collaboration", href: "#home" },
+  { id: "light-motion", href: "#home" },
   { id: "about", href: "#about" },
   { id: "skills", href: "#skills" },
   { id: "projects", href: "#projects" },
@@ -169,7 +169,6 @@ export function Navbar() {
             onClick={() => setOpen((value) => !value)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-300/70 bg-white/80 md:hidden"
             aria-label="Toggle menu"
-            aria-expanded={open}
             aria-controls="mobile-navbar-menu"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
