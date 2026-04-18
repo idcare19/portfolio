@@ -1,0 +1,213 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg: 244 247 255;
+  --surface: 255 255 255;
+  --fg: 2 6 23;
+  --muted: 51 65 85;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+section[id] {
+  scroll-margin-top: 6.5rem;
+}
+
+body {
+  @apply bg-[rgb(var(--bg))] text-[rgb(var(--fg))] antialiased;
+  overflow-x: hidden;
+  background-image: radial-gradient(circle at 15% 12%, rgba(59, 130, 246, 0.14), transparent 38%),
+    radial-gradient(circle at 82% 14%, rgba(6, 182, 212, 0.14), transparent 38%),
+    radial-gradient(circle at 50% 82%, rgba(139, 92, 246, 0.1), transparent 45%),
+    linear-gradient(to bottom, #ffffff, #f8fbff);
+}
+
+.page-enter {
+  animation: page-enter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+::selection {
+  @apply bg-blue-300/40;
+}
+
+.glass {
+  @apply border border-white/70 bg-white/70 backdrop-blur-xl;
+}
+
+.panel {
+  @apply rounded-3xl border border-slate-200/70 bg-white/80 shadow-[0_16px_42px_rgba(15,23,42,0.08)] backdrop-blur-xl;
+}
+
+.section-wrap {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.hero-blob {
+  @apply pointer-events-none absolute rounded-full blur-3xl;
+}
+
+.deferred-section {
+  contain-intrinsic-size: 1px 900px;
+}
+
+.marquee-track {
+  width: max-content;
+  animation: marquee 24s linear infinite;
+}
+
+.marquee-track-reverse {
+  width: max-content;
+  animation: marquee-reverse 28s linear infinite;
+}
+
+.animate-float-slow {
+  animation: float-y 12s ease-in-out infinite;
+}
+
+.animate-float-medium {
+  animation: float-y 8s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-y-reverse 10s ease-in-out infinite;
+}
+
+.animate-bounce-soft {
+  animation: bounce-soft 1.4s ease-in-out infinite;
+}
+
+.animate-progress-scan {
+  animation: progress-scan 2.4s ease-in-out infinite;
+}
+
+.animate-spin-slower {
+  animation: spin 20s linear infinite;
+}
+
+.animate-spin-reverse {
+  animation: spin-reverse 24s linear infinite;
+}
+
+.text-gradient-animated {
+  background: linear-gradient(112deg, #2563eb, #06b6d4, #8b5cf6, #2563eb);
+  background-size: 220% 220%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-shift 6s ease infinite;
+}
+
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.992);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -12px, 0);
+  }
+}
+
+@keyframes float-y-reverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 10px, 0);
+  }
+}
+
+@keyframes bounce-soft {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}
+
+@keyframes progress-scan {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes spin-reverse {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+@supports (content-visibility: auto) {
+  .deferred-section {
+    content-visibility: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
