@@ -1,10 +1,7 @@
-"use client";
-
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { SkillCard } from "@/components/ui/SkillCard";
 import { portfolioData } from "@/data/portfolio";
-import { motion, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
 import {
   SiCss,
@@ -53,7 +50,6 @@ const skillIconMap: Record<string, { icon: ReactNode; tone: string }> = {
 export function SkillsSection() {
   const skillsA = portfolioData.skills.slice(0, 5);
   const skillsB = portfolioData.skills.slice(5);
-  const prefersReducedMotion = useReducedMotion();
 
   return (
     <AnimatedSection id="skills" className="py-20">
@@ -74,47 +70,35 @@ export function SkillsSection() {
         </div>
 
         <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white/70 py-2">
-          <motion.div
-            className="flex gap-3 whitespace-nowrap px-3 sm:gap-4 sm:px-4"
-            animate={prefersReducedMotion ? undefined : { x: ["0%", "-50%"] }}
-            transition={{ duration: 14, repeat: Infinity, ease: "linear" }}
-          >
+          <div className="marquee-track flex gap-3 whitespace-nowrap px-3 sm:gap-4 sm:px-4">
             {portfolioData.skills.concat(portfolioData.skills).map((skill, index) => (
-              <motion.span
+              <span
                 key={`${skill}-${index}`}
-                className="inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
-                animate={prefersReducedMotion ? undefined : { y: [0, -2, 0], scale: [1, 1.02, 1] }}
-                transition={{ duration: 1.9, repeat: Infinity, delay: (index % 8) * 0.08 }}
+                className="animate-float-medium inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
               >
                 {(() => {
                   const skillIcon = skillIconMap[skill] ?? { icon: <SiGithub className="h-3.5 w-3.5 text-slate-700" />, tone: "" };
                   return <span className={skillIcon.tone}>{skillIcon.icon}</span>;
                 })()}
                 {skill}
-              </motion.span>
+              </span>
             ))}
-          </motion.div>
+          </div>
 
-          <motion.div
-            className="mt-2 flex gap-3 whitespace-nowrap px-3 sm:gap-4 sm:px-4"
-            animate={prefersReducedMotion ? undefined : { x: ["-50%", "0%"] }}
-            transition={{ duration: 16, repeat: Infinity, ease: "linear" }}
-          >
+          <div className="marquee-track-reverse mt-2 flex gap-3 whitespace-nowrap px-3 sm:gap-4 sm:px-4">
             {portfolioData.skills.concat(portfolioData.skills).map((skill, index) => (
-              <motion.span
+              <span
                 key={`reverse-${skill}-${index}`}
-                className="inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-medium text-cyan-700"
-                animate={prefersReducedMotion ? undefined : { y: [0, 2, 0] }}
-                transition={{ duration: 2.1, repeat: Infinity, delay: (index % 6) * 0.1 }}
+                className="animate-float-reverse inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-medium text-cyan-700"
               >
                 {(() => {
                   const skillIcon = skillIconMap[skill] ?? { icon: <SiGithub className="h-3.5 w-3.5 text-slate-700" />, tone: "" };
                   return <span className={skillIcon.tone}>{skillIcon.icon}</span>;
                 })()}
                 {skill}
-              </motion.span>
+              </span>
             ))}
-          </motion.div>
+          </div>
         </div>
       </div>
     </AnimatedSection>
