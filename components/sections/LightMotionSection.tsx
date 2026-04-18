@@ -3,16 +3,30 @@
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { motion, useReducedMotion } from "framer-motion";
+import { Braces, Code2, Cpu, Database, GitBranch, Globe, LucideIcon, TerminalSquare } from "lucide-react";
 
-const motionTags = ["Quantum UI", "Pulse Engine", "Neon Drift", "Orbit Sync", "Velocity Boost", "Future Ready", "Smooth Core"];
+type TechBadge = {
+  label: string;
+  icon: LucideIcon;
+};
+
+const techBadges: TechBadge[] = [
+  { label: "React", icon: Code2 },
+  { label: "Next.js", icon: Globe },
+  { label: "TypeScript", icon: Braces },
+  { label: "Node API", icon: TerminalSquare },
+  { label: "PostgreSQL", icon: Database },
+  { label: "CI/CD", icon: GitBranch },
+  { label: "Web Performance", icon: Cpu },
+];
 
 const orbitNodes = [
-  { label: "⚡", angle: 0, distance: 108, delay: 0.1 },
-  { label: "🎉", angle: 52, distance: 96, delay: 0.25 },
-  { label: "✨", angle: 110, distance: 114, delay: 0.4 },
-  { label: "🚀", angle: 168, distance: 92, delay: 0.55 },
-  { label: "💫", angle: 228, distance: 104, delay: 0.7 },
-  { label: "🌈", angle: 288, distance: 98, delay: 0.85 },
+  { icon: Code2, angle: 0, distance: 108, delay: 0.1 },
+  { icon: Braces, angle: 52, distance: 96, delay: 0.25 },
+  { icon: TerminalSquare, angle: 110, distance: 114, delay: 0.4 },
+  { icon: Globe, angle: 168, distance: 92, delay: 0.55 },
+  { icon: Database, angle: 228, distance: 104, delay: 0.7 },
+  { icon: GitBranch, angle: 288, distance: 98, delay: 0.85 },
 ];
 
 const energyBursts = [
@@ -32,8 +46,8 @@ export function LightMotionSection() {
       <div className="section-wrap">
         <SectionHeader
           eyebrow="Motion"
-          title="Extraordinary motion playground"
-          description="A high-energy animation scene with orbiting icons, pulse rings, and kinetic strips for a wow effect."
+          title="Isometric web-dev animation"
+          description="Coding-inspired isometric motion with floating dev icons, workflow cards, and kinetic tech rails."
         />
 
         <div className="relative overflow-hidden rounded-3xl border border-slate-200/80 bg-[linear-gradient(120deg,rgba(255,255,255,0.92),rgba(240,249,255,0.9),rgba(238,242,255,0.9))] p-4 shadow-[0_18px_44px_rgba(15,23,42,0.08)] sm:p-6">
@@ -54,7 +68,41 @@ export function LightMotionSection() {
             />
           ))}
 
-          <div className="relative z-20 mx-auto mb-6 flex h-[260px] w-full max-w-[360px] items-center justify-center rounded-3xl border border-white/60 bg-white/50 backdrop-blur-sm sm:h-[300px]">
+          <div className="relative z-20 mx-auto mb-6 flex h-[260px] w-full max-w-[420px] items-center justify-center rounded-3xl border border-white/60 bg-white/50 backdrop-blur-sm [transform-style:preserve-3d] sm:h-[320px]">
+            <motion.div
+              className="absolute inset-6 rounded-2xl border border-blue-200/50 bg-white/65 shadow-[0_20px_34px_rgba(59,130,246,0.12)] [transform:rotateX(52deg)_rotateZ(-45deg)_translateZ(-8px)]"
+              animate={prefersReducedMotion ? undefined : { y: [0, -6, 0] }}
+              transition={{ duration: 3.6, repeat: Infinity, ease: "easeInOut" }}
+            />
+            <motion.div
+              className="absolute left-10 top-12 w-[45%] rounded-xl border border-white/80 bg-white/90 p-3 shadow-[0_12px_24px_rgba(15,23,42,0.12)] [transform:rotateX(52deg)_rotateZ(-34deg)_translateZ(10px)]"
+              animate={prefersReducedMotion ? undefined : { y: [0, -8, 0], opacity: [0.9, 1, 0.9] }}
+              transition={{ duration: 3.1, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <div className="mb-2 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-blue-700">
+                <Cpu className="h-3.5 w-3.5" /> Core Engine
+              </div>
+              <div className="space-y-1.5">
+                <div className="h-1.5 rounded-full bg-blue-100" />
+                <div className="h-1.5 w-10/12 rounded-full bg-cyan-100" />
+                <div className="h-1.5 w-8/12 rounded-full bg-violet-100" />
+              </div>
+            </motion.div>
+            <motion.div
+              className="absolute right-10 bottom-12 w-[43%] rounded-xl border border-white/80 bg-white/90 p-3 shadow-[0_12px_24px_rgba(15,23,42,0.12)] [transform:rotateX(52deg)_rotateZ(-34deg)_translateZ(14px)]"
+              animate={prefersReducedMotion ? undefined : { y: [0, -9, 0], opacity: [0.9, 1, 0.9] }}
+              transition={{ duration: 3.4, repeat: Infinity, ease: "easeInOut", delay: 0.2 }}
+            >
+              <div className="mb-2 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.12em] text-cyan-700">
+                <Globe className="h-3.5 w-3.5" /> Deploy Flow
+              </div>
+              <div className="flex items-center justify-between">
+                <TerminalSquare className="h-4 w-4 text-slate-500" />
+                <GitBranch className="h-4 w-4 text-slate-500" />
+                <Database className="h-4 w-4 text-slate-500" />
+              </div>
+            </motion.div>
+
             <motion.div
               className="absolute h-40 w-40 rounded-full border border-blue-300/60"
               animate={prefersReducedMotion ? undefined : { rotate: 360 }}
@@ -73,7 +121,7 @@ export function LightMotionSection() {
 
             {orbitNodes.map((node) => (
               <motion.div
-                key={`${node.label}-${node.angle}`}
+                key={`${node.angle}-${node.distance}`}
                 className="absolute"
                 style={{ transform: `rotate(${node.angle}deg) translateX(${node.distance}px)` }}
                 animate={
@@ -87,7 +135,7 @@ export function LightMotionSection() {
                 transition={{ duration: 10 + node.delay * 4, repeat: Infinity, ease: "linear", delay: node.delay }}
               >
                 <span className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/85 text-sm shadow-[0_8px_18px_rgba(15,23,42,0.12)] sm:h-10 sm:w-10 sm:text-base">
-                  {node.label}
+                  <node.icon className="h-4 w-4 text-slate-700 sm:h-4.5 sm:w-4.5" />
                 </span>
               </motion.div>
             ))}
@@ -97,19 +145,20 @@ export function LightMotionSection() {
               animate={prefersReducedMotion ? undefined : { y: [0, -4, 0], opacity: [0.8, 1, 0.8] }}
               transition={{ duration: 2.2, repeat: Infinity }}
             >
-              Energy Core Online
+              Isometric Dev Grid Online
             </motion.p>
           </div>
 
           <div className="relative z-20 space-y-2">
             <div className="overflow-hidden rounded-xl border border-slate-200 bg-white/90 py-2">
               <div className="marquee-track flex gap-3 whitespace-nowrap px-3 [animation-duration:11s] sm:gap-4 sm:px-4">
-                {motionTags.concat(motionTags).map((item, index) => (
+                {techBadges.concat(techBadges).map((item, index) => (
                   <span
-                    key={`${item}-${index}`}
-                    className="inline-flex rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700"
+                    key={`${item.label}-${index}`}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-700"
                   >
-                    {item}
+                    <item.icon className="h-3.5 w-3.5" />
+                    {item.label}
                   </span>
                 ))}
               </div>
@@ -117,12 +166,13 @@ export function LightMotionSection() {
 
             <div className="overflow-hidden rounded-xl border border-slate-200 bg-white/90 py-2">
               <div className="marquee-track-reverse flex gap-3 whitespace-nowrap px-3 [animation-duration:13s] sm:gap-4 sm:px-4">
-                {motionTags.concat(motionTags).map((item, index) => (
+                {techBadges.concat(techBadges).map((item, index) => (
                   <span
-                    key={`rev-${item}-${index}`}
-                    className="inline-flex rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-semibold text-cyan-700"
+                    key={`rev-${item.label}-${index}`}
+                    className="inline-flex items-center gap-1.5 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-semibold text-cyan-700"
                   >
-                    {item}
+                    <item.icon className="h-3.5 w-3.5" />
+                    {item.label}
                   </span>
                 ))}
               </div>
