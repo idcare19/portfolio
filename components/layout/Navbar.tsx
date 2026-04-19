@@ -10,7 +10,7 @@ const sectionMap = [
   { id: "about", href: "#about" },
   { id: "skills", href: "#skills" },
   { id: "projects", href: "#projects" },
-  { id: "reviews", href: "#projects" },
+  { id: "reviews", href: "#reviews" },
   { id: "journey", href: "#journey" },
   { id: "contact", href: "#contact" },
 ];
@@ -20,11 +20,13 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
   const [scrolled, setScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
     let frame = 0;
 
     const isDesktopViewport = () => window.innerWidth >= 768;
+    const syncMobile = () => setIsMobile(window.innerWidth < 768);
 
     const syncFromHash = () => {
       if (window.location.hash && portfolioData.nav.some((item) => item.href === window.location.hash)) {
@@ -35,6 +37,7 @@ export function Navbar() {
     const syncFromScroll = () => {
       if (!isDesktopViewport()) {
         setScrolled(window.scrollY > 12);
+        syncMobile();
         return;
       }
 
@@ -73,6 +76,7 @@ export function Navbar() {
       frame = window.requestAnimationFrame(syncFromScroll);
     };
 
+    syncMobile();
     syncFromHash();
     syncFromScroll();
 
@@ -88,6 +92,8 @@ export function Navbar() {
 
   useEffect(() => {
     const onResize = () => {
+      setIsMobile(window.innerWidth < 768);
+
       if (window.innerWidth >= 768) {
         setOpen(false);
       }
@@ -121,7 +127,9 @@ export function Navbar() {
     <header className={`fixed inset-x-0 z-[90] ${hasTopNotice ? "top-11 sm:top-12" : "top-0"}`}>
       <div className="section-wrap pt-4">
         <div
-          className={`flex items-center justify-between gap-3 rounded-[28px] border px-3 py-2 shadow-[0_16px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-colors duration-200 sm:px-4 ${
+          className={`flex items-center justify-between gap-3 rounded-[28px] border px-3 py-2 transition-colors duration-200 sm:px-4 ${
+            isMobile ? "shadow-sm backdrop-blur-sm" : "shadow-[0_16px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl"
+          } ${
             scrolled ? "border-slate-200/90 bg-white/92" : "border-white/80 bg-white/78"
           }`}
         >
@@ -184,7 +192,7 @@ export function Navbar() {
         </div>
 
         {open ? (
-          <div id="mobile-navbar-menu" className="mt-2 rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-[0_16px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl md:hidden">
+          <div id="mobile-navbar-menu" className="mt-2 rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur-sm md:hidden">
             {portfolioData.nav.map((item) => (
               <a
                 key={item.href}

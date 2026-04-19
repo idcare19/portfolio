@@ -1,9 +1,11 @@
 "use client";
 
+import { useIsMobile } from "@/lib/use-is-mobile";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useRef } from "react";
 import { cn } from "@/lib/utils";
+import { useReducedMotion } from "framer-motion";
 
 type ButtonProps = {
   children: React.ReactNode;
@@ -65,6 +67,21 @@ function MagneticInner({
 
 export function Button({ children, href, className, variant = "primary", type = "button" }: ButtonProps) {
   const content = <span className={cn(base, variants[variant], className)}>{children}</span>;
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = useReducedMotion();
+  const lightweightMode = isMobile || prefersReducedMotion;
+
+  if (lightweightMode) {
+    if (href) {
+      return (
+        <Link href={href} className="inline-flex">
+          {content}
+        </Link>
+      );
+    }
+
+    return type === "submit" ? <button type="submit">{content}</button> : content;
+  }
 
   if (href) {
     return (

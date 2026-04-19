@@ -1,8 +1,8 @@
 "use client";
 
-import { motion, type Variants } from "framer-motion";
+import { motion, type Variants, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
-import { useEffect, useState } from "react";
+import { useIsMobile } from "@/lib/use-is-mobile";
 
 type RevealProps = {
   children: React.ReactNode;
@@ -23,21 +23,13 @@ const buildVariants = (y: number, duration: number): Variants => ({
 });
 
 export function ScrollReveal({ children, className, delay = 0, y = 24, once = true, immediate = false }: RevealProps) {
-  const [isMobile, setIsMobile] = useState(false);
+  const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const lightweightMode = prefersReducedMotion || isMobile;
 
-  useEffect(() => {
-    const media = window.matchMedia("(max-width: 767px)");
-    const sync = () => setIsMobile(media.matches);
-
-    sync();
-    media.addEventListener("change", sync);
-
-    return () => media.removeEventListener("change", sync);
-  }, []);
-
-  const revealDuration = isMobile ? 0.2 : 0.6;
-  const revealY = isMobile ? Math.min(y, 10) : y;
-  const revealDelay = isMobile ? delay * 0.35 : delay;
+  const revealDuration = lightweightMode ? 0.2 : 0.6;
+  const revealY = lightweightMode ? Math.min(y, 10) : y;
+  const revealDelay = lightweightMode ? delay * 0.25 : delay;
 
   if (immediate) {
     return (

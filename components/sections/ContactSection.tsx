@@ -5,12 +5,15 @@ import { FadeInUp } from "@/components/effects/FadeInUp";
 import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolio";
+import { useIsMobile } from "@/lib/use-is-mobile";
 import { motion, useReducedMotion } from "framer-motion";
 import type { FormEvent } from "react";
 import { useState } from "react";
 
 export function ContactSection() {
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const lightweightMode = prefersReducedMotion || isMobile;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -39,7 +42,7 @@ export function ContactSection() {
           <FadeInUp className="glass relative overflow-hidden rounded-3xl border border-white/80 p-6 shadow-[0_12px_34px_rgba(15,23,42,0.08)]">
             <motion.div
               className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/50 to-transparent"
-              animate={prefersReducedMotion ? undefined : { x: ["-120%", "320%"] }}
+              animate={lightweightMode ? undefined : { x: ["-120%", "320%"] }}
               transition={{ duration: 3.1, repeat: Infinity, repeatDelay: 1.3, ease: "easeInOut" }}
             />
             <h3 className="text-xl font-semibold text-slate-900">Let's build something amazing together.</h3>
@@ -54,7 +57,7 @@ export function ContactSection() {
                   href={social.href}
                   className="block break-all rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all duration-500 ease-out hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700"
                   initial={{ opacity: 0.9 }}
-                  animate={prefersReducedMotion ? undefined : { y: [0, -2, 0], opacity: [0.92, 1, 0.92] }}
+                  animate={lightweightMode ? undefined : { y: [0, -2, 0], opacity: [0.92, 1, 0.92] }}
                   transition={{ duration: 2.2, repeat: Infinity, delay: index * 0.18 }}
                 >
                   <span className="font-semibold">{social.label}</span> - {social.value}
@@ -66,7 +69,7 @@ export function ContactSection() {
           <FadeInUp delay={0.08} className="glass relative overflow-hidden rounded-3xl border border-white/80 p-6 shadow-[0_12px_34px_rgba(15,23,42,0.08)]">
             <motion.div
               className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/80 to-transparent"
-              animate={prefersReducedMotion ? undefined : { opacity: [0.2, 0.9, 0.2] }}
+              animate={lightweightMode ? undefined : { opacity: [0.2, 0.9, 0.2] }}
               transition={{ duration: 2.4, repeat: Infinity }}
             />
             <form className="space-y-4" onSubmit={handleSubmit}>

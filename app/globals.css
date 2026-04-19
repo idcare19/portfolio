@@ -251,13 +251,45 @@ body {
 }
 
 @media (max-width: 767px) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  body {
+    background-image: linear-gradient(to bottom, #ffffff, #f8fbff);
+  }
+
   .hero-blob {
-    filter: blur(32px);
-    opacity: 0.88;
+    filter: none;
+    opacity: 0.34;
   }
 
   .glass,
   .panel {
-    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.06);
+  }
+
+  .marquee-track,
+  .marquee-track-reverse,
+  .animate-float-slow,
+  .animate-float-medium,
+  .animate-float-reverse,
+  .animate-bounce-soft,
+  .animate-progress-scan,
+  .animate-spin-slower,
+  .animate-spin-reverse,
+  .text-gradient-animated,
+  .text-sweep {
+    animation: none !important;
+  }
+
+  .panel {
+    border-color: rgba(148, 163, 184, 0.28);
+  }
+
+  .deferred-section {
+    contain-intrinsic-size: 1px 680px;
   }
 }

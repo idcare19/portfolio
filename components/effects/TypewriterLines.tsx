@@ -1,5 +1,7 @@
 "use client";
 
+import { useIsMobile } from "@/lib/use-is-mobile";
+import { useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 type TypewriterLinesProps = {
@@ -15,6 +17,9 @@ export function TypewriterLines({
   typeSpeedMs = 44,
   holdMs = 1400,
 }: TypewriterLinesProps) {
+  const isMobile = useIsMobile();
+  const prefersReducedMotion = useReducedMotion();
+  const disableTypewriter = isMobile || prefersReducedMotion;
   const [firstCount, setFirstCount] = useState(0);
   const [secondCount, setSecondCount] = useState(0);
   const [phase, setPhase] = useState<"line1" | "line2" | "hold">("line1");
@@ -26,6 +31,10 @@ export function TypewriterLines({
   const secondText = secondLine.slice(0, secondCount);
 
   useEffect(() => {
+    if (disableTypewriter) {
+      return;
+    }
+
     if (phase === "line1") {
       if (firstCount >= firstLine.length) {
         setPhase("line2");
@@ -61,7 +70,16 @@ export function TypewriterLines({
 
       return () => window.clearTimeout(holdTimer);
     }
-  }, [firstCount, firstLine.length, holdMs, phase, secondCount, secondLine.length, typeSpeedMs]);
+  }, [disableTypewriter, firstCount, firstLine.length, holdMs, phase, secondCount, secondLine.length, typeSpeedMs]);
+
+  if (disableTypewriter) {
+    return (
+      <span className={className}>
+        <span className="block min-h-[1.05em] leading-[1.05]">{firstLine}</span>
+        <span className="block min-h-[1.05em] leading-[1.05]">{secondLine}</span>
+      </span>
+    );
+  }
 
   const showCaretOnFirst = phase === "line1";
   const showCaretOnSecond = phase === "line2" || phase === "hold";

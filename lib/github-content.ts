@@ -143,3 +143,27 @@ export async function listGitHubDirectory(path: string) {
   const entries = await githubRequest<GitHubDirectoryEntry[]>(url, { method: "GET" });
   return entries;
 }
+
+export async function deleteGitHubFile({
+  path,
+  message,
+}: {
+  path: string;
+  message: string;
+}) {
+  const sha = await getGitHubFileSha(path);
+  if (!sha) {
+    throw new Error(`File not found in repository: ${path}`);
+  }
+
+  const response = await githubRequest<{ commit: { sha: string } }>(githubUrl(path), {
+    method: "DELETE",
+    body: JSON.stringify({
+      message,
+      sha,
+      branch: GITHUB_BRANCH,
+    }),
+  });
+
+  return response;
+}

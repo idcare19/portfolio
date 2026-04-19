@@ -4,12 +4,15 @@ import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolio";
+import { useIsMobile } from "@/lib/use-is-mobile";
 import { motion, useReducedMotion } from "framer-motion";
 import { Code2, ExternalLink, Quote } from "lucide-react";
 import Link from "next/link";
 
 export function ReviewsSection() {
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const lightweightMode = prefersReducedMotion || isMobile;
 
   return (
     <AnimatedSection id="reviews" className="py-20">
@@ -25,12 +28,12 @@ export function ReviewsSection() {
             <FadeInUp key={review.clientName} delay={index * 0.08}>
               <motion.article
                 className="glass relative overflow-hidden rounded-3xl border border-white/80 p-6 shadow-[0_12px_34px_rgba(15,23,42,0.08)]"
-                whileHover={prefersReducedMotion ? undefined : { y: -6 }}
+                whileHover={lightweightMode ? undefined : { y: -6 }}
                 transition={{ type: "spring", stiffness: 220, damping: 18 }}
               >
                 <motion.div
                   className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/45 to-transparent"
-                  animate={prefersReducedMotion ? undefined : { x: ["-120%", "320%"] }}
+                  animate={lightweightMode ? undefined : { x: ["-120%", "320%"] }}
                   transition={{ duration: 3, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" }}
                 />
 

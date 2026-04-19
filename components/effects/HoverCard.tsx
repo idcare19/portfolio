@@ -1,5 +1,6 @@
 "use client";
 
+import { useIsMobile } from "@/lib/use-is-mobile";
 import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +11,8 @@ type HoverCardProps = {
 
 export function HoverCard({ children, className }: HoverCardProps) {
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const lightweightMode = prefersReducedMotion || isMobile;
 
   return (
     <motion.div
@@ -18,7 +21,7 @@ export function HoverCard({ children, className }: HoverCardProps) {
         className
       )}
       whileHover={
-        prefersReducedMotion
+        lightweightMode
           ? undefined
           : {
               y: -8,

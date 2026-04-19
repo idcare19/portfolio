@@ -4,10 +4,13 @@ import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolio";
+import { useIsMobile } from "@/lib/use-is-mobile";
 import { motion, useReducedMotion } from "framer-motion";
 
 export function JourneySection() {
   const prefersReducedMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const lightweightMode = prefersReducedMotion || isMobile;
 
   return (
     <AnimatedSection id="journey" className="py-20">
@@ -40,7 +43,7 @@ export function JourneySection() {
               <motion.span
                 className="absolute -left-[31px] top-1.5 inline-flex h-4 w-4 rounded-full border-2 border-blue-500 bg-white"
                 animate={
-                  prefersReducedMotion
+                  lightweightMode
                     ? undefined
                     : {
                         scale: [1, 1.15, 1],
@@ -56,7 +59,7 @@ export function JourneySection() {
 
               <motion.div
                 className="group rounded-xl border border-slate-200/80 bg-white/80 p-4 backdrop-blur-md transition-all duration-500 ease-out hover:-translate-y-1 hover:border-blue-300"
-                whileHover={{ x: 4 }}
+                whileHover={lightweightMode ? undefined : { x: 4 }}
               >
                 <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-700">{item.period}</div>
                 <p className="text-sm font-semibold text-slate-900">{item.role}</p>

@@ -1,11 +1,17 @@
 "use client";
 
+import { useIsMobile } from "@/lib/use-is-mobile";
 import { useEffect, useRef } from "react";
 
 export function ScrollProgress() {
   const barRef = useRef<HTMLDivElement | null>(null);
+  const isMobile = useIsMobile();
 
   useEffect(() => {
+    if (isMobile) {
+      return;
+    }
+
     let frame = 0;
 
     const updateProgress = () => {
@@ -34,7 +40,11 @@ export function ScrollProgress() {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, []);
+  }, [isMobile]);
+
+  if (isMobile) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-x-0 top-0 z-[60] h-1 overflow-hidden">
