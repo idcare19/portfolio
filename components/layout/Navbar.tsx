@@ -2,6 +2,7 @@
 
 import { portfolioData } from "@/data/portfolio";
 import { Menu, X } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 const sectionMap = [
@@ -17,6 +18,7 @@ const sectionMap = [
 
 export function Navbar() {
   const hasTopNotice = Boolean(portfolioData.websiteControl?.topNoticeBar?.enabled);
+  const prefersReducedMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
   const [scrolled, setScrolled] = useState(false);
@@ -124,7 +126,12 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className={`fixed inset-x-0 z-[90] ${hasTopNotice ? "top-11 sm:top-12" : "top-0"}`}>
+    <motion.header
+      className={`fixed inset-x-0 z-[90] ${hasTopNotice ? "top-11 sm:top-12" : "top-0"}`}
+      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: prefersReducedMotion ? 0.2 : 0.35, ease: "easeOut" }}
+    >
       <div className="section-wrap pt-4">
         <div
           className={`flex items-center justify-between gap-3 rounded-[28px] border px-3 py-2 transition-colors duration-200 sm:px-4 ${
@@ -185,45 +192,53 @@ export function Navbar() {
             onClick={() => setOpen((value) => !value)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-slate-300/70 bg-white/80 md:hidden"
             aria-label="Toggle menu"
-            aria-controls="mobile-navbar-menu"
           >
             {open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
           </button>
         </div>
 
-        {open ? (
-          <div id="mobile-navbar-menu" className="mt-2 rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur-sm md:hidden">
-            {portfolioData.nav.map((item) => (
+        <AnimatePresence initial={false}>
+          {open ? (
+            <motion.div
+              id="mobile-navbar-menu"
+              className="mt-2 rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur-sm md:hidden"
+              initial={prefersReducedMotion ? { opacity: 1, height: "auto" } : { opacity: 0, y: -6, height: 0 }}
+              animate={{ opacity: 1, y: 0, height: "auto" }}
+              exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -6, height: 0 }}
+              transition={{ duration: prefersReducedMotion ? 0.15 : 0.22, ease: "easeOut" }}
+            >
+              {portfolioData.nav.map((item) => (
+                <a
+                  key={item.href}
+                  href={item.href}
+                  aria-current={active === item.href ? "page" : undefined}
+                  onClick={() => {
+                    setActive(item.href);
+                    setOpen(false);
+                  }}
+                  className={`block rounded-xl px-3 py-2 text-sm ${
+                    active === item.href
+                      ? "bg-blue-50 text-blue-700 ring-1 ring-blue-200/80"
+                      : "text-slate-700 hover:bg-blue-50"
+                  }`}
+                >
+                  {item.label}
+                </a>
+              ))}
               <a
-                key={item.href}
-                href={item.href}
-                aria-current={active === item.href ? "page" : undefined}
+                href="#contact"
                 onClick={() => {
-                  setActive(item.href);
+                  setActive("#contact");
                   setOpen(false);
                 }}
-                className={`block rounded-xl px-3 py-2 text-sm ${
-                  active === item.href
-                    ? "bg-blue-50 text-blue-700 ring-1 ring-blue-200/80"
-                    : "text-slate-700 hover:bg-blue-50"
-                }`}
+                className="mt-2 inline-flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-2 text-sm font-semibold text-white"
               >
-                {item.label}
+                Hire Me
               </a>
-            ))}
-            <a
-              href="#contact"
-              onClick={() => {
-                setActive("#contact");
-                setOpen(false);
-              }}
-              className="mt-2 inline-flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-2 text-sm font-semibold text-white"
-            >
-              Hire Me
-            </a>
-          </div>
-        ) : null}
+            </motion.div>
+          ) : null}
+        </AnimatePresence>
       </div>
-    </header>
+    </motion.header>
   );
 }
