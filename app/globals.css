@@ -102,6 +102,26 @@ body {
   animation: gradient-shift 6s ease infinite;
 }
 
+.text-sweep {
+  background: linear-gradient(110deg, #0f172a 20%, #2563eb 45%, #06b6d4 55%, #0f172a 80%);
+  background-size: 250% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: text-sweep 3.2s linear infinite;
+}
+
+.typing-caret {
+  display: inline-block;
+  margin-left: 0.08em;
+  width: 0.08em;
+  height: 0.95em;
+  vertical-align: -0.05em;
+  border-radius: 9999px;
+  background-color: rgba(37, 99, 235, 0.88);
+  animation: caret-blink 0.8s step-end infinite;
+}
+
 @keyframes gradient-shift {
   0% {
     background-position: 0% 50%;
@@ -111,6 +131,26 @@ body {
   }
   100% {
     background-position: 0% 50%;
+  }
+}
+
+@keyframes text-sweep {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: -100% 50%;
+  }
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
   }
 }
 

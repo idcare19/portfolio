@@ -4,7 +4,7 @@ export const portfolioData = {
     username: "idcare19.dev",
     identityLine: "idcare19.dev / India",
     introLine: "Hi, I'm Abhishek",
-    role: "Full Stack Developer and Next.js Developer",
+    role: "Full Stack Developer and Nest JS Developer",
     tagline:
       "I craft modern, high-performance websites and web apps with clean architecture and premium user experience.",
     location: "India",

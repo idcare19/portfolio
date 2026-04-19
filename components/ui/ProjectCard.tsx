@@ -1,6 +1,3 @@
-"use client";
-
-import { motion } from "framer-motion";
 import { ExternalLink, Github } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -18,17 +15,7 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <motion.article
-      whileHover={{ y: -8, rotateX: 2, rotateY: -2 }}
-      transition={{ type: "spring", stiffness: 230, damping: 18 }}
-      style={{ transformStyle: "preserve-3d" }}
-      className="group relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/70 p-4 shadow-[0_12px_35px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-all duration-500 ease-out before:pointer-events-none before:absolute before:inset-0 before:rounded-3xl before:bg-gradient-to-br before:from-blue-500/15 before:via-cyan-300/10 before:to-violet-400/15 before:opacity-0 before:transition before:duration-500 hover:border-blue-300/70 hover:before:opacity-100 hover:shadow-[0_24px_48px_rgba(59,130,246,0.22)]"
-    >
-      <motion.div
-        className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/45 to-transparent"
-        animate={{ x: ["-120%", "320%"] }}
-        transition={{ duration: 2.8, repeat: Infinity, repeatDelay: 1.2, ease: "easeInOut" }}
-      />
+    <article className="group relative overflow-hidden rounded-3xl border border-slate-200/70 bg-white/85 p-4 shadow-[0_10px_30px_rgba(15,23,42,0.08)] transition-all duration-300 ease-out hover:-translate-y-1 hover:border-blue-300/70 hover:shadow-[0_16px_36px_rgba(59,130,246,0.16)]">
 
       <div className="relative overflow-hidden rounded-2xl border border-slate-200/70">
         <Image
@@ -47,16 +34,13 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <p className="mt-2 text-sm text-slate-600">{project.description}</p>
 
         <div className="mt-4 flex flex-wrap gap-2">
-          {project.tech.map((tech, index) => (
-            <motion.span
+          {project.tech.map((tech) => (
+            <span
               key={tech}
               className="rounded-full bg-slate-100 px-2.5 py-1 text-xs text-slate-700"
-              initial={{ opacity: 0.8 }}
-              animate={{ opacity: [0.8, 1, 0.8] }}
-              transition={{ duration: 1.8, repeat: Infinity, delay: index * 0.12 }}
             >
               {tech}
-            </motion.span>
+            </span>
           ))}
         </div>
 
@@ -81,6 +65,6 @@ export function ProjectCard({ project }: ProjectCardProps) {
           </Link>
         </div>
       </div>
-    </motion.article>
+    </article>
   );
 }

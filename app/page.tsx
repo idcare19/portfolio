@@ -4,9 +4,6 @@ import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { HeroSection } from "@/components/sections/HeroSection";
 
-const LightMotionSection = dynamic(() =>
-  import("@/components/sections/LightMotionSection").then((module) => module.LightMotionSection)
-);
 const AboutSection = dynamic(() => import("@/components/sections/AboutSection").then((module) => module.AboutSection));
 const SkillsSection = dynamic(() => import("@/components/sections/SkillsSection").then((module) => module.SkillsSection));
 const ProjectsSection = dynamic(() =>
@@ -26,10 +23,6 @@ export default function HomePage() {
       <Navbar />
       <div>
         <HeroSection />
-
-        <DeferredSection id="light-motion" className="min-h-[360px]">
-          <LightMotionSection />
-        </DeferredSection>
 
         <DeferredSection id="about" className="min-h-[720px]">
           <AboutSection />
