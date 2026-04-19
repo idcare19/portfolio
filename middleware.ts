@@ -4,7 +4,6 @@ import siteData from "@/src/data/siteData.json";
 
 function isExcludedPath(pathname: string) {
   return (
-    pathname.startsWith("/admin") ||
     pathname.startsWith("/api") ||
     pathname.startsWith("/_next") ||
     pathname.startsWith("/maintenance") ||
@@ -15,12 +14,36 @@ function isExcludedPath(pathname: string) {
 
 export function middleware(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
+
+  if (pathname.startsWith("/admin")) {
+    const isLoginPage = pathname === "/admin/login";
+    const hasSessionCookie = Boolean(request.cookies.get("admin_session")?.value);
+
+    if (!isLoginPage && !hasSessionCookie) {
+      const loginUrl = request.nextUrl.clone();
+      loginUrl.pathname = "/admin/login";
+      return NextResponse.redirect(loginUrl);
+    }
+
+    if (isLoginPage && hasSessionCookie) {
+      const dashboardUrl = request.nextUrl.clone();
+      dashboardUrl.pathname = "/admin";
+      return NextResponse.redirect(dashboardUrl);
+    }
+
+    return NextResponse.next();
+  }
+
   if (isExcludedPath(pathname)) {
     return NextResponse.next();
   }
 
   const maintenance = siteData.websiteControl?.maintenanceMode;
   if (!maintenance?.enabled) {
+    return NextResponse.next();
+  }
+
+  if (maintenance.whitelistAdmin && request.cookies.get("admin_session")?.value) {
     return NextResponse.next();
   }
 

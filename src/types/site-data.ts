@@ -1,5 +1,14 @@
 export type NavItem = { label: string; href: string };
 
+export type GitHubProject = {
+  id: string;
+  name: string;
+  owner: string;
+  repo: string;
+  branch: string;
+  contentPath: string;
+};
+
 export type ProjectItem = {
   id: string;
   title: string;
@@ -168,5 +177,7 @@ export type SiteData = {
     theme: "light" | "dark" | "system";
   };
   websiteControl: WebsiteControl;
+  githubProjects?: GitHubProject[];
+  activeGithubProjectId?: string;
   updatedAt: string;
 };
