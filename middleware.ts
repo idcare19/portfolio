@@ -1,0 +1,39 @@
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import siteData from "@/src/data/siteData.json";
+
+function isExcludedPath(pathname: string) {
+  return (
+    pathname.startsWith("/admin") ||
+    pathname.startsWith("/api") ||
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/maintenance") ||
+    pathname.startsWith("/uploads") ||
+    pathname === "/favicon.ico"
+  );
+}
+
+export function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+  if (isExcludedPath(pathname)) {
+    return NextResponse.next();
+  }
+
+  const maintenance = siteData.websiteControl?.maintenanceMode;
+  if (!maintenance?.enabled) {
+    return NextResponse.next();
+  }
+
+  const allowedRoutes = Array.isArray(maintenance.allowedRoutes) ? maintenance.allowedRoutes : [];
+  if (allowedRoutes.includes(pathname)) {
+    return NextResponse.next();
+  }
+
+  const url = request.nextUrl.clone();
+  url.pathname = "/maintenance";
+  return NextResponse.rewrite(url);
+}
+
+export const config = {
+  matcher: ["/((?!_next/static|_next/image|.*\\.(?:svg|png|jpg|jpeg|gif|webp|ico)$).*)"],
+};

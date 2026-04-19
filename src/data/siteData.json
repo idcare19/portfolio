@@ -1,0 +1,190 @@
+{
+  "owner": {
+    "name": "Abhishek",
+    "username": "idcare19.dev",
+    "identityLine": "idcare19.dev / India",
+    "introLine": "Hi, I'm Abhishek",
+    "role": "Full Stack Developer and Nest JS Developer",
+    "tagline": "I craft modern, high-performance websites and web apps with clean architecture and premium user experience.",
+    "location": "India",
+    "badges": ["Open to Freelance", "Internship Ready", "Available for Projects"],
+    "profileImage": "/projects/logo.png",
+    "resumeUrl": "#"
+  },
+  "nav": [
+    { "label": "Home", "href": "#home" },
+    { "label": "About", "href": "#about" },
+    { "label": "Skills", "href": "#skills" },
+    { "label": "Projects", "href": "#projects" },
+    { "label": "Experience", "href": "#journey" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+  "heroTech": ["HTML", "CSS", "JavaScript", "React", "Next.js", "Node.js"],
+  "about": {
+    "intro": "I turn ideas into premium web products with clear structure, thoughtful interactions, and strong performance. My focus is responsive UI, smooth motion, and production-ready front-end quality.",
+    "stats": [
+      { "label": "Projects Completed", "value": "16+" },
+      { "label": "Technologies Learned", "value": "7+" },
+      { "label": "Months of Learning", "value": "8+" }
+    ]
+  },
+  "skills": ["HTML/CSS", "JavaScript", "PHP", "MySQL", "WordPress", "Git & GitHub", "Design (Photoshop)", "Laravel", "React", "Testing"],
+  "learningPhase": ["App Security", "Advanced Laravel", "Scalable React Apps"],
+  "projects": [
+    {
+      "title": "Devfolio - Portfolio Template",
+      "description": "A blazing-fast, accessible portfolio template built with semantic HTML, modern CSS, and vanilla JavaScript.",
+      "image": "/projects/portfolio.png",
+      "tech": ["HTML", "CSS", "JavaScript"],
+      "liveUrl": "#",
+      "githubUrl": "#"
+    },
+    {
+      "title": "Hirefind",
+      "description": "A full-stack job platform built with React and Appwrite where candidates apply, companies post jobs, and admins manage the hiring workflow.",
+      "image": "/projects/hirefind.png",
+      "tech": ["React", "Appwrite"],
+      "liveUrl": "https://hirefind.idcare19.me",
+      "githubUrl": "https://github.com/idcare19/hirefind"
+    }
+  ],
+  "reviews": [
+    {
+      "clientName": "Rakesh.dev",
+      "website": "https://rakesh-dev-portfolio.vercel.app",
+      "quote": "Abhishek delivered a clean, fast portfolio with excellent attention to UI details."
+    },
+    {
+      "clientName": "Nitin.dev",
+      "website": "https://nitin-dev-portfolio.vercel.app",
+      "quote": "Very professional and reliable. The final website feels premium and polished."
+    }
+  ],
+  "collaboration": {
+    "users": [
+      { "name": "Abhishek", "color": "bg-blue-500" },
+      { "name": "Teammate", "color": "bg-cyan-500" },
+      { "name": "Designer", "color": "bg-violet-500" }
+    ],
+    "board": [
+      { "title": "UI polish", "status": "Live editing" },
+      { "title": "API integration", "status": "Syncing" },
+      { "title": "Deploy checks", "status": "Review" }
+    ],
+    "events": ["Code synced", "New comment added", "Build passed", "Changes deployed"]
+  },
+  "experience": [
+    {
+      "role": "Full Stack Developer - Freelance",
+      "period": "2026 - Present",
+      "summary": "Built secure, scalable applications and advised clients on best development and security practices."
+    }
+  ],
+  "socials": [
+    { "label": "Email", "value": "personal@idcare19.me", "href": "mailto:personal@idcare19.me" },
+    { "label": "GitHub", "value": "github.com/idcare19", "href": "https://github.com/idcare19" },
+    { "label": "LinkedIn", "value": "linkedin.com/in/abhishekidcare19", "href": "https://www.linkedin.com/in/abhishekidcare19/" },
+    { "label": "Instagram", "value": "instagram.com/idcare19", "href": "https://instagram.com/idcare19" },
+    { "label": "Twitter", "value": "x.com/idcare19", "href": "https://x.com/idcare19" }
+  ],
+  "services": [
+    { "id": "service-1", "title": "Full Stack Development", "description": "End-to-end product engineering.", "icon": "code" },
+    { "id": "service-2", "title": "UI/UX Implementation", "description": "Fast, responsive, premium interfaces.", "icon": "layout" }
+  ],
+  "skillsDetailed": [
+    { "id": "skill-1", "name": "Next.js", "category": "Frontend", "icon": "next", "level": 92 },
+    { "id": "skill-2", "name": "NestJS", "category": "Backend", "icon": "server", "level": 84 },
+    { "id": "skill-3", "name": "MongoDB", "category": "Database", "icon": "database", "level": 80 },
+    { "id": "skill-4", "name": "Git", "category": "Tools", "icon": "git-branch", "level": 88 }
+  ],
+  "projectsDetailed": [
+    {
+      "id": "project-1",
+      "title": "Portfolio CMS",
+      "shortDescription": "A lightweight Git-backed portfolio CMS.",
+      "longDescription": "Admin content editing with secure save to GitHub using Next.js API routes.",
+      "techStack": ["Next.js", "TypeScript", "Tailwind", "GitHub API"],
+      "category": "Web App",
+      "image": "/projects/portfolio.png",
+      "liveDemoUrl": "#",
+      "githubUrl": "#",
+      "featured": true,
+      "order": 1
+    }
+  ],
+  "testimonialsDetailed": [
+    {
+      "id": "testimonial-1",
+      "clientName": "Aman Sharma",
+      "roleCompany": "Founder, BuildWorks",
+      "message": "Great execution quality and communication.",
+      "image": ""
+    }
+  ],
+  "contactMessages": [],
+  "blogs": [
+    {
+      "id": "blog-1",
+      "title": "How to build a portfolio that converts",
+      "slug": "portfolio-that-converts",
+      "thumbnail": "/projects/portfolio.png",
+      "content": "Long-form markdown or HTML content goes here.",
+      "tags": ["portfolio", "seo"],
+      "published": false
+    }
+  ],
+  "mediaLibrary": [],
+  "websiteSettings": {
+    "seoTitle": "Abhishek | Full Stack Developer",
+    "metaDescription": "Portfolio of Abhishek with modern full-stack projects and services.",
+    "favicon": "/projects/logo.png",
+    "logo": "/projects/logo.png",
+    "footerText": "© 2026 Abhishek. All rights reserved.",
+    "theme": "system"
+  },
+  "websiteControl": {
+    "popupAnnouncement": {
+      "enabled": false,
+      "title": "New Update",
+      "message": "New projects and case studies just dropped.",
+      "buttonText": "View Projects",
+      "buttonLink": "#projects",
+      "image": "",
+      "frequency": "once",
+      "style": "update",
+      "closeButton": true,
+      "startDate": "",
+      "endDate": ""
+    },
+    "maintenanceMode": {
+      "enabled": false,
+      "title": "Website Under Maintenance",
+      "subtitle": "We are performing a quick upgrade. Please check back soon.",
+      "estimatedReturn": "Expected back in 2 hours",
+      "contactButtonText": "Contact Support",
+      "contactButtonLink": "#contact",
+      "whatsappLink": "",
+      "socialLinks": [
+        { "label": "GitHub", "href": "https://github.com/idcare19" },
+        { "label": "LinkedIn", "href": "https://www.linkedin.com/in/abhishekidcare19/" }
+      ],
+      "allowedRoutes": ["/contact", "/resume"],
+      "whitelistAdmin": true
+    },
+    "topNoticeBar": {
+      "enabled": false,
+      "message": "Open for freelance and long-term projects.",
+      "ctaText": "Let’s Talk",
+      "ctaLink": "#contact",
+      "colorStyle": "blue"
+    },
+    "versionInfo": {
+      "currentVersion": "1.0.0",
+      "showUpdateMessage": false,
+      "updateMessage": "New update available",
+      "changelogShort": "Admin panel + Git-based CMS added",
+      "showBadge": true
+    }
+  },
+  "updatedAt": "2026-04-19T00:00:00.000Z"
+}
