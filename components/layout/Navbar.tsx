@@ -132,7 +132,14 @@ export function Navbar() {
             }}
             className="min-w-0 max-w-[62vw] truncate text-sm font-bold tracking-tight text-slate-900 sm:max-w-none"
           >
-            <span className="block truncate text-black">{portfolioData.owner.username}</span>
+            <span className="block truncate text-black">
+              {portfolioData.owner.username}
+              {portfolioData.websiteControl?.versionInfo?.showBadge ? (
+                <span className="ml-2 inline-flex items-center rounded-full bg-blue-100 px-2 py-0.5 text-[10px] font-semibold text-blue-700">
+                  {portfolioData.websiteControl.versionInfo.currentVersion}
+                </span>
+              ) : null}
+            </span>
           </a>
 
           <div className="ml-3 hidden items-center gap-2 rounded-full border border-slate-200/80 bg-slate-50 px-3 py-1 text-[11px] font-medium text-slate-500 lg:flex">

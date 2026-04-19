@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import { GlobalPopupAnnouncement } from "@/components/layout/controls/GlobalPopupAnnouncement";
+import { TopNoticeBar } from "@/components/layout/controls/TopNoticeBar";
 import "./globals.css";
 import { portfolioData } from "@/data/portfolio";
 
@@ -92,7 +94,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', '${gaMeasurementId}');
           `}
         </Script>
+        <TopNoticeBar />
         {children}
+        <GlobalPopupAnnouncement />
       </body>
     </html>
   );
