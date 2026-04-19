@@ -13,10 +13,10 @@ export function AdminBreadcrumbs() {
   }));
 
   return (
-    <nav className="mb-4 flex flex-wrap items-center gap-2 text-xs text-slate-500">
+    <nav className="mb-4 flex flex-nowrap items-center gap-2 overflow-x-auto pb-1 text-xs text-slate-500">
       <Link href="/admin" className="font-medium text-slate-600 hover:text-blue-600">admin</Link>
       {crumbs.slice(1).map((crumb) => (
-        <span key={crumb.href} className="flex items-center gap-2">
+        <span key={crumb.href} className="flex shrink-0 items-center gap-2">
           <span>/</span>
           <Link href={crumb.href} className="font-medium capitalize text-slate-600 hover:text-blue-600">
             {crumb.label}

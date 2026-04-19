@@ -9,13 +9,13 @@ export function AdminSidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="sticky top-0 h-screen w-72 border-r border-slate-200 bg-white/90 p-4 backdrop-blur">
+    <aside className="sticky top-0 hidden h-screen w-72 shrink-0 border-r border-slate-200 bg-white/90 p-4 backdrop-blur lg:block">
       <div className="mb-6 rounded-2xl border border-slate-200 bg-slate-50 p-4">
         <p className="text-xs font-semibold uppercase tracking-widest text-blue-700">Admin Panel</p>
         <h2 className="mt-1 text-lg font-bold text-slate-900">Portfolio CMS</h2>
       </div>
 
-      <nav className="space-y-1">
+      <nav className="space-y-1 overflow-y-auto pb-4">
         {adminNav.map((item) => {
           const active = pathname === item.href;
           return (
