@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { ProjectItem, SiteData } from "@/src/types/site-data";
 
 type Props = {
@@ -24,7 +24,37 @@ const emptyProject: ProjectItem = {
 
 export function ProjectsEditor({ data, onChange }: Props) {
   const [activeId, setActiveId] = useState<string>(data.projectsDetailed[0]?.id || "");
+  const [githubImages, setGithubImages] = useState<string[]>([]);
   const active = data.projectsDetailed.find((p) => p.id === activeId) || null;
+
+  useEffect(() => {
+    let cancelled = false;
+
+    async function loadGithubImages() {
+      try {
+        const res = await fetch("/api/github/images", { cache: "no-store" });
+        const payload = await res.json();
+        if (!cancelled && res.ok && payload?.ok) {
+          setGithubImages(
+            (payload.data as Array<{ url: string }>).map((item) => item.url).filter(Boolean)
+          );
+        }
+      } catch {
+        if (!cancelled) setGithubImages([]);
+      }
+    }
+
+    void loadGithubImages();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const imageOptions = useMemo(() => {
+    const fromLibrary = data.mediaLibrary.map((item) => item.url).filter(Boolean);
+    const combined = [...githubImages, ...fromLibrary, ...(active?.image ? [active.image] : [])];
+    return Array.from(new Set(combined));
+  }, [githubImages, data.mediaLibrary, active?.image]);
 
   function addProject() {
     const id = `project-${Date.now()}`;
@@ -86,7 +116,24 @@ export function ProjectsEditor({ data, onChange }: Props) {
             <input className="rounded-xl border border-slate-300 px-3 py-2" value={active.category} onChange={(e) => updateActive({ category: e.target.value })} placeholder="Category" />
             <textarea className="rounded-xl border border-slate-300 px-3 py-2 md:col-span-2" rows={3} value={active.shortDescription} onChange={(e) => updateActive({ shortDescription: e.target.value })} placeholder="Short description" />
             <textarea className="rounded-xl border border-slate-300 px-3 py-2 md:col-span-2" rows={5} value={active.longDescription} onChange={(e) => updateActive({ longDescription: e.target.value })} placeholder="Long description" />
-            <input className="rounded-xl border border-slate-300 px-3 py-2 md:col-span-2" value={active.image} onChange={(e) => updateActive({ image: e.target.value })} placeholder="Image URL" />
+            <select
+              aria-label="Project image from uploaded media"
+              className="rounded-xl border border-slate-300 px-3 py-2 md:col-span-2"
+              value={active.image}
+              onChange={(e) => updateActive({ image: e.target.value })}
+            >
+              <option value="">Select image from public/projects</option>
+              {imageOptions.map((url) => (
+                <option key={url} value={url}>{url}</option>
+              ))}
+            </select>
+            <input className="rounded-xl border border-slate-300 px-3 py-2 md:col-span-2" value={active.image} onChange={(e) => updateActive({ image: e.target.value })} placeholder="Or paste custom image URL/path" />
+            {active.image ? (
+              <div className="md:col-span-2 overflow-hidden rounded-xl border border-slate-200 bg-slate-50 p-3">
+                <p className="mb-2 text-xs font-medium text-slate-600">Preview</p>
+                <img src={active.image} alt={active.title || "Project image"} className="h-44 w-full rounded-lg object-cover" loading="lazy" />
+              </div>
+            ) : null}
             <input className="rounded-xl border border-slate-300 px-3 py-2" value={active.liveDemoUrl} onChange={(e) => updateActive({ liveDemoUrl: e.target.value })} placeholder="Live demo URL" />
             <input className="rounded-xl border border-slate-300 px-3 py-2" value={active.githubUrl} onChange={(e) => updateActive({ githubUrl: e.target.value })} placeholder="GitHub URL" />
             <input className="rounded-xl border border-slate-300 px-3 py-2 md:col-span-2" value={active.techStack.join(", ")} onChange={(e) => updateActive({ techStack: e.target.value.split(",").map((v) => v.trim()).filter(Boolean) })} placeholder="Tech stack (comma separated)" />
