@@ -16,6 +16,7 @@ const sectionMap = [
 ];
 
 export function Navbar() {
+  const hasTopNotice = Boolean(portfolioData.websiteControl?.topNoticeBar?.enabled);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
   const [scrolled, setScrolled] = useState(false);
@@ -117,7 +118,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[90]">
+    <header className={`fixed inset-x-0 z-[90] ${hasTopNotice ? "top-11 sm:top-12" : "top-0"}`}>
       <div className="section-wrap pt-4">
         <div
           className={`flex items-center justify-between gap-3 rounded-[28px] border px-3 py-2 shadow-[0_16px_40px_rgba(15,23,42,0.08)] backdrop-blur-xl transition-colors duration-200 sm:px-4 ${
