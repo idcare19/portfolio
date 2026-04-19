@@ -23,9 +23,11 @@ export function Navbar() {
   const [active, setActive] = useState("#home");
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const [hideOnScroll, setHideOnScroll] = useState(false);
 
   useEffect(() => {
     let frame = 0;
+    let lastY = window.scrollY;
 
     const isDesktopViewport = () => window.innerWidth >= 768;
     const syncMobile = () => setIsMobile(window.innerWidth < 768);
@@ -37,11 +39,23 @@ export function Navbar() {
     };
 
     const syncFromScroll = () => {
+      const currentY = window.scrollY;
+      const delta = Math.abs(currentY - lastY);
+      const isGoingDown = currentY > lastY;
+
       if (!isDesktopViewport()) {
-        setScrolled(window.scrollY > 12);
+        setScrolled(currentY > 12);
+        if (currentY < 64) {
+          setHideOnScroll(false);
+        } else if (delta > 6) {
+          setHideOnScroll(isGoingDown);
+        }
         syncMobile();
+        lastY = currentY;
         return;
       }
+
+      setHideOnScroll(false);
 
       const marker = Math.max(140, window.innerHeight * 0.32);
       let current = "#home";
@@ -70,7 +84,8 @@ export function Navbar() {
       }
 
       setActive((previous) => (previous === current ? previous : current));
-      setScrolled(window.scrollY > 12);
+      setScrolled(currentY > 12);
+      lastY = currentY;
     };
 
     const handleScroll = () => {
@@ -129,8 +144,16 @@ export function Navbar() {
     <motion.header
       className={`fixed inset-x-0 z-[90] ${hasTopNotice ? "top-11 sm:top-12" : "top-0"}`}
       initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: prefersReducedMotion ? 0.2 : 0.35, ease: "easeOut" }}
+      animate={{
+        opacity: 1,
+        y: hideOnScroll && isMobile && !open ? -110 : 0,
+        scale: scrolled ? 0.995 : 1,
+      }}
+      transition={
+        prefersReducedMotion
+          ? { duration: 0.2, ease: "easeOut" }
+          : { type: "spring", stiffness: 280, damping: 28, mass: 0.65 }
+      }
     >
       <div className="section-wrap pt-4">
         <div
@@ -169,12 +192,23 @@ export function Navbar() {
                 href={item.href}
                 aria-current={active === item.href ? "page" : undefined}
                 onClick={() => setActive(item.href)}
-                className={`relative rounded-full px-3 py-1.5 text-sm transition-colors duration-150 ease-out ${
+                className={`relative z-0 rounded-full px-3 py-1.5 text-sm transition-colors duration-150 ease-out ${
                   active === item.href
-                    ? "bg-blue-50 text-blue-700 ring-1 ring-blue-200/80"
+                    ? "text-blue-700"
                     : "text-slate-600 hover:bg-slate-100/80 hover:text-slate-900"
                 }`}
               >
+                {active === item.href ? (
+                  <motion.span
+                    layoutId="desktop-nav-active-pill"
+                    className="absolute inset-0 -z-10 rounded-full bg-blue-50 ring-1 ring-blue-200/80"
+                    transition={
+                      prefersReducedMotion
+                        ? { duration: 0.15 }
+                        : { type: "spring", stiffness: 450, damping: 35 }
+                    }
+                  />
+                ) : null}
                 {item.label}
               </a>
             ))}
@@ -216,7 +250,7 @@ export function Navbar() {
                     setActive(item.href);
                     setOpen(false);
                   }}
-                  className={`block rounded-xl px-3 py-2 text-sm ${
+                  className={`relative block rounded-xl px-3 py-2 text-sm ${
                     active === item.href
                       ? "bg-blue-50 text-blue-700 ring-1 ring-blue-200/80"
                       : "text-slate-700 hover:bg-blue-50"

@@ -272,16 +272,25 @@ body {
   }
 
   .marquee-track,
-  .marquee-track-reverse,
+  .marquee-track-reverse {
+    animation-play-state: running !important;
+  }
+
+  .marquee-track {
+    animation: marquee 18s linear infinite !important;
+  }
+
+  .marquee-track-reverse {
+    animation: marquee-reverse 20s linear infinite !important;
+  }
+
   .animate-float-slow,
   .animate-float-medium,
   .animate-float-reverse,
   .animate-bounce-soft,
   .animate-progress-scan,
   .animate-spin-slower,
-  .animate-spin-reverse,
-  .text-gradient-animated,
-  .text-sweep {
+  .animate-spin-reverse {
     animation: none !important;
   }
 

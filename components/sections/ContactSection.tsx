@@ -17,16 +17,48 @@ export function ContactSection() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [submitState, setSubmitState] = useState<{ type: "success" | "error"; text: string } | null>(null);
 
-  const emailContact = portfolioData.socials.find((social) => social.label.toLowerCase() === "email")?.href ?? "mailto:personal@idcare19.me";
-  const toEmail = emailContact.replace(/^mailto:/, "");
-  const mailSubject = encodeURIComponent(`Portfolio Contact from ${name || "Visitor"}`);
-  const mailBody = encodeURIComponent(`Name: ${name || "-"}\nEmail: ${email || "-"}\n\nMessage:\n${message || "-"}`);
-  const mailtoHref = `mailto:${toEmail}?subject=${mailSubject}&body=${mailBody}`;
-
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    window.location.href = mailtoHref;
+    if (submitting) return;
+
+    setSubmitting(true);
+    setSubmitState(null);
+
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name,
+          email,
+          message,
+          subject: "Website Contact Form",
+        }),
+      });
+
+      const payload = (await response.json().catch(() => null)) as { ok?: boolean; error?: string } | null;
+
+      if (!response.ok || !payload?.ok) {
+        throw new Error(payload?.error || "Failed to send message. Please try again.");
+      }
+
+      setSubmitState({ type: "success", text: "Message sent successfully." });
+      setName("");
+      setEmail("");
+      setMessage("");
+    } catch (error) {
+      setSubmitState({
+        type: "error",
+        text: error instanceof Error ? error.message : "Unable to send message right now.",
+      });
+    } finally {
+      setSubmitting(false);
+    }
   }
 
   return (
@@ -116,7 +148,19 @@ export function ContactSection() {
                 />
               </div>
 
-              <Button type="submit">Open Mail App</Button>
+              <Button type="submit">{submitting ? "Sending..." : "Send Message"}</Button>
+
+              {submitState ? (
+                <p
+                  className={`text-sm ${
+                    submitState.type === "success" ? "text-emerald-700" : "text-rose-600"
+                  }`}
+                  role="status"
+                  aria-live="polite"
+                >
+                  {submitState.text}
+                </p>
+              ) : null}
             </form>
           </FadeInUp>
         </div>
