@@ -272,6 +272,15 @@
       "message": "Hi",
       "read": false,
       "createdAt": "2026-04-19T16:33:42.141Z"
+    },
+    {
+      "id": "msg-1776658705364",
+      "name": "Ojas",
+      "email": "ojasbohre84@gmail.com",
+      "subject": "Website Contact Form",
+      "message": "Hello Abhishek \nWe have internship offer for you of \"tel chatai\". In this job you have  just need 1 chatai and 1 bottle of japani oil , baki palat ke let jayiye  hum costumer leke ate hain 😋",
+      "read": false,
+      "createdAt": "2026-04-20T04:18:25.364Z"
     }
   ],
   "blogs": [
@@ -350,5 +359,5 @@
       "showBadge": true
     }
   },
-  "updatedAt": "2026-04-19T16:33:42.141Z"
+  "updatedAt": "2026-04-20T04:18:25.364Z"
 }
