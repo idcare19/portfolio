@@ -113,10 +113,14 @@ export function ReviewsSection() {
     const rail = railRef.current;
     if (!rail) return;
 
-    if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) {
-      rail.scrollLeft += event.deltaY;
-      event.preventDefault();
-    }
+    const hasHorizontalOverflow = rail.scrollWidth - rail.clientWidth > 4;
+    if (!hasHorizontalOverflow) return;
+
+    const dominantDelta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
+    if (dominantDelta === 0) return;
+
+    rail.scrollLeft += dominantDelta;
+    event.preventDefault();
   }
 
   function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
@@ -195,7 +199,7 @@ export function ReviewsSection() {
               onPointerLeave={handlePointerUp}
               onMouseEnter={() => setIsHovering(true)}
               onMouseLeave={() => setIsHovering(false)}
-              className="reviews-scroll -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2 touch-pan-x md:cursor-grab md:gap-5 md:active:cursor-grabbing sm:-mx-4 sm:px-4"
+              className="reviews-scroll -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden px-2 pb-2 touch-pan-x md:cursor-grab md:gap-5 md:active:cursor-grabbing sm:-mx-4 sm:px-4"
             >
               <div aria-hidden className="w-[4px] shrink-0" />
               {portfolioData.reviews.map((review, index) => {

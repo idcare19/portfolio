@@ -148,7 +148,7 @@
     {
       "clientName": "Digital Sphere",
       "website": "Https://Dhawantravel.com",
-      "quote": "He did an excellent job optimizing our website speed. The site now loads much faster on both mobile and desktop, and the overall performance has improved a lot. He was professional, responsive, and completed everything on time. I would definitely recommend him for website optimization and future web development work.",
+      "quote": "He did an excellent job optimizing our website speed..",
       "icon": "user"
     }
   ],
@@ -443,7 +443,7 @@
       "showUpdateMessage": false,
       "updateMessage": "New update available",
       "changelogShort": "Admin panel + Git-based CMS added",
-      "showBadge": true
+      "showBadge": false
     }
   },
   "updatedAt": "2026-04-22T14:09:22.008Z",
