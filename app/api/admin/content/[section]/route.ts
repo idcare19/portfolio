@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireAdminSession } from "@/lib/admin/server";
 import { readGitHubJsonFile, updateGitHubJsonFile } from "@/lib/github-content";
+import { writeLocalSiteData } from "@/lib/local-site-data";
 
 function response(success: boolean, message: string, data?: unknown, error?: string, status = 200) {
   return NextResponse.json({ success, ok: success, message, data: data ?? null, error: error ?? null }, { status });
@@ -51,6 +52,8 @@ export async function PUT(request: Request, { params }: Params) {
       data: next,
       message: commitMessage,
     });
+
+    await writeLocalSiteData(next);
 
     return response(true, "Section saved", {
       section,

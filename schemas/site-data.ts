@@ -5,6 +5,14 @@ export const navItemSchema = z.object({
   href: z.string().min(1),
 });
 
+export const sectionControlSchema = z.object({
+  id: z.enum(["about", "skills", "projects", "working", "completed", "reviews", "journey", "contact"]),
+  label: z.string().min(1),
+  visible: z.boolean(),
+  showInNav: z.boolean(),
+  deleted: z.boolean(),
+});
+
 export const websiteControlSchema = z.object({
   popupAnnouncement: z.object({
     enabled: z.boolean(),
@@ -69,6 +77,7 @@ export const siteDataSchema = z.object({
     resumeUrl: z.string(),
   }),
   nav: z.array(navItemSchema),
+  sectionControls: z.array(sectionControlSchema).optional(),
   about: z.object({
     intro: z.string(),
     stats: z.array(z.object({ label: z.string(), value: z.string() })),
@@ -85,6 +94,28 @@ export const siteDataSchema = z.object({
       githubUrl: z.string(),
     })
   ),
+  workingProjects: z
+    .array(
+      z.object({
+        title: z.string(),
+        description: z.string(),
+        status: z.string(),
+        timeline: z.string(),
+        link: z.string(),
+      })
+    )
+    .optional(),
+  completedProjects: z
+    .array(
+      z.object({
+        title: z.string(),
+        timeline: z.string(),
+        role: z.string(),
+        link: z.string(),
+        workDone: z.string(),
+      })
+    )
+    .optional(),
   reviews: z.array(
     z.object({
       clientName: z.string(),
@@ -100,6 +131,12 @@ export const siteDataSchema = z.object({
       summary: z.string(),
     })
   ),
+  journeyNow: z
+    .object({
+      currentWork: z.string(),
+      ongoingMilestones: z.array(z.string()),
+    })
+    .optional(),
   socials: z.array(z.object({ label: z.string(), value: z.string(), href: z.string() })),
   services: z.array(z.object({ id: z.string(), title: z.string(), description: z.string(), icon: z.string() })),
   skillsDetailed: z.array(z.object({ id: z.string(), name: z.string(), category: z.string(), icon: z.string(), level: z.number() })),

@@ -1,61 +1,50 @@
 "use client";
 
-import { useIsMobile } from "@/lib/use-is-mobile";
 import { useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
 type TypewriterLinesProps = {
-  lines: [string, string];
+  text: string;
   className?: string;
   typeSpeedMs?: number;
   holdMs?: number;
 };
 
 export function TypewriterLines({
-  lines,
+  text,
   className,
-  typeSpeedMs = 44,
-  holdMs = 1400,
+  typeSpeedMs = 95,
+  holdMs = 1800,
 }: TypewriterLinesProps) {
-  const isMobile = useIsMobile();
   const prefersReducedMotion = useReducedMotion();
-  const disableTypewriter = isMobile || prefersReducedMotion;
-  const [firstCount, setFirstCount] = useState(0);
-  const [secondCount, setSecondCount] = useState(0);
-  const [phase, setPhase] = useState<"line1" | "line2" | "hold">("line1");
-
-  const firstLine = lines[0];
-  const secondLine = lines[1];
-
-  const firstText = firstLine.slice(0, firstCount);
-  const secondText = secondLine.slice(0, secondCount);
+  const disableTypewriter = prefersReducedMotion;
+  const [charCount, setCharCount] = useState(0);
+  const [phase, setPhase] = useState<"typing" | "hold" | "deleting">("typing");
 
   useEffect(() => {
     if (disableTypewriter) {
       return;
     }
 
-    if (phase === "line1") {
-      if (firstCount >= firstLine.length) {
-        setPhase("line2");
-        return;
-      }
+    setCharCount(0);
+    setPhase("typing");
+  }, [disableTypewriter, text]);
 
-      const timer = window.setTimeout(() => {
-        setFirstCount((value) => value + 1);
-      }, typeSpeedMs);
-
-      return () => window.clearTimeout(timer);
+  useEffect(() => {
+    if (disableTypewriter) {
+      return;
     }
 
-    if (phase === "line2") {
-      if (secondCount >= secondLine.length) {
+    const deleteSpeedMs = Math.max(120, Math.round(typeSpeedMs * 0.72));
+
+    if (phase === "typing") {
+      if (charCount >= text.length) {
         setPhase("hold");
         return;
       }
 
       const timer = window.setTimeout(() => {
-        setSecondCount((value) => value + 1);
+        setCharCount((value) => Math.min(value + 1, text.length));
       }, typeSpeedMs);
 
       return () => window.clearTimeout(timer);
@@ -63,36 +52,42 @@ export function TypewriterLines({
 
     if (phase === "hold") {
       const holdTimer = window.setTimeout(() => {
-        setFirstCount(0);
-        setSecondCount(0);
-        setPhase("line1");
+        setPhase("deleting");
       }, holdMs);
 
       return () => window.clearTimeout(holdTimer);
     }
-  }, [disableTypewriter, firstCount, firstLine.length, holdMs, phase, secondCount, secondLine.length, typeSpeedMs]);
+
+    if (phase === "deleting") {
+      if (charCount <= 0) {
+        setPhase("typing");
+        return;
+      }
+
+      const timer = window.setTimeout(() => {
+        setCharCount((value) => Math.max(value - 1, 0));
+      }, deleteSpeedMs);
+
+      return () => window.clearTimeout(timer);
+    }
+  }, [charCount, disableTypewriter, holdMs, phase, text, typeSpeedMs]);
 
   if (disableTypewriter) {
     return (
       <span className={className}>
-        <span className="block min-h-[1.05em] leading-[1.05]">{firstLine}</span>
-        <span className="block min-h-[1.05em] leading-[1.05]">{secondLine}</span>
+        <span className="block min-h-[1.05em] leading-[1.05]">{text}</span>
       </span>
     );
   }
 
-  const showCaretOnFirst = phase === "line1";
-  const showCaretOnSecond = phase === "line2" || phase === "hold";
+  const animatedText = text.slice(0, charCount);
+  const showCaret = phase === "typing" || phase === "hold" || phase === "deleting";
 
   return (
     <span className={className}>
       <span className="block min-h-[1.05em] leading-[1.05]">
-        {firstText}
-        {showCaretOnFirst ? <span className="typing-caret" aria-hidden /> : null}
-      </span>
-      <span className="block min-h-[1.05em] leading-[1.05]">
-        {secondText}
-        {showCaretOnSecond ? <span className="typing-caret" aria-hidden /> : null}
+        {animatedText}
+        {showCaret ? <span className="typing-caret" aria-hidden /> : null}
       </span>
     </span>
   );

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import dynamic from "next/dynamic";
 import Script from "next/script";
 import { TopNoticeBar } from "@/components/layout/controls/TopNoticeBar";
+import { GlobalPopupWrapper } from "@/components/layout/controls/GlobalPopupWrapper";
 import "./globals.css";
 import { portfolioData } from "@/data/portfolio";
 
@@ -20,10 +20,6 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://portfolio-delta-dus
 const emailHref = portfolioData.socials.find((item) => item.label.toLowerCase() === "email")?.href ?? "mailto:personal@idcare19.me";
 const gaMeasurementId = "G-TV1QZVQRL8";
 const shouldShowPopup = Boolean(portfolioData.websiteControl?.popupAnnouncement?.enabled);
-const GlobalPopupAnnouncement = dynamic(
-  () => import("@/components/layout/controls/GlobalPopupAnnouncement").then((module) => module.GlobalPopupAnnouncement),
-  { ssr: false }
-);
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -102,7 +98,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </Script>
         <TopNoticeBar />
         {children}
-        {shouldShowPopup ? <GlobalPopupAnnouncement /> : null}
+        {shouldShowPopup ? <GlobalPopupWrapper /> : null}
       </body>
     </html>
   );

@@ -85,8 +85,9 @@ body {
 
 .reviews-scroll {
   scroll-behavior: smooth;
-  scrollbar-width: thin;
+  scrollbar-width: none;
   overscroll-behavior-x: contain;
+  -ms-overflow-style: none;
 }
 
 .animate-float-gentle {
@@ -102,7 +103,7 @@ body {
 }
 
 .reviews-scroll::-webkit-scrollbar {
-  height: 7px;
+  display: none;
 }
 
 .reviews-scroll::-webkit-scrollbar-track {
@@ -262,10 +263,16 @@ body {
   .animate-float-gentle-reverse,
   .animate-scroll-dot,
   .animate-float-medium,
-  .animate-float-reverse,
-  .marquee-track,
-  .marquee-track-reverse {
+  .animate-float-reverse {
     animation: none !important;
+  }
+
+  .marquee-track {
+    animation-duration: 14s;
+  }
+
+  .marquee-track-reverse {
+    animation-duration: 17s;
   }
 
   .glass,

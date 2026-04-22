@@ -22,8 +22,10 @@ export function HeroSection() {
             <h1 className="text-4xl font-bold leading-tight tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
               <span className="block">{`Hi, I'm ${portfolioData.owner.name}`}</span>
               <TypewriterLines
-                lines={["Full Stack Developer", "Nest JS Developer"]}
+                text="Full Stack Developer"
                 className="text-gradient-animated mt-2 inline-block align-top"
+                typeSpeedMs={80}
+                holdMs={1800}
               />
             </h1>
           </FadeInUp>

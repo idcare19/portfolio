@@ -1,23 +1,22 @@
 "use client";
 
 import { portfolioData } from "@/data/portfolio";
+import { getManagedNavItems, SECTION_DEFINITIONS, toSectionControlMap } from "@/lib/section-controls";
 import { Menu, X } from "lucide-react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useState } from "react";
 
+const sectionControlMap = toSectionControlMap(portfolioData.sectionControls);
+const navItems = getManagedNavItems(portfolioData.nav, portfolioData.sectionControls);
 const sectionMap = [
   { id: "home", href: "#home" },
-  { id: "about", href: "#about" },
-  { id: "skills", href: "#skills" },
-  { id: "projects", href: "#projects" },
-  { id: "reviews", href: "#reviews" },
-  { id: "journey", href: "#journey" },
-  { id: "contact", href: "#contact" },
+  ...SECTION_DEFINITIONS.filter((section) => {
+    const control = sectionControlMap[section.id];
+    return control.visible && !control.deleted;
+  }).map((section) => ({ id: section.id, href: section.href })),
 ];
 
 export function Navbar() {
   const hasTopNotice = Boolean(portfolioData.websiteControl?.topNoticeBar?.enabled);
-  const prefersReducedMotion = useReducedMotion();
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
   const [scrolled, setScrolled] = useState(false);
@@ -39,7 +38,7 @@ export function Navbar() {
     };
 
     const syncFromHash = () => {
-      if (window.location.hash && portfolioData.nav.some((item) => item.href === window.location.hash)) {
+      if (window.location.hash && navItems.some((item) => item.href === window.location.hash)) {
         setActive(window.location.hash);
       }
     };
@@ -135,20 +134,7 @@ export function Navbar() {
   }, [open]);
 
   return (
-    <motion.header
-      className={`fixed inset-x-0 z-[90] ${hasTopNotice ? "top-11 sm:top-12" : "top-0"}`}
-      initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
-      animate={{
-        opacity: 1,
-        y: 0,
-        scale: scrolled ? 0.995 : 1,
-      }}
-      transition={
-        prefersReducedMotion
-          ? { duration: 0.2, ease: "easeOut" }
-          : { type: "spring", stiffness: 280, damping: 28, mass: 0.65 }
-      }
-    >
+    <header className={`fixed inset-x-0 z-[90] ${hasTopNotice ? "top-11 sm:top-12" : "top-0"}`}>
       <div className="section-wrap pt-4">
         <div
           className={`flex items-center justify-between gap-3 rounded-[28px] border px-3 py-2 transition-colors duration-200 sm:px-4 ${
@@ -180,7 +166,7 @@ export function Navbar() {
           </div>
 
           <nav className="hidden items-center gap-1 md:flex">
-            {portfolioData.nav.map((item) => (
+            {navItems.map((item) => (
               <a
                 key={item.href}
                 href={item.href}
@@ -193,14 +179,8 @@ export function Navbar() {
                 }`}
               >
                 {active === item.href ? (
-                  <motion.span
-                    layoutId="desktop-nav-active-pill"
+                  <span
                     className="absolute inset-0 -z-10 rounded-full bg-blue-50 ring-1 ring-blue-200/80"
-                    transition={
-                      prefersReducedMotion
-                        ? { duration: 0.15 }
-                        : { type: "spring", stiffness: 450, damping: 35 }
-                    }
                   />
                 ) : null}
                 {item.label}
@@ -225,48 +205,42 @@ export function Navbar() {
           </button>
         </div>
 
-        <AnimatePresence initial={false}>
-          {open ? (
-            <motion.div
-              id="mobile-navbar-menu"
-              className="mt-2 rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur-sm md:hidden"
-              initial={prefersReducedMotion ? { opacity: 1, height: "auto" } : { opacity: 0, y: -6, height: 0 }}
-              animate={{ opacity: 1, y: 0, height: "auto" }}
-              exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -6, height: 0 }}
-              transition={{ duration: prefersReducedMotion ? 0.15 : 0.22, ease: "easeOut" }}
-            >
-              {portfolioData.nav.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  aria-current={active === item.href ? "page" : undefined}
-                  onClick={() => {
-                    setActive(item.href);
-                    setOpen(false);
-                  }}
-                  className={`relative block rounded-xl px-3 py-2 text-sm ${
-                    active === item.href
-                      ? "bg-blue-50 text-blue-700 ring-1 ring-blue-200/80"
-                      : "text-slate-700 hover:bg-blue-50"
-                  }`}
-                >
-                  {item.label}
-                </a>
-              ))}
+        {open ? (
+          <div
+            id="mobile-navbar-menu"
+            className="mt-2 rounded-3xl border border-slate-200 bg-white/95 p-3 shadow-sm backdrop-blur-sm md:hidden"
+          >
+            {navItems.map((item) => (
               <a
-                href="#contact"
+                key={item.href}
+                href={item.href}
+                aria-current={active === item.href ? "page" : undefined}
                 onClick={() => {
-                  setActive("#contact");
+                  setActive(item.href);
                   setOpen(false);
                 }}
-                className="mt-2 inline-flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-2 text-sm font-semibold text-white"
+                className={`relative block rounded-xl px-3 py-2 text-sm ${
+                  active === item.href
+                    ? "bg-blue-50 text-blue-700 ring-1 ring-blue-200/80"
+                    : "text-slate-700 hover:bg-blue-50"
+                }`}
               >
-                Hire Me
+                {item.label}
               </a>
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
+            ))}
+            <a
+              href="#contact"
+              onClick={() => {
+                setActive("#contact");
+                setOpen(false);
+              }}
+              className="mt-2 inline-flex w-full justify-center rounded-xl bg-gradient-to-r from-blue-600 to-cyan-500 px-3 py-2 text-sm font-semibold text-white"
+            >
+              Hire Me
+            </a>
+          </div>
+        ) : null}
       </div>
-    </motion.header>
+    </header>
   );
 }

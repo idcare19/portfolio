@@ -43,12 +43,15 @@ export function ReviewsSection() {
   });
   const [canScrollPrev, setCanScrollPrev] = useState(false);
   const [canScrollNext, setCanScrollNext] = useState(false);
+  const [hasOverflow, setHasOverflow] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
 
   const syncScrollButtons = useCallback(() => {
     const rail = railRef.current;
     if (!rail) return;
 
-    const maxScroll = rail.scrollWidth - rail.clientWidth;
+    const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+    setHasOverflow(maxScroll > 4);
     setCanScrollPrev(rail.scrollLeft > 4);
     setCanScrollNext(rail.scrollLeft < maxScroll - 4);
   }, []);
@@ -69,13 +72,42 @@ export function ReviewsSection() {
     };
   }, [syncScrollButtons]);
 
-  function scrollRail(direction: -1 | 1) {
+  const scrollRail = useCallback((direction: -1 | 1, loopAtEdge = false) => {
     const rail = railRef.current;
     if (!rail) return;
 
+    const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
+    if (maxScroll <= 4) return;
+
     const offset = Math.max(260, rail.clientWidth * 0.78);
-    rail.scrollBy({ left: direction * offset, behavior: "smooth" });
-  }
+    if (direction > 0) {
+      const nextLeft = rail.scrollLeft + offset;
+      if (loopAtEdge && nextLeft >= maxScroll - 4) {
+        rail.scrollTo({ left: 0, behavior: "smooth" });
+        return;
+      }
+      rail.scrollBy({ left: offset, behavior: "smooth" });
+      return;
+    }
+
+    const prevLeft = rail.scrollLeft - offset;
+    if (loopAtEdge && prevLeft <= 4) {
+      rail.scrollTo({ left: maxScroll, behavior: "smooth" });
+      return;
+    }
+
+    rail.scrollBy({ left: -offset, behavior: "smooth" });
+  }, []);
+
+  useEffect(() => {
+    if (!hasOverflow || isHovering || dragState.current.active) return;
+
+    const interval = setInterval(() => {
+      scrollRail(1, true);
+    }, 3200);
+
+    return () => clearInterval(interval);
+  }, [hasOverflow, isHovering, scrollRail]);
 
   function handleWheel(event: WheelEvent<HTMLDivElement>) {
     const rail = railRef.current;
@@ -97,6 +129,7 @@ export function ReviewsSection() {
       startLeft: rail.scrollLeft,
     };
 
+    event.preventDefault();
     rail.setPointerCapture(event.pointerId);
   }
 
@@ -149,8 +182,8 @@ export function ReviewsSection() {
           </div>
 
           <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-10 bg-gradient-to-r from-slate-50 to-transparent md:block" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-10 bg-gradient-to-l from-slate-50 to-transparent md:block" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-8 bg-gradient-to-r from-slate-50 to-transparent md:block" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-8 bg-gradient-to-l from-slate-50 to-transparent md:block" />
 
             <div
               ref={railRef}
@@ -160,7 +193,9 @@ export function ReviewsSection() {
               onPointerUp={handlePointerUp}
               onPointerCancel={handlePointerUp}
               onPointerLeave={handlePointerUp}
-              className="reviews-scroll -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2 touch-pan-x md:cursor-grab md:gap-5 md:active:cursor-grabbing"
+              onMouseEnter={() => setIsHovering(true)}
+              onMouseLeave={() => setIsHovering(false)}
+              className="reviews-scroll -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2 touch-pan-x md:cursor-grab md:gap-5 md:active:cursor-grabbing sm:-mx-4 sm:px-4"
             >
               <div aria-hidden className="w-[4px] shrink-0" />
               {portfolioData.reviews.map((review, index) => {
@@ -169,7 +204,7 @@ export function ReviewsSection() {
                 return (
                   <article
                     key={`${review.clientName}-${index}`}
-                    className="glass w-[clamp(260px,78vw,380px)] snap-start shrink-0 rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition-transform duration-200 hover:-translate-y-0.5"
+                    className="glass flex-shrink-0 snap-start rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition-transform duration-200 hover:-translate-y-0.5 w-[calc(100%-1rem)] sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)]"
                   >
                     <Quote className="h-5 w-5 text-blue-600" />
                     <p className="mt-3 text-sm leading-relaxed text-slate-600">"{review.quote}"</p>
@@ -193,7 +228,7 @@ export function ReviewsSection() {
                   </article>
                 );
               })}
-              <div aria-hidden className="w-[10vw] shrink-0" />
+              <div aria-hidden className="w-[2rem] shrink-0" />
             </div>
           </div>
         </FadeInUp>

@@ -32,6 +32,26 @@ export function JourneySection() {
           </div>
         </div>
 
+        {portfolioData.journeyNow ? (
+          <div className="mx-auto mb-5 max-w-4xl rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-slate-500">Where I Am Working Right Now</p>
+            <p className="mt-2 text-sm font-semibold text-slate-900">{portfolioData.journeyNow.currentWork}</p>
+            {portfolioData.journeyNow.ongoingMilestones.length > 0 ? (
+              <div className="mt-3">
+                <p className="text-xs font-semibold uppercase tracking-[0.12em] text-blue-700">Ongoing Milestones</p>
+                <ul className="mt-2 space-y-2">
+                  {portfolioData.journeyNow.ongoingMilestones.map((milestone, index) => (
+                    <li key={`${milestone}-${index}`} className="flex items-start gap-2 text-sm text-slate-700">
+                      <span className="mt-1 inline-flex h-1.5 w-1.5 shrink-0 rounded-full bg-blue-600" />
+                      <span>{milestone}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
+
         <div className="relative mx-auto max-w-4xl border-l border-blue-200/80 pl-6">
           {portfolioData.experience.map((item, index) => (
             <FadeInUp key={`${item.role}-${item.period}`} delay={index * 0.06} className="relative pb-7 last:pb-0">

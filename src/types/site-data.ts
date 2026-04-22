@@ -22,6 +22,37 @@ export type ProjectItem = {
   order: number;
 };
 
+export type WorkingProjectItem = {
+  title: string;
+  description: string;
+  status: string;
+  timeline: string;
+  link: string;
+};
+
+export type CompletedProjectItem = {
+  title: string;
+  timeline: string;
+  role: string;
+  link: string;
+  workDone: string;
+};
+
+export type JourneyNow = {
+  currentWork: string;
+  ongoingMilestones: string[];
+};
+
+export type SectionId = "about" | "skills" | "projects" | "working" | "completed" | "reviews" | "journey" | "contact";
+
+export type SectionControlItem = {
+  id: SectionId;
+  label: string;
+  visible: boolean;
+  showInNav: boolean;
+  deleted: boolean;
+};
+
 export type SkillItem = {
   id: string;
   name: string;
@@ -129,6 +160,7 @@ export type SiteData = {
     resumeUrl: string;
   };
   nav: NavItem[];
+  sectionControls?: SectionControlItem[];
   heroTech: string[];
   about: {
     intro: string;
@@ -144,6 +176,8 @@ export type SiteData = {
     liveUrl: string;
     githubUrl: string;
   }[];
+  workingProjects?: WorkingProjectItem[];
+  completedProjects?: CompletedProjectItem[];
   reviews: {
     clientName: string;
     website: string;
@@ -160,6 +194,7 @@ export type SiteData = {
     period: string;
     summary: string;
   }[];
+  journeyNow?: JourneyNow;
   socials: { label: string; value: string; href: string }[];
   services: ServiceItem[];
   skillsDetailed: SkillItem[];

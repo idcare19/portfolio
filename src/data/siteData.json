@@ -361,5 +361,72 @@
       "showBadge": true
     }
   },
-  "updatedAt": "2026-04-20T04:18:25.364Z"
+  "updatedAt": "2026-04-22T12:50:13.620Z",
+  "workingProjects": [
+    {
+      "title": "",
+      "description": "",
+      "status": "In Progress",
+      "timeline": "",
+      "link": ""
+    }
+  ],
+  "sectionControls": [
+    {
+      "id": "about",
+      "label": "About",
+      "visible": true,
+      "showInNav": true,
+      "deleted": false
+    },
+    {
+      "id": "skills",
+      "label": "Skills",
+      "visible": true,
+      "showInNav": true,
+      "deleted": false
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "visible": true,
+      "showInNav": true,
+      "deleted": false
+    },
+    {
+      "id": "working",
+      "label": "Working",
+      "visible": true,
+      "showInNav": false,
+      "deleted": false
+    },
+    {
+      "id": "completed",
+      "label": "Worked On",
+      "visible": false,
+      "showInNav": false,
+      "deleted": true
+    },
+    {
+      "id": "reviews",
+      "label": "Reviews",
+      "visible": true,
+      "showInNav": true,
+      "deleted": false
+    },
+    {
+      "id": "journey",
+      "label": "Experience",
+      "visible": true,
+      "showInNav": true,
+      "deleted": false
+    },
+    {
+      "id": "contact",
+      "label": "Contact",
+      "visible": true,
+      "showInNav": true,
+      "deleted": false
+    }
+  ]
 }

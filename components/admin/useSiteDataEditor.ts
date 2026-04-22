@@ -116,6 +116,87 @@ export function useSiteDataEditor() {
     }
   }, []);
 
+  const saveSection = useCallback(async (section: keyof SiteData, value: unknown, commitMessage: string) => {
+    setSaving(true);
+    setError(null);
+    try {
+      const res = await fetch(`/api/admin/content/${encodeURIComponent(String(section))}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          value,
+          commitMessage,
+        }),
+      });
+
+      const payload = await res.json();
+      if (!res.ok || !payload?.ok) {
+        throw new Error(payload?.error || `Failed to save ${String(section)}`);
+      }
+
+      setData((previous) =>
+        previous
+          ? {
+              ...previous,
+              [section]: value as any,
+              updatedAt: new Date().toISOString(),
+            }
+          : previous
+      );
+
+      return { ok: true as const };
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Save failed";
+      setError(message);
+      return { ok: false as const, error: message };
+    } finally {
+      setSaving(false);
+    }
+  }, []);
+
+  const saveSections = useCallback(
+    async (sections: Array<{ section: keyof SiteData; value: unknown }>, commitMessage: string) => {
+      setSaving(true);
+      setError(null);
+      try {
+        for (const entry of sections) {
+          const res = await fetch(`/api/admin/content/${encodeURIComponent(String(entry.section))}`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              value: entry.value,
+              commitMessage: `${commitMessage} (${String(entry.section)})`,
+            }),
+          });
+
+          const payload = await res.json();
+          if (!res.ok || !payload?.ok) {
+            throw new Error(payload?.error || `Failed to save ${String(entry.section)}`);
+          }
+        }
+
+        setData((previous) => {
+          if (!previous) return previous;
+          const next = { ...previous } as SiteData;
+          for (const entry of sections) {
+            (next as any)[entry.section] = entry.value;
+          }
+          next.updatedAt = new Date().toISOString();
+          return next;
+        });
+
+        return { ok: true as const };
+      } catch (err) {
+        const message = err instanceof Error ? err.message : "Save failed";
+        setError(message);
+        return { ok: false as const, error: message };
+      } finally {
+        setSaving(false);
+      }
+    },
+    []
+  );
+
   const syncFromConnection = useCallback(
     async (token?: string) => {
       if (!data?.siteConnection?.owner || !data.siteConnection.repo) {
@@ -140,6 +221,8 @@ export function useSiteDataEditor() {
     error,
     reload: load,
     save,
+    saveSection,
+    saveSections,
     syncFromConnection,
     toGitHubConfig,
   };

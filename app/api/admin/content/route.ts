@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireAdminSession } from "@/lib/admin/server";
 import { readGitHubJsonFile, updateGitHubJsonFile } from "@/lib/github-content";
+import { writeLocalSiteData } from "@/lib/local-site-data";
 import { siteDataSchema } from "@/schemas/site-data";
 
 function sanitizeCommitMessage(input: string) {
@@ -65,6 +66,8 @@ export async function PUT(request: Request) {
       message: commitMessage,
       projectConfig,
     });
+
+    await writeLocalSiteData(dataToSave);
 
     return response(true, "Content saved to GitHub", {
       commitSha: updated.commit.sha,
