@@ -6,11 +6,15 @@ import { useToast } from "@/components/admin/ToastProvider";
 
 export default function MessagesAdminPage() {
   const { notify } = useToast();
-  const { data, setData, loading, saving, error, save } = useSiteDataEditor();
+  const { data, setData, loading, saving, error, saveSection } = useSiteDataEditor();
 
   async function handleSave() {
     if (!data) return;
-    const result = await save(data, "chore: update contact messages state from admin panel");
+    const result = await saveSection(
+      "contactMessages",
+      data.contactMessages,
+      "chore: update contact messages state from admin panel"
+    );
     if (result.ok) notify("success", "Messages state saved");
     else notify("error", result.error || "Save failed");
   }

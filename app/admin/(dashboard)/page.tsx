@@ -1,11 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import {
   Activity,
   Briefcase,
   Clock3,
   Code2,
+  Mail,
   Database,
   Folder,
   MessageSquare,
@@ -97,9 +99,17 @@ export default function AdminDashboardPage() {
           hint: "Client feedback",
           icon: MessageSquare,
         },
+        {
+          label: "Unread Messages",
+          value: (data?.contactMessages || []).filter((message) => !message.read).length,
+          hint: "Contact form inbox",
+          icon: Mail,
+        },
       ] as Array<{ label: string; value: number; hint: string; icon: LucideIcon }>,
     [data]
   );
+
+  const recentMessages = useMemo(() => (data?.contactMessages || []).slice(0, 3), [data?.contactMessages]);
 
   function patch(next: any) {
     setData(next);
@@ -561,7 +571,7 @@ export default function AdminDashboardPage() {
           </div>
         </div>
 
-        <div className="relative mt-5 grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <div className="relative mt-5 grid grid-cols-2 gap-3 lg:grid-cols-5">
           {dashboardStats.map((stat) => {
             const StatIcon = stat.icon;
             return (
@@ -653,6 +663,50 @@ export default function AdminDashboardPage() {
               </section>
 
               {renderActiveTabContent()}
+
+              <section className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-5">
+                <div className="flex flex-wrap items-start justify-between gap-3">
+                  <div>
+                    <h3 className="text-lg font-semibold text-slate-900">Recent Contact Messages</h3>
+                    <p className="mt-1 text-sm text-slate-600">
+                      {(data.contactMessages || []).filter((message) => !message.read).length} unread of{" "}
+                      {(data.contactMessages || []).length} total.
+                    </p>
+                  </div>
+                  <Link
+                    href="/admin/messages"
+                    className="inline-flex items-center rounded-lg border border-blue-300 bg-blue-50 px-3 py-1.5 text-sm font-semibold text-blue-700 transition hover:bg-blue-100"
+                  >
+                    Open Messages
+                  </Link>
+                </div>
+
+                <div className="mt-4 space-y-2">
+                  {recentMessages.length ? (
+                    recentMessages.map((message) => (
+                      <article key={message.id} className="rounded-xl border border-slate-200 bg-slate-50/60 p-3">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <p className="text-sm font-semibold text-slate-900">
+                            {message.name}{" "}
+                            <span className="font-normal text-slate-500">({message.email})</span>
+                          </p>
+                          <span
+                            className={`rounded-full px-2 py-0.5 text-[11px] font-semibold ${
+                              message.read ? "bg-slate-200 text-slate-700" : "bg-emerald-100 text-emerald-700"
+                            }`}
+                          >
+                            {message.read ? "Read" : "Unread"}
+                          </span>
+                        </div>
+                        <p className="mt-1 text-xs text-slate-500">{new Date(message.createdAt).toLocaleString()}</p>
+                        <p className="mt-2 line-clamp-2 text-sm text-slate-700">{message.message}</p>
+                      </article>
+                    ))
+                  ) : (
+                    <p className="text-sm text-slate-500">No contact messages yet.</p>
+                  )}
+                </div>
+              </section>
             </>
           ) : null}
         </div>
