@@ -352,6 +352,15 @@
   ],
   "contactMessages": [
     {
+      "id": "msg-1776877408635",
+      "name": "Jigi",
+      "email": "jigishree@gmail.com",
+      "subject": "Website Contact Form",
+      "message": "Hiiii 👋",
+      "read": false,
+      "createdAt": "2026-04-22T17:03:28.635Z"
+    },
+    {
       "id": "msg-1776658705364",
       "name": "Ojas",
       "email": "ojasbohre84@gmail.com",
@@ -446,7 +455,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-22T16:53:01.539Z",
+  "updatedAt": "2026-04-22T17:03:28.801Z",
   "workingProjects": [
     {
       "title": "Freelancer and intership work",
