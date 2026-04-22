@@ -85,27 +85,51 @@
   ],
   "projects": [
     {
-      "title": "Devfolio - Portfolio Template",
-      "description": "A blazing-fast, accessible portfolio template built with semantic HTML, modern CSS, and vanilla JavaScript.",
-      "image": "/projects/portfolio.png",
+      "title": "E-commerce website",
+      "description": "A modern e-commerce website clone built to simulate a real online shopping experience. It includes product listings, search, category filters, product details, cart functionality, and a responsive design for mobile and desktop users",
+      "image": "/projects/ecomm.png",
       "tech": [
-        "HTML",
-        "CSS",
-        "JavaScript"
+        "HTML5",
+        "CSS3",
+        "JS"
       ],
-      "liveUrl": "#",
-      "githubUrl": "#"
+      "liveUrl": "Https://forever.idcare19.me",
+      "githubUrl": "https://github.com/idcare19/ecommerce-website-clone"
     },
     {
-      "title": "Hirefind",
-      "description": "A full-stack job platform built with React and Appwrite where candidates apply, companies post jobs, and admins manage the hiring workflow.",
-      "image": "/projects/hirefind.png",
+      "title": "Vainsh",
+      "description": "A secure end-to-end encrypted chatting web app built for private real-time communication. It allows users to send messages instantly while keeping conversations protected so only the sender and receiver can read them.",
+      "image": "/projects/chat.png",
       "tech": [
-        "React",
-        "Appwrite"
+        "Vite js",
+        "appwrite"
       ],
-      "liveUrl": "https://hirefind.idcare19.me",
-      "githubUrl": "https://github.com/idcare19/hirefind"
+      "liveUrl": "Https://vainsh.idcare19.me",
+      "githubUrl": "https://github.com/idcare19/vainsh"
+    },
+    {
+      "title": "Sithub Bootstrap ",
+      "description": "A responsive clone of the Sithub Bootstrap website built using HTML5, CSS3, and Bootstrap. It recreates the original layout with modern styling, smooth sections, and a mobile-friendly design.",
+      "image": "/projects/Sithub.png",
+      "tech": [
+        "HTML5",
+        "CSS",
+        "BOOTSTRAP"
+      ],
+      "liveUrl": "https://bootstrap-omega-seven.vercel.app/",
+      "githubUrl": "https://github.com/idcare19/Bootstrap"
+    },
+    {
+      "title": "News Blog Website",
+      "description": "A modern news blog website that displays the latest articles, trending topics, and category-based news in a clean and responsive layout",
+      "image": "/projects/News.png",
+      "tech": [
+        "HTML5",
+        "CSS3",
+        "JS"
+      ],
+      "liveUrl": "https://news-blog-idcare19.vercel.app/",
+      "githubUrl": "https://github.com/idcare19/news-blog"
     }
   ],
   "reviews": [
@@ -119,7 +143,13 @@
       "clientName": "Nitin.dev",
       "website": "https://nitin-dev-portfolio.vercel.app",
       "quote": "Very professional and reliable. The final website feels premium and polished.",
-      "icon": "briefcase"
+      "icon": "code2"
+    },
+    {
+      "clientName": "Digital Sphere",
+      "website": "Https://Dhawantravel.com",
+      "quote": "He did an excellent job optimizing our website speed. The site now loads much faster on both mobile and desktop, and the overall performance has improved a lot. He was professional, responsive, and completed everything on time. I would definitely recommend him for website optimization and future web development work.",
+      "icon": "user"
     }
   ],
   "collaboration": {
@@ -204,6 +234,12 @@
       "title": "UI/UX Implementation",
       "description": "Fast, responsive, premium interfaces.",
       "icon": "layout"
+    },
+    {
+      "id": "service-1776865311808",
+      "title": "Fixing Website ",
+      "description": "Fixing website bugs, layout issues, responsiveness problems, broken sections, and improving overall performance for a smoother user experience.",
+      "icon": "wrench"
     }
   ],
   "skillsDetailed": [
@@ -238,22 +274,71 @@
   ],
   "projectsDetailed": [
     {
-      "id": "project-1",
-      "title": "Portfolio CMS",
-      "shortDescription": "A lightweight Git-backed portfolio CMS.",
-      "longDescription": "Admin content editing with secure save to GitHub using Next.js API routes.",
+      "id": "project-1776863181090",
+      "title": "E-commerce website",
+      "shortDescription": "A modern e-commerce website clone built to simulate a real online shopping experience. It includes product listings, search, category filters, product details, cart functionality, and a responsive design for mobile and desktop users",
+      "longDescription": "This e-commerce website clone is a full-featured project designed to replicate the experience of a real online store. The website allows users to browse products through categories, search for specific items, and view detailed product pages with images, pricing, and descriptions. Users can add products to the cart, update quantities, and review their order before checkout.\nThe project is fully responsive, ensuring a smooth experience across desktop, tablet, and mobile devices. It focuses on clean UI/UX, fast loading speed, and modern design principles. The website was built to strengthen skills in frontend and backend development, including handling dynamic product data, user interactions, and responsive layouts.\nKey features include:\nProduct listing and filtering\nSearch functionality\nProduct detail pages\nAdd to cart and cart management\nResponsive design\nModern and clean interface\nOptimized performance and user experience\nThis project showcases practical full-stack development skills and demonstrates the ability to build a real-world business website similar to major e-commerce platforms.",
       "techStack": [
-        "Next.js",
-        "TypeScript",
-        "Tailwind",
-        "GitHub API"
+        "HTML5",
+        "CSS3",
+        "JS"
       ],
-      "category": "Web App",
-      "image": "/projects/portfolio.png",
-      "liveDemoUrl": "#",
-      "githubUrl": "#",
+      "category": "Clone",
+      "image": "/projects/ecomm.png",
+      "liveDemoUrl": "Https://forever.idcare19.me",
+      "githubUrl": "https://github.com/idcare19/ecommerce-website-clone",
       "featured": true,
       "order": 1
+    },
+    {
+      "id": "project-1776863738357",
+      "title": "Vainsh",
+      "shortDescription": "A secure end-to-end encrypted chatting web app built for private real-time communication. It allows users to send messages instantly while keeping conversations protected so only the sender and receiver can read them.",
+      "longDescription": "This end-to-end encrypted chatting web app is designed for users who want fast, private, and temporary communication. All messages are encrypted before being sent, meaning only the sender and receiver can read them. In addition to strong encryption, the app includes an automatic chat deletion system that permanently removes messages after a selected time period.\nThe platform supports real-time one-to-one messaging with a clean and responsive interface. Users can choose temporary conversations where messages disappear automatically after being viewed or after a countdown ends. This creates a secure and private communication experience similar to disappearing-message platforms.\nKey features include:\nEnd-to-end encrypted messaging\nAutomatic chat and message deletion\nSelf-destruct timer for conversations\nReal-time private messaging\nSecure user authentication\nResponsive design for desktop and mobile\nPrivacy-focused user experience\n",
+      "techStack": [
+        "Vite js",
+        "appwrite"
+      ],
+      "category": "Web App",
+      "image": "/projects/chat.png",
+      "liveDemoUrl": "Https://vainsh.idcare19.me",
+      "githubUrl": "https://github.com/idcare19/vainsh",
+      "featured": true,
+      "order": 2
+    },
+    {
+      "id": "project-1776864204492",
+      "title": "Sithub Bootstrap ",
+      "shortDescription": "A responsive clone of the Sithub Bootstrap website built using HTML5, CSS3, and Bootstrap. It recreates the original layout with modern styling, smooth sections, and a mobile-friendly design.",
+      "longDescription": "This project is a complete front-end clone of the Sithub Bootstrap website, developed to strengthen my skills in HTML5, CSS3, and Bootstrap. The website includes a fully responsive layout that adapts smoothly across desktop, tablet, and mobile devices. It features a clean navigation bar, hero section, content cards, responsive grids, and modern UI elements inspired by the original design.\nThe project was built with a focus on pixel-perfect design, proper spacing, reusable Bootstrap components, and optimized responsiveness. Through this clone, I practiced building structured layouts, customizing Bootstrap classes, improving mobile compatibility, and creating a professional-looking website that can be used as part of my portfolio.",
+      "techStack": [
+        "HTML5",
+        "CSS",
+        "BOOTSTRAP"
+      ],
+      "category": "Clone",
+      "image": "/projects/Sithub.png",
+      "liveDemoUrl": "https://bootstrap-omega-seven.vercel.app/",
+      "githubUrl": "https://github.com/idcare19/Bootstrap",
+      "featured": true,
+      "order": 3
+    },
+    {
+      "id": "project-1776864489065",
+      "title": "News Blog Website",
+      "shortDescription": "A modern news blog website that displays the latest articles, trending topics, and category-based news in a clean and responsive layout",
+      "longDescription": "This project is a fully responsive news blog website built to showcase news articles in an organized and attractive way. It includes category-based filtering, featured articles, recent posts, search functionality, and a clean reading experience for users on both mobile and desktop. The website is designed with a modern UI, fast loading speed, and SEO-friendly structure to improve visibility and engagement. It can be used for technology news, world news, business updates, sports, entertainment, or any custom blog niche.",
+      "techStack": [
+        "HTML5",
+        "CSS3",
+        "JS"
+      ],
+      "category": "Blog / News Website",
+      "image": "/projects/News.png",
+      "liveDemoUrl": "https://news-blog-idcare19.vercel.app/",
+      "githubUrl": "https://github.com/idcare19/news-blog",
+      "featured": true,
+      "order": 4
     }
   ],
   "testimonialsDetailed": [
@@ -361,14 +446,14 @@
       "showBadge": true
     }
   },
-  "updatedAt": "2026-04-22T12:50:13.620Z",
+  "updatedAt": "2026-04-22T14:09:22.008Z",
   "workingProjects": [
     {
-      "title": "",
-      "description": "",
-      "status": "In Progress",
-      "timeline": "",
-      "link": ""
+      "title": "Freelancer and intership work",
+      "description": "Working on multiple freelance and internship projects involving frontend fixes, responsive design, performance optimization, admin dashboard improvements, bug fixing, and deployment support for live websites and client projects.",
+      "status": "In progress ",
+      "timeline": "Non Disclosable ",
+      "link": "#"
     }
   ],
   "sectionControls": [
@@ -403,9 +488,9 @@
     {
       "id": "completed",
       "label": "Worked On",
-      "visible": false,
-      "showInNav": false,
-      "deleted": true
+      "visible": true,
+      "showInNav": true,
+      "deleted": false
     },
     {
       "id": "reviews",
@@ -428,5 +513,16 @@
       "showInNav": true,
       "deleted": false
     }
-  ]
+  ],
+  "journeyNow": {
+    "currentWork": "Parvati & Sons – Frontend Fixer & Web Developer",
+    "ongoingMilestones": [
+      "Fixing frontend layout and responsive design issues",
+      "Improving website UI and user experience",
+      "Optimizing website speed and loading performance",
+      "Adding new sections and updating existing pages",
+      "Testing and fixing bugs on mobile and desktop",
+      "Deploying regular updates and maintaining the live website"
+    ]
+  }
 }

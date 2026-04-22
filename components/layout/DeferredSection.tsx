@@ -55,5 +55,5 @@ export function DeferredSection({
     return <div id={id} ref={placeholderRef} className={cn("deferred-section", className)} aria-hidden="true" />;
   }
 
-  return <div id={id} className={className}>{children}</div>;
+  return <div id={id}>{children}</div>;
 }
