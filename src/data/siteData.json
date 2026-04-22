@@ -112,12 +112,14 @@
     {
       "clientName": "Rakesh.dev",
       "website": "https://rakesh-dev-portfolio.vercel.app",
-      "quote": "Abhishek delivered a clean, fast portfolio with excellent attention to UI details."
+      "quote": "Abhishek delivered a clean, fast portfolio with excellent attention to UI details.",
+      "icon": "code2"
     },
     {
       "clientName": "Nitin.dev",
       "website": "https://nitin-dev-portfolio.vercel.app",
-      "quote": "Very professional and reliable. The final website feels premium and polished."
+      "quote": "Very professional and reliable. The final website feels premium and polished.",
+      "icon": "briefcase"
     }
   ],
   "collaboration": {

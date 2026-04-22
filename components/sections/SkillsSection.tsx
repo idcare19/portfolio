@@ -50,6 +50,25 @@ const skillIconMap: Record<string, { icon: ReactNode; tone: string }> = {
 export function SkillsSection() {
   const skillsA = portfolioData.skills.slice(0, 5);
   const skillsB = portfolioData.skills.slice(5);
+  const movingSkills = portfolioData.skills.concat(portfolioData.skills);
+
+  function renderSkillPill(skill: string, key: string, tone: "blue" | "cyan") {
+    const skillIcon = skillIconMap[skill] ?? { icon: <SiGithub className="h-3.5 w-3.5 text-slate-700" />, tone: "" };
+    const toneClasses =
+      tone === "blue"
+        ? "border-blue-200 bg-blue-50 text-blue-700"
+        : "border-cyan-200 bg-cyan-50 text-cyan-700";
+
+    return (
+      <span
+        key={key}
+        className={`inline-flex items-center gap-2 rounded-full border px-3 py-1 text-xs font-medium ${toneClasses}`}
+      >
+        <span className={skillIcon.tone}>{skillIcon.icon}</span>
+        {skill}
+      </span>
+    );
+  }
 
   return (
     <AnimatedSection id="skills" className="py-20">
@@ -69,35 +88,17 @@ export function SkillsSection() {
           <SkillCard title="Currently in Learning Phase" items={portfolioData.learningPhase} delay={0.12} />
         </div>
 
-        <div className="mt-6 overflow-hidden rounded-2xl border border-slate-200 bg-white/70 py-2">
-          <div className="marquee-track flex gap-3 whitespace-nowrap px-3 sm:gap-4 sm:px-4">
-            {portfolioData.skills.concat(portfolioData.skills).map((skill, index) => (
-              <span
-                key={`${skill}-${index}`}
-                className="animate-float-medium inline-flex items-center gap-2 rounded-full border border-blue-200 bg-blue-50 px-3 py-1 text-xs font-medium text-blue-700"
-              >
-                {(() => {
-                  const skillIcon = skillIconMap[skill] ?? { icon: <SiGithub className="h-3.5 w-3.5 text-slate-700" />, tone: "" };
-                  return <span className={skillIcon.tone}>{skillIcon.icon}</span>;
-                })()}
-                {skill}
-              </span>
-            ))}
+        <div className="mt-6 space-y-2 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_8px_20px_rgba(15,23,42,0.04)]">
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white/90 py-2">
+            <div className="marquee-track flex gap-2 whitespace-nowrap px-2 sm:gap-3 sm:px-3">
+              {movingSkills.map((skill, index) => renderSkillPill(skill, `skill-moving-a-${skill}-${index}`, "blue"))}
+            </div>
           </div>
 
-          <div className="marquee-track-reverse mt-2 flex gap-3 whitespace-nowrap px-3 sm:gap-4 sm:px-4">
-            {portfolioData.skills.concat(portfolioData.skills).map((skill, index) => (
-              <span
-                key={`reverse-${skill}-${index}`}
-                className="animate-float-reverse inline-flex items-center gap-2 rounded-full border border-cyan-200 bg-cyan-50 px-3 py-1 text-xs font-medium text-cyan-700"
-              >
-                {(() => {
-                  const skillIcon = skillIconMap[skill] ?? { icon: <SiGithub className="h-3.5 w-3.5 text-slate-700" />, tone: "" };
-                  return <span className={skillIcon.tone}>{skillIcon.icon}</span>;
-                })()}
-                {skill}
-              </span>
-            ))}
+          <div className="overflow-hidden rounded-xl border border-slate-200 bg-white/90 py-2">
+            <div className="marquee-track-reverse flex gap-2 whitespace-nowrap px-2 sm:gap-3 sm:px-3">
+              {movingSkills.map((skill, index) => renderSkillPill(skill, `skill-moving-b-${skill}-${index}`, "cyan"))}
+            </div>
           </div>
         </div>
       </div>

@@ -27,9 +27,9 @@ export function ScrollReveal({ children, className, delay = 0, y = 24, once = tr
   const isMobile = useIsMobile();
   const lightweightMode = prefersReducedMotion || isMobile;
 
-  const revealDuration = lightweightMode ? 0.2 : 0.6;
-  const revealY = lightweightMode ? Math.min(y, 10) : y;
-  const revealDelay = lightweightMode ? delay * 0.25 : delay;
+  const revealDuration = lightweightMode ? 0.18 : 0.36;
+  const revealY = lightweightMode ? Math.min(y, 6) : Math.min(y, 14);
+  const revealDelay = lightweightMode ? delay * 0.2 : delay * 0.5;
 
   if (immediate) {
     return (
@@ -51,7 +51,7 @@ export function ScrollReveal({ children, className, delay = 0, y = 24, once = tr
       variants={buildVariants(revealY, revealDuration)}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once, amount: 0.2 }}
+      viewport={{ once, amount: 0.16 }}
       transition={{ delay: revealDelay }}
     >
       {children}

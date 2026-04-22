@@ -20,10 +20,10 @@ export function AnimatedSection({ id, className, children, delay = 0 }: Animated
     <motion.section
       id={id}
       className={cn("relative py-20 md:py-24", className)}
-      initial={shouldReduceMotion ? { opacity: 0, y: 10 } : { opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: shouldReduceMotion ? 8 : 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, amount: shouldReduceMotion ? 0.08 : 0.2 }}
-      transition={{ duration: shouldReduceMotion ? 0.28 : 0.6, ease: "easeOut", delay: shouldReduceMotion ? delay * 0.35 : delay }}
+      viewport={{ once: true, amount: 0.14 }}
+      transition={{ duration: shouldReduceMotion ? 0.2 : 0.38, ease: "easeOut", delay: shouldReduceMotion ? delay * 0.2 : delay * 0.55 }}
     >
       {children}
     </motion.section>

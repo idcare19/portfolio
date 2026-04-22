@@ -5,15 +5,10 @@ import { FadeInUp } from "@/components/effects/FadeInUp";
 import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolio";
-import { useIsMobile } from "@/lib/use-is-mobile";
-import { motion, useReducedMotion } from "framer-motion";
 import type { FormEvent } from "react";
 import { useState } from "react";
 
 export function ContactSection() {
-  const prefersReducedMotion = useReducedMotion();
-  const isMobile = useIsMobile();
-  const lightweightMode = prefersReducedMotion || isMobile;
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
@@ -71,39 +66,26 @@ export function ContactSection() {
         />
 
         <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
-          <FadeInUp className="glass relative overflow-hidden rounded-3xl border border-white/80 p-6 shadow-[0_12px_34px_rgba(15,23,42,0.08)]">
-            <motion.div
-              className="pointer-events-none absolute inset-y-0 -left-1/3 w-1/3 bg-gradient-to-r from-transparent via-white/50 to-transparent"
-              animate={lightweightMode ? undefined : { x: ["-120%", "320%"] }}
-              transition={{ duration: 3.1, repeat: Infinity, repeatDelay: 1.3, ease: "easeInOut" }}
-            />
+          <FadeInUp className="glass rounded-3xl p-6 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
             <h3 className="text-xl font-semibold text-slate-900">Let's build something amazing together.</h3>
             <p className="mt-3 text-sm text-slate-600">
               Whether it's a startup idea, website revamp, or app concept - I'd love to help build it.
             </p>
 
             <div className="mt-5 space-y-2 text-sm">
-              {portfolioData.socials.map((social, index) => (
-                <motion.a
+              {portfolioData.socials.map((social) => (
+                <a
                   key={social.label}
                   href={social.href}
-                  className="block break-all rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-all duration-500 ease-out hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700"
-                  initial={{ opacity: 0.9 }}
-                  animate={lightweightMode ? undefined : { y: [0, -2, 0], opacity: [0.92, 1, 0.92] }}
-                  transition={{ duration: 2.2, repeat: Infinity, delay: index * 0.18 }}
+                  className="block break-all rounded-xl border border-slate-200 bg-white px-3 py-2 text-slate-700 transition-colors duration-200 hover:border-blue-200 hover:text-blue-700"
                 >
                   <span className="font-semibold">{social.label}</span> - {social.value}
-                </motion.a>
+                </a>
               ))}
             </div>
           </FadeInUp>
 
-          <FadeInUp delay={0.08} className="glass relative overflow-hidden rounded-3xl border border-white/80 p-6 shadow-[0_12px_34px_rgba(15,23,42,0.08)]">
-            <motion.div
-              className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-blue-400/80 to-transparent"
-              animate={lightweightMode ? undefined : { opacity: [0.2, 0.9, 0.2] }}
-              transition={{ duration: 2.4, repeat: Infinity }}
-            />
+          <FadeInUp delay={0.08} className="glass rounded-3xl p-6 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-slate-700">

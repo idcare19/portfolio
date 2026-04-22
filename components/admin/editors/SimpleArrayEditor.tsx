@@ -1,13 +1,19 @@
 "use client";
 
 type ItemRecord = Record<string, any>;
+type FieldType = "text" | "number" | "textarea" | "checkbox" | "select";
+
+type FieldOption = {
+  label: string;
+  value: string;
+};
 
 type Props<T extends ItemRecord> = {
   title: string;
   description: string;
   items: T[];
   setItems: (items: T[]) => void;
-  fields: Array<{ key: keyof T; label: string; type?: "text" | "number" | "textarea" | "checkbox" }>;
+  fields: Array<{ key: keyof T; label: string; type?: FieldType; options?: FieldOption[] }>;
   createItem: () => T;
 };
 
@@ -49,6 +55,18 @@ export function SimpleArrayEditor<T extends ItemRecord>({ title, description, it
                     <textarea className="w-full rounded-xl border border-slate-300 px-3 py-2" rows={3} value={String(item[field.key] ?? "")} onChange={(e) => update(index, field.key, e.target.value)} />
                   ) : field.type === "checkbox" ? (
                     <input type="checkbox" checked={Boolean(item[field.key])} onChange={(e) => update(index, field.key, e.target.checked)} />
+                  ) : field.type === "select" ? (
+                    <select
+                      className="w-full rounded-xl border border-slate-300 px-3 py-2"
+                      value={String(item[field.key] ?? "")}
+                      onChange={(e) => update(index, field.key, e.target.value)}
+                    >
+                      {(field.options || []).map((option) => (
+                        <option key={option.value} value={option.value}>
+                          {option.label}
+                        </option>
+                      ))}
+                    </select>
                   ) : (
                     <input
                       type={field.type === "number" ? "number" : "text"}

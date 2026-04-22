@@ -4,14 +4,9 @@ import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolio";
-import { useIsMobile } from "@/lib/use-is-mobile";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 
 export function JourneySection() {
-  const prefersReducedMotion = useReducedMotion();
-  const isMobile = useIsMobile();
-  const lightweightMode = prefersReducedMotion || isMobile;
-
   return (
     <AnimatedSection id="journey" className="py-20">
       <div className="section-wrap">
@@ -32,7 +27,7 @@ export function JourneySection() {
               initial={{ width: 0 }}
               whileInView={{ width: "100%" }}
               viewport={{ once: true, amount: 0.8 }}
-              transition={{ duration: 1.15, ease: [0.22, 1, 0.36, 1] }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
             />
           </div>
         </div>
@@ -40,31 +35,13 @@ export function JourneySection() {
         <div className="relative mx-auto max-w-4xl border-l border-blue-200/80 pl-6">
           {portfolioData.experience.map((item, index) => (
             <FadeInUp key={`${item.role}-${item.period}`} delay={index * 0.06} className="relative pb-7 last:pb-0">
-              <motion.span
-                className="absolute -left-[31px] top-1.5 inline-flex h-4 w-4 rounded-full border-2 border-blue-500 bg-white"
-                animate={
-                  lightweightMode
-                    ? undefined
-                    : {
-                        scale: [1, 1.15, 1],
-                        boxShadow: [
-                          "0 0 0 rgba(59,130,246,0)",
-                          "0 0 0 8px rgba(59,130,246,0.14)",
-                          "0 0 0 rgba(59,130,246,0)",
-                        ],
-                      }
-                }
-                transition={{ duration: 2.3, repeat: Infinity, delay: index * 0.14 }}
-              />
+              <span className="absolute -left-[31px] top-1.5 inline-flex h-4 w-4 rounded-full border-2 border-blue-500 bg-white" />
 
-              <motion.div
-                className="group rounded-xl border border-slate-200/80 bg-white/80 p-4 backdrop-blur-md transition-all duration-500 ease-out hover:-translate-y-1 hover:border-blue-300"
-                whileHover={lightweightMode ? undefined : { x: 4 }}
-              >
+              <div className="group rounded-xl border border-slate-200/80 bg-white p-4 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-blue-200">
                 <div className="mb-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-blue-700">{item.period}</div>
                 <p className="text-sm font-semibold text-slate-900">{item.role}</p>
                 <p className="mt-2 text-sm text-slate-700">{item.summary}</p>
-              </motion.div>
+              </div>
             </FadeInUp>
           ))}
         </div>

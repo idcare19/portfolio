@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 
 const sectionMap = [
   { id: "home", href: "#home" },
-  { id: "light-motion", href: "#home" },
   { id: "about", href: "#about" },
   { id: "skills", href: "#skills" },
   { id: "projects", href: "#projects" },

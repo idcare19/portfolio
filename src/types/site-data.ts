@@ -1,7 +1,6 @@
 export type NavItem = { label: string; href: string };
 
-export type GitHubProject = {
-  id: string;
+export type SiteConnection = {
   name: string;
   owner: string;
   repo: string;
@@ -149,6 +148,7 @@ export type SiteData = {
     clientName: string;
     website: string;
     quote: string;
+    icon?: string;
   }[];
   collaboration: {
     users: { name: string; color: string }[];
@@ -177,7 +177,6 @@ export type SiteData = {
     theme: "light" | "dark" | "system";
   };
   websiteControl: WebsiteControl;
-  githubProjects?: GitHubProject[];
-  activeGithubProjectId?: string;
+  siteConnection?: SiteConnection;
   updatedAt: string;
 };

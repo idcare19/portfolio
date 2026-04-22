@@ -1,7 +1,5 @@
 "use client";
 
-import { useIsMobile } from "@/lib/use-is-mobile";
-import { motion, useReducedMotion } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 type HoverCardProps = {
@@ -10,27 +8,14 @@ type HoverCardProps = {
 };
 
 export function HoverCard({ children, className }: HoverCardProps) {
-  const prefersReducedMotion = useReducedMotion();
-  const isMobile = useIsMobile();
-  const lightweightMode = prefersReducedMotion || isMobile;
-
   return (
-    <motion.div
+    <div
       className={cn(
-        "rounded-3xl border border-slate-200/70 bg-white/65 shadow-[0_10px_30px_rgba(15,23,42,0.06)] backdrop-blur-xl transition-all duration-500 ease-out",
+        "rounded-3xl border border-slate-200/80 bg-white shadow-[0_10px_28px_rgba(15,23,42,0.05)] transition-transform duration-200 ease-out hover:-translate-y-0.5 hover:border-blue-200",
         className
       )}
-      whileHover={
-        lightweightMode
-          ? undefined
-          : {
-              y: -8,
-              boxShadow: "0 25px 45px rgba(59, 130, 246, 0.2)",
-              borderColor: "rgba(59, 130, 246, 0.45)",
-            }
-      }
     >
       {children}
-    </motion.div>
+    </div>
   );
 }

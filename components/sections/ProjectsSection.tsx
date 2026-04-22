@@ -10,14 +10,9 @@ export function ProjectsSection() {
       <div className="section-wrap">
         <SectionHeader
           eyebrow="Projects"
-          title={<span className="text-sweep">Featured work</span>}
+          title="Featured work"
           description="Fast, clean project cards with minimal motion and better performance."
         />
-
-        <p className="-mt-4 mb-8 text-center text-sm text-slate-500">
-          <span className="text-slate-700">Motion style:</span>{" "}
-          <span className="text-sweep font-semibold">lightweight text animation</span>
-        </p>
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {portfolioData.projects.map((project, index) => (

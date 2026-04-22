@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import type { GitHubProject, SiteData } from "@/src/types/site-data";
+import type { SiteConnection, SiteData } from "@/src/types/site-data";
 
 export type GitHubConfigInput = {
   token?: string;
@@ -11,13 +11,31 @@ export type GitHubConfigInput = {
   contentPath?: string;
 };
 
-function toGitHubConfig(project: GitHubProject, token?: string): GitHubConfigInput {
+const DEFAULT_SITE_CONNECTION: SiteConnection = {
+  name: "This Website",
+  owner: "",
+  repo: "",
+  branch: "main",
+  contentPath: "src/data/siteData.json",
+};
+
+function toGitHubConfig(connection: SiteConnection, token?: string): GitHubConfigInput {
   return {
     token,
-    owner: project.owner,
-    repo: project.repo,
-    branch: project.branch,
-    contentPath: project.contentPath,
+    owner: connection.owner,
+    repo: connection.repo,
+    branch: connection.branch,
+    contentPath: connection.contentPath,
+  };
+}
+
+function normalizeSiteData(input: SiteData): SiteData {
+  return {
+    ...input,
+    siteConnection: {
+      ...DEFAULT_SITE_CONNECTION,
+      ...(input.siteConnection || {}),
+    },
   };
 }
 
@@ -26,7 +44,6 @@ export function useSiteDataEditor() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [activeProjectId, setActiveProjectId] = useState<string | null>(null);
 
   const load = useCallback(async (githubConfig?: GitHubConfigInput) => {
     setLoading(true);
@@ -44,12 +61,8 @@ export function useSiteDataEditor() {
           throw new Error(syncPayload?.error || "Failed to sync selected project");
         }
 
-        const remoteData = syncPayload?.data?.data as SiteData;
+        const remoteData = normalizeSiteData(syncPayload?.data?.data as SiteData);
         setData(remoteData);
-
-        if (remoteData?.activeGithubProjectId) {
-          setActiveProjectId(remoteData.activeGithubProjectId);
-        }
 
         return { ok: true as const };
       }
@@ -57,12 +70,7 @@ export function useSiteDataEditor() {
       const res = await fetch("/api/admin/content", { cache: "no-store" });
       if (!res.ok) throw new Error("Failed to load site data");
       const payload = await res.json();
-      setData(payload.data as SiteData);
-
-      const loadedData = payload.data as SiteData;
-      if (loadedData?.activeGithubProjectId) {
-        setActiveProjectId(loadedData.activeGithubProjectId);
-      }
+      setData(normalizeSiteData(payload.data as SiteData));
 
       return { ok: true as const };
     } catch (err) {
@@ -82,11 +90,12 @@ export function useSiteDataEditor() {
     setSaving(true);
     setError(null);
     try {
+      const nextData = normalizeSiteData(updatedData);
       const res = await fetch("/api/admin/content", {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          data: { ...updatedData, updatedAt: new Date().toISOString() },
+          data: { ...nextData, updatedAt: new Date().toISOString() },
           commitMessage,
           githubConfig,
         }),
@@ -97,7 +106,7 @@ export function useSiteDataEditor() {
         throw new Error(payload.error || "Failed to update GitHub content");
       }
 
-      setData({ ...updatedData, updatedAt: new Date().toISOString() });
+      setData({ ...nextData, updatedAt: new Date().toISOString() });
       return { ok: true } as const;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Save failed");
@@ -107,26 +116,20 @@ export function useSiteDataEditor() {
     }
   }, []);
 
-  const switchProject = useCallback(
-    async (projectId: string, token?: string) => {
-      if (!data) return { ok: false as const, error: "No site data loaded" };
+  const syncFromConnection = useCallback(
+    async (token?: string) => {
+      if (!data?.siteConnection?.owner || !data.siteConnection.repo) {
+        return { ok: false as const, error: "Set owner and repo first" };
+      }
 
-      const project = data.githubProjects?.find((item) => item.id === projectId);
-      if (!project) return { ok: false as const, error: "Project config not found" };
-
-      const githubConfig = toGitHubConfig(project, token);
-      const previousProjectId = activeProjectId;
-      setActiveProjectId(projectId);
-
-      const result = await load(githubConfig);
+      const result = await load(toGitHubConfig(data.siteConnection, token));
       if (!result?.ok) {
-        setActiveProjectId(previousProjectId ?? null);
-        return { ok: false as const, error: result?.error || "Failed to switch project" };
+        return { ok: false as const, error: result?.error || "Failed to sync connection" };
       }
 
       return { ok: true as const };
     },
-    [activeProjectId, data, load]
+    [data, load]
   );
 
   return {
@@ -135,10 +138,9 @@ export function useSiteDataEditor() {
     loading,
     saving,
     error,
-    activeProjectId,
-    setActiveProjectId,
     reload: load,
     save,
-    switchProject,
+    syncFromConnection,
+    toGitHubConfig,
   };
 }

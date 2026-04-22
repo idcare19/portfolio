@@ -47,8 +47,7 @@ export const websiteControlSchema = z.object({
   }),
 });
 
-export const githubProjectSchema = z.object({
-  id: z.string().min(1),
+export const siteConnectionSchema = z.object({
   name: z.string().min(1),
   owner: z.string().min(1),
   repo: z.string().min(1),
@@ -91,6 +90,7 @@ export const siteDataSchema = z.object({
       clientName: z.string(),
       website: z.string(),
       quote: z.string(),
+      icon: z.string().optional(),
     })
   ),
   experience: z.array(
@@ -160,8 +160,7 @@ export const siteDataSchema = z.object({
   }),
   heroTech: z.array(z.string()),
   updatedAt: z.string(),
-  githubProjects: z.array(githubProjectSchema).optional(),
-  activeGithubProjectId: z.string().optional(),
+  siteConnection: siteConnectionSchema.optional(),
 });
 
 export type SiteDataInput = z.infer<typeof siteDataSchema>;
