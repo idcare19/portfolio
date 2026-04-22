@@ -6,6 +6,8 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { portfolioData } from "@/data/portfolio";
 import {
   Briefcase,
+  ChevronLeft,
+  ChevronRight,
   Code2,
   ExternalLink,
   Globe,
@@ -16,7 +18,7 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
-import { useRef, type PointerEvent, type WheelEvent } from "react";
+import { useCallback, useEffect, useRef, useState, type PointerEvent, type WheelEvent } from "react";
 
 const reviewIconMap: Record<string, LucideIcon> = {
   code2: Code2,
@@ -39,6 +41,41 @@ export function ReviewsSection() {
     startX: 0,
     startLeft: 0,
   });
+  const [canScrollPrev, setCanScrollPrev] = useState(false);
+  const [canScrollNext, setCanScrollNext] = useState(false);
+
+  const syncScrollButtons = useCallback(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const maxScroll = rail.scrollWidth - rail.clientWidth;
+    setCanScrollPrev(rail.scrollLeft > 4);
+    setCanScrollNext(rail.scrollLeft < maxScroll - 4);
+  }, []);
+
+  useEffect(() => {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    syncScrollButtons();
+
+    const onScroll = () => syncScrollButtons();
+    rail.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+
+    return () => {
+      rail.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [syncScrollButtons]);
+
+  function scrollRail(direction: -1 | 1) {
+    const rail = railRef.current;
+    if (!rail) return;
+
+    const offset = Math.max(260, rail.clientWidth * 0.78);
+    rail.scrollBy({ left: direction * offset, behavior: "smooth" });
+  }
 
   function handleWheel(event: WheelEvent<HTMLDivElement>) {
     const rail = railRef.current;
@@ -90,47 +127,74 @@ export function ReviewsSection() {
         />
 
         <FadeInUp>
-          <div
-            ref={railRef}
-            onWheel={handleWheel}
-            onPointerDown={handlePointerDown}
-            onPointerMove={handlePointerMove}
-            onPointerUp={handlePointerUp}
-            onPointerCancel={handlePointerUp}
-            className="reviews-scroll -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2 touch-pan-x md:gap-5"
-          >
-            <div aria-hidden className="w-[4px] shrink-0" />
-            {portfolioData.reviews.map((review, index) => {
-              const ReviewIcon = getReviewIcon(review.icon);
+          <div className="mb-3 hidden items-center justify-end gap-2 md:flex">
+            <button
+              type="button"
+              onClick={() => scrollRail(-1)}
+              disabled={!canScrollPrev}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-blue-300 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label="Scroll reviews left"
+            >
+              <ChevronLeft className="h-4 w-4" />
+            </button>
+            <button
+              type="button"
+              onClick={() => scrollRail(1)}
+              disabled={!canScrollNext}
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-slate-300 bg-white text-slate-700 transition hover:border-blue-300 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+              aria-label="Scroll reviews right"
+            >
+              <ChevronRight className="h-4 w-4" />
+            </button>
+          </div>
 
-              return (
-              <article
-                key={`${review.clientName}-${index}`}
-                className="glass w-[clamp(260px,78vw,380px)] snap-start shrink-0 rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition-transform duration-200 hover:-translate-y-0.5"
-              >
+          <div className="relative">
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-10 bg-gradient-to-r from-slate-50 to-transparent md:block" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-10 bg-gradient-to-l from-slate-50 to-transparent md:block" />
 
-                <Quote className="h-5 w-5 text-blue-600" />
-                <p className="mt-3 text-sm leading-relaxed text-slate-600">"{review.quote}"</p>
+            <div
+              ref={railRef}
+              onWheel={handleWheel}
+              onPointerDown={handlePointerDown}
+              onPointerMove={handlePointerMove}
+              onPointerUp={handlePointerUp}
+              onPointerCancel={handlePointerUp}
+              onPointerLeave={handlePointerUp}
+              className="reviews-scroll -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto px-2 pb-2 touch-pan-x md:cursor-grab md:gap-5 md:active:cursor-grabbing"
+            >
+              <div aria-hidden className="w-[4px] shrink-0" />
+              {portfolioData.reviews.map((review, index) => {
+                const ReviewIcon = getReviewIcon(review.icon);
 
-                <div className="mt-5 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-                  <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
-                    <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-white">
-                      <ReviewIcon className="h-3.5 w-3.5" />
-                    </span>
-                    {review.clientName}
-                  </p>
-                  <Link
-                    href={review.website}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition-colors duration-200 hover:border-blue-500 hover:bg-blue-100 sm:w-auto"
+                return (
+                  <article
+                    key={`${review.clientName}-${index}`}
+                    className="glass w-[clamp(260px,78vw,380px)] snap-start shrink-0 rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition-transform duration-200 hover:-translate-y-0.5"
                   >
-                    Visit Site <ExternalLink className="h-3.5 w-3.5" />
-                  </Link>
-                </div>
-              </article>
-            )})}
-            <div aria-hidden className="w-[10vw] shrink-0" />
+                    <Quote className="h-5 w-5 text-blue-600" />
+                    <p className="mt-3 text-sm leading-relaxed text-slate-600">"{review.quote}"</p>
+
+                    <div className="mt-5 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
+                      <p className="inline-flex items-center gap-2 text-sm font-semibold text-slate-900">
+                        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-slate-900 text-white">
+                          <ReviewIcon className="h-3.5 w-3.5" />
+                        </span>
+                        {review.clientName}
+                      </p>
+                      <Link
+                        href={review.website}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-blue-300 bg-blue-50 px-3 py-1.5 text-xs font-semibold text-blue-700 transition-colors duration-200 hover:border-blue-500 hover:bg-blue-100 sm:w-auto"
+                      >
+                        Visit Site <ExternalLink className="h-3.5 w-3.5" />
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })}
+              <div aria-hidden className="w-[10vw] shrink-0" />
+            </div>
           </div>
         </FadeInUp>
       </div>

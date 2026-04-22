@@ -85,6 +85,8 @@ body {
 
 .reviews-scroll {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  overscroll-behavior-x: contain;
 }
 
 .animate-float-gentle {

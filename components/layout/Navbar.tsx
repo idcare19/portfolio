@@ -22,14 +22,21 @@ export function Navbar() {
   const [active, setActive] = useState("#home");
   const [scrolled, setScrolled] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
-  const [hideOnScroll, setHideOnScroll] = useState(false);
 
   useEffect(() => {
     let frame = 0;
-    let lastY = window.scrollY;
+    let sectionElements = sectionMap.map((item) => ({
+      href: item.href,
+      element: document.getElementById(item.id),
+    }));
 
     const isDesktopViewport = () => window.innerWidth >= 768;
-    const syncMobile = () => setIsMobile(window.innerWidth < 768);
+    const refreshSections = () => {
+      sectionElements = sectionMap.map((item) => ({
+        href: item.href,
+        element: document.getElementById(item.id),
+      }));
+    };
 
     const syncFromHash = () => {
       if (window.location.hash && portfolioData.nav.some((item) => item.href === window.location.hash)) {
@@ -39,29 +46,19 @@ export function Navbar() {
 
     const syncFromScroll = () => {
       const currentY = window.scrollY;
-      const delta = Math.abs(currentY - lastY);
-      const isGoingDown = currentY > lastY;
+      const nextScrolled = currentY > 12;
 
       if (!isDesktopViewport()) {
-        setScrolled(currentY > 12);
-        if (currentY < 64) {
-          setHideOnScroll(false);
-        } else if (delta > 6) {
-          setHideOnScroll(isGoingDown);
-        }
-        syncMobile();
-        lastY = currentY;
+        setScrolled((previous) => (previous === nextScrolled ? previous : nextScrolled));
         return;
       }
-
-      setHideOnScroll(false);
 
       const marker = Math.max(140, window.innerHeight * 0.32);
       let current = "#home";
       let fallback: string | null = null;
 
-      for (const item of sectionMap) {
-        const section = document.getElementById(item.id);
+      for (const item of sectionElements) {
+        const section = item.element;
         if (!section) {
           continue;
         }
@@ -83,8 +80,7 @@ export function Navbar() {
       }
 
       setActive((previous) => (previous === current ? previous : current));
-      setScrolled(currentY > 12);
-      lastY = currentY;
+      setScrolled((previous) => (previous === nextScrolled ? previous : nextScrolled));
     };
 
     const handleScroll = () => {
@@ -92,33 +88,32 @@ export function Navbar() {
       frame = window.requestAnimationFrame(syncFromScroll);
     };
 
-    syncMobile();
+    const handleResize = () => {
+      const mobile = window.innerWidth < 768;
+      const nextScrolled = window.scrollY > 12;
+      setIsMobile((previous) => (previous === mobile ? previous : mobile));
+      setScrolled((previous) => (previous === nextScrolled ? previous : nextScrolled));
+      if (!mobile) {
+        setOpen(false);
+      }
+      refreshSections();
+      handleScroll();
+    };
+
+    handleResize();
     syncFromHash();
     syncFromScroll();
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     window.addEventListener("hashchange", syncFromHash);
+    window.addEventListener("resize", handleResize, { passive: true });
 
     return () => {
       cancelAnimationFrame(frame);
       window.removeEventListener("scroll", handleScroll);
       window.removeEventListener("hashchange", syncFromHash);
+      window.removeEventListener("resize", handleResize);
     };
-  }, []);
-
-  useEffect(() => {
-    const onResize = () => {
-      setIsMobile(window.innerWidth < 768);
-
-      if (window.innerWidth >= 768) {
-        setOpen(false);
-      }
-
-      setScrolled(window.scrollY > 12);
-    };
-
-    window.addEventListener("resize", onResize, { passive: true });
-    return () => window.removeEventListener("resize", onResize);
   }, []);
 
   useEffect(() => {
@@ -145,7 +140,7 @@ export function Navbar() {
       initial={prefersReducedMotion ? { opacity: 1, y: 0 } : { opacity: 0, y: -12 }}
       animate={{
         opacity: 1,
-        y: hideOnScroll && isMobile && !open ? -110 : 0,
+        y: 0,
         scale: scrolled ? 0.995 : 1,
       }}
       transition={
