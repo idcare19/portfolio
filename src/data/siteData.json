@@ -350,7 +350,17 @@
       "image": ""
     }
   ],
-  "contactMessages": [],
+  "contactMessages": [
+    {
+      "id": "msg-1776947938563",
+      "name": "Jigi",
+      "email": "jigishree@gmail.com",
+      "subject": "Website Contact Form",
+      "message": "Babyy yr bhuk lag rhi kya khauu ab mere ko gussa bhi aa rha h",
+      "read": false,
+      "createdAt": "2026-04-23T12:38:58.563Z"
+    }
+  ],
   "blogs": [
     {
       "id": "blog-1",
@@ -427,7 +437,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T10:45:04.341Z",
+  "updatedAt": "2026-04-23T12:38:58.735Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
