@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/react";
 import { TopNoticeBar } from "@/components/layout/controls/TopNoticeBar";
 import { GlobalPopupWrapper } from "@/components/layout/controls/GlobalPopupWrapper";
 import "./globals.css";
@@ -12,14 +14,33 @@ const inter = Inter({
   variable: "--font-inter",
   display: "swap",
   preload: true,
-  fallback: ["system-ui", "-apple-system", "Segoe UI", "Roboto", "Helvetica Neue", "Arial", "sans-serif"],
+  fallback: [
+    "system-ui",
+    "-apple-system",
+    "Segoe UI",
+    "Roboto",
+    "Helvetica Neue",
+    "Arial",
+    "sans-serif",
+  ],
 });
 
 const owner = portfolioData.owner;
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://portfolio-delta-dusky-86.vercel.app";
-const emailHref = portfolioData.socials.find((item) => item.label.toLowerCase() === "email")?.href ?? "mailto:personal@idcare19.me";
+
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ??
+  "https://portfolio-delta-dusky-86.vercel.app";
+
+const emailHref =
+  portfolioData.socials.find(
+    (item) => item.label.toLowerCase() === "email"
+  )?.href ?? "mailto:personal@idcare19.me";
+
 const gaMeasurementId = "G-TV1QZVQRL8";
-const shouldShowPopup = Boolean(portfolioData.websiteControl?.popupAnnouncement?.enabled);
+
+const shouldShowPopup = Boolean(
+  portfolioData.websiteControl?.popupAnnouncement?.enabled
+);
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
@@ -71,23 +92,30 @@ export const metadata: Metadata = {
     description: owner.tagline,
   },
   icons: {
-    icon: [
-      { url: "/projects/logo.png", type: "image/png" },
-    ],
-    shortcut: [
-      "/projects/logo.png",
-    ],
-    apple: [
-      { url: "/projects/logo.png" },
-    ],
+    icon: [{ url: "/projects/logo.png", type: "image/png" }],
+    shortcut: ["/projects/logo.png"],
+    apple: [{ url: "/projects/logo.png" }],
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <html lang="en" className={inter.variable} suppressHydrationWarning>
+    <html
+      lang="en"
+      className={inter.variable}
+      suppressHydrationWarning
+    >
       <body className="font-sans">
-        <Script src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`} strategy="lazyOnload" />
+        
+        {/* Google Analytics */}
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
+          strategy="lazyOnload"
+        />
         <Script id="google-analytics" strategy="lazyOnload">
           {`
             window.dataLayer = window.dataLayer || [];
@@ -96,9 +124,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             gtag('config', '${gaMeasurementId}');
           `}
         </Script>
+
+        {/* UI Components */}
         <TopNoticeBar />
         {children}
         {shouldShowPopup ? <GlobalPopupWrapper /> : null}
+
+        {/* Analytics + Performance */}
+        <Analytics />
+        <SpeedInsights />
+
       </body>
     </html>
   );
