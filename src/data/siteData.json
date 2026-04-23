@@ -350,35 +350,7 @@
       "image": ""
     }
   ],
-  "contactMessages": [
-    {
-      "id": "msg-1776877408635",
-      "name": "Jigi",
-      "email": "jigishree@gmail.com",
-      "subject": "Website Contact Form",
-      "message": "Hiiii 👋",
-      "read": false,
-      "createdAt": "2026-04-22T17:03:28.635Z"
-    },
-    {
-      "id": "msg-1776658705364",
-      "name": "Ojas",
-      "email": "ojasbohre84@gmail.com",
-      "subject": "Website Contact Form",
-      "message": "Hello Abhishek \nWe have internship offer for you of \"tel chatai\". In this job you have  just need 1 chatai and 1 bottle of japani oil , baki palat ke let jayiye  hum costumer leke ate hain 😋",
-      "read": false,
-      "createdAt": "2026-04-20T04:18:25.364Z"
-    },
-    {
-      "id": "msg-1776873249281",
-      "name": "Jigiiiii",
-      "email": "jigishree@gmail.com",
-      "subject": "Website Contact Form",
-      "message": "Umm.... Hehe I'll tell you in Dm 💥💥😻😻😻",
-      "read": false,
-      "createdAt": "2026-04-22T15:54:09.281Z"
-    }
-  ],
+  "contactMessages": [],
   "blogs": [
     {
       "id": "blog-1",
@@ -455,7 +427,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-22T17:03:28.801Z",
+  "updatedAt": "2026-04-23T10:10:15.919Z",
   "workingProjects": [
     {
       "title": "Freelancer and intership work",
