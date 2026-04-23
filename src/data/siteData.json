@@ -413,7 +413,7 @@
       "whitelistAdmin": true
     },
     "topNoticeBar": {
-      "enabled": true,
+      "enabled": false,
       "message": "Open for freelance and long-term projects.",
       "ctaText": "Let’s Talk",
       "ctaLink": "#contact",
@@ -427,7 +427,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T10:36:33.137Z",
+  "updatedAt": "2026-04-23T10:45:04.341Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
