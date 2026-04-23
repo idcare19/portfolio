@@ -40,6 +40,8 @@ const skillIconMap: Record<string, { icon: ReactNode; tone: string }> = {
   GitHub: { icon: <SiGithub className="h-3.5 w-3.5 text-slate-800" />, tone: "" },
   Testing: { icon: <SiTestinglibrary className="h-3.5 w-3.5 text-rose-600" />, tone: "" },
   Deployment: { icon: <Rocket className="h-3.5 w-3.5 text-emerald-600" />, tone: "" },
+  Vercel: { icon: <SiVercel className="h-3.5 w-3.5 text-black" />, tone: "" },
+Database: { icon: <Database className="h-3.5 w-3.5 text-indigo-600" />, tone: "" },
 };
 
 export function SkillsSection() {
