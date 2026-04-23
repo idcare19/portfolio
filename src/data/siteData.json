@@ -82,7 +82,9 @@
   "Git",
   "GitHub",
   "Testing",
-  "Deployment"
+  "Deployment",
+  "Vercel",
+  "Database"
 ],
   "learningPhase": [
     "App Security",
@@ -362,6 +364,20 @@
     "icon": "rocket",
     "level": 80
   }
+  {
+  "id": "skill-17",
+  "name": "Vercel",
+  "category": "DevOps",
+  "icon": "vercel",
+  "level": 78
+},
+{
+  "id": "skill-18",
+  "name": "Database",
+  "category": "Database",
+  "icon": "database",
+  "level": 76
+}
 ],
   "projectsDetailed": [
     {
