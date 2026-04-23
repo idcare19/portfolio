@@ -427,7 +427,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T10:24:14.771Z",
+  "updatedAt": "2026-04-23T10:28:38.551Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
@@ -513,6 +513,13 @@
       "role": "Frontend Developer (Performance Optimization)",
       "link": "Https://dhawantravel.com",
       "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop."
+    },
+    {
+      "title": "Guruji Taxi – API Integration & Frontend Fixes (Internship",
+      "timeline": "20/04/2026",
+      "role": "Frontend Developer Intern",
+      "link": "Https://gurujitaxi.com",
+      "workDone": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements."
     }
   ]
 }
