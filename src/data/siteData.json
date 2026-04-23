@@ -66,21 +66,27 @@
       }
     ]
   },
-  "skills": [
-    "Next.js",
-    "PHP",
-    "Appwrite",
-    "Git",
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "GitHub",
-    "Bootstrap",
-    "Tailwind CSS"
-  ],
+"skills": [
+  "HTML",
+  "CSS",
+  "JavaScript",
+  "Bootstrap",
+  "Tailwind CSS",
+  "Next.js",
+  "React.js",
+  "MySQL",
+  "Laravel",
+  "PHP",
+  "Appwrite",
+  "WordPress",
+  "Git",
+  "GitHub",
+  "Testing",
+  "Deployment"
+],
   "learningPhase": [
     "App Security",
-    "Advanced Laravel",
+    "Flutter",
     "Scalable React Apps"
   ],
   "projects": [
@@ -293,27 +299,120 @@
       "level": 70
     },
     {
-      "id": "skill-1776962790491",
-      "name": "GitHub",
-      "category": "Tools",
-      "icon": "Github",
-      "level": 70
-    },
-    {
-      "id": "skill-1776962818808",
-      "name": "Bootstrap",
-      "category": "Frontend",
-      "icon": "Bootstrap",
-      "level": 70
-    },
-    {
-      "id": "skill-1776962833827",
-      "name": "Tailwind CSS",
-      "category": "Frontend",
-      "icon": "Tailwind",
-      "level": 70
-    }
-  ],
+"skillsDetailed": [
+  {
+    "id": "skill-1",
+    "name": "HTML",
+    "category": "Frontend",
+    "icon": "html",
+    "level": 90
+  },
+  {
+    "id": "skill-2",
+    "name": "CSS",
+    "category": "Frontend",
+    "icon": "css",
+    "level": 88
+  },
+  {
+    "id": "skill-3",
+    "name": "JavaScript",
+    "category": "Frontend",
+    "icon": "javascript",
+    "level": 84
+  },
+  {
+    "id": "skill-4",
+    "name": "Bootstrap",
+    "category": "Frontend",
+    "icon": "bootstrap",
+    "level": 85
+  },
+  {
+    "id": "skill-5",
+    "name": "Tailwind CSS",
+    "category": "Frontend",
+    "icon": "tailwind",
+    "level": 86
+  },
+  {
+    "id": "skill-6",
+    "name": "Next.js",
+    "category": "Frontend",
+    "icon": "next",
+    "level": 82
+  },
+  {
+    "id": "skill-7",
+    "name": "React.js",
+    "category": "Frontend",
+    "icon": "react",
+    "level": 80
+  },
+  {
+    "id": "skill-8",
+    "name": "MySQL",
+    "category": "Database",
+    "icon": "database",
+    "level": 78
+  },
+  {
+    "id": "skill-9",
+    "name": "Laravel",
+    "category": "Backend",
+    "icon": "server",
+    "level": 76
+  },
+  {
+    "id": "skill-10",
+    "name": "PHP",
+    "category": "Backend",
+    "icon": "server",
+    "level": 82
+  },
+  {
+    "id": "skill-11",
+    "name": "Appwrite",
+    "category": "Backend",
+    "icon": "database",
+    "level": 75
+  },
+  {
+    "id": "skill-12",
+    "name": "WordPress",
+    "category": "CMS",
+    "icon": "layout",
+    "level": 78
+  },
+  {
+    "id": "skill-13",
+    "name": "Git",
+    "category": "Tools",
+    "icon": "git-branch",
+    "level": 84
+  },
+  {
+    "id": "skill-14",
+    "name": "GitHub",
+    "category": "Tools",
+    "icon": "github",
+    "level": 86
+  },
+  {
+    "id": "skill-15",
+    "name": "Testing",
+    "category": "Quality",
+    "icon": "check-circle",
+    "level": 72
+  },
+  {
+    "id": "skill-16",
+    "name": "Deployment",
+    "category": "DevOps",
+    "icon": "rocket",
+    "level": 80
+  }
+],
   "projectsDetailed": [
     {
       "id": "project-1776863181090",
