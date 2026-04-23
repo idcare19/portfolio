@@ -427,7 +427,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T10:30:52.666Z",
+  "updatedAt": "2026-04-23T10:31:32.776Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
@@ -526,7 +526,7 @@
       "timeline": "19/04/2026",
       "role": "Frontend Developer Intern",
       "link": "Https://Saniaenterprises.in",
-      "workDone": ""
+      "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering."
     }
   ]
 }
