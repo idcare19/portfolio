@@ -67,16 +67,14 @@
     ]
   },
   "skills": [
-    "HTML/CSS",
-    "JavaScript",
+    "Next.js",
     "PHP",
-    "MySQL",
-    "WordPress",
-    "Git & GitHub",
-    "Design (Photoshop)",
-    "Laravel",
-    "React",
-    "Testing"
+    "Appwrite",
+    "Git",
+    "HTML",
+    "CSS",
+    "JavaScript",
+    "GitHub"
   ],
   "learningPhase": [
     "App Security",
@@ -437,7 +435,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T12:38:58.735Z",
+  "updatedAt": "2026-04-23T16:46:55.758Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
