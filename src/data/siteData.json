@@ -248,57 +248,7 @@
       "icon": "wrench"
     }
   ],
-  "skillsDetailed": [
-    {
-      "id": "skill-1",
-      "name": "Next.js",
-      "category": "Frontend",
-      "icon": "next",
-      "level": 92
-    },
-    {
-      "id": "skill-2",
-      "name": "PHP",
-      "category": "Backend",
-      "icon": "server",
-      "level": 84
-    },
-    {
-      "id": "skill-3",
-      "name": "Appwrite",
-      "category": "Database",
-      "icon": "database",
-      "level": 80
-    },
-    {
-      "id": "skill-4",
-      "name": "Git",
-      "category": "Tools",
-      "icon": "git-branch",
-      "level": 88
-    },
-    {
-      "id": "Skill-5",
-      "name": "HTML",
-      "category": "Frontend",
-      "icon": "HTML",
-      "level": 70
-    },
-    {
-      "id": "skill-1776962757628",
-      "name": "CSS",
-      "category": "Frontend",
-      "icon": "CSS",
-      "level": 70
-    },
-    {
-      "id": "skill-1776962773403",
-      "name": "JavaScript",
-      "category": "Frontend",
-      "icon": "JavaScript",
-      "level": 70
-    },
-    {
+
 "skillsDetailed": [
   {
     "id": "skill-1",
