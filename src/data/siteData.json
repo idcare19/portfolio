@@ -427,7 +427,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T10:32:49.688Z",
+  "updatedAt": "2026-04-23T10:36:33.137Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
@@ -527,6 +527,13 @@
       "role": "Frontend Developer Intern",
       "link": "Https://Saniaenterprises.in",
       "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering."
+    },
+    {
+      "title": "Medical Seva – Static Website Development (Internship)",
+      "timeline": "23/04/2026",
+      "role": "Frontend Developer Intern",
+      "link": "https://medicalseva.in/",
+      "workDone": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation."
     }
   ]
 }
