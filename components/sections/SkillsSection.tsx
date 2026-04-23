@@ -11,40 +11,35 @@ import {
   SiJavascript,
   SiLaravel,
   SiMysql,
-  SiPhotopea,
   SiPhp,
   SiReact,
-  SiTestinglibrary,
+  SiTailwindcss,
+  SiBootstrap,
+  SiNextdotjs,
+  SiAppwrite,
   SiWordpress,
+  SiTestinglibrary,
+  SiVercel,
 } from "react-icons/si";
+import { Rocket, Database, Code2 } from "lucide-react";
 
 const skillIconMap: Record<string, { icon: ReactNode; tone: string }> = {
-  "HTML/CSS": {
-    icon: (
-      <span className="inline-flex items-center gap-0.5">
-        <SiHtml5 className="h-3.5 w-3.5 text-orange-600" />
-        <SiCss className="h-3.5 w-3.5 text-blue-600" />
-      </span>
-    ),
-    tone: "",
-  },
+  HTML: { icon: <SiHtml5 className="h-3.5 w-3.5 text-orange-600" />, tone: "" },
+  CSS: { icon: <SiCss className="h-3.5 w-3.5 text-blue-600" />, tone: "" },
   JavaScript: { icon: <SiJavascript className="h-3.5 w-3.5 text-amber-500" />, tone: "" },
-  PHP: { icon: <SiPhp className="h-3.5 w-3.5 text-indigo-600" />, tone: "" },
+  Bootstrap: { icon: <SiBootstrap className="h-3.5 w-3.5 text-violet-600" />, tone: "" },
+  "Tailwind CSS": { icon: <SiTailwindcss className="h-3.5 w-3.5 text-cyan-500" />, tone: "" },
+  "Next.js": { icon: <SiNextdotjs className="h-3.5 w-3.5 text-slate-900" />, tone: "" },
+  "React.js": { icon: <SiReact className="h-3.5 w-3.5 text-cyan-600" />, tone: "" },
   MySQL: { icon: <SiMysql className="h-3.5 w-3.5 text-blue-600" />, tone: "" },
-  WordPress: { icon: <SiWordpress className="h-3.5 w-3.5 text-sky-700" />, tone: "" },
-  "Git & GitHub": {
-    icon: (
-      <span className="inline-flex items-center gap-0.5">
-        <SiGit className="h-3.5 w-3.5 text-orange-600" />
-        <SiGithub className="h-3.5 w-3.5 text-slate-800" />
-      </span>
-    ),
-    tone: "",
-  },
-  "Design (Photoshop)": { icon: <SiPhotopea className="h-3.5 w-3.5 text-blue-600" />, tone: "" },
   Laravel: { icon: <SiLaravel className="h-3.5 w-3.5 text-red-600" />, tone: "" },
-  React: { icon: <SiReact className="h-3.5 w-3.5 text-cyan-600" />, tone: "" },
+  PHP: { icon: <SiPhp className="h-3.5 w-3.5 text-indigo-600" />, tone: "" },
+  Appwrite: { icon: <SiAppwrite className="h-3.5 w-3.5 text-pink-600" />, tone: "" },
+  WordPress: { icon: <SiWordpress className="h-3.5 w-3.5 text-sky-700" />, tone: "" },
+  Git: { icon: <SiGit className="h-3.5 w-3.5 text-orange-600" />, tone: "" },
+  GitHub: { icon: <SiGithub className="h-3.5 w-3.5 text-slate-800" />, tone: "" },
   Testing: { icon: <SiTestinglibrary className="h-3.5 w-3.5 text-rose-600" />, tone: "" },
+  Deployment: { icon: <Rocket className="h-3.5 w-3.5 text-emerald-600" />, tone: "" },
 };
 
 export function SkillsSection() {
