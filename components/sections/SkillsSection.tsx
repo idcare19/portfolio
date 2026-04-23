@@ -48,7 +48,7 @@ export function SkillsSection() {
   const movingSkills = portfolioData.skills.concat(portfolioData.skills);
 
   function renderSkillPill(skill: string, key: string, tone: "blue" | "cyan") {
-    const skillIcon = skillIconMap[skill] ?? { icon: <SiGithub className="h-3.5 w-3.5 text-slate-700" />, tone: "" };
+    const skillIcon = skillIconMap[skill] ?? { icon: <Code2 className="h-3.5 w-3.5 text-slate-700" />, tone: "" };
     const toneClasses =
       tone === "blue"
         ? "border-blue-200 bg-blue-50 text-blue-700"
