@@ -298,6 +298,20 @@
       "category": "Tools",
       "icon": "Github",
       "level": 70
+    },
+    {
+      "id": "skill-1776962818808",
+      "name": "Bootstrap",
+      "category": "Frontend",
+      "icon": "Bootstrap",
+      "level": 70
+    },
+    {
+      "id": "skill-1776962833827",
+      "name": "Tailwind CSS",
+      "category": "Frontend",
+      "icon": "Tailwind",
+      "level": 70
     }
   ],
   "projectsDetailed": [
@@ -465,7 +479,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T16:47:33.722Z",
+  "updatedAt": "2026-04-23T16:47:35.123Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
