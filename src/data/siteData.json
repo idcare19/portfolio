@@ -427,7 +427,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T10:20:33.301Z",
+  "updatedAt": "2026-04-23T10:24:14.771Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
@@ -505,5 +505,14 @@
       "Testing and fixing bugs on mobile and desktop",
       "Deploying regular updates and maintaining the live website"
     ]
-  }
+  },
+  "completedProjects": [
+    {
+      "title": "Website Speed Optimization & Performance Enhancement",
+      "timeline": "21/04/2026",
+      "role": "Frontend Developer (Performance Optimization)",
+      "link": "Https://dhawantravel.com",
+      "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop."
+    }
+  ]
 }
