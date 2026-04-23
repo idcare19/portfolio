@@ -413,11 +413,11 @@
       "whitelistAdmin": true
     },
     "topNoticeBar": {
-      "enabled": false,
+      "enabled": true,
       "message": "Open for freelance and long-term projects.",
       "ctaText": "Let’s Talk",
       "ctaLink": "#contact",
-      "colorStyle": "blue"
+      "colorStyle": "amber"
     },
     "versionInfo": {
       "currentVersion": "1.0.0",
@@ -427,7 +427,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T10:31:32.776Z",
+  "updatedAt": "2026-04-23T10:32:13.750Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
