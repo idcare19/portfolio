@@ -74,7 +74,9 @@
     "HTML",
     "CSS",
     "JavaScript",
-    "GitHub"
+    "GitHub",
+    "Bootstrap",
+    "Tailwind CSS"
   ],
   "learningPhase": [
     "App Security",
@@ -463,7 +465,7 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T16:46:57.262Z",
+  "updatedAt": "2026-04-23T16:47:33.722Z",
   "workingProjects": [
     {
       "title": "Excel Practice Website",
