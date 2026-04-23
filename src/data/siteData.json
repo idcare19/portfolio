@@ -427,13 +427,13 @@
       "showBadge": false
     }
   },
-  "updatedAt": "2026-04-23T10:10:15.919Z",
+  "updatedAt": "2026-04-23T10:20:33.301Z",
   "workingProjects": [
     {
-      "title": "Freelancer and intership work",
-      "description": "Working on multiple freelance and internship projects involving frontend fixes, responsive design, performance optimization, admin dashboard improvements, bug fixing, and deployment support for live websites and client projects.",
-      "status": "In progress ",
-      "timeline": "Non Disclosable ",
+      "title": "Excel Practice Website",
+      "description": "A smart and beginner-friendly Excel practice platform designed to help users master Excel from basics to advanced. It includes structured lessons, shortcut cheat sheets, real-world practice tasks, and interactive data handling exercises. The goal is to make Excel learning fast, practical, and accessible on both mobile and desktop with a clean, responsive UI.",
+      "status": "Under Designing",
+      "timeline": "Soon",
       "link": "#"
     }
   ],
