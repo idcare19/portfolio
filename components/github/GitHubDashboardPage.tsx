@@ -42,12 +42,12 @@ const COMMITS_PER_PAGE = 25;
 
 function formatDate(value?: string, options?: Intl.DateTimeFormatOptions) {
   if (!value) return "Not available";
-  return new Date(value).toLocaleDateString(undefined, options);
+  return new Date(value).toLocaleDateString("en-US", { timeZone: "UTC", ...options });
 }
 
 function formatDateTime(value?: string) {
   if (!value) return "Not synced yet";
-  return new Date(value).toLocaleString();
+  return new Date(value).toLocaleString("en-US", { timeZone: "UTC" });
 }
 
 function StatCard({ label, value, helper }: { label: string; value: string | number; helper?: string }) {

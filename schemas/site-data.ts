@@ -427,6 +427,8 @@ export const siteDataSchema = z.object({
     commitCountMode: z.enum(["publicCommitsOnly", "publicAndPrivateCommits", "publicReposOnly", "selectedRepositoriesOnly", "customRepositoryList"]).default("publicCommitsOnly"),
     repositorySelectionMode: z.enum(["all", "publicOnly", "privateOnly", "selected"]).default("all"),
     selectedRepositories: z.array(z.string()).default([]),
+    commitMessageIncludes: z.array(z.string()).default([]),
+    commitMessageExcludes: z.array(z.string()).default([]),
   }).optional().default({
     username: "",
     token: "",
@@ -441,6 +443,8 @@ export const siteDataSchema = z.object({
     commitCountMode: "publicCommitsOnly",
     repositorySelectionMode: "all",
     selectedRepositories: [],
+    commitMessageIncludes: [],
+    commitMessageExcludes: [],
   }),
   updatedAt: z.string().default(() => new Date().toISOString()),
   siteConnection: siteConnectionSchema.optional(),

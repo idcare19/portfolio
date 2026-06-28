@@ -22,6 +22,8 @@ type GitHubConfig = {
   commitCountMode: CommitCountMode;
   repositorySelectionMode: RepositorySelectionMode;
   selectedRepositories: string[];
+  commitMessageIncludes: string[];
+  commitMessageExcludes: string[];
 };
 
 type GitHubStats = {
@@ -58,6 +60,8 @@ const defaultConfig: GitHubConfig = {
   commitCountMode: "publicCommitsOnly",
   repositorySelectionMode: "all",
   selectedRepositories: [],
+  commitMessageIncludes: [],
+  commitMessageExcludes: [],
 };
 
 export default function GitHubAdminPage() {
@@ -158,6 +162,13 @@ export default function GitHubAdminPage() {
     });
   }
 
+  function parseList(value: string) {
+    return value
+      .split("\n")
+      .map((line) => line.trim())
+      .filter(Boolean);
+  }
+
   return (
     <div className="space-y-6">
       <PageHeader title="GitHub Settings" description="Configure repository selection and commit counting modes." />
@@ -208,6 +219,33 @@ export default function GitHubAdminPage() {
               </label>
             );
           })}
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-admin-border bg-admin-card p-6 space-y-4">
+        <h3 className="text-lg font-semibold text-admin-text">Commit Visibility Rules</h3>
+        <p className="text-sm text-admin-text-muted">
+          Add one keyword per line. Include rules keep matching commits visible, exclude rules hide matching commits.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <label className="block text-sm text-admin-text">
+            <span className="mb-1 block font-medium">Show only commits matching</span>
+            <textarea
+              className="min-h-32 w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+              value={config.commitMessageIncludes.join("\n")}
+              onChange={(e) => updateConfig({ commitMessageIncludes: parseList(e.target.value) })}
+              placeholder="release\nfix\nblog"
+            />
+          </label>
+          <label className="block text-sm text-admin-text">
+            <span className="mb-1 block font-medium">Hide commits matching</span>
+            <textarea
+              className="min-h-32 w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+              value={config.commitMessageExcludes.join("\n")}
+              onChange={(e) => updateConfig({ commitMessageExcludes: parseList(e.target.value) })}
+              placeholder="wip\ntest\nchore"
+            />
+          </label>
         </div>
       </section>
 

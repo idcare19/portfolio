@@ -36,8 +36,20 @@
       "href": "#journey"
     },
     {
+      "label": "GitHub",
+      "href": "#github"
+    },
+    {
       "label": "Services",
       "href": "#services"
+    },
+    {
+      "label": "Blogs",
+      "href": "#blogs"
+    },
+    {
+      "label": "New Section",
+      "href": "#custom-1782646235622"
     },
     {
       "label": "Contact",
@@ -401,8 +413,8 @@
   "blogs": [
     {
       "id": "how-to-build-a-portfolio-that-converts",
-      "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
+      "slug": "how-to-build-a-portfolio-that-converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
       "content": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients...",
       "coverImage": "",
@@ -416,14 +428,14 @@
       "isFeatured": false,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-06-28T08:45:00.141Z",
+      "publishedAt": "Sun Jun 28 2026 14:15:00 GMT+0530 (India Standard Time)",
       "order": 1,
       "isEnabled": true
     },
     {
       "id": "10-tips-for-frontend-developers",
-      "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
+      "slug": "10-tips-for-frontend-developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
       "content": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code...",
       "coverImage": "",
@@ -437,14 +449,14 @@
       "isFeatured": false,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-06-28T08:45:00.141Z",
+      "publishedAt": "Sun Jun 28 2026 14:15:00 GMT+0530 (India Standard Time)",
       "order": 2,
       "isEnabled": true
     },
     {
       "id": "mongodb-best-practices",
-      "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
+      "slug": "mongodb-best-practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
       "content": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices...",
       "coverImage": "",
@@ -458,7 +470,7 @@
       "isFeatured": false,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-06-28T08:45:00.141Z",
+      "publishedAt": "Sun Jun 28 2026 14:15:00 GMT+0530 (India Standard Time)",
       "order": 3,
       "isEnabled": true
     }
@@ -474,10 +486,9 @@
   },
   "websiteControl": {
     "dataSource": "auto",
-    "developerMode": false,
     "syncStatus": {
-      "lastMongoUpdate": "2026-06-28T08:45:00.141Z",
-      "lastGitHubSync": "2026-06-27T16:25:07.577Z"
+      "lastMongoUpdate": "2026-06-28T11:31:27.412Z",
+      "lastGitHubSync": "2026-06-28T11:31:28.634Z"
     },
     "popupAnnouncement": {
       "enabled": true,
@@ -531,6 +542,14 @@
       "showBadge": false
     }
   },
+  "aiConfig": {
+    "enabled": true,
+    "model": "gemini-2.5-flash",
+    "temperature": 0.2,
+    "maxTokens": 700,
+    "maxContextChunks": 6,
+    "confidenceThreshold": 0.2
+  },
   "shell": {
     "navbar": {
       "desktopCtaLabel": "Hire Me",
@@ -560,20 +579,6 @@
       "loadingLabel": "Searching..."
     }
   },
-  "githubConfig": {
-    "username": "idcare19",
-    "token": "YOUR_GITHUB_TOKEN",
-    "enabled": true,
-    "refreshInterval": 30,
-    "includePrivateRepos": false,
-    "includePrivateCommits": true,
-    "showPrivateReposPublicly": false,
-    "showPrivateCommitsPublicly": false,
-    "publicDisplayMode": "publicOnly",
-    "commitCountMode": "publicAndPrivateCommits",
-    "repositorySelectionMode": "all",
-    "selectedRepositories": []
-  },
   "sections": {
     "hero": {
       "id": "hero",
@@ -589,7 +594,80 @@
         "label": "Home"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Remote & Freelance Ready",
+          "sectionId": "hero",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Hi, I'm Abhishek",
+          "sectionId": "hero",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "animatedRole",
+          "type": "plain",
+          "label": "animatedRole",
+          "value": "Building fast, scalable and premium full-stack web applications",
+          "sectionId": "hero",
+          "order": 3,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "I build modern full-stack applications with scalable architecture, clean UI systems, and performance-focused user experiences using technologies like Next.js, Appwrite, and modern frontend frameworks.",
+          "sectionId": "hero",
+          "order": 4,
+          "isEnabled": true
+        },
+        {
+          "key": "primaryCtaLabel",
+          "type": "button",
+          "label": "primaryCtaLabel",
+          "value": "View Projects",
+          "sectionId": "hero",
+          "order": 5,
+          "isEnabled": true
+        },
+        {
+          "key": "primaryCtaHref",
+          "type": "button",
+          "label": "primaryCtaHref",
+          "value": "#projects",
+          "sectionId": "hero",
+          "order": 6,
+          "isEnabled": true
+        },
+        {
+          "key": "secondaryCtaLabel",
+          "type": "button",
+          "label": "secondaryCtaLabel",
+          "value": "Contact Me",
+          "sectionId": "hero",
+          "order": 7,
+          "isEnabled": true
+        },
+        {
+          "key": "secondaryCtaHref",
+          "type": "button",
+          "label": "secondaryCtaHref",
+          "value": "#contact",
+          "sectionId": "hero",
+          "order": 8,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Remote & Freelance Ready",
@@ -643,7 +721,44 @@
         "label": "About"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "About",
+          "sectionId": "about",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Building modern products with clean execution",
+          "sectionId": "about",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "I love transforming ideas into smooth, responsive, and practical digital experiences.",
+          "sectionId": "about",
+          "order": 3,
+          "isEnabled": true
+        },
+        {
+          "key": "intro",
+          "type": "plain",
+          "label": "intro",
+          "value": "I turn ideas into premium web products with clear structure, thoughtful interactions, and strong performance. My focus is responsive UI, smooth motion, and production-ready front-end quality.",
+          "sectionId": "about",
+          "order": 4,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "About",
@@ -680,7 +795,44 @@
         "label": "Skills"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Skills",
+          "sectionId": "skills",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Comfortable across the stack",
+          "sectionId": "skills",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "Core tools and technologies I use to design, develop, and ship production-ready web products.",
+          "sectionId": "skills",
+          "order": 3,
+          "isEnabled": true
+        },
+        {
+          "key": "learningTitle",
+          "type": "plain",
+          "label": "learningTitle",
+          "value": "Currently in Learning Phase",
+          "sectionId": "skills",
+          "order": 4,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Skills",
@@ -836,7 +988,35 @@
         "label": "Projects"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Projects",
+          "sectionId": "projects",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Featured work",
+          "sectionId": "projects",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "Fast, clean project cards with minimal motion and better performance.",
+          "sectionId": "projects",
+          "order": 3,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Projects",
@@ -859,7 +1039,35 @@
         "label": "Working Projects"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Currently Working On",
+          "sectionId": "working",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Projects in progress",
+          "sectionId": "working",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "A live snapshot of what I am building right now and where the work is headed next.",
+          "sectionId": "working",
+          "order": 3,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Currently Working On",
@@ -890,7 +1098,35 @@
         "label": "Completed Projects"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Projects I Worked On",
+          "sectionId": "completed",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Completed work and what I delivered",
+          "sectionId": "completed",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "A clear record of finished projects and the exact work I handled in each.",
+          "sectionId": "completed",
+          "order": 3,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Projects I Worked On",
@@ -942,7 +1178,35 @@
         "label": "Reviews"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Client Reviews",
+          "sectionId": "reviews",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "What clients say",
+          "sectionId": "reviews",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "Feedback from recent portfolio projects delivered for clients.",
+          "sectionId": "reviews",
+          "order": 3,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Client Reviews",
@@ -973,7 +1237,53 @@
         "label": "Experience"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Experience",
+          "sectionId": "journey",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Timeline of roles & milestones",
+          "sectionId": "journey",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "Hands-on roles that shaped my practical engineering and security-first development approach.",
+          "sectionId": "journey",
+          "order": 3,
+          "isEnabled": true
+        },
+        {
+          "key": "currentWorkTitle",
+          "type": "plain",
+          "label": "currentWorkTitle",
+          "value": "Where I Am Working Right Now",
+          "sectionId": "journey",
+          "order": 4,
+          "isEnabled": true
+        },
+        {
+          "key": "currentWork",
+          "type": "plain",
+          "label": "currentWork",
+          "value": "Parvati & Sons — Project Manager & Full Stack Developer",
+          "sectionId": "journey",
+          "order": 5,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Experience",
@@ -1004,7 +1314,7 @@
       "label": "Education",
       "renderer": "education",
       "enabled": true,
-      "order": 9,
+      "order": 10,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1013,7 +1323,35 @@
         "label": "Education"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Education",
+          "sectionId": "education",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Academic foundation",
+          "sectionId": "education",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "Education, training, and practical study that shaped the work I do today.",
+          "sectionId": "education",
+          "order": 3,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Education",
@@ -1027,7 +1365,7 @@
       "label": "Services",
       "renderer": "services",
       "enabled": true,
-      "order": 10,
+      "order": 11,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1036,7 +1374,35 @@
         "label": "Services"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Services",
+          "sectionId": "services",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "How I can help",
+          "sectionId": "services",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "Flexible product, design, and development support for founders, teams, and fast-moving ideas.",
+          "sectionId": "services",
+          "order": 3,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Services",
@@ -1069,7 +1435,7 @@
       "label": "Contact",
       "renderer": "contact",
       "enabled": true,
-      "order": 99,
+      "order": 14,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1078,7 +1444,62 @@
         "label": "Contact"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Contact",
+          "sectionId": "contact",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Let's talk about your next project",
+          "sectionId": "contact",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "Freelance projects, internships, and collaboration opportunities are always welcome.",
+          "sectionId": "contact",
+          "order": 3,
+          "isEnabled": true
+        },
+        {
+          "key": "cardTitle",
+          "type": "plain",
+          "label": "cardTitle",
+          "value": "Let's build something amazing together.",
+          "sectionId": "contact",
+          "order": 4,
+          "isEnabled": true
+        },
+        {
+          "key": "cardDescription",
+          "type": "plain",
+          "label": "cardDescription",
+          "value": "Whether it's a startup idea, website revamp, or app concept - I'd love to help build it.",
+          "sectionId": "contact",
+          "order": 5,
+          "isEnabled": true
+        },
+        {
+          "key": "formTitle",
+          "type": "plain",
+          "label": "formTitle",
+          "value": "Send a message",
+          "sectionId": "contact",
+          "order": 6,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Contact",
@@ -1121,16 +1542,44 @@
       "label": "Blogs",
       "renderer": "blogs",
       "enabled": true,
-      "order": 11,
+      "order": 12,
       "layout": "default",
       "status": "published",
       "nav": {
-        "show": false,
+        "show": true,
         "href": "#blogs",
         "label": "Blogs"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Blogs",
+          "sectionId": "blogs",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Notes, experiments, and practical write-ups",
+          "sectionId": "blogs",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "Published posts, learnings, and project breakdowns from real work.",
+          "sectionId": "blogs",
+          "order": 3,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Blogs",
@@ -1140,8 +1589,8 @@
       "items": [
         {
           "id": "how-to-build-a-portfolio-that-converts",
-          "slug": "how-to-build-a-portfolio-that-converts",
           "title": "How to build a portfolio that converts",
+          "slug": "how-to-build-a-portfolio-that-converts",
           "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
           "content": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients...",
           "coverImage": "",
@@ -1155,14 +1604,14 @@
           "isFeatured": false,
           "seoTitle": "How to Build a Portfolio That Converts",
           "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-          "publishedAt": "2026-06-28T08:45:00.141Z",
+          "publishedAt": "Sun Jun 28 2026 14:15:00 GMT+0530 (India Standard Time)",
           "order": 1,
           "isEnabled": true
         },
         {
           "id": "10-tips-for-frontend-developers",
-          "slug": "10-tips-for-frontend-developers",
           "title": "10 tips for frontend developers",
+          "slug": "10-tips-for-frontend-developers",
           "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
           "content": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code...",
           "coverImage": "",
@@ -1176,14 +1625,14 @@
           "isFeatured": false,
           "seoTitle": "10 Tips for Frontend Developers",
           "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-          "publishedAt": "2026-06-28T08:45:00.141Z",
+          "publishedAt": "Sun Jun 28 2026 14:15:00 GMT+0530 (India Standard Time)",
           "order": 2,
           "isEnabled": true
         },
         {
           "id": "mongodb-best-practices",
-          "slug": "mongodb-best-practices",
           "title": "MongoDB best practices",
+          "slug": "mongodb-best-practices",
           "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
           "content": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices...",
           "coverImage": "",
@@ -1197,7 +1646,7 @@
           "isFeatured": false,
           "seoTitle": "MongoDB Best Practices",
           "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-          "publishedAt": "2026-06-28T08:45:00.141Z",
+          "publishedAt": "Sun Jun 28 2026 14:15:00 GMT+0530 (India Standard Time)",
           "order": 3,
           "isEnabled": true
         }
@@ -1208,7 +1657,7 @@
       "label": "GitHub Activity",
       "renderer": "github",
       "enabled": true,
-      "order": 8,
+      "order": 9,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1217,12 +1666,91 @@
         "label": "GitHub"
       },
       "emptyMessage": "No content added yet.",
-      "textBlocks": [],
+      "textBlocks": [
+        {
+          "key": "eyebrow",
+          "type": "plain",
+          "label": "eyebrow",
+          "value": "Developer Activity",
+          "sectionId": "github",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "title",
+          "type": "plain",
+          "label": "title",
+          "value": "Live from GitHub",
+          "sectionId": "github",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "description",
+          "type": "plain",
+          "label": "description",
+          "value": "A real-time look at my recent contributions, projects, and statistics.",
+          "sectionId": "github",
+          "order": 3,
+          "isEnabled": true
+        }
+      ],
       "settings": {},
       "data": {
         "eyebrow": "Developer Activity",
         "title": "Live from GitHub",
         "description": "A real-time look at my recent contributions, projects, and statistics."
+      },
+      "items": []
+    },
+    "footer": {
+      "id": "footer",
+      "label": "Footer",
+      "renderer": "footer",
+      "enabled": true,
+      "order": 15,
+      "layout": "default",
+      "status": "published",
+      "nav": {
+        "show": false,
+        "href": "#footer",
+        "label": "Footer"
+      },
+      "emptyMessage": "No content added yet.",
+      "textBlocks": [
+        {
+          "key": "copyrightText",
+          "type": "plain",
+          "label": "copyrightText",
+          "value": "© 2026 Abhishek. All rights reserved.",
+          "sectionId": "footer",
+          "order": 1,
+          "isEnabled": true
+        },
+        {
+          "key": "ctaLabel",
+          "type": "button",
+          "label": "ctaLabel",
+          "value": "Let's work together",
+          "sectionId": "footer",
+          "order": 2,
+          "isEnabled": true
+        },
+        {
+          "key": "ctaHref",
+          "type": "button",
+          "label": "ctaHref",
+          "value": "#contact",
+          "sectionId": "footer",
+          "order": 3,
+          "isEnabled": true
+        }
+      ],
+      "settings": {},
+      "data": {
+        "copyrightText": "© 2026 Abhishek. All rights reserved.",
+        "ctaLabel": "Let's work together",
+        "ctaHref": "#contact"
       },
       "items": []
     }
@@ -1271,20 +1799,19 @@
     "Next.js",
     "Node.js"
   ],
-  "updatedAt": "Sun Jun 28 2026 14:15:00 GMT+0530 (India Standard Time)",
-  "siteConnection": {
-    "name": "portfolio",
-    "owner": "idcare19",
-    "repo": "portfolio",
-    "branch": "main",
-    "contentPath": "src/data/siteData.json"
-  },
-  "aiConfig": {
+  "githubConfig": {
+    "username": "idcare19",
     "enabled": true,
-    "model": "gemini-2.5-flash",
-    "temperature": 0.2,
-    "maxTokens": 700,
-    "maxContextChunks": 6,
-    "confidenceThreshold": 0.2
-  }
+    "refreshInterval": 30,
+    "includePrivateRepos": false,
+    "includePrivateCommits": true,
+    "showLifetimeCommits": true,
+    "showPrivateReposPublicly": false,
+    "showPrivateCommitsPublicly": false,
+    "publicDisplayMode": "publicOnly",
+    "commitCountMode": "publicAndPrivateCommits",
+    "repositorySelectionMode": "all",
+    "selectedRepositories": []
+  },
+  "updatedAt": "2026-06-28T11:31:27.412Z"
 }

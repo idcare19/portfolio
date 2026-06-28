@@ -26,6 +26,8 @@ type GitHubPrivacyConfig = {
   commitCountMode?: "publicCommitsOnly" | "publicAndPrivateCommits" | "publicReposOnly" | "selectedRepositoriesOnly" | "customRepositoryList";
   repositorySelectionMode?: "all" | "publicOnly" | "privateOnly" | "selected";
   selectedRepositories?: string[];
+  commitMessageIncludes?: string[];
+  commitMessageExcludes?: string[];
 };
 
 type GitHubHeaders = HeadersInit;
@@ -146,6 +148,14 @@ function getPrivacyConfig(siteData?: Awaited<ReturnType<typeof getFullSiteData>>
 function normalizeBlogUrl(value: unknown) {
   const text = String(value || "").trim();
   return text;
+}
+
+function toPlainJson<T>(value: T): T {
+  return JSON.parse(JSON.stringify(value)) as T;
+}
+
+function normalizeTerms(values?: string[]) {
+  return (values || []).map((term) => term.trim().toLowerCase()).filter(Boolean);
 }
 
 async function getHeaders() {
@@ -422,6 +432,7 @@ function toPublicStats(fullStats: CachedGitHubStats, privacyConfig: GitHubPrivac
     .map((repo: any) => sanitizeRepositoryForPublic(repo, allowPrivateRepoNames));
   const latestCommits = (fullStats.recentCommits || [])
     .filter((commit: any) => !commit.isPrivate || allowPrivateCommitMessages)
+    .filter((commit: any) => commitMatchesFilters(commit, privacyConfig))
     .slice(0, MAX_PUBLIC_COMMITS)
     .map((commit: any) =>
       commit.isPrivate && !allowPrivateCommitMessages
@@ -500,15 +511,16 @@ export async function getPublicGitHubStats(username: string, options?: { forceRe
   const cached = (await GitHubStats.findOne({ username }).lean()) as CachedGitHubStats | null;
 
   if (cached && !options?.forceRefresh && isFresh(cached.syncedAt, refreshInterval)) {
-    return toPublicStats(cached, privacyConfig);
+    return toPlainJson(toPublicStats(cached, privacyConfig));
   }
 
-  return cached ? toPublicStats(cached, privacyConfig) : null;
+  return cached ? toPlainJson(toPublicStats(cached, privacyConfig)) : null;
 }
 
 export async function getFullGitHubStatsForAdmin(username: string) {
   await connectToDatabase();
-  return await GitHubStats.findOne({ username });
+  const stats = await GitHubStats.findOne({ username }).lean();
+  return stats ? toPlainJson(stats) : null;
 }
 
 export async function syncGitHubStats(username: string) {
@@ -716,4 +728,20 @@ export async function clearGitHubCache(username: string) {
   await connectToDatabase();
   await GitHubStats.deleteOne({ username });
   return { success: true };
+}
+
+function commitMatchesFilters(commit: { repoName?: string; message?: string }, config: GitHubPrivacyConfig) {
+  const includes = normalizeTerms(config.commitMessageIncludes);
+  const excludes = normalizeTerms(config.commitMessageExcludes);
+  const haystack = `${commit.repoName || ""} ${commit.message || ""}`.toLowerCase();
+
+  if (includes.length > 0 && !includes.some((term) => haystack.includes(term))) {
+    return false;
+  }
+
+  if (excludes.some((term) => haystack.includes(term))) {
+    return false;
+  }
+
+  return true;
 }

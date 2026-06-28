@@ -13,13 +13,21 @@ export async function POST(request: Request) {
   try {
     const body = await request.json();
     const state = await getSiteContentState("mongodb");
+    const incomingGithubConfig = body?.githubConfig
+      ? {
+          ...body.githubConfig,
+        }
+      : null;
+    if (incomingGithubConfig) {
+      delete incomingGithubConfig.token;
+    }
     const nextData = normalizeSiteData({
       ...state.data,
       ...body,
-      githubConfig: body?.githubConfig
+      githubConfig: incomingGithubConfig
         ? {
             ...state.data.githubConfig,
-            ...body.githubConfig,
+            ...incomingGithubConfig,
           }
         : state.data.githubConfig,
       updatedAt: new Date().toISOString(),

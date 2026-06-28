@@ -373,6 +373,8 @@ export type SiteData = {
     commitCountMode?: "publicCommitsOnly" | "publicAndPrivateCommits" | "publicReposOnly" | "selectedRepositoriesOnly" | "customRepositoryList";
     repositorySelectionMode?: "all" | "publicOnly" | "privateOnly" | "selected";
     selectedRepositories?: string[];
+    commitMessageIncludes?: string[];
+    commitMessageExcludes?: string[];
   };
   updatedAt: string;
 };

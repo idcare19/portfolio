@@ -317,7 +317,6 @@ export function normalizeSiteData(input: SiteData): SiteData {
     updatedAt: input.updatedAt || new Date().toISOString(),
     githubConfig: {
       username: input.githubConfig?.username ?? "",
-      token: input.githubConfig?.token ?? "",
       enabled: input.githubConfig?.enabled ?? false,
       refreshInterval: input.githubConfig?.refreshInterval ?? 30,
       includePrivateRepos: input.githubConfig?.includePrivateRepos ?? false,
@@ -329,6 +328,8 @@ export function normalizeSiteData(input: SiteData): SiteData {
       commitCountMode: input.githubConfig?.commitCountMode ?? "publicCommitsOnly",
       repositorySelectionMode: input.githubConfig?.repositorySelectionMode ?? "all",
       selectedRepositories: input.githubConfig?.selectedRepositories ?? [],
+      commitMessageIncludes: input.githubConfig?.commitMessageIncludes ?? [],
+      commitMessageExcludes: input.githubConfig?.commitMessageExcludes ?? [],
     },
   };
 }

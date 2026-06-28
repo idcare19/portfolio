@@ -21,6 +21,7 @@ export function Navbar() {
   );
   const contactHref = isHomePage ? "#contact" : "/#contact";
   const homeHref = isHomePage ? "#home" : "/#home";
+  const githubHref = "/github";
   const hasTopNotice = Boolean(portfolioData.websiteControl?.topNoticeBar?.enabled);
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
@@ -109,6 +110,13 @@ export function Navbar() {
             {shell.navbar.desktopCtaLabel}
           </a>
 
+          <a
+            href={githubHref}
+            className="hidden rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-5 py-2 text-xs font-semibold text-text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary lg:inline-flex"
+          >
+            GitHub
+          </a>
+
           <button
             onClick={() => setOpen((value) => !value)}
             className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main md:hidden"
@@ -149,8 +157,15 @@ export function Navbar() {
                 setOpen(false);
               }}
               className="mt-3 inline-flex w-full justify-center rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white hover:opacity-90"
-            >
+              >
               {shell.navbar.desktopCtaLabel}
+            </a>
+            <a
+              href={githubHref}
+              onClick={() => setOpen(false)}
+              className="mt-3 inline-flex w-full justify-center rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-3 text-sm font-semibold text-text-main hover:border-primary/40 hover:text-primary"
+            >
+              GitHub
             </a>
           </div>
         ) : null}
