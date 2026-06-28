@@ -477,7 +477,7 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     title: blog.title || `Blog ${index + 1}`,
     excerpt: blog.excerpt || "",
     content: blog.content || blog.markdown || "",
-    coverImage: blog.thumbnail || "",
+    coverImage: blog.thumbnail || blog.coverImage || "",
     tags: blog.tags || [],
     category: Array.isArray(blog.categories) ? String(blog.categories[0] || "General") : "General",
     status: blog.published === false ? "draft" : "published",
@@ -489,18 +489,7 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     isEnabled: blog.published !== false,
   }));
 
-  console.log("[ADMIN GET document id/source]", {
-    id: settings.updatedAt || null,
-    collection: "SiteSettings",
-    activeSource: "mongodb",
-  });
   const aboutSection = sections.find((section: any) => section.key === "about" || section.id === "about");
-  console.log("[ADMIN GET _id]", {
-    settingsId: (rawSettings as any)?._id || null,
-    aboutSectionId: aboutSection?._id || null,
-  });
-  console.log("[ADMIN GET raw about.items]", aboutSection?.items || []);
-  console.log("[ADMIN GET section count]", sections.length);
 
   return normalizeSiteData({
     owner: settings.owner,
@@ -605,13 +594,6 @@ export async function createPortfolioMessage(input: {
 export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteData> {
   const now = nextData.updatedAt || new Date().toISOString();
 
-  console.log("[BEFORE SAVE about.items]", nextData.sections?.about?.items);
-  console.log("[SAVE document id/source]", {
-    id: now,
-    collection: "SiteSettings",
-    activeSource: "mongodb",
-  });
-
   const savedSettings = await SiteSettings.findOneAndUpdate(
     { key: SETTINGS_KEY },
     {
@@ -660,15 +642,8 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
 
   const sectionReadback = await Section.find({}).sort({ order: 1, createdAt: 1 }).lean();
   const aboutSectionFromMongo = sectionReadback.find((section: any) => section.key === "about" || section.id === "about");
-  console.log("[SECTION READBACK about.items]", aboutSectionFromMongo?.items);
-  console.log("[SAVE _id]", {
-    settingsId: savedSettings?._id || null,
-    aboutSectionId: aboutSectionFromMongo?._id || null,
-  });
-
   const readback = await SiteSettings.findOne({ key: SETTINGS_KEY }).lean();
   const readbackData = readback as unknown as { _id?: unknown; sections?: SiteData["sections"] };
-  console.log("[AFTER SAVE READBACK about.items]", readbackData?.sections?.about?.items);
 
   await Project.deleteMany({});
   const projects = (nextData.projectsDetailed || []).map((project, index) => ({
@@ -740,7 +715,7 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
     title: String(blog.title || `Blog ${index + 1}`),
     excerpt: String(blog.excerpt || blog.description || ""),
     content: String(blog.content || ""),
-    coverImage: String(blog.coverImage || ""),
+    thumbnail: String(blog.coverImage || blog.thumbnail || ""),
     tags: Array.isArray(blog.tags) ? blog.tags : [],
     category: String(blog.category || ""),
     status: String(blog.status || "draft"),
@@ -812,5 +787,10 @@ export async function getPublishedProjects() {
 
 export async function getPublishedBlogs() {
   const data = await getPortfolioSiteData();
-  return data.blogs.filter((blog) => blog.status === "published" && blog.isEnabled);
+  return data.blogs
+    .filter((blog) => blog.status === "published" && blog.isEnabled)
+    .map((blog) => ({
+      ...blog,
+      thumbnail: blog.coverImage || (blog as any).thumbnail || "",
+    }));
 }

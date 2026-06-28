@@ -36,7 +36,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
 
   return (
     <div className="space-y-4">
-      <section className="rounded-2xl border border-admin-border bg-admin-card p-5 shadow-sm">
+      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Content Source Control</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <div className="space-y-1">
@@ -69,20 +69,20 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
             <p><span className="font-semibold">Last GitHub sync:</span> {formatDateTime(status?.lastGitHubSyncAt || control.syncStatus?.lastGitHubSync)}</p>
           </div>
           <div className="flex flex-wrap gap-3">
-            <button type="button" onClick={actions?.onSyncGithubToDb} disabled={actions?.syncingGithubToDb} className="rounded-xl border border-admin-border bg-admin-input px-4 py-2 text-sm font-semibold text-admin-text disabled:opacity-60">
+            <button type="button" onClick={actions?.onSyncGithubToDb} disabled={actions?.syncingGithubToDb} className="inline-flex items-center justify-center rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-4 py-2.5 text-sm font-semibold text-[#1D4ED8] shadow-[0_12px_24px_rgba(37,99,235,0.10)] transition hover:-translate-y-0.5 disabled:opacity-60">
               {actions?.syncingGithubToDb ? "Syncing..." : "Sync GitHub -> MongoDB"}
             </button>
-            <button type="button" onClick={actions?.onSyncDbToGithub} disabled={actions?.syncingDbToGithub} className="rounded-xl border border-admin-border bg-admin-input px-4 py-2 text-sm font-semibold text-admin-text disabled:opacity-60">
+            <button type="button" onClick={actions?.onSyncDbToGithub} disabled={actions?.syncingDbToGithub} className="inline-flex items-center justify-center rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-4 py-2.5 text-sm font-semibold text-[#1D4ED8] shadow-[0_12px_24px_rgba(37,99,235,0.10)] transition hover:-translate-y-0.5 disabled:opacity-60">
               {actions?.syncingDbToGithub ? "Syncing..." : "Sync MongoDB -> GitHub"}
             </button>
-            <button type="button" onClick={actions?.onRefreshCache} disabled={actions?.refreshingCache} className="rounded-xl border border-admin-border bg-admin-input px-4 py-2 text-sm font-semibold text-admin-text disabled:opacity-60">
+            <button type="button" onClick={actions?.onRefreshCache} disabled={actions?.refreshingCache} className="inline-flex items-center justify-center rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-4 py-2.5 text-sm font-semibold text-[#1D4ED8] shadow-[0_12px_24px_rgba(37,99,235,0.10)] transition hover:-translate-y-0.5 disabled:opacity-60">
               {actions?.refreshingCache ? "Refreshing..." : "Force Refresh Cache"}
             </button>
           </div>
         </div>
       </section>
 
-      <section className="rounded-2xl border border-admin-border bg-admin-card p-5 shadow-sm">
+      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Global Popup Announcement</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={control.popupAnnouncement.enabled} onChange={(e) => setControl({ popupAnnouncement: { ...control.popupAnnouncement, enabled: e.target.checked } })} /> Enable popup</label>
@@ -99,7 +99,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         </div>
       </section>
 
-      <section className="rounded-2xl border border-admin-border bg-admin-card p-5 shadow-sm">
+      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Maintenance / Downtime Mode</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={control.maintenanceMode.enabled} onChange={(e) => setControl({ maintenanceMode: { ...control.maintenanceMode, enabled: e.target.checked } })} /> Enable maintenance mode</label>
@@ -114,7 +114,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         </div>
       </section>
 
-      <section className="rounded-2xl border border-admin-border bg-admin-card p-5 shadow-sm">
+      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Top Notice Bar</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={control.topNoticeBar.enabled} onChange={(e) => setControl({ topNoticeBar: { ...control.topNoticeBar, enabled: e.target.checked } })} /> Enable notice bar</label>
@@ -125,7 +125,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         </div>
       </section>
 
-      <section className="rounded-2xl border border-admin-border bg-admin-card p-5 shadow-sm">
+      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Version / Update Message</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <input className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2" value={control.versionInfo.currentVersion} onChange={(e) => setControl({ versionInfo: { ...control.versionInfo, currentVersion: e.target.value } })} placeholder="Current version" />

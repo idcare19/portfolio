@@ -21,6 +21,7 @@ const emptyProject: ProjectItem = {
   githubUrl: "",
   featured: false,
   order: 0,
+  isEnabled: true,
   overview: "",
   problem: "",
   solution: "",
@@ -57,6 +58,7 @@ export function ProjectsEditor({ data, onChange }: Props) {
         tech: project.techStack,
         liveUrl: project.liveDemoUrl,
         githubUrl: project.githubUrl,
+        isEnabled: project.isEnabled,
       })),
     });
   }
@@ -185,6 +187,9 @@ export function ProjectsEditor({ data, onChange }: Props) {
             <textarea className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2 md:col-span-2" rows={3} value={(active.futureImprovements || []).join(", ")} onChange={(e) => updateActive({ futureImprovements: e.target.value.split(",").map((v) => v.trim()).filter(Boolean) })} placeholder="Future improvements (comma separated)" />
             <label className="inline-flex items-center gap-2 text-sm text-admin-text">
               <input type="checkbox" checked={active.featured} onChange={(e) => updateActive({ featured: e.target.checked })} /> Featured
+            </label>
+            <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+              <input type="checkbox" checked={active.isEnabled !== false} onChange={(e) => updateActive({ isEnabled: e.target.checked })} /> Enabled
             </label>
             <input type="number" className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2" value={active.order} onChange={(e) => updateActive({ order: Number(e.target.value || 0) })} placeholder="Order" />
             

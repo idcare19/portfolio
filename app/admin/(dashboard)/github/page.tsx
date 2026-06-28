@@ -43,6 +43,7 @@ type GitHubStats = {
     totalCommits?: number;
   };
   repositories?: Array<{ name: string; fullName?: string; private?: boolean; commitCount?: number; publicCommitCount?: number; privateCommitCount?: number }>;
+  selectedRepositories?: string[];
   lastSyncError?: string;
 };
 
@@ -64,6 +65,48 @@ const defaultConfig: GitHubConfig = {
   commitMessageExcludes: [],
 };
 
+function normalizeConfig(input?: Partial<GitHubConfig> | null): GitHubConfig {
+  return {
+    ...defaultConfig,
+    ...input,
+    username: input?.username || "",
+    token: input?.token || "",
+    selectedRepositories: Array.isArray(input?.selectedRepositories) ? input.selectedRepositories : [],
+    commitMessageIncludes: Array.isArray(input?.commitMessageIncludes) ? input.commitMessageIncludes : [],
+    commitMessageExcludes: Array.isArray(input?.commitMessageExcludes) ? input.commitMessageExcludes : [],
+  };
+}
+
+function normalizeStats(input?: Partial<GitHubStats> | null) {
+  const totals: NonNullable<GitHubStats["totals"]> = input?.totals || {
+    totalRepos: 0,
+    publicRepos: 0,
+    privateRepos: 0,
+    totalStars: 0,
+    totalForks: 0,
+  };
+  return {
+    syncedAt: input?.syncedAt || "",
+    publicCommits: input?.publicCommits ?? totals.publicCommits ?? 0,
+    privateCommits: input?.privateCommits ?? totals.privateCommits ?? 0,
+    totalCommits: input?.totalCommits ?? totals.totalCommits ?? 0,
+    privateIncluded: Boolean(input?.privateIncluded),
+    totals: {
+      totalRepos: totals.totalRepos ?? 0,
+      publicRepos: totals.publicRepos ?? 0,
+      privateRepos: totals.privateRepos ?? 0,
+      totalStars: totals.totalStars ?? 0,
+      totalForks: totals.totalForks ?? 0,
+      publicCommits: totals.publicCommits ?? input?.publicCommits ?? 0,
+      privateCommits: totals.privateCommits ?? input?.privateCommits ?? 0,
+      totalCommits: totals.totalCommits ?? input?.totalCommits ?? 0,
+    },
+    repositories: Array.isArray(input?.repositories) ? input.repositories : [],
+    selectedRepositories: Array.isArray(input?.selectedRepositories) ? input.selectedRepositories : [],
+    lastSyncError: input?.lastSyncError || "",
+  };
+}
+
 export default function GitHubAdminPage() {
   const { notify } = useToast();
   const [loading, setLoading] = useState(false);
@@ -71,28 +114,32 @@ export default function GitHubAdminPage() {
   const [clearing, setClearing] = useState(false);
   const [showToken, setShowToken] = useState(false);
   const [config, setConfig] = useState<GitHubConfig>(defaultConfig);
-  const [stats, setStats] = useState<GitHubStats | null>(null);
+  const [stats, setStats] = useState<ReturnType<typeof normalizeStats> | null>(null);
 
   useEffect(() => {
     async function fetchData() {
       const siteRes = await fetch("/api/admin/site-data");
       if (siteRes.ok) {
         const siteData = await siteRes.json();
-        if (siteData.data?.githubConfig) setConfig((current) => ({ ...current, ...siteData.data.githubConfig }));
+        if (siteData.data?.githubConfig) setConfig(normalizeConfig(siteData.data.githubConfig));
       }
 
       const statsRes = await fetch("/api/admin/github/stats");
       if (statsRes.ok) {
         const statsData = await statsRes.json();
-        if (statsData.success) setStats(statsData.data);
+        if (statsData.success) setStats(normalizeStats(statsData.data));
+        else setStats(normalizeStats(null));
       }
     }
 
     void fetchData();
   }, []);
 
-  const repoOptions = useMemo(() => stats?.repositories || [], [stats?.repositories]);
-  const selectedSet = useMemo(() => new Set(config.selectedRepositories), [config.selectedRepositories]);
+  const repoOptions = useMemo(() => stats?.repositories ?? [], [stats?.repositories]);
+  const selectedRepositories = config.selectedRepositories ?? [];
+  const includeRules = config.commitMessageIncludes ?? [];
+  const excludeRules = config.commitMessageExcludes ?? [];
+  const selectedSet = useMemo(() => new Set(selectedRepositories), [selectedRepositories]);
 
   function updateConfig(next: Partial<GitHubConfig>) {
     setConfig((current) => ({ ...current, ...next }));
@@ -101,16 +148,40 @@ export default function GitHubAdminPage() {
   async function saveConfig() {
     setLoading(true);
     try {
+      const nextConfig = normalizeConfig({
+        ...config,
+        selectedRepositories: config.selectedRepositories ?? [],
+        commitMessageIncludes: config.commitMessageIncludes ?? [],
+        commitMessageExcludes: config.commitMessageExcludes ?? [],
+      });
+      const siteRes = await fetch("/api/admin/site-data?_ts=" + Date.now());
+      const sitePayload = siteRes.ok ? await siteRes.json() : null;
+      const currentSiteData = sitePayload?.data ?? {};
+      const mergedSiteData = {
+        ...currentSiteData,
+        githubConfig: {
+          ...(currentSiteData.githubConfig ?? {}),
+          ...nextConfig,
+          selectedRepositories: nextConfig.selectedRepositories ?? [],
+          commitMessageIncludes: nextConfig.commitMessageIncludes ?? [],
+          commitMessageExcludes: nextConfig.commitMessageExcludes ?? [],
+        },
+      };
       const response = await fetch("/api/admin/site-data/update", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ githubConfig: config }),
+        body: JSON.stringify({ data: mergedSiteData }),
       });
       const payload = await response.json();
-      if (!payload.success) throw new Error(payload.reason || "Failed to save configuration");
+      if (!payload.success) throw new Error(payload.error || payload.reason || payload.details || "Failed to save configuration");
       notify("success", "GitHub configuration saved.");
-      if (config.repositorySelectionMode === "selected" || config.commitCountMode === "selectedRepositoriesOnly") {
+      if (nextConfig.repositorySelectionMode === "selected" || nextConfig.commitCountMode === "selectedRepositoriesOnly") {
         notify("success", "Repository selection updated. Run sync to recalculate commit totals.");
+      }
+      const refreshed = await fetch("/api/admin/site-data?_ts=" + Date.now());
+      if (refreshed.ok) {
+        const refreshedPayload = await refreshed.json();
+        if (refreshedPayload.data?.githubConfig) setConfig(normalizeConfig(refreshedPayload.data.githubConfig));
       }
     } catch (error) {
       notify("error", error instanceof Error ? error.message : "Failed to save configuration.");
@@ -155,7 +226,7 @@ export default function GitHubAdminPage() {
 
   function toggleSelectedRepository(name: string) {
     setConfig((current) => {
-      const next = new Set(current.selectedRepositories);
+      const next = new Set(current.selectedRepositories ?? []);
       if (next.has(name)) next.delete(name);
       else next.add(name);
       return { ...current, selectedRepositories: Array.from(next) };
@@ -215,7 +286,7 @@ export default function GitHubAdminPage() {
                 <input type="checkbox" checked={checked} onChange={() => toggleSelectedRepository(key)} />
                 <span className="flex-1 truncate">{repo.name}</span>
                 <Badge>{repo.private ? "Private" : "Public"}</Badge>
-                <span className="text-admin-text-muted">{repo.commitCount || 0} commits</span>
+                <span className="text-admin-text-muted">{repo.commitCount ?? 0} commits</span>
               </label>
             );
           })}
@@ -232,7 +303,7 @@ export default function GitHubAdminPage() {
             <span className="mb-1 block font-medium">Show only commits matching</span>
             <textarea
               className="min-h-32 w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
-              value={config.commitMessageIncludes.join("\n")}
+              value={includeRules.join("\n")}
               onChange={(e) => updateConfig({ commitMessageIncludes: parseList(e.target.value) })}
               placeholder="release\nfix\nblog"
             />
@@ -241,7 +312,7 @@ export default function GitHubAdminPage() {
             <span className="mb-1 block font-medium">Hide commits matching</span>
             <textarea
               className="min-h-32 w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
-              value={config.commitMessageExcludes.join("\n")}
+              value={excludeRules.join("\n")}
               onChange={(e) => updateConfig({ commitMessageExcludes: parseList(e.target.value) })}
               placeholder="wip\ntest\nchore"
             />
@@ -270,6 +341,7 @@ export default function GitHubAdminPage() {
           <button type="button" onClick={syncGitHub} disabled={syncing} className="rounded-full bg-blue-600 px-4 py-2 text-sm font-semibold text-white">{syncing ? "Syncing..." : "Manual Sync"}</button>
           <button type="button" onClick={clearCache} disabled={clearing} className="rounded-full bg-rose-600 px-4 py-2 text-sm font-semibold text-white">{clearing ? "Clearing..." : "Clear Cache"}</button>
         </div>
+        {!stats ? <p className="mt-4 text-sm text-amber-700">GitHub stats are not loaded yet. Run Manual Sync.</p> : null}
         {stats?.syncedAt ? <p className="mt-4 text-sm text-admin-text-muted">Last synced: {new Date(stats.syncedAt).toLocaleString()}</p> : null}
         {stats?.lastSyncError ? <p className="mt-2 text-sm text-rose-600">Last sync error: {stats.lastSyncError}</p> : null}
       </section>

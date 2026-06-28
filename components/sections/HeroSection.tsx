@@ -8,15 +8,12 @@ import { Button } from "@/components/ui/Button";
 export function HeroSection() {
   const portfolioData = useSiteDataContext();
   const section = useSectionData("hero");
+  const aboutSection = useSectionData("about");
   const heroData = section.data as Record<string, any>;
-  const stats = Array.isArray(heroData.stats) ? heroData.stats : [];
+  const stats = Array.isArray(aboutSection.items) ? aboutSection.items : [];
   const badges = Array.isArray(heroData.badges) ? heroData.badges : [];
   const resumeUrl = String(heroData.resumeUrl || portfolioData.owner?.resumeUrl || "").trim();
   const hasResume = Boolean(resumeUrl && resumeUrl !== "#");
-  if (process.env.NODE_ENV !== "production") {
-    console.debug("[section:hero]", { eyebrow: heroData.eyebrow, title: heroData.title, description: heroData.description });
-  }
-
   return (
     <section id="home" className="relative overflow-hidden bg-section-bg pt-32 sm:pt-36 pb-24">
       {/* Removed blobs that were causing washed out colors */}

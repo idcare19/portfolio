@@ -20,7 +20,7 @@ export default async function BlogsPage() {
           {blogs.map((blog: any) => (
             <article key={blog.slug} className="glass rounded-3xl p-6">
               <div className="grid gap-6 md:grid-cols-[240px_1fr]">
-                {blog.thumbnail ? <img src={blog.thumbnail} alt={blog.title} className="h-48 w-full rounded-2xl object-cover" /> : null}
+                {blog.coverImage || blog.thumbnail ? <img src={blog.coverImage || blog.thumbnail} alt={blog.title} className="h-48 w-full rounded-2xl object-cover" /> : null}
                 <div>
                   <div className="flex flex-wrap gap-2">
                     {(blog.tags || []).map((tag: string) => <span key={tag} className="rounded-full border border-[rgb(var(--border))] bg-white px-3 py-1 text-xs text-text-main">{tag}</span>)}

@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import type { SiteData } from "@/src/types/site-data";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { SectionCard } from "@/components/admin/SectionCard";
+import { SectionItemsCrudEditor } from "@/components/admin/SectionItemsCrudEditor";
 import { useSiteDataEditor } from "@/components/admin/useSiteDataEditor";
 import { useToast } from "@/components/admin/ToastProvider";
 import { getSectionContentConfig, getValueByPath, setValueByPath, type SectionArrayField } from "@/lib/admin/section-content-fields";
@@ -112,16 +113,7 @@ export function SectionContentEditor({ slug }: { slug: string }) {
   }
 
   async function handleSave() {
-    if (process.env.NODE_ENV !== "production") {
-      console.log("[SectionContentEditor] Save clicked", config.sectionId || slug);
-    }
-    if (process.env.NODE_ENV !== "production" && config.sectionId === "about") {
-      console.log("[FRONTEND SAVE about.items]", editorData?.sections?.about?.items);
-    }
     const result = await save(editorData!, config.saveMessage);
-    if (process.env.NODE_ENV !== "production") {
-      console.log("[SectionContentEditor] save response", result);
-    }
     if (result.ok) notify("success", `${config.title} saved`);
     else notify("error", result.error || "Save failed");
   }
@@ -154,6 +146,10 @@ export function SectionContentEditor({ slug }: { slug: string }) {
         {config.arrayFields?.map((field) => (
           <ArrayEditor key={field.path} field={field} value={getValueByPath(editorData, field.path) as any[]} onChange={(next) => setPath(field.path, next)} />
         ))}
+
+        {config.itemCrud ? (
+          <SectionItemsCrudEditor config={config.itemCrud} items={getValueByPath(editorData, config.itemCrud.path) as any[]} onChange={(next) => setPath(config.itemCrud!.path, next)} />
+        ) : null}
       </div>
 
       <div className="flex flex-wrap gap-3">

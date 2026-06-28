@@ -10,7 +10,7 @@ import Link from "next/link";
 export function WorkingProjectsSection() {
   const section = useSectionData("working");
   const data = section.data as Record<string, any>;
-  const workingProjects = section.items || [];
+  const workingProjects = (section.items || []).filter((project: any) => project.isEnabled !== false);
 
   if (workingProjects.length === 0) {
     return null;

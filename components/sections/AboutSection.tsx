@@ -10,12 +10,6 @@ export function AboutSection() {
   const section = useSectionData("about");
   const data = section.data as Record<string, any>;
   const stats = section.items;
-  if (process.env.NODE_ENV !== "production") {
-    console.debug("[section:about]", { eyebrow: data.eyebrow, title: data.title, description: data.description });
-    if (data.eyebrow === undefined || data.title === undefined || data.description === undefined) {
-      console.warn("[section:about] missing text fields", { eyebrow: data.eyebrow, title: data.title, description: data.description });
-    }
-  }
   const hasHeader = Boolean(data.eyebrow || data.title || data.description);
 
   return (

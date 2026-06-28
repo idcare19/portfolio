@@ -18,7 +18,15 @@ type Props<T extends ItemRecord> = {
   description: string;
   items: T[];
   setItems: (items: T[]) => void;
-  fields: Array<{ key: keyof T; label: string; type?: FieldType; options?: FieldOption[]; required?: boolean }>;
+  fields: Array<{
+    key: keyof T;
+    label: string;
+    type?: FieldType;
+    options?: FieldOption[];
+    required?: boolean;
+    format?: (value: any, item: T, index: number) => any;
+    parse?: (value: any, item: T, index: number) => any;
+  }>;
   createItem: () => T;
 };
 
@@ -61,8 +69,8 @@ export function SimpleArrayEditor<T extends ItemRecord>({ title, description, it
     setItems(items.filter((_, i) => i !== index));
   }
 
-  function update(index: number, key: keyof T, value: any) {
-    setItems(items.map((item, i) => (i === index ? { ...item, [key]: value } : item)));
+  function update(index: number, key: keyof T, value: any, parse?: (value: any, item: T, index: number) => any) {
+    setItems(items.map((item, i) => (i === index ? { ...item, [key]: parse ? parse(value, item, i) : value } : item)));
   }
 
   function moveItem(from: number, to: number) {
@@ -143,16 +151,16 @@ export function SimpleArrayEditor<T extends ItemRecord>({ title, description, it
                     <textarea
                       className="w-full rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text outline-none transition focus:border-admin-primary/50"
                       rows={4}
-                      value={String(item[field.key] ?? "")}
-                      onChange={(e) => update(index, field.key, e.target.value)}
+                      value={String(field.format ? field.format(item[field.key], item, index) : item[field.key] ?? "")}
+                      onChange={(e) => update(index, field.key, e.target.value, field.parse)}
                     />
                   ) : field.type === "checkbox" ? (
-                    <input type="checkbox" checked={Boolean(item[field.key])} onChange={(e) => update(index, field.key, e.target.checked)} />
+                    <input type="checkbox" checked={Boolean(field.format ? field.format(item[field.key], item, index) : item[field.key])} onChange={(e) => update(index, field.key, e.target.checked, field.parse)} />
                   ) : field.type === "select" ? (
                     <select
                       className="w-full rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text outline-none transition focus:border-admin-primary/50"
-                      value={String(item[field.key] ?? "")}
-                      onChange={(e) => update(index, field.key, e.target.value)}
+                      value={String(field.format ? field.format(item[field.key], item, index) : item[field.key] ?? "")}
+                      onChange={(e) => update(index, field.key, e.target.value, field.parse)}
                     >
                       {(field.options || []).map((option) => (
                         <option key={option.value} value={option.value}>
@@ -164,8 +172,8 @@ export function SimpleArrayEditor<T extends ItemRecord>({ title, description, it
                     <input
                       type={field.type === "number" ? "number" : field.type === "email" ? "email" : field.type === "url" ? "url" : "text"}
                       className="w-full rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text outline-none transition focus:border-admin-primary/50"
-                      value={field.type === "number" ? Number(item[field.key] ?? 0) : String(item[field.key] ?? "")}
-                      onChange={(e) => update(index, field.key, field.type === "number" ? Number(e.target.value || 0) : e.target.value)}
+                      value={field.type === "number" ? Number(field.format ? field.format(item[field.key], item, index) : item[field.key] ?? 0) : String(field.format ? field.format(item[field.key], item, index) : item[field.key] ?? "")}
+                      onChange={(e) => update(index, field.key, field.type === "number" ? Number(e.target.value || 0) : e.target.value, field.parse)}
                     />
                   )}
                 </label>

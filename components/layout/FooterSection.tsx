@@ -8,7 +8,7 @@ export function FooterSection() {
   const portfolioData = useSiteDataContext();
   const footerSection = portfolioData.sections?.footer;
   const footer = footerSection?.data as Record<string, string> | undefined;
-  const socials = portfolioData.socials;
+  const socials = portfolioData.socials.filter((item) => item.isEnabled !== false);
   const githubHref = socials.find((item) => item.label.toLowerCase() === "github")?.href || "";
   const linkedinHref = socials.find((item) => item.label.toLowerCase() === "linkedin")?.href || "";
   const emailHref = socials.find((item) => item.label.toLowerCase() === "email")?.href || "";

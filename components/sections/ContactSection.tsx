@@ -12,7 +12,7 @@ import { useState } from "react";
 export function ContactSection() {
   const section = useSectionData("contact");
   const data = section.data as Record<string, any>;
-  const socials = section.items.length ? section.items : [];
+  const socials = section.items.length ? section.items.filter((item: any) => item.isEnabled !== false) : [];
   const resumeUrl = String(data.resumeUrl || "").trim();
   const hasResume = Boolean(resumeUrl && resumeUrl !== "#");
   const [name, setName] = useState("");
@@ -20,9 +20,6 @@ export function ContactSection() {
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitState, setSubmitState] = useState<{ type: "success" | "error"; text: string } | null>(null);
-  if (process.env.NODE_ENV !== "production") {
-    console.debug("[section:contact]", { eyebrow: data.eyebrow, title: data.title, description: data.description });
-  }
   const hasHeader = Boolean(data.eyebrow || data.title || data.description);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {

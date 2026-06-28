@@ -31,9 +31,11 @@ export default function ServicesAdminPage() {
             { key: "id", label: "ID" },
             { key: "title", label: "Title" },
             { key: "description", label: "Description", type: "textarea" },
-            { key: "icon", label: "Icon" }
+            { key: "icon", label: "Icon" },
+            { key: "isEnabled", label: "Enabled", type: "checkbox" },
+            { key: "order", label: "Order", type: "number" }
           ]}
-          createItem={() => ({ id: `service-${Date.now()}`, title: "", description: "", icon: "" }) as any}
+          createItem={() => ({ id: `service-${Date.now()}`, title: "", description: "", icon: "", isEnabled: true, order: (data?.services?.length || 0) + 1 }) as any}
         />
       ) : null}
       <button onClick={handleSave} disabled={!data || saving} className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white hover:bg-[#1D4ED8] disabled:opacity-80">{saving ? "Saving..." : "Save Services"}</button>

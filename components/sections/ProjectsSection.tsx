@@ -10,7 +10,7 @@ export function ProjectsSection() {
   const section = useSectionData("projects");
   const data = section.data as Record<string, any>;
   const projects = section.items.length
-    ? section.items.map((item: any) => ({
+    ? section.items.filter((item: any) => item.isEnabled !== false).map((item: any) => ({
         title: item.title,
         description: item.shortDescription,
         image: item.image,
@@ -19,9 +19,6 @@ export function ProjectsSection() {
         githubUrl: item.githubUrl,
       }))
     : [];
-  if (process.env.NODE_ENV !== "production") {
-    console.debug("[section:projects]", { eyebrow: data.eyebrow, title: data.title, description: data.description });
-  }
   const hasHeader = Boolean(data.eyebrow || data.title || data.description);
 
   return (

@@ -56,7 +56,12 @@ export default function BlogsAdminPage() {
             { key: "excerpt", label: "Excerpt", type: "textarea" },
             { key: "content", label: "Content", type: "textarea" },
             { key: "coverImage", label: "Cover Image URL" },
-            { key: "tags", label: "Tags (comma separated)" },
+            {
+              key: "tags",
+              label: "Tags (comma separated)",
+              format: (value) => (Array.isArray(value) ? value.join(", ") : String(value || "")),
+              parse: (value) => String(value || "").split(",").map((item) => item.trim()).filter(Boolean),
+            },
             { key: "category", label: "Category" },
             { key: "status", label: "Status", type: "select", options: [
               { value: "draft", label: "Draft" },

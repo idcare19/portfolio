@@ -48,8 +48,11 @@ export default function ContactAdminPage() {
               { key: "label", label: "Label", required: true },
               { key: "value", label: "Visible Text" },
               { key: "href", label: "Link", type: "url", required: true },
+              { key: "icon", label: "Icon" },
+              { key: "isEnabled", label: "Enabled", type: "checkbox" },
+              { key: "order", label: "Order", type: "number" },
             ] as any}
-            createItem={() => ({ label: "", value: "", href: "" } as any)}
+            createItem={() => ({ label: "", value: "", href: "", icon: "", isEnabled: true, order: (data.socials?.length || 0) + 1 } as any)}
           />
         </>
       ) : null}

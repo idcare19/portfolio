@@ -960,7 +960,7 @@
       "settings": {},
       "data": {
         "eyebrow": "",
-        "title": "",
+        "title": "Experience",
         "description": "",
         "currentWorkTitle": "",
         "currentWork": "Parvati & Sons — Project Manager & Full Stack Developer",
@@ -1192,11 +1192,11 @@
       "emptyMessage": "",
       "textBlocks": [],
       "settings": {},
-      "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": ""
-      },
+        "data": {
+          "eyebrow": "",
+          "title": "GitHub",
+          "description": ""
+        },
       "items": []
     },
     "footer": {

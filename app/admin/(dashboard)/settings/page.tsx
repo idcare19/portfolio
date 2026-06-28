@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import { ArrowDown, ArrowUp, Plus, Trash2 } from "lucide-react";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { SectionCard } from "@/components/admin/SectionCard";
 import { useSiteDataEditor } from "@/components/admin/useSiteDataEditor";
@@ -14,6 +15,7 @@ export default function SettingsPage() {
   const [tokenInput, setTokenInput] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [showToken, setShowToken] = useState(false);
+  const navItems = data?.nav ?? [];
   const selectedRepositoriesText = useMemo(
     () => data?.githubConfig?.selectedRepositories?.join("\n") || "",
     [data?.githubConfig?.selectedRepositories]
@@ -76,11 +78,42 @@ export default function SettingsPage() {
     }
   }
 
+  function updateNavItems(nextNav: SiteData["nav"]) {
+    if (!data) return;
+    setData({ ...data, nav: nextNav });
+  }
+
+  function addNavItem() {
+    updateNavItems([
+      ...navItems,
+      {
+        label: "New Link",
+        href: "/blogs",
+      },
+    ]);
+  }
+
+  function updateNavItem(index: number, patch: Partial<SiteData["nav"][number]>) {
+    updateNavItems(navItems.map((item, itemIndex) => (itemIndex === index ? { ...item, ...patch } : item)));
+  }
+
+  function moveNavItem(index: number, direction: -1 | 1) {
+    const target = index + direction;
+    if (target < 0 || target >= navItems.length) return;
+    const next = [...navItems];
+    [next[index], next[target]] = [next[target], next[index]];
+    updateNavItems(next);
+  }
+
+  function removeNavItem(index: number) {
+    updateNavItems(navItems.filter((_, itemIndex) => itemIndex !== index));
+  }
+
   return (
     <div className="space-y-6">
       <PageHeader title="Settings" description="Manage global website settings and the GitHub integration." />
 
-      <SectionCard title="GitHub Integration" description="Connect your GitHub account to display live stats and repositories.">
+      <SectionCard title="GitHub Integration" description="Connect your GitHub account to display live stats and repositories." className="border-admin-border/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <label className="block text-sm">
             <span className="mb-1 block font-medium text-admin-text">GitHub Username</span>
@@ -258,7 +291,7 @@ export default function SettingsPage() {
               type="button"
               onClick={handleRefreshGitHub}
               disabled={!githubConfig?.enabled || refreshing}
-              className="rounded-xl bg-admin-secondary px-4 py-2 text-sm font-semibold text-white hover:bg-admin-secondary/80 disabled:opacity-50"
+              className="inline-flex items-center justify-center rounded-full bg-admin-primary px-5 py-2.5 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:bg-[#1D4ED8] disabled:cursor-not-allowed disabled:opacity-50"
             >
               {refreshing ? "Refreshing..." : "Refresh GitHub Data"}
             </button>
@@ -266,7 +299,55 @@ export default function SettingsPage() {
         </div>
       </SectionCard>
 
-      <SectionCard title="Git-based CMS" description="Connect a GitHub repository to use as a content source.">
+      <SectionCard
+        title="Navigation Links"
+        description="Add custom navbar links and routes like /blogs, /resume, or any page you want."
+        className="border-admin-border/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] shadow-[0_18px_50px_rgba(15,23,42,0.08)]"
+      >
+        <div className="space-y-3">
+          {navItems.length ? (
+            navItems.map((item, index) => (
+              <div key={`nav-item-${index}`} className="grid gap-3 rounded-2xl border border-admin-border bg-admin-card p-3 md:grid-cols-[1fr_1fr_auto]">
+                <input
+                  value={item.label}
+                  onChange={(e) => updateNavItem(index, { label: e.target.value })}
+                  className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+                  placeholder="Label"
+                />
+                <input
+                  value={item.href}
+                  onChange={(e) => updateNavItem(index, { href: e.target.value })}
+                  className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+                  placeholder="/blogs or #about"
+                />
+                <div className="flex items-center gap-2">
+                  <button type="button" onClick={() => moveNavItem(index, -1)} className="rounded-full border border-admin-border p-2 text-admin-text">
+                    <ArrowUp className="h-4 w-4" />
+                  </button>
+                  <button type="button" onClick={() => moveNavItem(index, 1)} className="rounded-full border border-admin-border p-2 text-admin-text">
+                    <ArrowDown className="h-4 w-4" />
+                  </button>
+                  <button type="button" onClick={() => removeNavItem(index)} className="rounded-full border border-rose-200 bg-rose-50 p-2 text-rose-600">
+                    <Trash2 className="h-4 w-4" />
+                  </button>
+                </div>
+              </div>
+            ))
+          ) : (
+            <p className="text-sm text-admin-text-muted">No custom links yet. Add one below.</p>
+          )}
+          <button
+            type="button"
+            onClick={addNavItem}
+            className="inline-flex items-center gap-2 rounded-full bg-admin-primary px-4 py-2 text-sm font-semibold text-white"
+          >
+            <Plus className="h-4 w-4" />
+            Add Nav Link
+          </button>
+        </div>
+      </SectionCard>
+
+      <SectionCard title="Git-based CMS" description="Connect a GitHub repository to use as a content source." className="border-admin-border/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <label className="block text-sm">
             <span className="mb-1 block font-medium text-admin-text">Repository Owner</span>
@@ -310,7 +391,7 @@ export default function SettingsPage() {
         </div>
       </SectionCard>
 
-      <SectionCard title="Website SEO" description="Global SEO title, meta description, and favicon.">
+      <SectionCard title="Website SEO" description="Global SEO title, meta description, and favicon." className="border-admin-border/80 bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
           <label className="block text-sm">
             <span className="mb-1 block font-medium text-admin-text">SEO Title</span>
@@ -334,7 +415,7 @@ export default function SettingsPage() {
             type="button"
             onClick={handleSave}
             disabled={saving}
-            className="rounded-xl bg-admin-secondary px-6 py-2 text-sm font-semibold text-white hover:bg-admin-secondary/80 disabled:opacity-50"
+            className="inline-flex items-center justify-center rounded-full bg-admin-primary px-6 py-2.5 text-sm font-semibold text-white shadow-[0_14px_28px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:bg-[#1D4ED8] disabled:cursor-not-allowed disabled:opacity-50"
           >
             {saving ? "Saving..." : "Save All Settings"}
           </button>

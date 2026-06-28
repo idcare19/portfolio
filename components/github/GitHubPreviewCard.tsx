@@ -61,7 +61,7 @@ export function GitHubPreviewCard({ stats }: { stats: GitHubStatsResponse | null
           <div className="min-w-0 flex-1">
             <div className="flex flex-wrap items-center gap-2">
               <h3 className="text-2xl font-semibold tracking-tight text-text-main">{stats.profile.name}</h3>
-              <Badge className="text-[11px]">@{stats.profile.login}</Badge>
+              <Badge className="bg-[#EFF6FF] text-[11px] text-[#1D4ED8]">@{stats.profile.login}</Badge>
             </div>
             {stats.profile.bio ? (
               <p className="mt-2 line-clamp-2 max-w-2xl text-sm leading-7 text-text-muted">{stats.profile.bio}</p>
@@ -72,26 +72,26 @@ export function GitHubPreviewCard({ stats }: { stats: GitHubStatsResponse | null
         </div>
 
         <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
-          <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/85 p-4">
+          <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/90 p-4">
             <p className="text-[11px] uppercase tracking-[0.18em] text-text-muted">Repos</p>
             <p className="mt-2 text-2xl font-semibold text-text-main">{stats.totalRepositories}</p>
           </div>
-          <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/85 p-4">
+          <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/90 p-4">
             <p className="text-[11px] uppercase tracking-[0.18em] text-text-muted">Stars</p>
             <p className="mt-2 text-2xl font-semibold text-text-main">{stats.stars}</p>
           </div>
           {stats.showLifetimeCommits !== false ? (
-            <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/85 p-4">
+            <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/90 p-4">
               <p className="text-[11px] uppercase tracking-[0.18em] text-text-muted">Lifetime Commits</p>
               <p className="mt-2 text-2xl font-semibold text-text-main">{stats.totalCommits}</p>
             </div>
           ) : (
-            <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/85 p-4">
+            <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/90 p-4">
               <p className="text-[11px] uppercase tracking-[0.18em] text-text-muted">Commits</p>
               <p className="mt-2 text-2xl font-semibold text-text-main">{stats.totalCommits}</p>
             </div>
           )}
-          <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/85 p-4">
+          <div className="rounded-[24px] border border-[rgb(var(--border))] bg-white/90 p-4">
             <p className="text-[11px] uppercase tracking-[0.18em] text-text-muted">Followers</p>
             <p className="mt-2 text-2xl font-semibold text-text-main">{stats.followers}</p>
           </div>

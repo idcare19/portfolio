@@ -11,14 +11,7 @@ export async function GET() {
 
   try {
     const data = await getPortfolioSiteData();
-    console.log("[ADMIN GET document id/source]", {
-      id: data.updatedAt || null,
-      collection: "SiteSettings",
-      activeSource: "mongodb",
-    });
-    console.log("[ADMIN GET raw about.items]", data.sections?.about?.items);
     const normalized = normalizeSiteData(data);
-    console.log("[ADMIN GET normalized about.items]", normalized.sections?.about?.items);
     return NextResponse.json({
       success: true,
       ok: true,

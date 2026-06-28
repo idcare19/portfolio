@@ -54,6 +54,7 @@ export type ProjectItem = {
   totalViews?: number;
   uniqueViews?: number;
   likes?: number;
+  isEnabled?: boolean;
 };
 
 export type WorkingProjectItem = {
@@ -144,6 +145,8 @@ export type ServiceItem = {
   title: string;
   description: string;
   icon: string;
+  isEnabled?: boolean;
+  order?: number;
 };
 
 export type TestimonialItem = {
@@ -326,7 +329,7 @@ export type SiteData = {
   }[];
   education?: EducationItem[];
   journeyNow?: JourneyNow;
-  socials: { label: string; value: string; href: string }[];
+  socials: { label: string; value: string; href: string; icon?: string; isEnabled?: boolean; order?: number }[];
   services: ServiceItem[];
   skillsDetailed: SkillItem[];
   projectsDetailed: ProjectItem[];

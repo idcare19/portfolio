@@ -1,6 +1,6 @@
 import type { SiteData, DynamicSectionId } from "@/src/types/site-data";
 
-export type SectionFieldType = "text" | "textarea" | "url" | "number";
+export type SectionFieldType = "text" | "textarea" | "url" | "number" | "checkbox";
 
 export type SectionField = {
   label: string;
@@ -23,6 +23,10 @@ export type SectionArrayField = {
   }>;
 };
 
+export type SectionItemCrudConfig = SectionArrayField & {
+  description?: string;
+};
+
 export type SectionContentConfig = {
   title: string;
   description: string;
@@ -32,6 +36,7 @@ export type SectionContentConfig = {
   saveMessage: string;
   fields: SectionField[];
   arrayFields?: SectionArrayField[];
+  itemCrud?: SectionItemCrudConfig;
   sync?: Array<{ from: string; to: string }>;
 };
 
@@ -65,10 +70,10 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
         fields: [{ key: "value", label: "Badge", type: "text" }],
       },
       {
-        label: "Stats",
-        path: "sections.hero.data.stats",
+        label: "Stats (Shared with About)",
+        path: "sections.about.items",
         itemLabel: "Stat",
-        createItem: () => ({ label: "", value: "" }),
+        createItem: () => ({ label: "", value: "", isEnabled: true, order: 1 }),
         fields: [
           { key: "label", label: "Label" },
           { key: "value", label: "Value" },
@@ -80,6 +85,18 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
       { from: "sections.hero.data.animatedRole", to: "owner.role" },
       { from: "sections.hero.data.description", to: "owner.tagline" },
     ],
+    itemCrud: {
+      label: "About Stats",
+      path: "sections.about.items",
+      itemLabel: "Stat",
+      createItem: () => ({ label: "", value: "", isEnabled: true, order: 1 }),
+      fields: [
+        { key: "label", label: "Label" },
+        { key: "value", label: "Value" },
+        { key: "isEnabled", label: "Enabled", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
   about: {
     title: "About",
@@ -129,6 +146,20 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
         fields: [{ key: "value", label: "Learning Item" }],
       },
     ],
+    itemCrud: {
+      label: "Skills",
+      path: "sections.skills.items",
+      itemLabel: "Skill",
+      createItem: () => ({ id: `skill-${Date.now()}`, name: "", category: "Core Skills", icon: "", level: 0, isEnabled: true, order: 1 }),
+      fields: [
+        { key: "name", label: "Name" },
+        { key: "category", label: "Category" },
+        { key: "level", label: "Level", type: "number" },
+        { key: "icon", label: "Icon" },
+        { key: "isEnabled", label: "Enabled", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
   "projects-content": {
     title: "Projects Content",
@@ -142,6 +173,20 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
       { label: "Title", path: "sections.projects.data.title" },
       { label: "Description", path: "sections.projects.data.description", type: "textarea" },
     ],
+    itemCrud: {
+      label: "Projects",
+      path: "sections.projects.items",
+      itemLabel: "Project",
+      createItem: () => ({ id: `project-${Date.now()}`, title: "", shortDescription: "", longDescription: "", techStack: [], category: "Project", image: "", liveDemoUrl: "", githubUrl: "", featured: false, order: 1 }),
+      fields: [
+        { key: "title", label: "Title" },
+        { key: "shortDescription", label: "Description", type: "textarea" },
+        { key: "category", label: "Status" },
+        { key: "image", label: "Image" },
+        { key: "featured", label: "Featured", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
   "working-content": {
     title: "Working Content",
@@ -155,6 +200,21 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
       { label: "Title", path: "sections.working.data.title" },
       { label: "Description", path: "sections.working.data.description", type: "textarea" },
     ],
+    itemCrud: {
+      label: "Working Projects",
+      path: "sections.working.items",
+      itemLabel: "Working Item",
+      createItem: () => ({ title: "", description: "", status: "", timeline: "", link: "", isEnabled: true, order: 1 }),
+      fields: [
+        { key: "title", label: "Title" },
+        { key: "description", label: "Description", type: "textarea" },
+        { key: "status", label: "Status" },
+        { key: "timeline", label: "Progress" },
+        { key: "link", label: "Link", type: "url" },
+        { key: "isEnabled", label: "Enabled", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
   "completed-content": {
     title: "Completed Content",
@@ -168,6 +228,21 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
       { label: "Title", path: "sections.completed.data.title" },
       { label: "Description", path: "sections.completed.data.description", type: "textarea" },
     ],
+    itemCrud: {
+      label: "Completed Projects",
+      path: "sections.completed.items",
+      itemLabel: "Completed Item",
+      createItem: () => ({ title: "", timeline: "", role: "", link: "", workDone: "", isEnabled: true, order: 1 }),
+      fields: [
+        { key: "title", label: "Title" },
+        { key: "role", label: "Role" },
+        { key: "timeline", label: "Date" },
+        { key: "workDone", label: "Description", type: "textarea" },
+        { key: "link", label: "Link", type: "url" },
+        { key: "isEnabled", label: "Enabled", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
   "reviews-content": {
     title: "Reviews Content",
@@ -181,6 +256,20 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
       { label: "Title", path: "sections.reviews.data.title" },
       { label: "Description", path: "sections.reviews.data.description", type: "textarea" },
     ],
+    itemCrud: {
+      label: "Reviews",
+      path: "sections.reviews.items",
+      itemLabel: "Review",
+      createItem: () => ({ id: `review-${Date.now()}`, clientName: "", roleCompany: "", message: "", image: "", isEnabled: true, order: 1 }),
+      fields: [
+        { key: "clientName", label: "Name" },
+        { key: "roleCompany", label: "Role / Company" },
+        { key: "message", label: "Quote", type: "textarea" },
+        { key: "image", label: "Avatar" },
+        { key: "isEnabled", label: "Enabled", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
   "experience-content": {
     title: "Experience Content",
@@ -194,6 +283,19 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
       { label: "Title", path: "sections.journey.data.title" },
       { label: "Description", path: "sections.journey.data.description", type: "textarea" },
     ],
+    itemCrud: {
+      label: "Experience",
+      path: "sections.journey.items",
+      itemLabel: "Experience",
+      createItem: () => ({ role: "", period: "", summary: "", isEnabled: true, order: 1 }),
+      fields: [
+        { key: "role", label: "Role" },
+        { key: "period", label: "Start / End" },
+        { key: "summary", label: "Description", type: "textarea" },
+        { key: "isEnabled", label: "Enabled", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
   "services-content": {
     title: "Services Content",
@@ -207,6 +309,22 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
       { label: "Title", path: "sections.services.data.title" },
       { label: "Description", path: "sections.services.data.description", type: "textarea" },
     ],
+    itemCrud: {
+      label: "Services",
+      path: "sections.services.items",
+      itemLabel: "Service",
+      createItem: () => ({ title: "", description: "", icon: "", features: [], priceLabel: "", ctaLabel: "", ctaHref: "", isEnabled: true, order: 1 }),
+      fields: [
+        { key: "title", label: "Title" },
+        { key: "description", label: "Description", type: "textarea" },
+        { key: "icon", label: "Icon" },
+        { key: "priceLabel", label: "Price Label" },
+        { key: "ctaLabel", label: "CTA Label" },
+        { key: "ctaHref", label: "CTA Link", type: "url" },
+        { key: "isEnabled", label: "Enabled", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
   "github-content": {
     title: "GitHub Content",
@@ -258,6 +376,20 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
         ],
       },
     ],
+    itemCrud: {
+      label: "Social Links",
+      path: "socials",
+      itemLabel: "Social Link",
+      createItem: () => ({ label: "", value: "", href: "", icon: "", isEnabled: true, order: 1 }),
+      fields: [
+        { key: "label", label: "Label" },
+        { key: "value", label: "Value" },
+        { key: "href", label: "Href", type: "url" },
+        { key: "icon", label: "Icon" },
+        { key: "isEnabled", label: "Enabled", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
   "footer-content": {
     title: "Footer Content",
@@ -295,6 +427,19 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
         ],
       },
     ],
+    itemCrud: {
+      label: "Footer Links",
+      path: "shell.footer.quickLinks",
+      itemLabel: "Footer Link",
+      createItem: () => ({ label: "", href: "", group: "", isEnabled: true, order: 1 }),
+      fields: [
+        { key: "label", label: "Label" },
+        { key: "href", label: "Href", type: "url" },
+        { key: "group", label: "Group" },
+        { key: "isEnabled", label: "Enabled", type: "checkbox" },
+        { key: "order", label: "Order", type: "number" },
+      ],
+    },
   },
 };
 

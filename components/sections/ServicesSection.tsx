@@ -17,10 +17,7 @@ const iconMap: Record<string, ReactNode> = {
 export function ServicesSection() {
   const section = useSectionData("services");
   const data = section.data as Record<string, any>;
-  const items = section.items as Array<{ id?: string; title: string; description: string; icon?: string }>;
-  if (process.env.NODE_ENV !== "production") {
-    console.debug("[section:services]", { eyebrow: data.eyebrow, title: data.title, description: data.description });
-  }
+  const items = (section.items as Array<{ id?: string; title: string; description: string; icon?: string; isEnabled?: boolean }>).filter((item) => item.isEnabled !== false);
   const hasHeader = Boolean(data.eyebrow || data.title || data.description);
 
   if (items.length === 0) {

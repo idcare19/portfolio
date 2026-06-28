@@ -20,6 +20,7 @@ import {
   Star,
   Users,
 } from "lucide-react";
+import { useSiteDataContext } from "@/components/site/SiteDataProvider";
 
 const heatmapColors = [
   "bg-[rgb(var(--card-hover))]",
@@ -48,17 +49,62 @@ function formatDateTime(value?: string) {
   return new Date(value).toLocaleString("en-US", { timeZone: "UTC" });
 }
 
-function StatCard({ label, value, helper }: { label: string; value: string | number; helper?: string }) {
+function SafeExternalLink({
+  href,
+  children,
+  className,
+  onClick,
+  ariaLabel,
+}: {
+  href: string;
+  children: React.ReactNode;
+  className?: string;
+  onClick?: () => void;
+  ariaLabel?: string;
+}) {
   return (
-    <div className="rounded-[28px] border border-[rgb(var(--border))] bg-white/85 p-5 shadow-[0_18px_40px_rgba(15,23,42,0.05)]">
-      <p className="text-[11px] uppercase tracking-[0.18em] text-text-muted">{label}</p>
-      <p className="mt-3 text-3xl font-semibold tracking-tight text-text-main">{value}</p>
-      {helper ? <p className="mt-2 text-sm text-text-muted">{helper}</p> : null}
-    </div>
+    <a href={href} target="_blank" rel="noopener noreferrer" onClick={onClick} className={className} aria-label={ariaLabel}>
+      {children}
+    </a>
   );
 }
 
+function StatCard({
+  label,
+  value,
+  helper,
+  href,
+  onClick,
+}: {
+  label: string;
+  value: string | number;
+  helper?: string;
+  href?: string;
+  onClick?: () => void;
+}) {
+  const content = (
+    <>
+      <p className="text-[11px] uppercase tracking-[0.18em] text-text-muted">{label}</p>
+      <p className="mt-3 text-3xl font-semibold tracking-tight text-text-main">{value}</p>
+      {helper ? <p className="mt-2 text-sm text-text-muted">{helper}</p> : null}
+    </>
+  );
+
+  const className = "rounded-[28px] border border-[rgb(var(--border))] bg-white/85 p-5 text-left shadow-[0_18px_40px_rgba(15,23,42,0.05)] transition hover:-translate-y-1 hover:border-primary/30 hover:bg-white";
+
+  if (href) {
+    return (
+      <a href={href} onClick={onClick} className={className}>
+        {content}
+      </a>
+    );
+  }
+
+  return <div className={className}>{content}</div>;
+}
+
 export function GitHubDashboardPage({ enabled, initialStats }: Props) {
+  const siteData = useSiteDataContext();
   const [stats, setStats] = useState<GitHubStatsResponse | null>(initialStats);
   const [isAdmin, setIsAdmin] = useState(false);
   const [query, setQuery] = useState("");
@@ -185,30 +231,60 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
     );
   }
 
+  const commitsHref = stats.profile.profileUrl.replace(/\/?$/, "") + "?tab=overview";
+  const activityHref = stats.profile.profileUrl.replace(/\/?$/, "");
+  const organizationsHref = stats.profile.profileUrl.replace(/\/?$/, "");
+  const profileHref = stats.profile.profileUrl;
+  const followersHref = stats.profile.profileUrl.replace(/\/?$/, "") + "?tab=followers";
+  const followingHref = stats.profile.profileUrl.replace(/\/?$/, "") + "?tab=following";
+  const starsHref = stats.profile.profileUrl.replace(/\/?$/, "") + "?tab=stars";
+  const repositoriesHref = stats.profile.profileUrl.replace(/\/?$/, "") + "?tab=repositories";
+
+  const currentStats = stats;
+
+  function resolveRepoHref(repo: GitHubRepository) {
+    const fallbackRepoHref = repo.fullName ? `https://github.com/${repo.fullName}` : `${profileHref.replace(/\/?$/, "")}/${repo.name}`;
+    if (!currentStats) return fallbackRepoHref;
+    if (repo.private && !currentStats.privateIncluded && siteData.githubConfig?.showPrivateReposPublicly !== true) {
+      return profileHref;
+    }
+    return repo.url || fallbackRepoHref || profileHref;
+  }
+
+  function resolveOrganizationHref(organization: { url?: string }) {
+    return organization.url || profileHref;
+  }
+
   return (
     <div className="space-y-8">
       <section className="overflow-hidden rounded-[36px] border border-[rgb(var(--border))] bg-[linear-gradient(135deg,rgba(255,255,255,0.98),rgba(239,246,255,0.9))] p-6 shadow-[0_24px_70px_rgba(15,23,42,0.08)] sm:p-8 lg:p-10">
         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
           <div className="space-y-6">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-start">
-              {stats.profile.avatarUrl ? (
-                <img
-                  src={stats.profile.avatarUrl}
-                  alt={stats.profile.name}
-                  className="h-24 w-24 rounded-[28px] border border-[rgb(var(--border))] object-cover shadow-[0_18px_45px_rgba(15,23,42,0.12)]"
-                />
-              ) : null}
+              <SafeExternalLink href={profileHref} ariaLabel={`Open GitHub profile for ${stats.profile.login}`}>
+                {stats.profile.avatarUrl ? (
+                  <img
+                    src={stats.profile.avatarUrl}
+                    alt={stats.profile.name}
+                    className="h-24 w-24 rounded-[28px] border border-[rgb(var(--border))] object-cover shadow-[0_18px_45px_rgba(15,23,42,0.12)] transition hover:-translate-y-1 hover:border-primary/30"
+                  />
+                ) : null}
+              </SafeExternalLink>
               <div className="min-w-0 flex-1">
                 <p className="text-sm font-semibold uppercase tracking-[0.22em] text-primary">GitHub Dashboard</p>
                 <div className="flex flex-wrap items-center gap-3">
-                  <h1 className="text-3xl font-semibold tracking-tight text-text-main sm:text-4xl">{stats.profile.name}</h1>
-                  <Badge className="text-xs">@{stats.profile.login}</Badge>
+                  <SafeExternalLink href={profileHref} className="text-3xl font-semibold tracking-tight text-text-main transition hover:text-primary sm:text-4xl" ariaLabel={`Open GitHub profile for ${stats.profile.login}`}>
+                    {stats.profile.name}
+                  </SafeExternalLink>
+                  <SafeExternalLink href={profileHref} className="inline-flex" ariaLabel={`Open GitHub profile for ${stats.profile.login}`}>
+                    <Badge className="text-xs">@{stats.profile.login}</Badge>
+                  </SafeExternalLink>
                 </div>
                 {stats.profile.bio ? <p className="mt-3 max-w-2xl text-sm leading-7 text-text-muted sm:text-base">{stats.profile.bio}</p> : null}
                 <div className="mt-4 flex flex-wrap gap-3 text-sm text-text-muted">
                   {stats.profile.company ? <span className="inline-flex items-center gap-2"><Building2 className="h-4 w-4" /> {stats.profile.company}</span> : null}
                   {stats.profile.location ? <span className="inline-flex items-center gap-2"><MapPin className="h-4 w-4" /> {stats.profile.location}</span> : null}
-                  {stats.profile.blog ? <a href={stats.profile.blog} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 hover:text-primary"><Globe className="h-4 w-4" /> {stats.profile.blog.replace(/^https?:\/\//, "")}</a> : null}
+                  {stats.profile.blog ? <SafeExternalLink href={stats.profile.blog} className="inline-flex items-center gap-2 hover:text-primary" ariaLabel={`Open website ${stats.profile.blog.replace(/^https?:\/\//, "")}`}><Globe className="h-4 w-4" /> {stats.profile.blog.replace(/^https?:\/\//, "")}</SafeExternalLink> : null}
                   {stats.profile.joinedAt ? <span className="inline-flex items-center gap-2"><Users className="h-4 w-4" /> Joined {formatDate(stats.profile.joinedAt, { month: "short", year: "numeric" })}</span> : null}
                 </div>
               </div>
@@ -222,29 +298,29 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
           </div>
 
           <div className="grid gap-4 sm:grid-cols-2">
-            <StatCard label="Repositories" value={stats.totalRepositories} helper={`${stats.publicRepos} public repositories`} />
-            <StatCard label="Public Commits" value={stats.publicCommits || 0} helper="Cached during the last sync" />
-            <StatCard label="Private Commits" value={stats.privateCommits || 0} helper={stats.privateIncluded ? "Included in totals" : "Not included"} />
+            <StatCard label="Repositories" value={stats.totalRepositories} helper={`${stats.publicRepos} public repositories`} href={repositoriesHref} />
+            <StatCard label="Public Commits" value={stats.publicCommits || 0} helper="Cached during the last sync" href={commitsHref} />
+            <StatCard label="Private Commits" value={stats.privateCommits || 0} helper={stats.privateIncluded ? "Included in totals" : "Not included"} href={commitsHref} />
             {stats.showLifetimeCommits !== false ? (
-              <StatCard label="Lifetime Commits" value={stats.totalCommits} helper={`${stats.pullRequests || 0} pull requests tracked`} />
+              <StatCard label="Lifetime Commits" value={stats.totalCommits} helper={`${stats.pullRequests || 0} pull requests tracked`} href={commitsHref} />
             ) : (
-              <StatCard label="Commits" value={stats.totalCommits} helper={`${stats.pullRequests || 0} pull requests tracked`} />
+              <StatCard label="Commits" value={stats.totalCommits} helper={`${stats.pullRequests || 0} pull requests tracked`} href={commitsHref} />
             )}
-            <StatCard label="Stars" value={stats.stars} helper={`${stats.forks} forks across repositories`} />
-            <StatCard label="Followers" value={stats.followers} helper={`${stats.following} following`} />
+            <StatCard label="Stars" value={stats.stars} helper={`${stats.forks} forks across repositories`} href={starsHref} />
+            <StatCard label="Followers" value={stats.followers} helper={`${stats.following} following`} href={followersHref} />
           </div>
         </div>
       </section>
 
       <section className="grid gap-4 sm:grid-cols-2 xl:grid-cols-5">
-        <StatCard label="Public Repositories" value={stats.publicRepos} />
-        <StatCard label="Private Repositories" value={stats.privateRepos} helper="Shown only as counts" />
-        <StatCard label="Forks" value={stats.forks} />
-        <StatCard label="Issues" value={stats.issues || 0} />
-        <StatCard label="Organizations" value={stats.organizations.length} />
+        <StatCard label="Public Repositories" value={stats.publicRepos} href={repositoriesHref} />
+        <StatCard label="Private Repositories" value={stats.privateRepos} helper="Shown only as counts" href={repositoriesHref} />
+        <StatCard label="Forks" value={stats.forks} href={repositoriesHref} />
+        <StatCard label="Issues" value={stats.issues || 0} href={repositoriesHref} />
+        <StatCard label="Organizations" value={stats.organizations.length} href={organizationsHref} />
       </section>
 
-      <section className="grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
+      <section id="contributions" className="grid gap-8 xl:grid-cols-[1.2fr_0.8fr]">
         <div className="rounded-[34px] border border-[rgb(var(--border))] bg-white/80 p-6 shadow-[0_20px_55px_rgba(15,23,42,0.05)]">
           <div className="flex items-end justify-between gap-4">
             <div>
@@ -315,34 +391,31 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
           <Badge>{stats.pinnedRepos.length} pinned</Badge>
         </div>
         <div className="mt-6 grid gap-4 lg:grid-cols-2 xl:grid-cols-3">
-          {stats.pinnedRepos.length ? (
+                {stats.pinnedRepos.length ? (
             stats.pinnedRepos.map((repo) => (
-              <article key={repo.name} className="rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-5">
+              <a
+                key={repo.name}
+                href={resolveRepoHref(repo)}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackClientEvent("github-click", { targetType: "pinned-repo", targetSlug: repo.name })}
+                className="group block rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-5 transition hover:-translate-y-1 hover:border-primary/30 hover:bg-white"
+                aria-label={`Open pinned repository ${repo.name} on GitHub`}
+              >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-lg font-semibold text-text-main">{repo.name}</p>
+                    <p className="text-lg font-semibold text-text-main transition-colors group-hover:text-primary">{repo.name}</p>
                     <p className="mt-2 line-clamp-3 text-sm leading-7 text-text-muted">{repo.description || "No description provided."}</p>
                   </div>
-                  <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-text-muted" />
+                  <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-text-muted transition group-hover:text-primary" />
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {repo.language ? <Badge>{repo.language}</Badge> : null}
                   <Badge><Star className="mr-1 h-3 w-3" /> {repo.stars}</Badge>
                   <Badge><GitBranch className="mr-1 h-3 w-3" /> {repo.forks}</Badge>
                 </div>
-                <div className="mt-5 flex items-center justify-between gap-3">
-                  <p className="text-xs text-text-muted">Updated {formatDate(repo.updatedAt, { month: "short", day: "numeric", year: "numeric" })}</p>
-                  <a
-                    href={repo.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => trackClientEvent("github-click", { targetType: "pinned-repo", targetSlug: repo.name })}
-                    className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-4 py-2 text-xs font-semibold text-text-main transition hover:border-primary/30 hover:text-primary"
-                  >
-                    View Repository <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-              </article>
+                <p className="mt-5 text-xs text-text-muted">Updated {formatDate(repo.updatedAt, { month: "short", day: "numeric", year: "numeric" })}</p>
+              </a>
             ))
           ) : (
             <p className="text-sm text-text-muted">No pinned repositories available.</p>
@@ -394,21 +467,21 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
         <div className="mt-6 grid gap-4 lg:grid-cols-2">
           {paginatedRepositories.length ? (
             paginatedRepositories.map((repo: GitHubRepository) => (
-              <article key={repo.name} className="rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-5">
+                <a
+                key={repo.name}
+                href={resolveRepoHref(repo)}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => trackClientEvent("github-click", { targetType: "repo-explorer", targetSlug: repo.name })}
+                className="group block rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-5 transition hover:-translate-y-1 hover:border-primary/30 hover:bg-white"
+                aria-label={`Open repository ${repo.name} on GitHub`}
+              >
                 <div className="flex items-start justify-between gap-3">
                   <div>
-                    <p className="text-lg font-semibold text-text-main">{repo.name}</p>
+                    <p className="text-lg font-semibold text-text-main transition-colors group-hover:text-primary">{repo.name}</p>
                     <p className="mt-2 line-clamp-3 text-sm leading-7 text-text-muted">{repo.description || "No description provided."}</p>
                   </div>
-                  <a
-                    href={repo.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    onClick={() => trackClientEvent("github-click", { targetType: "repo-explorer", targetSlug: repo.name })}
-                    className="rounded-full border border-[rgb(var(--border))] bg-white p-2 text-text-muted transition hover:border-primary/30 hover:text-primary"
-                  >
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
+                  <ExternalLink className="h-4 w-4 text-text-muted transition group-hover:text-primary" />
                 </div>
                 <div className="mt-4 flex flex-wrap gap-2">
                   {repo.language ? <Badge>{repo.language}</Badge> : null}
@@ -424,7 +497,7 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
                   </div>
                 ) : null}
                 <p className="mt-4 text-xs text-text-muted">Updated {formatDate(repo.updatedAt, { month: "short", day: "numeric", year: "numeric" })}</p>
-              </article>
+              </a>
             ))
           ) : (
             <div className="rounded-[28px] border border-dashed border-[rgb(var(--border))] p-6 text-sm text-text-muted">
@@ -447,7 +520,7 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
         ) : null}
       </section>
 
-      <section className="grid gap-8 xl:grid-cols-2">
+      <section id="recent-commits" className="grid gap-8 xl:grid-cols-2">
         <div className="rounded-[34px] border border-[rgb(var(--border))] bg-white/80 p-6 shadow-[0_20px_55px_rgba(15,23,42,0.05)]">
           <div className="flex items-center justify-between gap-4">
             <div>
@@ -459,14 +532,14 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
           <div className="mt-6 space-y-4">
             {paginatedCommits.length ? (
               paginatedCommits.map((commit) => (
-                <a
-                  key={`${commit.repoName}-${commit.createdAt}-${commit.message}`}
-                  href={commit.url}
-                  target="_blank"
-                  rel="noreferrer"
+              <a
+                key={`${commit.repoName}-${commit.createdAt}-${commit.message}`}
+                href={commit.url || commitsHref}
+                target="_blank"
+                rel="noreferrer"
                   onClick={() => trackClientEvent("github-click", { targetType: "commit", targetSlug: commit.repoName })}
-                  className="block rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4 transition hover:border-primary/30 hover:bg-white"
-                >
+                className="block rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4 transition hover:border-primary/30 hover:bg-white"
+              >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">{commit.repoName}</p>
@@ -506,14 +579,14 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
           <div className="mt-6 space-y-4">
             {stats.recentActivity.length ? (
               stats.recentActivity.map((activity) => (
-                <a
-                  key={`${activity.repoName}-${activity.createdAt}-${activity.type}`}
-                  href={activity.url}
-                  target="_blank"
-                  rel="noreferrer"
+              <a
+                key={`${activity.repoName}-${activity.createdAt}-${activity.type}`}
+                href={activity.url || activityHref}
+                target="_blank"
+                rel="noreferrer"
                   onClick={() => trackClientEvent("github-click", { targetType: "activity", targetSlug: activity.repoName })}
-                  className="block rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4 transition hover:border-primary/30 hover:bg-white"
-                >
+                className="block rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4 transition hover:border-primary/30 hover:bg-white"
+              >
                   <div className="flex items-start justify-between gap-4">
                     <div>
                       <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">{activity.type}</p>
@@ -531,8 +604,8 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
         </div>
       </section>
 
-      <section className="grid gap-8 xl:grid-cols-2">
-        <div className="rounded-[34px] border border-[rgb(var(--border))] bg-white/80 p-6 shadow-[0_20px_55px_rgba(15,23,42,0.05)]">
+      <section id="organizations" className="grid gap-8 xl:grid-cols-2">
+        <div id="achievements" className="rounded-[34px] border border-[rgb(var(--border))] bg-white/80 p-6 shadow-[0_20px_55px_rgba(15,23,42,0.05)]">
           <div className="flex items-center justify-between gap-4">
             <div>
               <p className="text-sm font-semibold text-text-main">Organizations</p>
@@ -545,7 +618,7 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
               stats.organizations.map((organization) => (
                 <a
                   key={organization.login}
-                  href={organization.url || "#"}
+                  href={resolveOrganizationHref(organization)}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-4 rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4 transition hover:border-primary/30 hover:bg-white"
@@ -582,7 +655,7 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
               stats.achievements.map((achievement) => (
                 <a
                   key={achievement.title}
-                  href={achievement.url || stats.profile.profileUrl}
+                  href={achievement.url || profileHref}
                   target="_blank"
                   rel="noreferrer"
                   className="flex items-center gap-4 rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4 transition hover:border-primary/30 hover:bg-white"

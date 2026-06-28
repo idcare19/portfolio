@@ -12,6 +12,7 @@ type BlogDetail = {
   slug: string;
   title: string;
   thumbnail?: string;
+  coverImage?: string;
   tags?: string[];
   excerpt?: string;
   content: string;
@@ -44,7 +45,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           <div className="mt-4">
             <ShareButtons title={blog.title} path={`/blogs/${blog.slug}`} />
           </div>
-          {blog.thumbnail ? <img src={blog.thumbnail} alt={blog.title} className="mt-8 w-full rounded-[24px] object-cover" /> : null}
+          {blog.coverImage || blog.thumbnail ? <img src={blog.coverImage || blog.thumbnail} alt={blog.title} className="mt-8 w-full rounded-[24px] object-cover" /> : null}
           {toc.length ? (
             <div className="mt-8 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4">
               <p className="text-sm font-semibold text-text-main">Table of Contents</p>

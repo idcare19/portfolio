@@ -38,9 +38,6 @@ export function useSiteDataEditor() {
 
   async function readJsonOrTextResponse(response: Response) {
     const text = await response.text();
-    if (process.env.NODE_ENV !== "production") {
-      console.debug("[useSiteDataEditor.save] raw response", text);
-    }
 
     if (!text.trim()) {
       return { json: null as any, text };
@@ -122,14 +119,6 @@ export function useSiteDataEditor() {
     try {
       const nextData = normalizeSiteData(updatedData);
       const endpoint = "/api/admin/site-data/update";
-      if (process.env.NODE_ENV !== "production") {
-        console.debug("[useSiteDataEditor.save] request", {
-          endpoint,
-          method: "PUT",
-          updatedAt: nextData.updatedAt,
-        });
-      }
-
       const res = await fetch(endpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -139,27 +128,14 @@ export function useSiteDataEditor() {
         }),
       });
 
-      if (process.env.NODE_ENV !== "production") {
-        console.debug("[useSiteDataEditor.save] response status", {
-          endpoint,
-          status: res.status,
-        });
-      }
-
       const { json: rawPayload, text } = await readJsonOrTextResponse(res);
 
       if (!res.ok) {
-        if (process.env.NODE_ENV !== "production") {
-          console.debug("[useSiteDataEditor.save] error response", rawPayload || text);
-        }
         const message = rawPayload?.error || rawPayload?.reason || text || "Failed to update content";
         throw new Error(message);
       }
 
       const payload = rawPayload;
-      if (process.env.NODE_ENV !== "production") {
-        console.debug("[useSiteDataEditor.save] response json", payload);
-      }
       const contentPayload = extractSiteDataPayload(payload);
       const latestPayload = await fetchLatestContent().catch(() => null);
       const latestContentPayload = extractSiteDataPayload(latestPayload);
@@ -168,11 +144,6 @@ export function useSiteDataEditor() {
       const finalSavedData = await fetchLatestContent().catch(() => null);
       const finalContentPayload = extractSiteDataPayload(finalSavedData);
       const serverData = finalContentPayload.data ? normalizeSiteData(finalContentPayload.data) : normalized;
-      if (process.env.NODE_ENV !== "production") {
-        console.debug("[useSiteDataEditor.save] updatedAt", {
-          updatedAt: serverData.updatedAt,
-        });
-      }
       setData(serverData);
       setSavedData(serverData);
       setLastSaveMeta({
@@ -187,15 +158,6 @@ export function useSiteDataEditor() {
         lastMongoUpdateAt: latestContentPayload.meta?.lastMongoUpdateAt || contentPayload.meta?.lastMongoUpdateAt || null,
         lastGitHubSyncAt: latestContentPayload.meta?.lastGitHubSyncAt || contentPayload.meta?.lastGitHubSyncAt || null,
       });
-      if (process.env.NODE_ENV !== "production") {
-        console.debug("[admin/save] response", {
-          success: Boolean(payload?.ok ?? payload?.success),
-          activeSource: payload?.activeSource || payload?.source,
-          updatedAt: payload?.updatedAt || serverData.updatedAt,
-          savedPreview: payload?.savedFieldPreview || null,
-          revalidatedPaths: payload?.revalidatedPaths || [],
-        });
-      }
       return { ok: true, data: serverData } as const;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Save failed");

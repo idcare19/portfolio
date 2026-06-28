@@ -32,8 +32,10 @@ export default function ExperienceAdminPage() {
               { key: "role", label: "Title", required: true },
               { key: "period", label: "Date / Period" },
               { key: "summary", label: "Summary", type: "textarea", required: true },
+              { key: "isEnabled", label: "Enabled", type: "checkbox" },
+              { key: "order", label: "Order", type: "number" },
             ] as any}
-            createItem={() => ({ role: "", period: "", summary: "" } as any)}
+            createItem={() => ({ role: "", period: "", summary: "", isEnabled: true, order: (data.experience?.length || 0) + 1 } as any)}
           />
           <SimpleArrayEditor
             title="Current Milestones"

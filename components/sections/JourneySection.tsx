@@ -9,17 +9,17 @@ import { motion } from "framer-motion";
 export function JourneySection() {
   const section = useSectionData("journey");
   const data = section.data as Record<string, any>;
-  const experience = section.items.length ? section.items : [];
+  const experience = section.items.length ? section.items.filter((item: any) => item.isEnabled !== false) : [];
   const milestones = Array.isArray(data.milestones) ? data.milestones : [];
-  if (process.env.NODE_ENV !== "production") {
-    console.debug("[section:journey]", { eyebrow: data.eyebrow, title: data.title, description: data.description });
-  }
-  const hasHeader = Boolean(data.eyebrow || data.title || data.description);
+  const eyebrow = data.eyebrow || "Experience";
+  const title = data.title || "Professional Journey";
+  const description = data.description || "A timeline of roles, growth, and recent work.";
+  const hasHeader = Boolean(eyebrow || title || description);
 
   return (
     <AnimatedSection id="journey" className="bg-section-bg py-20">
       <div className="section-wrap">
-        {hasHeader ? <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} /> : null}
+        {hasHeader ? <SectionHeader eyebrow={eyebrow} title={title} description={description} /> : null}
 
         <div className="mx-auto mb-5 max-w-4xl rounded-2xl border border-[rgb(var(--border))] bg-card-bg p-4 backdrop-blur-sm">
           <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.12em] text-text-muted">

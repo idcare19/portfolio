@@ -29,7 +29,7 @@ export function SkillsSection() {
   const section = useSectionData("skills");
   const siteData = useSiteDataContext();
   const data = section.data as Record<string, any>;
-  const skills = (section.items || []).filter((item: SkillItem) => item?.name);
+  const skills = (section.items || []).filter((item: SkillItem & { isEnabled?: boolean }) => item?.name && item.isEnabled !== false);
   const learningItems = Array.isArray(data.learningItems) ? data.learningItems : [];
   const shouldReduceMotion = useReducedMotion();
   const resumeUrl = String(siteData.owner?.resumeUrl || "").trim();
