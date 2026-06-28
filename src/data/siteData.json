@@ -629,9 +629,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": "",
+        "eyebrow": "About",
+        "title": "Building modern products with clean execution",
+        "description": "A quick overview of who I am and how I build.",
         "intro": "I turn ideas into premium web products with clear structure, thoughtful interactions, and strong performance. My focus is responsive UI, smooth motion, and production-ready front-end quality."
       },
       "items": [
@@ -666,10 +666,10 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": "",
-        "learningTitle": "",
+        "eyebrow": "Skills",
+        "title": "Tools I use to build",
+        "description": "My core technologies, workflow tools, and current learning stack.",
+        "learningTitle": "Currently Learning",
         "learningItems": [
           "App Security",
           "Flutter",
@@ -822,9 +822,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": ""
+        "eyebrow": "Projects",
+        "title": "Featured work",
+        "description": "Selected projects, client work, and production-ready builds."
       },
       "items": []
     },
@@ -845,9 +845,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": ""
+        "eyebrow": "Currently Working",
+        "title": "Live work in progress",
+        "description": "Projects I am actively building or improving right now."
       },
       "items": [
         {
@@ -876,9 +876,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": ""
+        "eyebrow": "Completed Projects",
+        "title": "Projects I worked on",
+        "description": "A clear record of completed work and what I delivered."
       },
       "items": [
         {
@@ -928,9 +928,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": ""
+        "eyebrow": "Reviews",
+        "title": "Client feedback",
+        "description": "What people say about my execution and communication."
       },
       "items": [
         {
@@ -999,9 +999,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": ""
+        "eyebrow": "Services",
+        "title": "How I can help",
+        "description": "Flexible development support for websites, SaaS, and product ideas."
       },
       "items": []
     },
@@ -1022,9 +1022,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": ""
+        "eyebrow": "Services",
+        "title": "How I can help",
+        "description": "Flexible development support for websites, SaaS, and product ideas."
       },
       "items": [
         {
@@ -1064,9 +1064,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": "",
+        "eyebrow": "Contact",
+        "title": "Let’s talk about your next project",
+        "description": "Reach out for freelance, internship, or collaboration opportunities.",
         "cardTitle": "",
         "cardDescription": "",
         "formTitle": ""
@@ -1106,9 +1106,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": ""
+        "eyebrow": "GitHub Live",
+        "title": "Live developer activity",
+        "description": "Latest repositories, commits, languages, and GitHub stats."
       },
       "items": [
         {

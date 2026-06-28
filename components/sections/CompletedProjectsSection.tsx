@@ -2,16 +2,15 @@
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
-import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
+import { useSectionData } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowUpRight, CalendarDays, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 
 export function CompletedProjectsSection() {
-  const portfolioData = useSiteDataContext();
   const section = useSectionData("completed");
   const data = section.data as Record<string, any>;
-  const completedProjects = (section.items.length ? section.items : portfolioData.completedProjects) || [];
+  const completedProjects = section.items || [];
 
   if (completedProjects.length === 0) {
     return null;
@@ -21,9 +20,9 @@ export function CompletedProjectsSection() {
     <AnimatedSection id="completed" className="py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "Projects I Worked On"}
-          title={data.title || "Completed work and what I delivered"}
-          description={data.description || "A clear record of finished projects and the exact work I handled in each."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

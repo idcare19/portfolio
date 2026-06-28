@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { SectionCard } from "@/components/admin/SectionCard";
 import { useSiteDataEditor } from "@/components/admin/useSiteDataEditor";
@@ -14,10 +14,15 @@ export default function SettingsPage() {
   const [tokenInput, setTokenInput] = useState("");
   const [refreshing, setRefreshing] = useState(false);
   const [showToken, setShowToken] = useState(false);
+  const selectedRepositoriesText = useMemo(
+    () => data?.githubConfig?.selectedRepositories?.join("\n") || "",
+    [data?.githubConfig?.selectedRepositories]
+  );
 
   if (!data) return <LoadingState />;
 
   const { websiteSettings, githubConfig, siteConnection } = data;
+  type RepositorySelectionMode = NonNullable<NonNullable<SiteData["githubConfig"]>["repositorySelectionMode"]>;
 
   async function handleRefreshGitHub() {
     if (!githubConfig?.username) {
@@ -177,6 +182,75 @@ export default function SettingsPage() {
               }
             />
             <span className="font-medium text-admin-text">Enable GitHub Stats</span>
+          </label>
+
+          <label className="block text-sm md:col-span-2">
+            <span className="mb-1 block font-medium text-admin-text">Repository Visibility</span>
+            <select
+              value={githubConfig?.repositorySelectionMode || "all"}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  githubConfig: {
+                    username: githubConfig?.username || "",
+                    enabled: githubConfig?.enabled ?? false,
+                    refreshInterval: githubConfig?.refreshInterval ?? 30,
+                    includePrivateRepos: githubConfig?.includePrivateRepos,
+                    includePrivateCommits: githubConfig?.includePrivateCommits,
+                    showLifetimeCommits: githubConfig?.showLifetimeCommits,
+                    showPrivateReposPublicly: githubConfig?.showPrivateReposPublicly,
+                    showPrivateCommitsPublicly: githubConfig?.showPrivateCommitsPublicly,
+                    publicDisplayMode: githubConfig?.publicDisplayMode,
+                    commitCountMode: githubConfig?.commitCountMode,
+                    repositorySelectionMode: e.target.value as RepositorySelectionMode,
+                    selectedRepositories: githubConfig?.selectedRepositories || [],
+                  },
+                })
+              }
+              className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+            >
+              <option value="all">All repositories</option>
+              <option value="publicOnly">Public repositories only</option>
+              <option value="privateOnly">Private repositories only</option>
+              <option value="selected">Selected repositories only</option>
+            </select>
+            <p className="mt-1 text-xs text-admin-text-muted">
+              Choose which repos the GitHub section and sync flow should consider.
+            </p>
+          </label>
+
+          <label className="block text-sm md:col-span-2">
+            <span className="mb-1 block font-medium text-admin-text">Selected Repositories</span>
+            <textarea
+              value={selectedRepositoriesText}
+              onChange={(e) =>
+                setData({
+                  ...data,
+                  githubConfig: {
+                    username: githubConfig?.username || "",
+                    enabled: githubConfig?.enabled ?? false,
+                    refreshInterval: githubConfig?.refreshInterval ?? 30,
+                    includePrivateRepos: githubConfig?.includePrivateRepos,
+                    includePrivateCommits: githubConfig?.includePrivateCommits,
+                    showLifetimeCommits: githubConfig?.showLifetimeCommits,
+                    showPrivateReposPublicly: githubConfig?.showPrivateReposPublicly,
+                    showPrivateCommitsPublicly: githubConfig?.showPrivateCommitsPublicly,
+                    publicDisplayMode: githubConfig?.publicDisplayMode,
+                    commitCountMode: githubConfig?.commitCountMode,
+                    repositorySelectionMode: githubConfig?.repositorySelectionMode,
+                    selectedRepositories: e.target.value
+                      .split("\n")
+                      .map((item) => item.trim())
+                      .filter(Boolean),
+                  },
+                })
+              }
+              className="min-h-[140px] w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+              placeholder={"repo-name-or-owner/repo-name\nanother-repo"}
+            />
+            <p className="mt-1 text-xs text-admin-text-muted">
+              Use one repository per line. Example: <span className="font-mono">owner/repo</span>.
+            </p>
           </label>
 
           <div className="md:col-span-2">

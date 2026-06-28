@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useEffect, useState } from "react";
 import type { SiteData } from "@/src/types/site-data";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { SectionCard } from "@/components/admin/SectionCard";
@@ -77,6 +78,11 @@ export function SectionContentEditor({ slug }: { slug: string }) {
   const { notify } = useToast();
   const config = getSectionContentConfig(slug);
   const { data, setData, saving, save } = useSiteDataEditor();
+  const [draft, setDraft] = useState<SiteData | null>(null);
+
+  useEffect(() => {
+    setDraft(data);
+  }, [data, slug]);
 
   if (!config) {
     return <p className="text-sm text-rose-600">Unknown section editor.</p>;
@@ -86,15 +92,17 @@ export function SectionContentEditor({ slug }: { slug: string }) {
     return <p className="text-sm text-admin-text-muted">Loading section content...</p>;
   }
 
+  const editorData = draft || data;
   const enabledPath = config.enabledPath;
-  const enabled = enabledPath ? Boolean(getValueByPath(data, enabledPath)) : true;
+  const enabled = enabledPath ? Boolean(getValueByPath(editorData, enabledPath)) : true;
 
   function patch(next: SiteData) {
+    setDraft(next);
     setData(next);
   }
 
   function setPath(path: string, value: unknown) {
-    let next = setValueByPath(data!, path, value);
+    let next = setValueByPath(editorData, path, value);
     for (const sync of config.sync || []) {
       if (sync.from === path) {
         next = setValueByPath(next, sync.to, value);
@@ -104,11 +112,16 @@ export function SectionContentEditor({ slug }: { slug: string }) {
   }
 
   async function handleSave() {
-    if (process.env.NODE_ENV !== "production" && config.sectionId === "about") {
-      const aboutItems = (data?.sections?.about?.items || []).map((item: any) => ({ label: item.label, value: item.value, order: item.order }));
-      console.debug("[admin/about] save payload about.items", aboutItems);
+    if (process.env.NODE_ENV !== "production") {
+      console.log("[SectionContentEditor] Save clicked", config.sectionId || slug);
     }
-    const result = await save(data!, config.saveMessage);
+    if (process.env.NODE_ENV !== "production" && config.sectionId === "about") {
+      console.log("[FRONTEND SAVE about.items]", editorData?.sections?.about?.items);
+    }
+    const result = await save(editorData!, config.saveMessage);
+    if (process.env.NODE_ENV !== "production") {
+      console.log("[SectionContentEditor] save response", result);
+    }
     if (result.ok) notify("success", `${config.title} saved`);
     else notify("error", result.error || "Save failed");
   }
@@ -134,12 +147,12 @@ export function SectionContentEditor({ slug }: { slug: string }) {
       <div className="grid gap-4">
         {config.fields.map((field) => (
           <SectionCard key={field.path} title={field.label} description={field.helpText}>
-            {renderInput(field.type, getValueByPath(data, field.path), (next) => setPath(field.path, next), field.placeholder)}
+            {renderInput(field.type, getValueByPath(editorData, field.path), (next) => setPath(field.path, next), field.placeholder)}
           </SectionCard>
         ))}
 
         {config.arrayFields?.map((field) => (
-          <ArrayEditor key={field.path} field={field} value={getValueByPath(data, field.path) as any[]} onChange={(next) => setPath(field.path, next)} />
+          <ArrayEditor key={field.path} field={field} value={getValueByPath(editorData, field.path) as any[]} onChange={(next) => setPath(field.path, next)} />
         ))}
       </div>
 

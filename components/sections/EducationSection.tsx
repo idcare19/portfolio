@@ -20,9 +20,9 @@ export function EducationSection() {
     <AnimatedSection id="education" className="bg-page-bg py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "Education"}
-          title={data.title || "Academic foundation"}
-          description={data.description || "Education, training, and practical study that shaped the work I do today."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <div className="grid gap-4 lg:grid-cols-2">

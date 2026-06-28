@@ -85,13 +85,15 @@ export function GitHubDeveloperSection() {
   const title = data.title;
   const description = data.description;
   const eyebrow = data.eyebrow;
+  if (process.env.NODE_ENV !== "production") {
+    console.debug("[section:github]", { eyebrow, title, description });
+  }
+  const hasHeader = Boolean(eyebrow || title || description);
 
   return (
     <AnimatedSection id="github" className="bg-page-bg py-20">
       <div className="container mx-auto px-4">
-        <FadeInUp>
-          <SectionHeader title={title} description={description} eyebrow={eyebrow} />
-        </FadeInUp>
+        {hasHeader ? <FadeInUp><SectionHeader title={title} description={description} eyebrow={eyebrow} /></FadeInUp> : null}
 
         {loading ? (
           <div className="mt-12 text-center">Loading GitHub stats...</div>
@@ -144,11 +146,12 @@ export function GitHubDeveloperSection() {
                     href={repo.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="block rounded-lg border border-border p-4 transition-colors hover:bg-muted/50"
+                    className="group block rounded-lg border border-border p-4 transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:bg-muted/50 hover:shadow-[0_12px_24px_rgba(37,99,235,0.10)]"
+                    aria-label={`Open repository ${repo.name}`}
                   >
                     <div className="flex items-start justify-between">
                       <div>
-                        <h4 className="font-medium">{repo.name}</h4>
+                        <h4 className="font-medium transition-colors group-hover:text-primary">{repo.name}</h4>
                         <p className="text-sm text-muted-foreground line-clamp-1">{repo.description}</p>
                       </div>
                       <ExternalLink className="h-4 w-4 text-muted-foreground" />

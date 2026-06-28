@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState, useTransition } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
@@ -14,9 +14,7 @@ import {
   GitBranch,
   GitCommitHorizontal,
   Globe,
-  Loader2,
   MapPin,
-  RefreshCcw,
   Search,
   Sparkles,
   Star,
@@ -68,8 +66,6 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
   const [sortBy, setSortBy] = useState<SortOption>("updated");
   const [repoPage, setRepoPage] = useState(1);
   const [commitPage, setCommitPage] = useState(1);
-  const [isPending, startTransition] = useTransition();
-
   useEffect(() => {
     let cancelled = false;
 
@@ -165,23 +161,6 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
     setRepoPage(1);
   }, [query, language, sortBy]);
 
-  function refreshStats() {
-    if (!isAdmin) return;
-    startTransition(async () => {
-      const syncResponse = await fetch("/api/admin/github/refresh", { method: "POST" });
-      const syncPayload = await syncResponse.json().catch(() => null);
-      if (!syncResponse.ok || !syncPayload?.success) {
-        return;
-      }
-
-      const statsResponse = await fetch("/api/github/stats", { cache: "no-store" });
-      const statsPayload = await statsResponse.json().catch(() => null);
-      if (statsPayload?.success && statsPayload.data) {
-        setStats(statsPayload.data as GitHubStatsResponse);
-      }
-    });
-  }
-
   if (!enabled) {
     return (
       <div className="overflow-hidden rounded-[36px] border border-dashed border-[rgb(var(--border))] bg-[linear-gradient(135deg,rgba(255,255,255,0.96),rgba(239,246,255,0.86))] p-10 text-center shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
@@ -239,17 +218,6 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
               <Button href={stats.profile.profileUrl} target="_blank">
                 View GitHub Profile <ExternalLink className="ml-2 h-4 w-4" />
               </Button>
-              {isAdmin ? (
-                <button
-                  type="button"
-                  onClick={refreshStats}
-                  disabled={isPending}
-                  className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-5 py-2.5 text-sm font-semibold text-text-main shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-primary/30 disabled:opacity-60"
-                >
-                  {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCcw className="h-4 w-4" />}
-                  Refresh Cached Stats
-                </button>
-              ) : null}
             </div>
           </div>
 
@@ -649,17 +617,6 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
             {stats.lastSyncError ? <p className="mt-1 text-sm text-rose-600">Last sync error: {stats.lastSyncError}</p> : null}
           </div>
           <div className="flex flex-wrap gap-3">
-            {isAdmin ? (
-              <button
-                type="button"
-                onClick={refreshStats}
-                disabled={isPending}
-                className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-5 py-2.5 text-sm font-semibold text-text-main shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition hover:-translate-y-0.5 hover:border-primary/30 disabled:opacity-60"
-              >
-                {isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <RefreshCcw className="h-4 w-4" />}
-                Refresh
-              </button>
-            ) : null}
             <Link
               href={stats.profile.profileUrl}
               target="_blank"

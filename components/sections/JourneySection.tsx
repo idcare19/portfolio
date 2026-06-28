@@ -2,7 +2,7 @@
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
-import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
+import { useSectionData } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { motion } from "framer-motion";
 
@@ -11,15 +11,15 @@ export function JourneySection() {
   const data = section.data as Record<string, any>;
   const experience = section.items.length ? section.items : [];
   const milestones = Array.isArray(data.milestones) ? data.milestones : [];
+  if (process.env.NODE_ENV !== "production") {
+    console.debug("[section:journey]", { eyebrow: data.eyebrow, title: data.title, description: data.description });
+  }
+  const hasHeader = Boolean(data.eyebrow || data.title || data.description);
 
   return (
     <AnimatedSection id="journey" className="bg-section-bg py-20">
       <div className="section-wrap">
-        <SectionHeader
-          eyebrow={data.eyebrow}
-          title={data.title}
-          description={data.description}
-        />
+        {hasHeader ? <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} /> : null}
 
         <div className="mx-auto mb-5 max-w-4xl rounded-2xl border border-[rgb(var(--border))] bg-card-bg p-4 backdrop-blur-sm">
           <div className="mb-2 flex items-center justify-between text-xs font-semibold uppercase tracking-[0.12em] text-text-muted">

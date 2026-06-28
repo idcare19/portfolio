@@ -23,7 +23,11 @@ export default async function HomePage() {
       <Navbar />
       <div>
         {sections.map((section) => (
-          <DeferredSection key={section.id} id={section.id === "hero" ? undefined : section.id} className="min-h-[420px]">
+          <DeferredSection
+            key={section.id}
+            id={section.id === "hero" ? "home" : section.id === "journey" ? "experience" : section.id}
+            className="min-h-[420px]"
+          >
             <DynamicSectionRenderer section={section} />
           </DeferredSection>
         ))}

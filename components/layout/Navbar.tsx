@@ -4,18 +4,26 @@ import { useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { Menu, X } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
+import { getManagedNavItems } from "@/lib/section-controls";
 
 export function Navbar() {
   const portfolioData = useSiteDataContext();
   const shell = portfolioData.shell;
   const pathname = usePathname();
   const isHomePage = pathname === "/";
-  const navItems = useMemo(() => portfolioData.nav, [portfolioData.nav]);
+  const navItems = useMemo(() => getManagedNavItems(portfolioData.nav, portfolioData.sectionControls), [portfolioData.nav, portfolioData.sectionControls]);
   const resolvedNavItems = useMemo(
     () =>
       navItems.map((item) => ({
         ...item,
-        href: !isHomePage && item.href.startsWith("#") ? `/${item.href}` : item.href,
+        href:
+          item.href === "#journey"
+            ? isHomePage
+              ? "#experience"
+              : "/#experience"
+            : !isHomePage && item.href.startsWith("#")
+              ? `/${item.href}`
+              : item.href,
       })),
     [isHomePage, navItems]
   );
@@ -26,6 +34,38 @@ export function Navbar() {
   const [open, setOpen] = useState(false);
   const [active, setActive] = useState("#home");
   const [scrolled, setScrolled] = useState(false);
+
+  const sectionOrder = useMemo(() => ["home", "about", "skills", "projects", "experience", "services", "contact", "github"], []);
+
+  useEffect(() => {
+    if (!isHomePage) return;
+
+    const elements = sectionOrder
+      .map((id) => document.getElementById(id))
+      .filter((element): element is HTMLElement => Boolean(element));
+
+    if (elements.length === 0) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        const best = visible[0]?.target as HTMLElement | undefined;
+        if (best?.id) {
+          setActive(`#${best.id}`);
+        }
+      },
+      {
+        root: null,
+        threshold: [0.15, 0.3, 0.5, 0.7],
+        rootMargin: hasTopNotice ? "-140px 0px -45% 0px" : "-110px 0px -45% 0px",
+      }
+    );
+
+    elements.forEach((element) => observer.observe(element));
+    return () => observer.disconnect();
+  }, [hasTopNotice, isHomePage, sectionOrder]);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -47,6 +87,20 @@ export function Navbar() {
     };
   }, [open]);
 
+  function handleNavClick(href: string) {
+    const normalizedHref = href === "#journey" || href === "/#journey" ? (isHomePage ? "#experience" : "/#experience") : href;
+    const target = normalizedHref.startsWith("/#") ? `#${normalizedHref.slice(2)}` : normalizedHref;
+    setActive(target);
+    setOpen(false);
+  }
+
+  function navLinkClass(href: string) {
+    const current = active === href || active === (href.startsWith("/#") ? `#${href.slice(2)}` : href);
+    return `relative z-0 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ease-out ${
+      current ? "text-[#1D4ED8] shadow-[0_8px_24px_rgba(37,99,235,0.10)]" : "text-text-muted hover:text-text-main hover:bg-[rgb(var(--card-hover))]/80"
+    }`;
+  }
+
   return (
     <header className={`sticky inset-x-0 top-0 z-[90] ${hasTopNotice ? "top-11 sm:top-12" : "top-0"}`}>
       <div className="section-wrap pt-4">
@@ -62,8 +116,7 @@ export function Navbar() {
           <a
             href={homeHref}
             onClick={() => {
-              setActive(isHomePage ? "#home" : "/#home");
-              setOpen(false);
+              handleNavClick(homeHref);
             }}
             className="min-w-0 max-w-[62vw] truncate text-sm font-bold tracking-tight text-text-main sm:max-w-none"
           >
@@ -87,15 +140,11 @@ export function Navbar() {
                 key={item.href}
                 href={item.href}
                 aria-current={active === item.href || active === navItems[index]?.href ? "page" : undefined}
-                onClick={() => setActive(item.href.startsWith("/#") ? item.href.slice(1) : item.href)}
-                className={`relative z-0 rounded-full px-4 py-2 text-sm font-medium transition-all duration-200 ease-out ${
-                  active === item.href || active === navItems[index]?.href
-                    ? "text-text-main"
-                    : "text-text-muted hover:text-text-main hover:bg-[rgb(var(--card-hover))]/80"
-                }`}
+                onClick={() => handleNavClick(item.href)}
+                className={navLinkClass(item.href)}
               >
                 {active === item.href || active === navItems[index]?.href ? (
-                  <span className="absolute inset-0 -z-10 rounded-full border border-[#BFDBFE] bg-[#EFF6FF]" />
+                  <span className="absolute inset-0 -z-10 rounded-full border border-[#BFDBFE] bg-[#EFF6FF]/90" />
                 ) : null}
                 {navItems[index]?.label || item.label}
               </a>
@@ -104,7 +153,7 @@ export function Navbar() {
 
           <a
             href={contactHref}
-            onClick={() => setActive(isHomePage ? "#contact" : "/#contact")}
+            onClick={() => handleNavClick(contactHref)}
             className="hidden rounded-full bg-primary px-5 py-2 text-xs font-semibold text-white shadow-[0_12px_28px_rgba(37,99,235,0.25)] transition-all duration-300 hover:-translate-y-0.5 hover:opacity-95 lg:inline-flex"
           >
             {shell.navbar.desktopCtaLabel}
@@ -138,8 +187,7 @@ export function Navbar() {
                 href={item.href}
                 aria-current={active === item.href || active === navItems[index]?.href ? "page" : undefined}
                 onClick={() => {
-                  setActive(item.href.startsWith("/#") ? item.href.slice(1) : item.href);
-                  setOpen(false);
+                  handleNavClick(item.href);
                 }}
                 className={`relative block rounded-lg px-4 py-3 text-sm font-medium ${
                   active === item.href || active === navItems[index]?.href
@@ -153,8 +201,7 @@ export function Navbar() {
             <a
               href={contactHref}
               onClick={() => {
-                setActive(isHomePage ? "#contact" : "/#contact");
-                setOpen(false);
+                handleNavClick(contactHref);
               }}
               className="mt-3 inline-flex w-full justify-center rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white hover:opacity-90"
               >

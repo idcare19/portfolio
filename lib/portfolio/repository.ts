@@ -62,6 +62,81 @@ function createSectionDoc(section: SiteSectionBlock) {
   };
 }
 
+function buildSiteDataFromSections(
+  sections: any[],
+  settings: any,
+  projects: any[],
+  skills: any[],
+  experience: any[],
+  testimonials: any[],
+  blogs: any[]
+) {
+  const fallback = (cloneSeedData().sections || {}) as NonNullable<SiteData["sections"]>;
+  const map = Object.fromEntries(sections.map((section) => [section.key || section.id, section]));
+
+  const sectionIds = [
+    "hero",
+    "about",
+    "skills",
+    "projects",
+    "working",
+    "completed",
+    "reviews",
+    "journey",
+    "education",
+    "services",
+    "contact",
+    "blogs",
+  ] as const;
+
+  const built = sectionIds.reduce((acc, key) => {
+    const source = map[key];
+    const fallbackSection = fallback[key];
+    const items =
+      key === "projects"
+        ? projects
+        : key === "skills"
+          ? skills
+          : key === "journey"
+            ? experience
+            : key === "reviews"
+              ? testimonials
+              : key === "blogs"
+                ? blogs
+                : source?.items ?? fallbackSection?.items ?? [];
+
+    acc[key] = {
+      id: key,
+      label: source?.label ?? fallbackSection?.label ?? key,
+      renderer: source?.renderer ?? fallbackSection?.renderer ?? key,
+      enabled: source?.isEnabled ?? fallbackSection?.enabled ?? true,
+      order: source?.order ?? fallbackSection?.order ?? 0,
+      nav: source?.nav ?? fallbackSection?.nav,
+      emptyMessage: source?.emptyMessage ?? fallbackSection?.emptyMessage ?? "",
+      data: source?.data ?? fallbackSection?.data ?? {},
+      items,
+    };
+    return acc;
+  }, {} as NonNullable<SiteData["sections"]>);
+
+  built.about.items = built.about.items ?? [];
+  built.working.items = built.working.items ?? [];
+  built.completed.items = built.completed.items ?? [];
+  built.education.items = built.education.items ?? [];
+  built.services.items = built.services.items ?? [];
+  built.contact.items = built.contact.items ?? [];
+  const journeyData = built.journey.data as Record<string, unknown>;
+  if (!journeyData.currentWork && settings?.extra?.journeyNow?.currentWork) {
+    built.journey.data = {
+      ...journeyData,
+      currentWork: settings.extra.journeyNow.currentWork,
+      milestones: settings.extra.journeyNow.ongoingMilestones || [],
+    };
+  }
+
+  return built;
+}
+
 async function seedCollectionsFromSiteData(siteData: SiteData) {
   await connectToDatabase();
   const now = new Date().toISOString();
@@ -414,7 +489,18 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     isEnabled: blog.published !== false,
   }));
 
-  const sectionMap = buildSectionMap(sections, settings, projectItems, skillItems, experienceItems, testimonialItems, normalizedBlogs);
+  console.log("[ADMIN GET document id/source]", {
+    id: settings.updatedAt || null,
+    collection: "SiteSettings",
+    activeSource: "mongodb",
+  });
+  const aboutSection = sections.find((section: any) => section.key === "about" || section.id === "about");
+  console.log("[ADMIN GET _id]", {
+    settingsId: (rawSettings as any)?._id || null,
+    aboutSectionId: aboutSection?._id || null,
+  });
+  console.log("[ADMIN GET raw about.items]", aboutSection?.items || []);
+  console.log("[ADMIN GET section count]", sections.length);
 
   return normalizeSiteData({
     owner: settings.owner,
@@ -471,6 +557,15 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     shell: settings.shell ?? cloneSeedData().shell,
     githubConfig: settings.githubConfig,
     updatedAt: settings.updatedAt || new Date().toISOString(),
+    sections: buildSiteDataFromSections(
+      sections,
+      settings,
+      projectItems,
+      skillItems,
+      experienceItems,
+      testimonialItems,
+      normalizedBlogs
+    ),
   });
 }
 
@@ -508,8 +603,206 @@ export async function createPortfolioMessage(input: {
 }
 
 export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteData> {
-  await seedCollectionsFromSiteData(nextData);
-  return nextData;
+  const now = nextData.updatedAt || new Date().toISOString();
+
+  console.log("[BEFORE SAVE about.items]", nextData.sections?.about?.items);
+  console.log("[SAVE document id/source]", {
+    id: now,
+    collection: "SiteSettings",
+    activeSource: "mongodb",
+  });
+
+  const savedSettings = await SiteSettings.findOneAndUpdate(
+    { key: SETTINGS_KEY },
+    {
+      key: SETTINGS_KEY,
+      owner: nextData.owner,
+      nav: nextData.nav || [],
+      socials: nextData.socials || [],
+      websiteSettings: nextData.websiteSettings,
+      websiteControl: nextData.websiteControl,
+      shell: nextData.shell || {},
+      githubConfig: nextData.githubConfig || {},
+      heroTech: nextData.heroTech || [],
+      learningPhase: nextData.learningPhase || [],
+      collaboration: nextData.collaboration || { users: [], board: [], events: [] },
+      siteConnection: nextData.siteConnection || null,
+      mediaLibrary: nextData.mediaLibrary || [],
+      services: nextData.services || [],
+      completedProjects: nextData.completedProjects || [],
+      education: nextData.education || [],
+      extra: {
+        about: nextData.about,
+        sectionControls: nextData.sectionControls || [],
+        workingProjects: nextData.workingProjects || [],
+        journeyNow: nextData.journeyNow || { currentWork: "", ongoingMilestones: [] },
+      },
+      updatedAt: now,
+    },
+    { upsert: true, new: true, setDefaultsOnInsert: true }
+  );
+
+  const sectionWrites = Object.values(nextData.sections || {}).map((section) => ({
+    updateOne: {
+      filter: { key: section.id },
+      update: {
+        $set: {
+          ...createSectionDoc(section),
+          updatedAt: now,
+        },
+      },
+      upsert: true,
+    },
+  }));
+  if (sectionWrites.length) {
+    await Section.bulkWrite(sectionWrites, { ordered: true });
+  }
+
+  const sectionReadback = await Section.find({}).sort({ order: 1, createdAt: 1 }).lean();
+  const aboutSectionFromMongo = sectionReadback.find((section: any) => section.key === "about" || section.id === "about");
+  console.log("[SECTION READBACK about.items]", aboutSectionFromMongo?.items);
+  console.log("[SAVE _id]", {
+    settingsId: savedSettings?._id || null,
+    aboutSectionId: aboutSectionFromMongo?._id || null,
+  });
+
+  const readback = await SiteSettings.findOne({ key: SETTINGS_KEY }).lean();
+  const readbackData = readback as unknown as { _id?: unknown; sections?: SiteData["sections"] };
+  console.log("[AFTER SAVE READBACK about.items]", readbackData?.sections?.about?.items);
+
+  await Project.deleteMany({});
+  const projects = (nextData.projectsDetailed || []).map((project, index) => ({
+    slug: slugify((project as any).slug || project.title),
+    title: project.title,
+    shortDescription: project.shortDescription,
+    longDescription: project.longDescription,
+    image: project.image,
+    category: project.category,
+    techStack: project.techStack || [],
+    featured: Boolean(project.featured),
+    order: project.order ?? index + 1,
+    status: "published",
+    problem: String((project as any).problem || ""),
+    overview: String((project as any).overview || project.shortDescription || ""),
+    solution: String((project as any).solution || ""),
+    myRole: String((project as any).myRole || ""),
+    responsibilities: Array.isArray((project as any).responsibilities) ? (project as any).responsibilities : [],
+    features: Array.isArray((project as any).features) ? (project as any).features : [],
+    screenshots: Array.isArray((project as any).screenshots) ? (project as any).screenshots : [project.image].filter(Boolean),
+    architectureDiagram: String((project as any).architectureDiagram || ""),
+    databaseSchema: String((project as any).databaseSchema || ""),
+    apiFlow: String((project as any).apiFlow || ""),
+    folderStructure: String((project as any).folderStructure || ""),
+    challenges: String((project as any).challenges || ""),
+    lessonsLearned: String((project as any).lessonsLearned || ""),
+    futureImprovements: Array.isArray((project as any).futureImprovements) ? (project as any).futureImprovements : [],
+    timeline: String((project as any).timeline || ""),
+    tags: Array.isArray((project as any).tags) ? (project as any).tags : [],
+    readingTimeMinutes: Number((project as any).readingTimeMinutes || calculateReadingTimeMinutes(`${project.longDescription} ${(project as any).solution || ""}`)),
+    outcome: String((project as any).outcome || ""),
+    liveDemoUrl: project.liveDemoUrl,
+    githubUrl: project.githubUrl,
+    updatedAt: now,
+  }));
+  if (projects.length) {
+    await Project.insertMany(projects, { ordered: false });
+  }
+
+  await Skill.deleteMany({});
+  const skills = (nextData.skillsDetailed || []).map((skill, index) => ({
+    key: skill.id || slugify(skill.name),
+    name: skill.name,
+    category: skill.category,
+    icon: skill.icon,
+    level: skill.level,
+    order: index + 1,
+    updatedAt: now,
+  }));
+  if (skills.length) {
+    await Skill.insertMany(skills, { ordered: false });
+  }
+
+  await Experience.deleteMany({});
+  const experience = (nextData.experience || []).map((item, index) => ({
+    key: `exp-${index + 1}-${slugify(item.role)}`,
+    role: item.role,
+    period: item.period,
+    summary: item.summary,
+    updatedAt: now,
+  }));
+  if (experience.length) {
+    await Experience.insertMany(experience, { ordered: false });
+  }
+
+  await Blog.deleteMany({});
+  const blogs = (nextData.blogs || []).map((blog: Record<string, unknown>, index) => ({
+    slug: slugify(String(blog.slug || blog.title || `blog-${index + 1}`)),
+    title: String(blog.title || `Blog ${index + 1}`),
+    excerpt: String(blog.excerpt || blog.description || ""),
+    content: String(blog.content || ""),
+    coverImage: String(blog.coverImage || ""),
+    tags: Array.isArray(blog.tags) ? blog.tags : [],
+    category: String(blog.category || ""),
+    status: String(blog.status || "draft"),
+    isFeatured: Boolean(blog.isFeatured),
+    seoTitle: String(blog.seoTitle || ""),
+    seoDescription: String(blog.seoDescription || ""),
+    publishedAt: String(blog.publishedAt || now),
+    order: Number(blog.order ?? index + 1),
+    isEnabled: Boolean(blog.isEnabled),
+    updatedAt: now,
+  }));
+  if (blogs.length) {
+    await Blog.insertMany(blogs, { ordered: false });
+  }
+
+  await Testimonial.deleteMany({});
+  const testimonials = (nextData.testimonialsDetailed || []).map((item, index) => ({
+    key: item.id || `testimonial-${index + 1}`,
+    clientName: item.clientName,
+    roleCompany: item.roleCompany,
+    message: item.message,
+    image: item.image,
+    featured: index < 3,
+    order: index + 1,
+    updatedAt: now,
+  }));
+  if (testimonials.length) {
+    await Testimonial.insertMany(testimonials, { ordered: false });
+  }
+
+  await Message.deleteMany({});
+  const messages = (nextData.contactMessages || []).map((item) => ({
+    key: item.id,
+    name: item.name,
+    email: item.email,
+    subject: item.subject,
+    message: item.message,
+    read: item.read,
+    status: item.status || (item.read ? "read" : "unread"),
+    createdAt: item.createdAt,
+    repliedAt: item.repliedAt || "",
+    updatedAt: item.createdAt,
+  }));
+  if (messages.length) {
+    await Message.insertMany(messages, { ordered: false });
+  }
+
+  const readSettings = savedSettings?.toObject ? savedSettings.toObject() : readback;
+  const rebuilt = buildSiteDataFromSections(
+    sectionReadback,
+    readSettings,
+    projects.length ? projects : [],
+    skills.length ? skills : [],
+    experience.length ? experience : [],
+    testimonials.length ? testimonials : [],
+    blogs.length ? blogs : []
+  );
+
+  return normalizeSiteData({
+    ...nextData,
+    sections: rebuilt,
+  });
 }
 
 export async function getPublishedProjects() {

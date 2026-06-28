@@ -2,7 +2,7 @@
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
-import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
+import { useSectionData } from "@/components/site/SiteDataProvider";
 import { trackClientEvent } from "@/components/site/AnalyticsTracker";
 import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
@@ -20,6 +20,10 @@ export function ContactSection() {
   const [message, setMessage] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitState, setSubmitState] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  if (process.env.NODE_ENV !== "production") {
+    console.debug("[section:contact]", { eyebrow: data.eyebrow, title: data.title, description: data.description });
+  }
+  const hasHeader = Boolean(data.eyebrow || data.title || data.description);
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -66,11 +70,7 @@ export function ContactSection() {
   return (
     <AnimatedSection id="contact" className="bg-page-bg py-20">
       <div className="section-wrap">
-        <SectionHeader
-          eyebrow={data.eyebrow}
-          title={data.title}
-          description={data.description}
-        />
+        {hasHeader ? <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} /> : null}
 
         <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
           <FadeInUp className="glass rounded-3xl p-6 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">

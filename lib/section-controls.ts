@@ -1,21 +1,23 @@
 import type { NavItem, SectionControlItem, SectionId } from "@/src/types/site-data";
 
-export const SECTION_DEFINITIONS: Array<{ id: SectionId; label: string; href: `#${SectionId}`; showInNavByDefault: boolean }> = [
+export const SECTION_DEFINITIONS: Array<{ id: SectionId; label: string; href: string; showInNavByDefault: boolean }> = [
   { id: "about", label: "About", href: "#about", showInNavByDefault: true },
   { id: "skills", label: "Skills", href: "#skills", showInNavByDefault: true },
   { id: "projects", label: "Projects", href: "#projects", showInNavByDefault: true },
   { id: "working", label: "Working", href: "#working", showInNavByDefault: false },
   { id: "completed", label: "Worked On", href: "#completed", showInNavByDefault: true },
   { id: "reviews", label: "Reviews", href: "#reviews", showInNavByDefault: true },
-  { id: "journey", label: "Experience", href: "#journey", showInNavByDefault: true },
+  { id: "journey", label: "Experience", href: "#experience", showInNavByDefault: true },
   { id: "education", label: "Education", href: "#education", showInNavByDefault: false },
+  { id: "github", label: "GitHub Live", href: "#github", showInNavByDefault: true },
   { id: "services", label: "Services", href: "#services", showInNavByDefault: true },
   { id: "contact", label: "Contact", href: "#contact", showInNavByDefault: true },
 ];
 
 function sectionIdFromHref(href: string): SectionId | null {
   if (!href.startsWith("#")) return null;
-  const candidate = href.slice(1) as SectionId;
+  const raw = href.slice(1);
+  const candidate = (raw === "experience" ? "journey" : raw) as SectionId;
   return SECTION_DEFINITIONS.some((section) => section.id === candidate) ? candidate : null;
 }
 

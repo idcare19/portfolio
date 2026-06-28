@@ -11,8 +11,11 @@ export function HeroSection() {
   const heroData = section.data as Record<string, any>;
   const stats = Array.isArray(heroData.stats) ? heroData.stats : [];
   const badges = Array.isArray(heroData.badges) ? heroData.badges : [];
-  const resumeUrl = String(heroData.resumeUrl || "").trim();
+  const resumeUrl = String(heroData.resumeUrl || portfolioData.owner?.resumeUrl || "").trim();
   const hasResume = Boolean(resumeUrl && resumeUrl !== "#");
+  if (process.env.NODE_ENV !== "production") {
+    console.debug("[section:hero]", { eyebrow: heroData.eyebrow, title: heroData.title, description: heroData.description });
+  }
 
   return (
     <section id="home" className="relative overflow-hidden bg-section-bg pt-32 sm:pt-36 pb-24">
@@ -21,33 +24,25 @@ export function HeroSection() {
       <div className="section-wrap">
         <div className="mx-auto max-w-5xl text-center">
           <FadeInUp immediate>
-            <p className="mb-4 inline-flex rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">
-              {heroData.eyebrow}
-            </p>
+            {heroData.eyebrow ? <p className="mb-4 inline-flex rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">{heroData.eyebrow}</p> : null}
           </FadeInUp>
           <FadeInUp delay={0.06} immediate>
             <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-text-main sm:text-6xl lg:text-7xl">
-              <span className="block">{heroData.title}</span>
-              <TypewriterLines
-                text={heroData.animatedRole}
-                className="text-gradient-animated mt-4 inline-block align-top"
-                typeSpeedMs={80}
-                holdMs={1800}
-              />
+              {heroData.title ? <span className="block">{heroData.title}</span> : null}
+              {heroData.animatedRole ? <TypewriterLines text={heroData.animatedRole} className="text-gradient-animated mt-4 inline-block align-top" typeSpeedMs={80} holdMs={1800} /> : null}
             </h1>
           </FadeInUp>
           <FadeInUp delay={0.12} immediate>
-            <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-text-muted sm:text-lg md:text-xl">{heroData.description}</p>
+            {heroData.description ? <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-text-muted sm:text-lg md:text-xl">{heroData.description}</p> : null}
           </FadeInUp>
 
           <FadeInUp delay={0.18}>
-            <div className="mt-12 flex flex-wrap justify-center gap-4">
-              <Button href={heroData.primaryCtaHref || "#projects"}>{heroData.primaryCtaLabel}</Button>
-              <Button href={heroData.secondaryCtaHref || "#contact"} variant="secondary">
-                {heroData.secondaryCtaLabel}
+            <div className="mt-12 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+              <Button href={heroData.primaryCtaHref || "#projects"} className="w-full sm:w-auto">
+                View Projects
               </Button>
               {hasResume ? (
-                <Button href={resumeUrl} variant="secondary" target="_blank" download>
+                <Button href={resumeUrl} variant="secondary" target="_blank" download className="w-full sm:w-auto">
                   Download Resume
                 </Button>
               ) : null}

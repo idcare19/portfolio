@@ -8,7 +8,6 @@ export function FooterSection() {
   const portfolioData = useSiteDataContext();
   const footerSection = portfolioData.sections?.footer;
   const footer = footerSection?.data as Record<string, string> | undefined;
-  const quickLinks = footerSection?.items || [];
   const socials = portfolioData.socials;
   const githubHref = socials.find((item) => item.label.toLowerCase() === "github")?.href || "";
   const linkedinHref = socials.find((item) => item.label.toLowerCase() === "linkedin")?.href || "";
@@ -17,9 +16,7 @@ export function FooterSection() {
   return (
     <footer className="border-t border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] py-10">
       <div className="section-wrap flex flex-col items-center justify-between gap-5 sm:flex-row">
-        <p className="max-w-xl text-center text-sm text-text-muted sm:text-left">
-          &copy; {new Date().getFullYear()} {footer?.copyrightText}
-        </p>
+        <p className="max-w-xl text-center text-sm text-text-muted sm:text-left">{footer?.copyrightText}</p>
         <div className="flex items-center gap-3">
           {githubHref ? (
             <a href={githubHref} onClick={() => trackClientEvent("github-click", { targetType: "social", targetSlug: "github" })} className="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-2.5 text-text-muted transition-all duration-500 ease-out hover:-translate-y-1 hover:rotate-[-8deg] hover:scale-105 hover:border-primary/40 hover:text-primary" aria-label="GitHub">

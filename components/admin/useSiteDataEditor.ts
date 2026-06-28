@@ -32,7 +32,56 @@ export function useSiteDataEditor() {
     const cacheBust = Date.now();
     const res = await fetch(`/api/admin/site-data?_ts=${cacheBust}`, { cache: "no-store" });
     if (!res.ok) throw new Error("Failed to load site data");
-    return res.json();
+    const text = await res.text();
+    return text ? JSON.parse(text) : null;
+  }
+
+  async function readJsonOrTextResponse(response: Response) {
+    const text = await response.text();
+    if (process.env.NODE_ENV !== "production") {
+      console.debug("[useSiteDataEditor.save] raw response", text);
+    }
+
+    if (!text.trim()) {
+      return { json: null as any, text };
+    }
+
+    try {
+      return { json: JSON.parse(text) as any, text };
+    } catch (parseError) {
+      throw new Error(`Invalid JSON response: ${text.slice(0, 200)}`);
+    }
+  }
+
+  function extractSiteDataPayload(payload: unknown): {
+    data?: SiteData;
+    source?: "mongodb" | "github";
+    requestedSource?: "mongodb" | "github" | "auto";
+    fallbackActivated?: boolean;
+    meta?: {
+      lastMongoUpdateAt?: string | null;
+      lastGitHubSyncAt?: string | null;
+    };
+  } {
+    const response = (payload || {}) as {
+      data?: SiteData | { data?: SiteData };
+      source?: "mongodb" | "github";
+      requestedSource?: "mongodb" | "github" | "auto";
+      fallbackActivated?: boolean;
+      meta?: {
+        lastMongoUpdateAt?: string | null;
+        lastGitHubSyncAt?: string | null;
+      };
+    };
+
+    const nestedData = response.data && "data" in response.data ? response.data.data : response.data;
+    return {
+      data: nestedData as SiteData | undefined,
+      source: response.source,
+      requestedSource: response.requestedSource,
+      fallbackActivated: response.fallbackActivated,
+      meta: response.meta,
+    };
   }
 
   const load = useCallback(async () => {
@@ -40,17 +89,8 @@ export function useSiteDataEditor() {
     setError(null);
     try {
       const payload = await fetchLatestContent();
-      const contentPayload = (payload.data || {}) as {
-        data?: SiteData;
-        source?: "mongodb" | "github";
-        requestedSource?: "mongodb" | "github" | "auto";
-        fallbackActivated?: boolean;
-        meta?: {
-          lastMongoUpdateAt?: string | null;
-          lastGitHubSyncAt?: string | null;
-        };
-      };
-      const normalized = normalizeSiteData((contentPayload.data || null) as SiteData);
+      const contentPayload = extractSiteDataPayload(payload);
+      const normalized = contentPayload.data ? normalizeSiteData(contentPayload.data) : null;
       if (!normalized) throw new Error("Site data payload missing");
       setData(normalized);
       setSavedData(normalized);
@@ -81,8 +121,17 @@ export function useSiteDataEditor() {
     setError(null);
     try {
       const nextData = normalizeSiteData(updatedData);
-      const res = await fetch("/api/admin/content", {
-        method: "PUT",
+      const endpoint = "/api/admin/site-data/update";
+      if (process.env.NODE_ENV !== "production") {
+        console.debug("[useSiteDataEditor.save] request", {
+          endpoint,
+          method: "PUT",
+          updatedAt: nextData.updatedAt,
+        });
+      }
+
+      const res = await fetch(endpoint, {
+        method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           data: { ...nextData, updatedAt: new Date().toISOString() },
@@ -90,44 +139,50 @@ export function useSiteDataEditor() {
         }),
       });
 
-      if (!res.ok) {
-        const payload = await res.json();
-        throw new Error(payload.error || "Failed to update content");
+      if (process.env.NODE_ENV !== "production") {
+        console.debug("[useSiteDataEditor.save] response status", {
+          endpoint,
+          status: res.status,
+        });
       }
 
-      const payload = await res.json();
-      const contentPayload = (payload?.data || {}) as {
-        data?: SiteData;
-        source?: "mongodb" | "github";
-        requestedSource?: "mongodb" | "github" | "auto";
-        fallbackActivated?: boolean;
-        meta?: {
-          lastMongoUpdateAt?: string | null;
-          lastGitHubSyncAt?: string | null;
-        };
-      };
+      const { json: rawPayload, text } = await readJsonOrTextResponse(res);
+
+      if (!res.ok) {
+        if (process.env.NODE_ENV !== "production") {
+          console.debug("[useSiteDataEditor.save] error response", rawPayload || text);
+        }
+        const message = rawPayload?.error || rawPayload?.reason || text || "Failed to update content";
+        throw new Error(message);
+      }
+
+      const payload = rawPayload;
+      if (process.env.NODE_ENV !== "production") {
+        console.debug("[useSiteDataEditor.save] response json", payload);
+      }
+      const contentPayload = extractSiteDataPayload(payload);
       const latestPayload = await fetchLatestContent().catch(() => null);
-      const latestContentPayload = (latestPayload?.data || {}) as {
-        data?: SiteData;
-        source?: "mongodb" | "github";
-        requestedSource?: "mongodb" | "github" | "auto";
-        fallbackActivated?: boolean;
-        meta?: {
-          lastMongoUpdateAt?: string | null;
-          lastGitHubSyncAt?: string | null;
-        };
-      };
+      const latestContentPayload = extractSiteDataPayload(latestPayload);
       const authoritativeData = (latestContentPayload.data || contentPayload.data || nextData) as SiteData;
       const normalized = normalizeSiteData(authoritativeData);
-      setData(normalized);
-      setSavedData(normalized);
+      const finalSavedData = await fetchLatestContent().catch(() => null);
+      const finalContentPayload = extractSiteDataPayload(finalSavedData);
+      const serverData = finalContentPayload.data ? normalizeSiteData(finalContentPayload.data) : normalized;
+      if (process.env.NODE_ENV !== "production") {
+        console.debug("[useSiteDataEditor.save] updatedAt", {
+          updatedAt: serverData.updatedAt,
+        });
+      }
+      setData(serverData);
+      setSavedData(serverData);
       setLastSaveMeta({
         ...payload,
         latestFetch: latestPayload,
+        finalFetch: finalSavedData,
       });
       setContentMeta({
         source: latestContentPayload.source || contentPayload.source || "mongodb",
-        requestedSource: latestContentPayload.requestedSource || contentPayload.requestedSource || normalized.websiteControl?.dataSource || "auto",
+        requestedSource: latestContentPayload.requestedSource || contentPayload.requestedSource || serverData.websiteControl?.dataSource || "auto",
         fallbackActivated: Boolean(latestContentPayload.fallbackActivated ?? contentPayload.fallbackActivated),
         lastMongoUpdateAt: latestContentPayload.meta?.lastMongoUpdateAt || contentPayload.meta?.lastMongoUpdateAt || null,
         lastGitHubSyncAt: latestContentPayload.meta?.lastGitHubSyncAt || contentPayload.meta?.lastGitHubSyncAt || null,
@@ -136,12 +191,12 @@ export function useSiteDataEditor() {
         console.debug("[admin/save] response", {
           success: Boolean(payload?.ok ?? payload?.success),
           activeSource: payload?.activeSource || payload?.source,
-          updatedAt: payload?.updatedAt || normalized.updatedAt,
+          updatedAt: payload?.updatedAt || serverData.updatedAt,
           savedPreview: payload?.savedFieldPreview || null,
           revalidatedPaths: payload?.revalidatedPaths || [],
         });
       }
-      return { ok: true, data: normalized } as const;
+      return { ok: true, data: serverData } as const;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Save failed");
       return { ok: false, error: err instanceof Error ? err.message : "Save failed" } as const;

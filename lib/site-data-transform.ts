@@ -9,8 +9,35 @@ import type {
 
 import seedData from "@/src/data/siteData.json";
 
+const SECTION_ORDER = [
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "working",
+  "completed",
+  "reviews",
+  "journey",
+  "education",
+  "github",
+  "services",
+  "contact",
+] as const;
+
 function cloneSeedData(): SiteData {
   return JSON.parse(JSON.stringify(seedData)) as SiteData;
+}
+
+function sectionSeed(
+  seedSections: Partial<Record<string, Partial<SiteSectionBlock>>>,
+  sectionId: string,
+) {
+  return seedSections[sectionId];
+}
+
+function sectionOrder(sectionId: string, fallback = 0) {
+  const index = SECTION_ORDER.indexOf(sectionId as (typeof SECTION_ORDER)[number]);
+  return index >= 0 ? index + 1 : fallback;
 }
 
 function makeBlock<K extends DynamicSectionId>(
@@ -45,57 +72,76 @@ function makeBlock<K extends DynamicSectionId>(
 export function normalizeSiteData(input: SiteData): SiteData {
   const sectionsInput = input.sections || ({} as SectionRecord);
   const seedSections = cloneSeedData().sections || {};
+  const heroSeed = sectionSeed(seedSections, "hero");
+  const aboutSeed = sectionSeed(seedSections, "about");
+  const skillsSeed = sectionSeed(seedSections, "skills");
+  const projectsSeed = sectionSeed(seedSections, "projects");
+  const workingSeed = sectionSeed(seedSections, "working");
+  const completedSeed = sectionSeed(seedSections, "completed");
+  const reviewsSeed = sectionSeed(seedSections, "reviews");
+  const journeySeed = sectionSeed(seedSections, "journey");
+  const educationSeed = sectionSeed(seedSections, "education");
+  const servicesSeed = sectionSeed(seedSections, "services");
+  const contactSeed = sectionSeed(seedSections, "contact");
+  const blogsSeed = sectionSeed(seedSections, "blogs");
+  const githubSeed = sectionSeed(seedSections, "github");
+  const footerSeed = sectionSeed(seedSections, "footer");
   const themeMode = input.websiteSettings?.themeMode || (input.websiteSettings as SiteData["websiteSettings"] & { theme?: SiteData["websiteSettings"]["themeMode"] })?.theme || "light";
 
   const sections: SectionRecord = {
     hero: makeBlock("hero", sectionsInput.hero, {
       data: {
-        eyebrow: sectionsInput.hero?.data?.eyebrow ?? seedSections.hero?.data?.eyebrow ?? input.owner.identityLine ?? "",
-        title: sectionsInput.hero?.data?.title ?? seedSections.hero?.data?.title ?? input.owner.introLine ?? "",
-        animatedRole: sectionsInput.hero?.data?.animatedRole ?? seedSections.hero?.data?.animatedRole ?? input.owner.role ?? "",
-        description: sectionsInput.hero?.data?.description ?? seedSections.hero?.data?.description ?? input.owner.tagline ?? "",
-        primaryCtaLabel: sectionsInput.hero?.data?.primaryCtaLabel ?? seedSections.hero?.data?.primaryCtaLabel ?? "",
-        primaryCtaHref: sectionsInput.hero?.data?.primaryCtaHref ?? seedSections.hero?.data?.primaryCtaHref ?? "",
-        secondaryCtaLabel: sectionsInput.hero?.data?.secondaryCtaLabel ?? seedSections.hero?.data?.secondaryCtaLabel ?? "",
-        secondaryCtaHref: sectionsInput.hero?.data?.secondaryCtaHref ?? seedSections.hero?.data?.secondaryCtaHref ?? "",
-        badges: sectionsInput.hero?.data?.badges ?? seedSections.hero?.data?.badges ?? input.owner.badges,
-        stats: sectionsInput.hero?.data?.stats ?? seedSections.hero?.data?.stats ?? input.about.stats,
-        techStack: sectionsInput.hero?.data?.techStack ?? seedSections.hero?.data?.techStack ?? input.heroTech,
+        eyebrow: sectionsInput.hero?.data?.eyebrow ?? heroSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.hero?.data?.title ?? heroSeed?.data?.title ?? "",
+        animatedRole: sectionsInput.hero?.data?.animatedRole ?? heroSeed?.data?.animatedRole ?? "",
+        description: sectionsInput.hero?.data?.description ?? heroSeed?.data?.description ?? "",
+        primaryCtaLabel: sectionsInput.hero?.data?.primaryCtaLabel ?? heroSeed?.data?.primaryCtaLabel ?? "",
+        primaryCtaHref: sectionsInput.hero?.data?.primaryCtaHref ?? heroSeed?.data?.primaryCtaHref ?? "",
+        secondaryCtaLabel: sectionsInput.hero?.data?.secondaryCtaLabel ?? heroSeed?.data?.secondaryCtaLabel ?? "",
+        secondaryCtaHref: sectionsInput.hero?.data?.secondaryCtaHref ?? heroSeed?.data?.secondaryCtaHref ?? "",
+        badges: sectionsInput.hero?.data?.badges ?? heroSeed?.data?.badges ?? [],
+        stats: sectionsInput.hero?.data?.stats ?? heroSeed?.data?.stats ?? [],
+        techStack: sectionsInput.hero?.data?.techStack ?? heroSeed?.data?.techStack ?? [],
       },
       items: [],
     }),
     about: makeBlock("about", sectionsInput.about, {
       data: {
-        eyebrow: sectionsInput.about?.data?.eyebrow ?? seedSections.about?.data?.eyebrow ?? "",
-        title: sectionsInput.about?.data?.title ?? seedSections.about?.data?.title ?? "",
-        description: sectionsInput.about?.data?.description ?? seedSections.about?.data?.description ?? "",
-        intro: sectionsInput.about?.data?.intro ?? seedSections.about?.data?.intro ?? input.about.intro ?? "",
+        eyebrow: sectionsInput.about?.data?.eyebrow ?? aboutSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.about?.data?.title ?? aboutSeed?.data?.title ?? "",
+        description: sectionsInput.about?.data?.description ?? aboutSeed?.data?.description ?? "",
+        intro: sectionsInput.about?.data?.intro ?? aboutSeed?.data?.intro ?? "",
       },
-      items: (sectionsInput.about?.items as SiteData["about"]["stats"] | undefined) ?? (seedSections.about?.items as SiteData["about"]["stats"] | undefined) ?? input.about.stats,
+      items: Array.isArray(sectionsInput.about?.items)
+        ? (sectionsInput.about.items as SiteData["about"]["stats"])
+        : (Array.isArray(aboutSeed?.items) ? (aboutSeed.items as SiteData["about"]["stats"]) : []),
     }),
     skills: makeBlock("skills", sectionsInput.skills, {
       data: {
-        eyebrow: sectionsInput.skills?.data?.eyebrow ?? seedSections.skills?.data?.eyebrow ?? "",
-        title: sectionsInput.skills?.data?.title ?? seedSections.skills?.data?.title ?? "",
-        description: sectionsInput.skills?.data?.description ?? seedSections.skills?.data?.description ?? "",
-        learningTitle: sectionsInput.skills?.data?.learningTitle ?? seedSections.skills?.data?.learningTitle ?? "",
-        learningItems: sectionsInput.skills?.data?.learningItems ?? seedSections.skills?.data?.learningItems ?? input.learningPhase,
+        eyebrow: sectionsInput.skills?.data?.eyebrow ?? skillsSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.skills?.data?.title ?? skillsSeed?.data?.title ?? "",
+        description: sectionsInput.skills?.data?.description ?? skillsSeed?.data?.description ?? "",
+        learningTitle: sectionsInput.skills?.data?.learningTitle ?? skillsSeed?.data?.learningTitle ?? "",
+        learningItems: sectionsInput.skills?.data?.learningItems ?? skillsSeed?.data?.learningItems ?? [],
       },
-      items: input.skillsDetailed.length
-        ? input.skillsDetailed
-        : input.skills.map((name, index) => ({
-            id: `skill-${index + 1}`,
-            name,
-            category: "Tools",
-            icon: "",
-            level: 80,
-          })),
+      items:
+        (sectionsInput.skills?.items as SiteData["skillsDetailed"] | undefined) ??
+        (skillsSeed?.items as SiteData["skillsDetailed"] | undefined) ??
+        (input.skillsDetailed.length
+          ? input.skillsDetailed
+          : input.skills.map((name, index) => ({
+              id: `skill-${index + 1}`,
+              name,
+              category: "Tools",
+              icon: "",
+              level: 80,
+            }))),
     }),
     projects: makeBlock("projects", sectionsInput.projects, {
       data: {
-        eyebrow: sectionsInput.projects?.data?.eyebrow ?? seedSections.projects?.data?.eyebrow ?? "",
-        title: sectionsInput.projects?.data?.title ?? seedSections.projects?.data?.title ?? "",
-        description: sectionsInput.projects?.data?.description ?? seedSections.projects?.data?.description ?? "",
+        eyebrow: sectionsInput.projects?.data?.eyebrow ?? projectsSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.projects?.data?.title ?? projectsSeed?.data?.title ?? "",
+        description: sectionsInput.projects?.data?.description ?? projectsSeed?.data?.description ?? "",
       },
       items: input.projectsDetailed.length
         ? [...input.projectsDetailed].sort((a, b) => a.order - b.order)
@@ -115,25 +161,25 @@ export function normalizeSiteData(input: SiteData): SiteData {
     }),
     working: makeBlock("working", sectionsInput.working, {
       data: {
-        eyebrow: sectionsInput.working?.data?.eyebrow ?? seedSections.working?.data?.eyebrow ?? "",
-        title: sectionsInput.working?.data?.title ?? seedSections.working?.data?.title ?? "",
-        description: sectionsInput.working?.data?.description ?? seedSections.working?.data?.description ?? "",
+        eyebrow: sectionsInput.working?.data?.eyebrow ?? workingSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.working?.data?.title ?? workingSeed?.data?.title ?? "",
+        description: sectionsInput.working?.data?.description ?? workingSeed?.data?.description ?? "",
       },
       items: input.workingProjects || [],
     }),
     completed: makeBlock("completed", sectionsInput.completed, {
       data: {
-        eyebrow: sectionsInput.completed?.data?.eyebrow ?? seedSections.completed?.data?.eyebrow ?? "",
-        title: sectionsInput.completed?.data?.title ?? seedSections.completed?.data?.title ?? "",
-        description: sectionsInput.completed?.data?.description ?? seedSections.completed?.data?.description ?? "",
+        eyebrow: sectionsInput.completed?.data?.eyebrow ?? completedSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.completed?.data?.title ?? completedSeed?.data?.title ?? "",
+        description: sectionsInput.completed?.data?.description ?? completedSeed?.data?.description ?? "",
       },
       items: input.completedProjects || [],
     }),
     reviews: makeBlock("reviews", sectionsInput.reviews, {
       data: {
-        eyebrow: sectionsInput.reviews?.data?.eyebrow ?? seedSections.reviews?.data?.eyebrow ?? "",
-        title: sectionsInput.reviews?.data?.title ?? seedSections.reviews?.data?.title ?? "",
-        description: sectionsInput.reviews?.data?.description ?? seedSections.reviews?.data?.description ?? "",
+        eyebrow: sectionsInput.reviews?.data?.eyebrow ?? reviewsSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.reviews?.data?.title ?? reviewsSeed?.data?.title ?? "",
+        description: sectionsInput.reviews?.data?.description ?? reviewsSeed?.data?.description ?? "",
       },
       items: input.testimonialsDetailed.length
         ? input.testimonialsDetailed
@@ -147,67 +193,71 @@ export function normalizeSiteData(input: SiteData): SiteData {
     }),
     journey: makeBlock("journey", sectionsInput.journey, {
       data: {
-        eyebrow: sectionsInput.journey?.data?.eyebrow ?? seedSections.journey?.data?.eyebrow ?? "",
-        title: sectionsInput.journey?.data?.title ?? seedSections.journey?.data?.title ?? "",
-        description: sectionsInput.journey?.data?.description ?? seedSections.journey?.data?.description ?? "",
-        currentWorkTitle: sectionsInput.journey?.data?.currentWorkTitle ?? seedSections.journey?.data?.currentWorkTitle ?? "",
-        currentWork: sectionsInput.journey?.data?.currentWork ?? seedSections.journey?.data?.currentWork ?? input.journeyNow?.currentWork ?? "",
-        milestones: sectionsInput.journey?.data?.milestones ?? seedSections.journey?.data?.milestones ?? input.journeyNow?.ongoingMilestones ?? [],
+        eyebrow: sectionsInput.journey?.data?.eyebrow ?? journeySeed?.data?.eyebrow ?? "",
+        title: sectionsInput.journey?.data?.title ?? journeySeed?.data?.title ?? "",
+        description: sectionsInput.journey?.data?.description ?? journeySeed?.data?.description ?? "",
+        currentWorkTitle: sectionsInput.journey?.data?.currentWorkTitle ?? journeySeed?.data?.currentWorkTitle ?? "",
+        currentWork: sectionsInput.journey?.data?.currentWork ?? journeySeed?.data?.currentWork ?? "",
+        milestones: sectionsInput.journey?.data?.milestones ?? journeySeed?.data?.milestones ?? [],
       },
       items: input.experience,
     }),
     education: makeBlock("education", sectionsInput.education, {
       data: {
-        eyebrow: sectionsInput.education?.data?.eyebrow ?? seedSections.education?.data?.eyebrow ?? "",
-        title: sectionsInput.education?.data?.title ?? seedSections.education?.data?.title ?? "",
-        description: sectionsInput.education?.data?.description ?? seedSections.education?.data?.description ?? "",
+        eyebrow: sectionsInput.education?.data?.eyebrow ?? educationSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.education?.data?.title ?? educationSeed?.data?.title ?? "",
+        description: sectionsInput.education?.data?.description ?? educationSeed?.data?.description ?? "",
       },
       items: input.education || [],
     }),
     services: makeBlock("services", sectionsInput.services, {
       data: {
-        eyebrow: sectionsInput.services?.data?.eyebrow ?? seedSections.services?.data?.eyebrow ?? "",
-        title: sectionsInput.services?.data?.title ?? seedSections.services?.data?.title ?? "",
-        description: sectionsInput.services?.data?.description ?? seedSections.services?.data?.description ?? "",
+        eyebrow: sectionsInput.services?.data?.eyebrow ?? servicesSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.services?.data?.title ?? servicesSeed?.data?.title ?? "",
+        description: sectionsInput.services?.data?.description ?? servicesSeed?.data?.description ?? "",
       },
       items: input.services || [],
     }),
     contact: makeBlock("contact", sectionsInput.contact, {
       data: {
-        eyebrow: sectionsInput.contact?.data?.eyebrow ?? seedSections.contact?.data?.eyebrow ?? "",
-        title: sectionsInput.contact?.data?.title ?? seedSections.contact?.data?.title ?? "",
-        description: sectionsInput.contact?.data?.description ?? seedSections.contact?.data?.description ?? "",
-        cardTitle: sectionsInput.contact?.data?.cardTitle ?? seedSections.contact?.data?.cardTitle ?? "",
-        cardDescription: sectionsInput.contact?.data?.cardDescription ?? seedSections.contact?.data?.cardDescription ?? "",
-        formTitle: sectionsInput.contact?.data?.formTitle ?? seedSections.contact?.data?.formTitle ?? "",
+        eyebrow: sectionsInput.contact?.data?.eyebrow ?? contactSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.contact?.data?.title ?? contactSeed?.data?.title ?? "",
+        description: sectionsInput.contact?.data?.description ?? contactSeed?.data?.description ?? "",
+        cardTitle: sectionsInput.contact?.data?.cardTitle ?? contactSeed?.data?.cardTitle ?? "",
+        cardDescription: sectionsInput.contact?.data?.cardDescription ?? contactSeed?.data?.cardDescription ?? "",
+        formTitle: sectionsInput.contact?.data?.formTitle ?? contactSeed?.data?.formTitle ?? "",
       },
       items: input.socials,
     }),
     blogs: makeBlock("blogs", sectionsInput.blogs, {
       data: {
-        eyebrow: sectionsInput.blogs?.data?.eyebrow ?? seedSections.blogs?.data?.eyebrow ?? "",
-        title: sectionsInput.blogs?.data?.title ?? seedSections.blogs?.data?.title ?? "",
-        description: sectionsInput.blogs?.data?.description ?? seedSections.blogs?.data?.description ?? "",
+        eyebrow: sectionsInput.blogs?.data?.eyebrow ?? blogsSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.blogs?.data?.title ?? blogsSeed?.data?.title ?? "",
+        description: sectionsInput.blogs?.data?.description ?? blogsSeed?.data?.description ?? "",
       },
       items: input.blogs,
     }),
     github: makeBlock("github", sectionsInput.github, {
       data: {
-        eyebrow: sectionsInput.github?.data?.eyebrow ?? seedSections.github?.data?.eyebrow ?? "",
-        title: sectionsInput.github?.data?.title ?? seedSections.github?.data?.title ?? "",
-        description: sectionsInput.github?.data?.description ?? seedSections.github?.data?.description ?? "",
+        eyebrow: sectionsInput.github?.data?.eyebrow ?? githubSeed?.data?.eyebrow ?? "",
+        title: sectionsInput.github?.data?.title ?? githubSeed?.data?.title ?? "",
+        description: sectionsInput.github?.data?.description ?? githubSeed?.data?.description ?? "",
       },
       items: [],
     }),
     footer: makeBlock("footer", sectionsInput.footer, {
       data: {
-        copyrightText: sectionsInput.footer?.data?.copyrightText ?? seedSections.footer?.data?.copyrightText ?? input.shell?.footer?.copyrightText ?? input.websiteSettings?.footerText ?? "",
-        ctaLabel: sectionsInput.footer?.data?.ctaLabel ?? seedSections.footer?.data?.ctaLabel ?? input.shell?.footer?.ctaLabel ?? "",
-        ctaHref: sectionsInput.footer?.data?.ctaHref ?? seedSections.footer?.data?.ctaHref ?? input.shell?.footer?.ctaHref ?? "",
+        copyrightText: sectionsInput.footer?.data?.copyrightText ?? footerSeed?.data?.copyrightText ?? "",
+        ctaLabel: sectionsInput.footer?.data?.ctaLabel ?? footerSeed?.data?.ctaLabel ?? "",
+        ctaHref: sectionsInput.footer?.data?.ctaHref ?? footerSeed?.data?.ctaHref ?? "",
       },
-      items: input.shell?.footer?.quickLinks || [],
+      items: sectionsInput.footer?.items ?? footerSeed?.items ?? [],
     }),
   };
+
+  for (const [sectionId, block] of Object.entries(sections)) {
+    block.order = sectionOrder(sectionId, block.order);
+  }
 
   const nav = input.nav?.length
     ? input.nav
@@ -241,7 +291,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
         brandBadgePrefix: input.shell?.navbar?.brandBadgePrefix || "",
       },
       footer: {
-        copyrightText: input.shell?.footer?.copyrightText || input.websiteSettings?.footerText || "",
+        copyrightText: input.shell?.footer?.copyrightText ?? input.websiteSettings?.footerText ?? "",
         backToTopLabel: input.shell?.footer?.backToTopLabel || "",
         quickLinks: input.shell?.footer?.quickLinks || [],
         ctaLabel: input.shell?.footer?.ctaLabel || "",
@@ -275,7 +325,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
     })),
     skillsDetailed: sections.skills.items as SiteData["skillsDetailed"],
     skills: (sections.skills.items as SiteData["skillsDetailed"]).map((skill) => skill.name),
-    learningPhase: ((sections.skills.data as Record<string, unknown>).learningItems as string[] | undefined) || input.learningPhase,
+    learningPhase: ((sections.skills.data as Record<string, unknown>).learningItems as string[] | undefined) ?? [],
     workingProjects: sections.working.items as SiteData["workingProjects"],
     completedProjects: sections.completed.items as SiteData["completedProjects"],
     experience: sections.journey.items as SiteData["experience"],
@@ -294,9 +344,9 @@ export function normalizeSiteData(input: SiteData): SiteData {
     socials: sections.contact.items as SiteData["socials"],
     services: sections.services.items as SiteData["services"],
     blogs: Array.isArray(input.blogs) ? input.blogs : [],
-    heroTech: (((sections.hero.data as Record<string, unknown>).techStack as string[] | undefined) || input.heroTech).filter(Boolean),
+    heroTech: (((sections.hero.data as Record<string, unknown>).techStack as string[] | undefined) ?? []).filter(Boolean),
     about: {
-      intro: String((sections.about.data as Record<string, unknown>).intro || input.about.intro),
+      intro: String((sections.about.data as Record<string, unknown>).intro ?? ""),
       stats: sections.about.items as SiteData["about"]["stats"],
     },
     updatedAt: input.updatedAt || new Date().toISOString(),

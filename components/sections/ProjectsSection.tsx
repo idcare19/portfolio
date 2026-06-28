@@ -2,7 +2,7 @@
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
-import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
+import { useSectionData } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 
@@ -19,15 +19,15 @@ export function ProjectsSection() {
         githubUrl: item.githubUrl,
       }))
     : [];
+  if (process.env.NODE_ENV !== "production") {
+    console.debug("[section:projects]", { eyebrow: data.eyebrow, title: data.title, description: data.description });
+  }
+  const hasHeader = Boolean(data.eyebrow || data.title || data.description);
 
   return (
     <AnimatedSection id="projects" className="bg-section-bg py-20">
       <div className="section-wrap">
-        <SectionHeader
-          eyebrow={data.eyebrow}
-          title={data.title}
-          description={data.description}
-        />
+        {hasHeader ? <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} /> : null}
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project, index) => (

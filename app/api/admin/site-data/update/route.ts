@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { syncGitHubStats } from "@/lib/github-stats";
 import { requireAdminSession } from "@/lib/admin/server";
-import { DEFAULT_REVALIDATE_PATHS, getSiteContentState, saveSiteData } from "@/lib/site-data-store";
+import { DEFAULT_REVALIDATE_PATHS, saveSiteData } from "@/lib/site-data-store";
 import { normalizeSiteData } from "@/lib/site-data-transform";
 
 export const runtime = "nodejs";
@@ -22,26 +22,20 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    const state = await getSiteContentState("mongodb");
-    const incomingGithubConfig = body?.githubConfig
-      ? {
-          ...body.githubConfig,
-        }
-      : null;
-    if (incomingGithubConfig) {
-      delete incomingGithubConfig.token;
-    }
-    const nextData = normalizeSiteData({
-      ...state.data,
-      ...body,
-      githubConfig: incomingGithubConfig
+    const incomingSiteData = normalizeSiteData((body?.data ?? body) as Parameters<typeof normalizeSiteData>[0]);
+    console.log("[SAVE RECEIVED about.items]", incomingSiteData?.sections?.about?.items);
+    console.log("[UPDATE ROUTE incoming about.items]", incomingSiteData?.sections?.about?.items);
+
+    const nextData = {
+      ...incomingSiteData,
+      githubConfig: incomingSiteData.githubConfig
         ? {
-            ...state.data.githubConfig,
-            ...incomingGithubConfig,
+            ...incomingSiteData.githubConfig,
+            token: "",
           }
-        : state.data.githubConfig,
+        : incomingSiteData.githubConfig,
       updatedAt: new Date().toISOString(),
-    });
+    };
 
     const saved = await saveSiteData(nextData);
     let githubSync: { success: boolean; error?: string } | null = null;
@@ -49,6 +43,12 @@ export async function POST(request: Request) {
     if (saved.data.githubConfig?.enabled && saved.data.githubConfig.username) {
       githubSync = await syncGitHubStats(saved.data.githubConfig.username);
     }
+
+    console.log("[admin save] returning json", {
+      success: true,
+      updatedAt: saved.data.updatedAt,
+    });
+    console.log("[AFTER SAVE READBACK about.items]", saved.data?.sections?.about?.items);
 
     return NextResponse.json({
       success: true,
