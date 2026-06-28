@@ -51,7 +51,6 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
               <option value="auto">Auto</option>
             </select>
           </div>
-<<<<<<< HEAD
           <label className="inline-flex items-center gap-2 text-sm">
             <input
               type="checkbox"
@@ -60,8 +59,6 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
             />
             Developer Mode
           </label>
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
           <div className="rounded-xl border border-admin-border bg-admin-input px-4 py-3 text-sm text-admin-text">
             <p><span className="font-semibold">Current active source:</span> {status?.activeSource || "Unknown"}</p>
             <p><span className="font-semibold">Fallback:</span> {status?.fallbackActivated ? "Active" : "Inactive"}</p>

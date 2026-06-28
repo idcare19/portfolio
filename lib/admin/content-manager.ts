@@ -1,10 +1,6 @@
 import type { SiteData, SiteSectionBlock, TextBlock } from "@/src/types/site-data";
 
-<<<<<<< HEAD
 const SECTION_KEYS = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "footer"] as const;
-=======
-const SECTION_KEYS = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs"] as const;
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 
 type SectionKey = (typeof SECTION_KEYS)[number];
 
@@ -119,8 +115,4 @@ export function saveAdminSections(siteData: SiteData, sections: SiteSectionBlock
     .sort((a, b) => a.order - b.order)
     .map((section) => ({ label: section.nav?.label || section.label, href: section.nav?.href || `#${section.id}` }));
   return next;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc

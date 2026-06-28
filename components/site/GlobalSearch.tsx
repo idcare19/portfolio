@@ -4,45 +4,32 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Search } from "lucide-react";
 import { useEffect, useState } from "react";
-<<<<<<< HEAD
 import { trackClientEvent } from "@/components/site/AnalyticsTracker";
 import { useSiteDataContext } from "@/components/site/SiteDataProvider";
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 
 type SearchResult = {
   type: string;
   title: string;
-  href: string;
   description: string;
+  href: string;
 };
 
 export function GlobalSearch() {
-<<<<<<< HEAD
   const siteData = useSiteDataContext();
   const shell = siteData.shell.search;
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   const [open, setOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<SearchResult[]>([]);
   const pathname = usePathname();
   const isAdminRoute = pathname?.startsWith("/admin");
 
-  // Close overlay when route changes and prevent body lock
   useEffect(() => {
     setOpen(false);
-    // Re-enable body scroll if it was locked
     document.body.style.overflow = "";
   }, [pathname]);
 
-  // Lock/unlock body scroll when search opens/closes
   useEffect(() => {
-    if (open) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "";
-    }
+    document.body.style.overflow = open ? "hidden" : "";
     return () => {
       document.body.style.overflow = "";
     };
@@ -51,7 +38,6 @@ export function GlobalSearch() {
   useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.ctrlKey && event.key.toLowerCase() === "k") {
-        // Only allow Ctrl+K on public routes
         if (isAdminRoute) return;
         event.preventDefault();
         setOpen((value) => !value);
@@ -72,7 +58,6 @@ export function GlobalSearch() {
       const response = await fetch(`/api/search?q=${encodeURIComponent(query)}`, { signal: controller.signal });
       const payload = await response.json();
       setResults(payload.results || []);
-<<<<<<< HEAD
       trackClientEvent("search-query", {
         targetType: "search",
         metadata: {
@@ -80,17 +65,12 @@ export function GlobalSearch() {
           results: Array.isArray(payload.results) ? payload.results.length : 0,
         },
       });
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     }, 150);
     return () => {
       controller.abort();
       window.clearTimeout(timeout);
     };
   }, [open, query]);
-
-  // Only render on public routes
-  if (isAdminRoute) return null;
 
   return (
     <>
@@ -100,13 +80,8 @@ export function GlobalSearch() {
         className="fixed bottom-5 left-5 z-[90] inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-2 text-sm font-medium text-text-main shadow-lg"
       >
         <Search className="h-4 w-4" />
-<<<<<<< HEAD
         {shell.buttonLabel}
         <span className="rounded-md bg-[rgb(var(--page-bg))] px-2 py-0.5 text-xs text-text-muted">{shell.shortcutLabel}</span>
-=======
-        Search
-        <span className="rounded-md bg-[rgb(var(--page-bg))] px-2 py-0.5 text-xs text-text-muted">Ctrl K</span>
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       </button>
 
       {open ? (
@@ -116,24 +91,15 @@ export function GlobalSearch() {
               autoFocus
               value={query}
               onChange={(event) => setQuery(event.target.value)}
-<<<<<<< HEAD
               placeholder={shell.inputPlaceholder}
               className="w-full rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3 text-text-main outline-none"
             />
             <div className="mt-4 max-h-[60vh] space-y-2 overflow-auto">
               {!query.trim() ? <p className="px-2 py-5 text-sm text-text-muted">{shell.emptyPrompt}</p> : null}
-=======
-              placeholder="Search projects, blogs, skills, technologies..."
-              className="w-full rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3 text-text-main outline-none"
-            />
-            <div className="mt-4 max-h-[60vh] space-y-2 overflow-auto">
-              {!query.trim() ? <p className="px-2 py-5 text-sm text-text-muted">Start typing to search across your portfolio.</p> : null}
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
               {results.map((result) => (
                 <Link
                   key={`${result.type}-${result.href}`}
                   href={result.href}
-<<<<<<< HEAD
                   onClick={() => {
                     trackClientEvent("search-result-click", {
                       targetType: "search",
@@ -142,9 +108,6 @@ export function GlobalSearch() {
                     });
                     setOpen(false);
                   }}
-=======
-                  onClick={() => setOpen(false)}
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
                   className="block rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4 transition hover:border-primary/40 hover:bg-white"
                 >
                   <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{result.type}</p>
@@ -158,8 +121,4 @@ export function GlobalSearch() {
       ) : null}
     </>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc

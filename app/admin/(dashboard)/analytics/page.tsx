@@ -18,7 +18,6 @@ type Summary = {
 export default function AnalyticsAdminPage() {
   const [summaries, setSummaries] = useState<Summary[]>([]);
   const [recent, setRecent] = useState<Array<{ label: string; eventType: string }>>([]);
-<<<<<<< HEAD
   const [topPages, setTopPages] = useState<Array<{ _id: string; count: number }>>([]);
   const [topProjects, setTopProjects] = useState<Array<{ _id: string; count: number }>>([]);
   const [topSearchTerms, setTopSearchTerms] = useState<Array<{ _id: string; count: number }>>([]);
@@ -26,8 +25,6 @@ export default function AnalyticsAdminPage() {
   const [portfolioAiUsage, setPortfolioAiUsage] = useState(0);
   const [resumeDownloads, setResumeDownloads] = useState(0);
   const [contactSubmissions, setContactSubmissions] = useState(0);
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 
   useEffect(() => {
     void fetch("/api/analytics/summary")
@@ -35,7 +32,6 @@ export default function AnalyticsAdminPage() {
       .then((payload) => {
         setSummaries(payload.summaries || []);
         setRecent(payload.recent || []);
-<<<<<<< HEAD
         setTopPages(payload.topPages || []);
         setTopProjects(payload.topProjects || []);
         setTopSearchTerms(payload.topSearchTerms || []);
@@ -43,8 +39,6 @@ export default function AnalyticsAdminPage() {
         setPortfolioAiUsage(payload.portfolioAiUsage || 0);
         setResumeDownloads(payload.resumeDownloads || 0);
         setContactSubmissions(payload.contactSubmissions || 0);
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       })
       .catch(() => undefined);
   }, []);
@@ -60,11 +54,8 @@ export default function AnalyticsAdminPage() {
           <StatCard label="Unique Visitors" value={current.uniqueVisitors} />
           <StatCard label="Project Views" value={current.projectViews} />
           <StatCard label="Contact Submissions" value={current.contactSubmissions} />
-<<<<<<< HEAD
           <StatCard label="Portfolio AI Usage" value={portfolioAiUsage} />
           <StatCard label="Resume Downloads" value={resumeDownloads} />
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
         </div>
       ) : null}
       <section className="rounded-[28px] border border-admin-border bg-admin-card p-5">
@@ -107,7 +98,6 @@ export default function AnalyticsAdminPage() {
           ))}
         </div>
       </section>
-<<<<<<< HEAD
       <section className="grid gap-4 xl:grid-cols-2">
         <div className="rounded-[28px] border border-admin-border bg-admin-card p-5">
           <h2 className="text-lg font-semibold text-admin-text">Top Pages</h2>
@@ -155,8 +145,6 @@ export default function AnalyticsAdminPage() {
           <p className="mt-4 text-sm text-admin-text-muted">Total contact submissions tracked: {contactSubmissions}</p>
         </div>
       </section>
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     </div>
   );
 }

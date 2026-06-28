@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { authorizeSiteDataWrite } from "@/lib/admin/server";
-<<<<<<< HEAD
 import { toPublicSiteData } from "@/lib/public-site-data";
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 import { getSiteContentState, saveSiteData } from "@/lib/site-data-store";
 import { normalizeSiteData } from "@/lib/site-data-transform";
 import { siteDataSchema } from "@/schemas/site-data";
@@ -28,11 +25,7 @@ function noStoreJson(body: unknown, init?: ResponseInit) {
 export async function GET() {
   try {
     const state = await getSiteContentState();
-<<<<<<< HEAD
     const siteData = toPublicSiteData(state.data);
-=======
-    const siteData = state.data;
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     return noStoreJson({
       ok: true,
       data: siteData,

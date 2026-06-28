@@ -115,11 +115,7 @@ export type ArrayItem = {
   isEnabled: boolean;
 };
 
-<<<<<<< HEAD
 export type SectionId = "about" | "skills" | "projects" | "working" | "completed" | "reviews" | "journey" | "education" | "services" | "contact" | "blogs" | "github" | "footer";
-=======
-export type SectionId = "about" | "skills" | "projects" | "working" | "completed" | "reviews" | "journey" | "education" | "services" | "contact" | "blogs" | "github";
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 export type DynamicSectionId = "hero" | SectionId;
 export type SectionRendererId = DynamicSectionId;
 
@@ -182,10 +178,7 @@ export type MediaItem = {
 
 export type WebsiteControl = {
   dataSource?: "mongodb" | "github" | "auto";
-<<<<<<< HEAD
   developerMode?: boolean;
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   syncStatus?: {
     lastMongoUpdate?: string;
     lastGitHubSync?: string;
@@ -231,7 +224,6 @@ export type WebsiteControl = {
   };
 };
 
-<<<<<<< HEAD
 export type SiteShellConfig = {
   navbar: {
     desktopCtaLabel: string;
@@ -262,8 +254,6 @@ export type SiteShellConfig = {
   };
 };
 
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 export type SiteSectionBlock = {
   id: DynamicSectionId;
   label: string;
@@ -358,7 +348,6 @@ export type SiteData = {
     animations?: "minimal" | "smooth" | "rich";
   };
   websiteControl: WebsiteControl;
-<<<<<<< HEAD
   shell: SiteShellConfig;
   aiConfig?: {
     enabled: boolean;
@@ -368,8 +357,6 @@ export type SiteData = {
     maxContextChunks: number;
     confidenceThreshold: number;
   };
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   siteConnection?: SiteConnection;
   sections?: SectionRecord;
   githubConfig?: {
@@ -377,7 +364,6 @@ export type SiteData = {
     token?: string;
     enabled: boolean;
     refreshInterval: number;
-<<<<<<< HEAD
     includePrivateRepos?: boolean;
     includePrivateCommits?: boolean;
     showLifetimeCommits?: boolean;
@@ -390,8 +376,3 @@ export type SiteData = {
   };
   updatedAt: string;
 };
-=======
-  };
-  updatedAt: string;
-};
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc

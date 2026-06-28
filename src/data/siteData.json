@@ -416,11 +416,7 @@
       "isFeatured": false,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-<<<<<<< HEAD
       "publishedAt": "2026-06-28T08:45:00.141Z",
-=======
-      "publishedAt": "2026-06-27T16:25:06.328Z",
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       "order": 1,
       "isEnabled": true
     },
@@ -441,11 +437,7 @@
       "isFeatured": false,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-<<<<<<< HEAD
       "publishedAt": "2026-06-28T08:45:00.141Z",
-=======
-      "publishedAt": "2026-06-27T16:25:06.328Z",
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       "order": 2,
       "isEnabled": true
     },
@@ -466,11 +458,7 @@
       "isFeatured": false,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-<<<<<<< HEAD
       "publishedAt": "2026-06-28T08:45:00.141Z",
-=======
-      "publishedAt": "2026-06-27T16:25:06.328Z",
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       "order": 3,
       "isEnabled": true
     }
@@ -486,14 +474,9 @@
   },
   "websiteControl": {
     "dataSource": "auto",
-<<<<<<< HEAD
     "developerMode": false,
     "syncStatus": {
       "lastMongoUpdate": "2026-06-28T08:45:00.141Z",
-=======
-    "syncStatus": {
-      "lastMongoUpdate": "2026-06-27T16:25:06.328Z",
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       "lastGitHubSync": "2026-06-27T16:25:07.577Z"
     },
     "popupAnnouncement": {
@@ -578,7 +561,6 @@
     }
   },
   "githubConfig": {
-<<<<<<< HEAD
     "username": "idcare19",
     "token": "YOUR_GITHUB_TOKEN",
     "enabled": true,
@@ -591,12 +573,6 @@
     "commitCountMode": "publicAndPrivateCommits",
     "repositorySelectionMode": "all",
     "selectedRepositories": []
-=======
-    "username": "",
-    "token": "",
-    "enabled": false,
-    "refreshInterval": 30
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   },
   "sections": {
     "hero": {
@@ -1179,11 +1155,7 @@
           "isFeatured": false,
           "seoTitle": "How to Build a Portfolio That Converts",
           "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-<<<<<<< HEAD
           "publishedAt": "2026-06-28T08:45:00.141Z",
-=======
-          "publishedAt": "2026-06-27T16:25:06.328Z",
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
           "order": 1,
           "isEnabled": true
         },
@@ -1204,11 +1176,7 @@
           "isFeatured": false,
           "seoTitle": "10 Tips for Frontend Developers",
           "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-<<<<<<< HEAD
           "publishedAt": "2026-06-28T08:45:00.141Z",
-=======
-          "publishedAt": "2026-06-27T16:25:06.328Z",
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
           "order": 2,
           "isEnabled": true
         },
@@ -1229,11 +1197,7 @@
           "isFeatured": false,
           "seoTitle": "MongoDB Best Practices",
           "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-<<<<<<< HEAD
           "publishedAt": "2026-06-28T08:45:00.141Z",
-=======
-          "publishedAt": "2026-06-27T16:25:06.328Z",
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
           "order": 3,
           "isEnabled": true
         }
@@ -1307,18 +1271,13 @@
     "Next.js",
     "Node.js"
   ],
-<<<<<<< HEAD
   "updatedAt": "Sun Jun 28 2026 14:15:00 GMT+0530 (India Standard Time)",
-=======
-  "updatedAt": "Sat Jun 27 2026 21:55:06 GMT+0530 (India Standard Time)",
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   "siteConnection": {
     "name": "portfolio",
     "owner": "idcare19",
     "repo": "portfolio",
     "branch": "main",
     "contentPath": "src/data/siteData.json"
-<<<<<<< HEAD
   },
   "aiConfig": {
     "enabled": true,
@@ -1327,7 +1286,5 @@
     "maxTokens": 700,
     "maxContextChunks": 6,
     "confidenceThreshold": 0.2
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   }
 }

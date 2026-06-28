@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import { redirect } from "next/navigation";
-
-export default function FooterRedirectPage() {
-  redirect("/admin/text-blocks");
-=======
 "use client";
 
 import { PageHeader } from "@/components/admin/PageHeader";
@@ -47,5 +41,4 @@ export default function FooterAdminPage() {
       <button onClick={handleSave} disabled={!data || saving} className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white hover:bg-[#1D4ED8] disabled:opacity-80">{saving ? "Saving..." : "Save Footer"}</button>
     </div>
   );
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 }

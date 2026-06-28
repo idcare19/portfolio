@@ -131,11 +131,7 @@ export default async function RootLayout({
 
             <TopNoticeBar />
             <AnalyticsTracker />
-<<<<<<< HEAD
             <div className={hasTopNotice ? "pt-20 sm:pt-16" : undefined}>{children}</div>
-=======
-            <div className={hasTopNotice ? "pt-12 sm:pt-14" : undefined}>{children}</div>
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
             {shouldShowPopup ? <GlobalPopupWrapper /> : null}
             <GlobalSearch />
             <AiAssistant />

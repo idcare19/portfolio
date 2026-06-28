@@ -17,17 +17,9 @@ export async function GET() {
       return NextResponse.json({ success: false, reason: 'GitHub data not synced yet. Please sync from admin.' });
     }
 
-<<<<<<< HEAD
     return NextResponse.json({ success: true, data: stats, syncedAt: stats.syncedAt });
-=======
-    return NextResponse.json({ success: true, data: stats });
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   } catch (error) {
     console.error('Error fetching GitHub stats:', error);
     return NextResponse.json({ success: false, reason: 'An error occurred while fetching GitHub stats.' }, { status: 500 });
   }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc

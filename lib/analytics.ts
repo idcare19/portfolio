@@ -150,7 +150,6 @@ export async function getAnalyticsSummary() {
     },
   ]);
 
-<<<<<<< HEAD
   const [topPages, topProjects, topSearchTerms, portfolioAiUsage, githubClicks, resumeDownloads, contactSubmissions] = await Promise.all([
     AnalyticsEvent.aggregate([
       { $match: { eventType: "page-view" } },
@@ -195,8 +194,4 @@ export async function getAnalyticsSummary() {
     githubClicks,
     resumeDownloads,
     contactSubmissions,
-  };
-=======
-  return { summaries, recent };
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
-}
+  };}

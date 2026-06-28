@@ -1,22 +1,12 @@
 "use client";
 
 import { createContext, useContext } from "react";
-<<<<<<< HEAD
-import type { PublicSiteData } from "@/lib/public-site-data";
-import type { DynamicSectionId, SiteSectionBlock } from "@/src/types/site-data";
-
-const SiteDataContext = createContext<PublicSiteData | null>(null);
-
-type SiteDataProviderProps = {
-  data: PublicSiteData;
-=======
 import type { DynamicSectionId, SiteData, SiteSectionBlock } from "@/src/types/site-data";
 
 const SiteDataContext = createContext<SiteData | null>(null);
 
 type SiteDataProviderProps = {
   data: SiteData;
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   children: React.ReactNode;
 };
 

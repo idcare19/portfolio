@@ -1,9 +1,3 @@
-<<<<<<< HEAD
-import { redirect } from "next/navigation";
-
-export default function ProjectsRedirectPage() {
-  redirect("/admin/text-blocks");
-=======
 "use client";
 
 import { PageHeader } from "@/components/admin/PageHeader";
@@ -54,5 +48,4 @@ export default function ProjectsAdminPage() {
       </div>
     </div>
   );
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 }

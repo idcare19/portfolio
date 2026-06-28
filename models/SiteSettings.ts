@@ -8,11 +8,8 @@ const SiteSettingsSchema = new Schema(
     socials: { type: [Schema.Types.Mixed], default: [] },
     websiteSettings: { type: Schema.Types.Mixed, default: {} },
     websiteControl: { type: Schema.Types.Mixed, default: {} },
-<<<<<<< HEAD
     shell: { type: Schema.Types.Mixed, default: {} },
     githubConfig: { type: Schema.Types.Mixed, default: {} },
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     heroTech: { type: [String], default: [] },
     learningPhase: { type: [String], default: [] },
     collaboration: { type: Schema.Types.Mixed, default: {} },

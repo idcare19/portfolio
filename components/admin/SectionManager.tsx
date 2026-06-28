@@ -21,13 +21,8 @@ export function SectionManager({
     [search, sections]
   );
 
-<<<<<<< HEAD
-  function update(id: SiteSectionBlock["id"], patch: Partial<SiteSectionBlock>) {
-    onChange(sections.map((section) => (section.id === id ? { ...section, ...patch } : section)));
-=======
   function update(index: number, patch: Partial<SiteSectionBlock>) {
     onChange(sections.map((section, itemIndex) => (itemIndex === index ? { ...section, ...patch } : section)));
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   }
 
   function move(index: number, direction: -1 | 1) {
@@ -57,13 +52,8 @@ export function SectionManager({
     onChange([...sections, nextSection]);
   }
 
-<<<<<<< HEAD
-  function removeSection(id: SiteSectionBlock["id"]) {
-    onChange(sections.filter((section) => section.id !== id).map((section, order) => ({ ...section, order: order + 1 })));
-=======
   function removeSection(index: number) {
     onChange(sections.filter((_, itemIndex) => itemIndex !== index).map((section, order) => ({ ...section, order: order + 1 })));
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   }
 
   return (
@@ -89,27 +79,12 @@ export function SectionManager({
                 <div className="flex items-center gap-2">
                   <button type="button" onClick={() => move(index, -1)} className="rounded-full border border-admin-border p-2 text-admin-text"><ArrowUp className="h-3.5 w-3.5" /></button>
                   <button type="button" onClick={() => move(index, 1)} className="rounded-full border border-admin-border p-2 text-admin-text"><ArrowDown className="h-3.5 w-3.5" /></button>
-<<<<<<< HEAD
-                  <button type="button" onClick={() => update(section.id, { enabled: !section.enabled })} className="rounded-full border border-admin-border p-2 text-admin-text">{section.enabled ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}</button>
-                  <button type="button" onClick={() => removeSection(section.id)} className="rounded-full border border-rose-200 bg-rose-50 p-2 text-rose-600"><Trash2 className="h-3.5 w-3.5" /></button>
-=======
                   <button type="button" onClick={() => update(index, { enabled: !section.enabled })} className="rounded-full border border-admin-border p-2 text-admin-text">{section.enabled ? <Eye className="h-3.5 w-3.5" /> : <EyeOff className="h-3.5 w-3.5" />}</button>
                   <button type="button" onClick={() => removeSection(index)} className="rounded-full border border-rose-200 bg-rose-50 p-2 text-rose-600"><Trash2 className="h-3.5 w-3.5" /></button>
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
                 </div>
               </div>
 
               <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
-<<<<<<< HEAD
-                <input value={section.label} onChange={(event) => update(section.id, { label: event.target.value })} className="rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" placeholder="Section label" />
-                <select value={section.renderer} onChange={(event) => update(section.id, { renderer: event.target.value as any })} className="rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text">
-                  {RENDERERS.map((renderer) => <option key={renderer} value={renderer}>{renderer}</option>)}
-                </select>
-                <select value={section.layout || "default"} onChange={(event) => update(section.id, { layout: event.target.value })} className="rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text">
-                  {LAYOUTS.map((layout) => <option key={layout} value={layout}>{layout}</option>)}
-                </select>
-                <select value={section.status || "published"} onChange={(event) => update(section.id, { status: event.target.value as "draft" | "published" })} className="rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text">
-=======
                 <input value={section.label} onChange={(event) => update(index, { label: event.target.value })} className="rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" placeholder="Section label" />
                 <select value={section.renderer} onChange={(event) => update(index, { renderer: event.target.value as any })} className="rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text">
                   {RENDERERS.map((renderer) => <option key={renderer} value={renderer}>{renderer}</option>)}
@@ -118,16 +93,11 @@ export function SectionManager({
                   {LAYOUTS.map((layout) => <option key={layout} value={layout}>{layout}</option>)}
                 </select>
                 <select value={section.status || "published"} onChange={(event) => update(index, { status: event.target.value as "draft" | "published" })} className="rounded-2xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text">
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
                   <option value="draft">Draft</option>
                   <option value="published">Published</option>
                 </select>
                 <label className="flex items-center gap-2 text-sm text-admin-text">
-<<<<<<< HEAD
-                  <input type="checkbox" checked={Boolean(section.nav?.show)} onChange={(event) => update(section.id, { nav: { show: event.target.checked, href: section.nav?.href || `#${section.id}`, label: section.nav?.label || section.label } })} />
-=======
                   <input type="checkbox" checked={Boolean(section.nav?.show)} onChange={(event) => update(index, { nav: { show: event.target.checked, href: section.nav?.href || `#${section.id}`, label: section.nav?.label || section.label } })} />
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
                   Show in navigation
                 </label>
               </div>
@@ -137,8 +107,4 @@ export function SectionManager({
       </div>
     </SectionCard>
   );
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc

@@ -1,9 +1,6 @@
 import { NextResponse } from "next/server";
 import { requireAdminSession } from "@/lib/admin/server";
-<<<<<<< HEAD
 import { syncGitHubStats } from "@/lib/github-stats";
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 import { getSiteContentState, saveSiteData } from "@/lib/site-data-store";
 import { normalizeSiteData } from "@/lib/site-data-transform";
 import { siteDataSchema } from "@/schemas/site-data";
@@ -63,14 +60,11 @@ export async function PUT(request: Request) {
     } as any);
 
     const saved = await saveSiteData(dataToSave);
-<<<<<<< HEAD
     let githubSync: { success: boolean; error?: string } | null = null;
 
     if (saved.data.githubConfig?.enabled && saved.data.githubConfig.username) {
       githubSync = await syncGitHubStats(saved.data.githubConfig.username);
     }
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 
     return response(true, "Content saved", {
       updatedAt: saved.data.updatedAt,
@@ -82,10 +76,7 @@ export async function PUT(request: Request) {
         lastMongoUpdateAt: saved.lastMongoUpdateAt,
         lastGitHubSyncAt: saved.lastGitHubSyncAt,
       },
-<<<<<<< HEAD
       githubSync,
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     });
   } catch (error) {
     return response(false, "Failed to save content", null, error instanceof Error ? error.message : "Failed to save", 500);

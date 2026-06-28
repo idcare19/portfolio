@@ -7,10 +7,7 @@ const MessageSchema = new Schema(
     email: { type: String, required: true },
     subject: { type: String, default: "Website Contact Form" },
     message: { type: String, required: true },
-<<<<<<< HEAD
     ipAddress: { type: String, default: "", index: true },
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     read: { type: Boolean, default: false },
     status: { type: String, enum: ["unread", "read", "replied", "archived"], default: "unread", index: true },
     createdAt: { type: String, required: true },

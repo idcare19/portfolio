@@ -1,6 +1,5 @@
 import "server-only";
 
-<<<<<<< HEAD
 import { GoogleGenAI } from "@google/genai";
 import { buildPublicCorpus, rankPublicCorpus, type PublicCorpusEntry } from "@/lib/public-corpus";
 import { getFullSiteData } from "@/src/lib/site-data";
@@ -326,70 +325,3 @@ export async function answerPortfolioQuestion(question: string, history: Assista
     return fallbackResponse;
   }
 }
-=======
-import { getPortfolioSiteData } from "@/lib/portfolio/repository";
-import { scoreFuzzy } from "@/lib/content-utils";
-
-export async function answerPortfolioQuestion(question: string) {
-  // Block all private/admin/internal questions first
-  const adminKeywords = ["admin", "sidebar", "draft", "hidden", "disabled", "env", "environment", "database", "mongo", "mongodb", "internal", "private", "secret", "id", "settings", "control panel", "cms"];
-  const isAdminQuestion = adminKeywords.some(keyword => question.toLowerCase().includes(keyword));
-  
-  if (isAdminQuestion) {
-    return {
-      answer: "I can only answer questions based on the public portfolio content.",
-      sources: [],
-    };
-  }
-
-  const siteData = await getPortfolioSiteData();
-  // Strictly only use PUBLIC content - filter out all non-public, draft, or disabled content
-  const corpus = [
-    ...siteData.projectsDetailed.map((project) => ({
-      source: `Project: ${project.title}`,
-      content: [project.shortDescription, project.longDescription, project.problem, project.solution, project.myRole, ...(project.features || [])].filter(Boolean).join(" "),
-      href: `/projects/${project.slug || project.id}`,
-    })),
-    ...siteData.blogs
-      .filter((blog) => blog.status === "published" && blog.isEnabled) // Only PUBLISHED, ENABLED blogs
-      .map((blog) => ({
-      source: `Blog: ${String(blog.title || "")}`,
-      content: String(blog.excerpt || blog.content || ""),
-      href: `/blogs/${blog.slug || ""}`,
-      })),
-    ...siteData.skillsDetailed.map((skill) => ({
-      source: `Skill: ${skill.name}`,
-      content: `${skill.name} ${skill.category}`,
-      href: "#skills",
-    })),
-    ...siteData.experience.map((item) => ({
-      source: `Experience: ${item.role}`,
-      content: `${item.role} ${item.period} ${item.summary}`,
-      href: "#journey",
-    })),
-    ...siteData.testimonialsDetailed.map((item) => ({
-      source: `Testimonial: ${item.clientName}`,
-      content: `${item.roleCompany} ${item.message}`,
-      href: "#reviews",
-    })),
-  ];
-
-  const matches = corpus
-    .map((entry) => ({ ...entry, score: scoreFuzzy(question, `${entry.source} ${entry.content}`) }))
-    .filter((entry) => entry.score > 0)
-    .sort((a, b) => b.score - a.score)
-    .slice(0, 4);
-
-  if (!matches.length) {
-    return {
-      answer: "I could not find that in the portfolio data yet.",
-      sources: [],
-    };
-  }
-
-  return {
-    answer: matches.map((entry) => `${entry.source}: ${entry.content.slice(0, 220)}`).join("\n\n"),
-    sources: matches.map(({ source, href }) => ({ source, href })),
-  };
-}
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc

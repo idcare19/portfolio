@@ -12,7 +12,6 @@ type AuditItem = {
   literal: string;
   suggestedKey: string;
   status: "fixed" | "dynamic";
-<<<<<<< HEAD
   category: "buttons" | "labels" | "navigation" | "footer" | "errors" | "success" | "github" | "portfolio-ai" | "content";
   pathHint: string;
 };
@@ -24,8 +23,6 @@ type AuditSummary = {
   ignoredStrings: number;
   duplicatesRemoved: number;
   coverage: number;
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 };
 
 const AUDIT_TARGETS: Array<{ sectionId: DynamicSectionId; filePath: string }> = [
@@ -39,13 +36,9 @@ const AUDIT_TARGETS: Array<{ sectionId: DynamicSectionId; filePath: string }> = 
   { sectionId: "journey", filePath: "components/sections/JourneySection.tsx" },
   { sectionId: "services", filePath: "components/sections/ServicesSection.tsx" },
   { sectionId: "contact", filePath: "components/sections/ContactSection.tsx" },
-<<<<<<< HEAD
   { sectionId: "footer", filePath: "components/layout/FooterSection.tsx" },
   { sectionId: "hero", filePath: "components/layout/Navbar.tsx" },
-=======
-  { sectionId: "hero", filePath: "components/layout/Navbar.tsx" },
   { sectionId: "contact", filePath: "components/layout/FooterSection.tsx" },
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   { sectionId: "projects", filePath: "app/projects/page.tsx" },
   { sectionId: "projects", filePath: "app/projects/[slug]/page.tsx" },
   { sectionId: "blogs", filePath: "app/blogs/page.tsx" },
@@ -54,11 +47,8 @@ const AUDIT_TARGETS: Array<{ sectionId: DynamicSectionId; filePath: string }> = 
 ];
 
 const STRING_LITERAL_PATTERN = /(?<![A-Za-z0-9_])["'`]([^"'`\n]*[A-Za-z][^"'`\n]*)["'`]/g;
-<<<<<<< HEAD
 const JSX_TEXT_PATTERN = />([^<>{}\n]{3,})</g;
 const TEXT_PROP_PATTERN = /\b(?:aria-label|title|placeholder|alt|label|text|description|message|toast|tooltip|helperText|buttonLabel|navLabel|ctaLabel|footerText|copyrightText)\s*=\s*["'`]([^"'`\n]*[A-Za-z][^"'`\n]*)["'`]/g;
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 const IGNORE_LITERALS = new Set([
   "use client",
   "server-only",
@@ -73,7 +63,6 @@ const IGNORE_LITERALS = new Set([
   "services",
   "contact",
   "blogs",
-<<<<<<< HEAD
   "github",
 ]);
 
@@ -87,11 +76,6 @@ const CATEGORY_RULES: Array<{ category: AuditItem["category"]; test: (literal: s
   { category: "github", test: (literal) => /\b(github|repo|repository|commits|stars|followers|forks|activity)\b/i.test(literal) },
   { category: "portfolio-ai", test: (literal) => /\b(ai|gemini|assistant|retrieval|portfolio ai)\b/i.test(literal) },
 ];
-
-=======
-]);
-
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 function slugifyKey(value: string) {
   return value
     .toLowerCase()
@@ -124,7 +108,6 @@ function looksUserFacing(value: string) {
   return /[A-Za-z]{2,}/.test(trimmed) && (/\s/.test(trimmed) || /^[A-Z][a-z]+$/.test(trimmed));
 }
 
-<<<<<<< HEAD
 function looksLikeCodeNoise(value: string) {
   const trimmed = value.trim();
   if (!trimmed) return true;
@@ -134,8 +117,6 @@ function looksLikeCodeNoise(value: string) {
   return false;
 }
 
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 function getComponentName(filePath: string) {
   return path.basename(filePath);
 }
@@ -148,17 +129,13 @@ export async function runTextAudit() {
   const siteData = await getOrSeedSiteData();
   const workspaceRoot = process.cwd();
   const results: AuditItem[] = [];
-<<<<<<< HEAD
   let filesScanned = 0;
   let textsFound = 0;
   let ignoredStrings = 0;
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 
   for (const target of AUDIT_TARGETS) {
     const absolutePath = path.join(workspaceRoot, target.filePath);
     const source = await readFile(absolutePath, "utf8");
-<<<<<<< HEAD
     filesScanned += 1;
     const currentKeys = getSectionKeys(siteData, target.sectionId);
     const matches = [...source.matchAll(JSX_TEXT_PATTERN), ...source.matchAll(TEXT_PROP_PATTERN), ...source.matchAll(STRING_LITERAL_PATTERN)];
@@ -181,15 +158,6 @@ export async function runTextAudit() {
       textsFound += 1;
       const category =
         CATEGORY_RULES.find((rule) => rule.test(literal, target.filePath))?.category || "content";
-=======
-    const currentKeys = getSectionKeys(siteData, target.sectionId);
-    const matches = Array.from(source.matchAll(STRING_LITERAL_PATTERN));
-
-    for (const match of matches) {
-      const literal = match[1]?.trim();
-      if (!literal || !looksUserFacing(literal)) continue;
-
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       const suggestedKey = `${target.sectionId}.${slugifyKey(literal)}`;
       results.push({
         componentName: getComponentName(target.filePath),
@@ -198,16 +166,12 @@ export async function runTextAudit() {
         literal,
         suggestedKey,
         status: currentKeys.has(suggestedKey) ? "dynamic" : "fixed",
-<<<<<<< HEAD
         category,
         pathHint: `${target.filePath}:${match.index || 0}`,
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       });
     }
   }
 
-<<<<<<< HEAD
   const deduped = Array.from(new Map(results.map((item) => [`${item.filePath}:${item.literal}`, item])).values());
   const duplicatesRemoved = results.length - deduped.length;
   const managedCount = deduped.filter((item) => item.status === "dynamic").length;
@@ -224,7 +188,4 @@ export async function runTextAudit() {
       managedCount,
     } satisfies AuditSummary,
   };
-=======
-  return results;
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 }

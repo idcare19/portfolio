@@ -22,11 +22,8 @@ type StoredSettings = {
   socials?: SiteData["socials"];
   websiteSettings: SiteData["websiteSettings"];
   websiteControl: SiteData["websiteControl"];
-<<<<<<< HEAD
   shell?: SiteData["shell"];
   githubConfig?: SiteData["githubConfig"];
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   heroTech?: SiteData["heroTech"];
   learningPhase?: SiteData["learningPhase"];
   collaboration?: SiteData["collaboration"];
@@ -45,78 +42,29 @@ type StoredSettings = {
 };
 
 function cloneSeedData(): SiteData {
-  return normalizeSiteData(JSON.parse(JSON.stringify(siteDataSeed)) as SiteData);
+  return JSON.parse(JSON.stringify(siteDataSeed)) as SiteData;
 }
 
 function createSectionDoc(section: SiteSectionBlock) {
-  const data = (section.data || {}) as Record<string, unknown>;
-  const title = String(data.title || section.label || "");
-  const subtitle = String(data.eyebrow || data.subtitle || "");
-  const content = String(data.description || data.intro || data.content || "");
-
   return {
     key: section.id,
-    title,
-    subtitle,
-    content,
-    items: Array.isArray(section.items) ? section.items : [],
+    id: section.id,
+    label: section.label,
+    renderer: section.renderer,
     isEnabled: section.enabled,
     order: section.order,
-    renderer: section.renderer,
-    layout: String(data.layout || "default"),
-    label: section.label,
-    nav: section.nav || null,
-    ctaButtons: [
-      data.primaryCtaLabel || data.primaryCtaHref
-        ? { label: data.primaryCtaLabel || "Primary CTA", href: data.primaryCtaHref || "#" }
-        : null,
-      data.secondaryCtaLabel || data.secondaryCtaHref
-        ? { label: data.secondaryCtaLabel || "Secondary CTA", href: data.secondaryCtaHref || "#" }
-        : null,
-    ].filter(Boolean),
-    data,
+    nav: section.nav,
+    emptyMessage: section.emptyMessage,
+    data: section.data,
+    items: section.items || [],
+    textBlocks: section.textBlocks || [],
     updatedAt: new Date().toISOString(),
   };
 }
 
-async function seedCollectionsFromSiteData(input: SiteData) {
-  const siteData = normalizeSiteData(input);
+async function seedCollectionsFromSiteData(siteData: SiteData) {
+  await connectToDatabase();
   const now = new Date().toISOString();
-
-  await SiteSettings.findOneAndUpdate(
-    { key: SETTINGS_KEY },
-    {
-      $set: {
-        key: SETTINGS_KEY,
-        owner: siteData.owner,
-        nav: siteData.nav,
-        socials: siteData.socials,
-        websiteSettings: siteData.websiteSettings,
-        websiteControl: siteData.websiteControl,
-<<<<<<< HEAD
-        shell: siteData.shell,
-        githubConfig: siteData.githubConfig,
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
-        heroTech: siteData.heroTech,
-        learningPhase: siteData.learningPhase,
-        collaboration: siteData.collaboration,
-        siteConnection: siteData.siteConnection || null,
-        mediaLibrary: siteData.mediaLibrary || [],
-        services: siteData.services || [],
-        completedProjects: siteData.completedProjects || [],
-        education: siteData.education || [],
-        extra: {
-          about: siteData.about,
-          sectionControls: siteData.sectionControls || [],
-          workingProjects: siteData.workingProjects || [],
-          journeyNow: siteData.journeyNow || { currentWork: "", ongoingMilestones: [] },
-        },
-        updatedAt: siteData.updatedAt || now,
-      },
-    },
-    { upsert: true, new: true, setDefaultsOnInsert: true }
-  );
 
   if (siteData.sections) {
     await Section.deleteMany({});
@@ -472,6 +420,7 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     owner: settings.owner,
     nav: settings.nav || [],
     sectionControls: settings.extra?.sectionControls || [],
+    heroTech: settings.heroTech || [],
     about: settings.extra?.about || { intro: "", stats: [] },
     skills: skillItems.map((item) => item.name),
     learningPhase: settings.learningPhase || [],
@@ -491,6 +440,11 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
       quote: item.message,
       icon: item.image,
     })),
+    collaboration: settings.collaboration || {
+      users: [],
+      board: [],
+      events: [],
+    },
     experience: experienceItems,
     education: settings.education || [],
     journeyNow: settings.extra?.journeyNow || { currentWork: "", ongoingMilestones: [] },
@@ -514,23 +468,10 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     mediaLibrary: settings.mediaLibrary || [],
     websiteSettings: settings.websiteSettings,
     websiteControl: settings.websiteControl,
-<<<<<<< HEAD
     shell: settings.shell || cloneSeedData().shell,
     githubConfig: settings.githubConfig,
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
-    sections: sectionMap,
-    collaboration: settings.collaboration || { users: [], board: [], events: [] },
-    heroTech: settings.heroTech || [],
     updatedAt: settings.updatedAt || new Date().toISOString(),
-    siteConnection: settings.siteConnection || undefined,
   });
-}
-
-export async function savePortfolioSiteData(input: SiteData) {
-  await connectToDatabase();
-  await seedCollectionsFromSiteData(input);
-  return getPortfolioSiteData();
 }
 
 export async function createPortfolioMessage(input: {
@@ -538,10 +479,7 @@ export async function createPortfolioMessage(input: {
   email: string;
   subject: string;
   message: string;
-<<<<<<< HEAD
   ipAddress?: string;
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 }) {
   await connectToDatabase();
   const createdAt = new Date().toISOString();
@@ -552,10 +490,7 @@ export async function createPortfolioMessage(input: {
     email: input.email,
     subject: input.subject,
     message: input.message,
-<<<<<<< HEAD
     ipAddress: input.ipAddress || "",
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     read: false,
     createdAt,
     updatedAt: createdAt,
@@ -570,6 +505,11 @@ export async function createPortfolioMessage(input: {
     read: Boolean(doc.read),
     createdAt: doc.createdAt as string,
   };
+}
+
+export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteData> {
+  await seedCollectionsFromSiteData(nextData);
+  return nextData;
 }
 
 export async function getPublishedProjects() {

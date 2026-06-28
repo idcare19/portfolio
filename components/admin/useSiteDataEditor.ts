@@ -32,7 +32,6 @@ export function useSiteDataEditor() {
     setLoading(true);
     setError(null);
     try {
-<<<<<<< HEAD
       const res = await fetch("/api/admin/content", { cache: "no-store" });
       if (!res.ok) throw new Error("Failed to load site data");
       const payload = await res.json();
@@ -56,20 +55,6 @@ export function useSiteDataEditor() {
         fallbackActivated: Boolean(contentPayload.fallbackActivated),
         lastMongoUpdateAt: contentPayload.meta?.lastMongoUpdateAt || null,
         lastGitHubSyncAt: contentPayload.meta?.lastGitHubSyncAt || null,
-=======
-      const res = await fetch("/api/site-data", { cache: "no-store" });
-      if (!res.ok) throw new Error("Failed to load site data");
-      const payload = await res.json();
-      const normalized = normalizeSiteData(payload.data as SiteData);
-      setData(normalized);
-      setSavedData(normalized);
-      setContentMeta({
-        source: payload?.source || null,
-        requestedSource: payload?.requestedSource || normalized.websiteControl?.dataSource || "auto",
-        fallbackActivated: Boolean(payload?.fallbackActivated),
-        lastMongoUpdateAt: payload?.meta?.lastMongoUpdateAt || null,
-        lastGitHubSyncAt: payload?.meta?.lastGitHubSyncAt || null,
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       });
 
       return { ok: true as const };
@@ -91,11 +76,7 @@ export function useSiteDataEditor() {
     setError(null);
     try {
       const nextData = normalizeSiteData(updatedData);
-<<<<<<< HEAD
       const res = await fetch("/api/admin/content", {
-=======
-      const res = await fetch("/api/site-data", {
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -110,7 +91,6 @@ export function useSiteDataEditor() {
       }
 
       const payload = await res.json();
-<<<<<<< HEAD
       const contentPayload = (payload?.data || {}) as {
         data?: SiteData;
         source?: "mongodb" | "github";
@@ -122,14 +102,10 @@ export function useSiteDataEditor() {
         };
       };
       const normalized = normalizeSiteData((contentPayload.data || nextData) as SiteData);
-=======
-      const normalized = normalizeSiteData((payload?.data || nextData) as SiteData);
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
       setData(normalized);
       setSavedData(normalized);
       setLastSaveMeta(payload || null);
       setContentMeta({
-<<<<<<< HEAD
         source: contentPayload.source || "mongodb",
         requestedSource: contentPayload.requestedSource || normalized.websiteControl?.dataSource || "auto",
         fallbackActivated: Boolean(contentPayload.fallbackActivated),
@@ -137,15 +113,6 @@ export function useSiteDataEditor() {
         lastGitHubSyncAt: contentPayload.meta?.lastGitHubSyncAt || null,
       });
       return { ok: true, data: contentPayload.data || null } as const;
-=======
-        source: payload?.source || "mongodb",
-        requestedSource: payload?.requestedSource || normalized.websiteControl?.dataSource || "auto",
-        fallbackActivated: Boolean(payload?.fallbackActivated),
-        lastMongoUpdateAt: payload?.meta?.lastMongoUpdateAt || null,
-        lastGitHubSyncAt: payload?.meta?.lastGitHubSyncAt || null,
-      });
-      return { ok: true, data: payload?.data || null } as const;
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     } catch (err) {
       setError(err instanceof Error ? err.message : "Save failed");
       return { ok: false, error: err instanceof Error ? err.message : "Save failed" } as const;
