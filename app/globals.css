@@ -1,0 +1,319 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 248 250 252;
+  --section: 255 255 255;
+  --card: 255 255 255;
+  --cardHover: 241 245 249;
+  --textMain: 15 23 42;
+  --textMuted: 71 85 105;
+  --border: 226 232 240;
+  --primary: 37 99 235;
+  --secondary: 99 102 241;
+  --success: 22 163 74;
+  --danger: 220 38 38;
+
+  --page-bg: var(--background);
+  --section-bg: var(--section);
+  --card-bg: var(--card);
+  --card-hover: var(--cardHover);
+  --text-main: var(--textMain);
+  --text-muted: var(--textMuted);
+  --primary-foreground: 255 255 255;
+
+  --admin-bg: var(--background);
+  --admin-sidebar: 255 255 255;
+  --admin-topbar: 255 255 255;
+  --admin-card: 255 255 255;
+  --admin-input: 248 250 252;
+  --admin-modal: 255 255 255;
+  --admin-text: var(--textMain);
+  --admin-text-muted: var(--textMuted);
+  --admin-border: var(--border);
+  --admin-primary: var(--primary);
+  --admin-danger: var(--danger);
+  --admin-success: var(--success);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6.5rem;
+}
+
+section[id] {
+  scroll-margin-top: 6.5rem;
+}
+
+body {
+  @apply bg-[rgb(var(--page-bg))] text-[rgb(var(--text-main))] antialiased;
+  overflow-x: hidden;
+  background-image: linear-gradient(180deg, #ffffff 0%, rgb(var(--page-bg)) 100%);
+}
+
+.page-enter {
+  animation: page-enter 420ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+::selection {
+  background-color: rgba(37, 99, 235, 0.18);
+}
+
+.glass {
+  @apply border;
+  border-color: rgb(var(--border));
+  background-color: rgb(var(--card-bg));
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.05);
+}
+
+.panel {
+  @apply rounded-3xl border transition-all duration-300 hover:-translate-y-1;
+  border-color: rgb(var(--border));
+  background-color: rgb(var(--card-bg));
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
+}
+
+.panel:hover {
+  background-color: rgb(var(--card-hover));
+}
+
+.section-wrap {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.hero-blob {
+  @apply pointer-events-none absolute rounded-full;
+}
+
+.deferred-section {
+  contain-intrinsic-size: 1px 900px;
+}
+
+.marquee-track {
+  width: max-content;
+  animation: marquee 20s linear infinite;
+}
+
+.marquee-track-reverse {
+  width: max-content;
+  animation: marquee-reverse 24s linear infinite;
+}
+
+.animate-float-medium {
+  animation: float-medium 8s ease-in-out infinite;
+}
+
+.animate-float-reverse {
+  animation: float-reverse 10s ease-in-out infinite;
+}
+
+.text-gradient-animated {
+  background: linear-gradient(112deg, rgb(var(--primary)), rgb(var(--secondary)), rgb(var(--primary)));
+  background-size: 140% 140%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: gradient-soft-shift 9s ease-in-out infinite;
+}
+
+.text-sweep {
+  color: rgb(var(--text-main));
+}
+
+.reviews-scroll {
+  scroll-behavior: smooth;
+  scrollbar-width: none;
+  overscroll-behavior-x: contain;
+  -ms-overflow-style: none;
+}
+
+.animate-float-gentle {
+  animation: float-gentle 10s ease-in-out infinite;
+}
+
+.animate-float-gentle-reverse {
+  animation: float-gentle-reverse 12s ease-in-out infinite;
+}
+
+.animate-scroll-dot {
+  animation: scroll-dot 1.8s ease-in-out infinite;
+}
+
+.reviews-scroll::-webkit-scrollbar {
+  display: none;
+}
+
+.reviews-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.reviews-scroll::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.45);
+  border-radius: 999px;
+}
+
+.typing-caret {
+  display: inline-block;
+  margin-left: 0.08em;
+  width: 0.08em;
+  height: 0.95em;
+  vertical-align: -0.05em;
+  border-radius: 9999px;
+  background-color: rgba(37, 99, 235, 0.88);
+  animation: caret-blink 0.8s step-end infinite;
+}
+
+@keyframes caret-blink {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes page-enter {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.992);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes marquee-reverse {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes gradient-soft-shift {
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes float-medium {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -10px, 0);
+  }
+}
+
+@keyframes float-reverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 8px, 0);
+  }
+}
+
+@keyframes float-gentle {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes float-gentle-reverse {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, 6px, 0);
+  }
+}
+
+@keyframes scroll-dot {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+@supports (content-visibility: auto) {
+  .deferred-section {
+    content-visibility: auto;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media (max-width: 767px) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .hero-blob {
+    opacity: 0.2;
+  }
+
+  .animate-float-gentle,
+  .animate-float-gentle-reverse,
+  .animate-scroll-dot,
+  .animate-float-medium,
+  .animate-float-reverse {
+    animation: none !important;
+  }
+
+  .marquee-track {
+    animation-duration: 14s;
+  }
+
+  .marquee-track-reverse {
+    animation-duration: 17s;
+  }
+
+  .glass,
+  .panel {
+    box-shadow: 0 12px 28px rgba(15, 23, 42, 0.08);
+  }
+
+  .deferred-section {
+    contain-intrinsic-size: 1px 680px;
+  }
+}

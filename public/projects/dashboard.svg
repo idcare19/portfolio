@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="700" viewBox="0 0 1200 700" fill="none">
+<defs>
+  <linearGradient id="bg" x1="108" x2="1092" y1="84" y2="616" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#0F172A"/>
+    <stop offset="1" stop-color="#1D4ED8"/>
+  </linearGradient>
+  <linearGradient id="panel" x1="212" x2="922" y1="164" y2="536" gradientUnits="userSpaceOnUse">
+    <stop stop-color="#E0F2FE" stop-opacity=".28"/>
+    <stop offset="1" stop-color="#FFFFFF" stop-opacity=".08"/>
+  </linearGradient>
+</defs>
+<rect width="1200" height="700" rx="48" fill="url(#bg)"/>
+<rect x="92" y="86" width="1016" height="528" rx="32" fill="#0B1220" stroke="#60A5FA" stroke-opacity=".35" stroke-width="2"/>
+<rect x="148" y="154" width="236" height="120" rx="24" fill="url(#panel)"/>
+<rect x="422" y="154" width="236" height="120" rx="24" fill="url(#panel)"/>
+<rect x="696" y="154" width="236" height="120" rx="24" fill="url(#panel)"/>
+<rect x="148" y="320" width="510" height="220" rx="28" fill="url(#panel)"/>
+<rect x="696" y="320" width="236" height="220" rx="28" fill="url(#panel)"/>
+<path d="M196 469C250 428 303 460 359 409C415 358 462 396 518 349C552 320 583 329 610 350" stroke="#38BDF8" stroke-linecap="round" stroke-width="18"/>
+<path d="M741 500L787 449L834 476L882 390" stroke="#A5F3FC" stroke-linecap="round" stroke-linejoin="round" stroke-width="16"/>
+<circle cx="787" cy="449" r="11" fill="#A5F3FC"/>
+<circle cx="834" cy="476" r="11" fill="#A5F3FC"/>
+<circle cx="882" cy="390" r="11" fill="#A5F3FC"/>
+<rect x="188" y="196" width="92" height="20" rx="10" fill="#60A5FA"/>
+<rect x="462" y="196" width="92" height="20" rx="10" fill="#67E8F9"/>
+<rect x="736" y="196" width="92" height="20" rx="10" fill="#C084FC"/>
+<text x="600" y="610" fill="#F8FAFC" font-family="Arial, sans-serif" font-size="52" font-weight="700" text-anchor="middle">DashX Analytics Dashboard</text>
+</svg>
