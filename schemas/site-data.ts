@@ -44,9 +44,9 @@ export const sectionControlSchema = z.object({
 });
 
 const dynamicSectionSchema = z.object({
-  id: z.enum(["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github"]),
+  id: z.enum(["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github", "footer"]),
   label: z.string().min(1),
-  renderer: z.enum(["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github"]),
+  renderer: z.enum(["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github", "footer"]),
   enabled: z.boolean(),
   order: z.number(),
   layout: z.string().optional(),
@@ -65,7 +65,7 @@ const dynamicSectionSchema = z.object({
     label: z.string(),
     value: z.string(),
     href: z.string().optional(),
-    sectionId: z.enum(["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github"]),
+    sectionId: z.enum(["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github", "footer"]),
     order: z.number(),
     isEnabled: z.boolean(),
   })).optional(),
