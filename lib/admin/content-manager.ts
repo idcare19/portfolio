@@ -1,9 +1,5 @@
 import type { SiteData, SiteSectionBlock, TextBlock } from "@/src/types/site-data";
 
-const SECTION_KEYS = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "footer"] as const;
-
-type SectionKey = (typeof SECTION_KEYS)[number];
-
 function makeTextBlock(key: string, label: string, value: unknown, order: number, type: TextBlock["type"] = "plain"): TextBlock {
   return {
     key,
@@ -31,16 +27,14 @@ export function ensureSectionTextBlocks(section: SiteSectionBlock) {
 }
 
 export function buildAdminSections(siteData: SiteData) {
-  return SECTION_KEYS.map((key) => {
-    const section = siteData.sections?.[key];
-    if (!section) return null;
-    return {
+  return Object.values(siteData.sections || {})
+    .map((section) => ({
       ...section,
       layout: section.layout || "default",
       status: section.status || "published",
       textBlocks: ensureSectionTextBlocks(section),
-    };
-  }).filter(Boolean) as SiteSectionBlock[];
+    }))
+    .sort((a, b) => a.order - b.order);
 }
 
 export function buildGlobalTextBlocks(siteData: SiteData): TextBlock[] {
@@ -66,7 +60,7 @@ export function buildGlobalTextBlocks(siteData: SiteData): TextBlock[] {
 export function updateTextBlockValue(siteData: SiteData, block: TextBlock & { sectionId?: string }) {
   const next = structuredClone(siteData) as SiteData;
   if (block.sectionId) {
-    const section = next.sections?.[block.sectionId as SectionKey];
+    const section = next.sections?.[block.sectionId];
     if (section) {
       section.data = { ...section.data, [block.key]: block.value };
       section.textBlocks = ensureSectionTextBlocks(section).map((item) => item.key === block.key ? { ...block } : item);
@@ -91,7 +85,7 @@ export function updateTextBlockValue(siteData: SiteData, block: TextBlock & { se
     return next;
   }
 
-  const section = next.sections?.[root as SectionKey];
+  const section = next.sections?.[root];
   if (section) {
     section.data = { ...section.data, [maybeIndex || block.key]: block.value };
     section.textBlocks = ensureSectionTextBlocks(section).map((item) => item.key === block.key ? block : item);

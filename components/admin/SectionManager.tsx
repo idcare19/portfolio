@@ -34,11 +34,11 @@ export function SectionManager({
   }
 
   function addSection() {
-    const nextId = RENDERERS.find((renderer) => !sections.some((section) => section.id === renderer)) || "contact";
+    const nextId = `custom-${Date.now()}`;
     const nextSection: SiteSectionBlock = {
-      id: nextId as any,
+      id: nextId,
       label: "New Section",
-      renderer: nextId as any,
+      renderer: "default",
       enabled: true,
       order: sections.length + 1,
       layout: "default",
@@ -48,7 +48,6 @@ export function SectionManager({
       textBlocks: [],
       nav: { show: false, href: `#${nextId}`, label: "New Section" },
     };
-    if (sections.some((section) => section.id === nextId)) return;
     onChange([...sections, nextSection]);
   }
 

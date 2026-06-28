@@ -116,8 +116,8 @@ export type ArrayItem = {
 };
 
 export type SectionId = "about" | "skills" | "projects" | "working" | "completed" | "reviews" | "journey" | "education" | "services" | "contact" | "blogs" | "github" | "footer";
-export type DynamicSectionId = "hero" | SectionId;
-export type SectionRendererId = DynamicSectionId;
+export type DynamicSectionId = string;
+export type SectionRendererId = string;
 
 export type SectionControlItem = {
   id: SectionId;
@@ -274,7 +274,7 @@ export type SiteSectionBlock = {
   items: any[];
 };
 
-export type SectionRecord = Record<DynamicSectionId, SiteSectionBlock>;
+export type SectionRecord = Record<string, SiteSectionBlock>;
 
 export type SiteData = {
   owner: {
