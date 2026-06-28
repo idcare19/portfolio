@@ -27,9 +27,9 @@ export function ServicesSection() {
     <AnimatedSection id="services" className="bg-section-bg py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "Services"}
-          title={data.title || "How I can help"}
-          description={data.description || "Flexible product, design, and development support for founders, teams, and fast-moving ideas."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

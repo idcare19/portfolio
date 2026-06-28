@@ -231,28 +231,28 @@ function buildSectionMap(sections: any[], settings: any, projects: any[], skills
               ? testimonials
               : key === "blogs"
                 ? blogs
-                : source?.items || fallbackSection?.items || [];
+                : source?.items ?? fallbackSection?.items ?? [];
 
     acc[key] = {
       id: key,
-      label: source?.label || fallbackSection?.label || key,
-      renderer: source?.renderer || fallbackSection?.renderer || key,
+      label: source?.label ?? fallbackSection?.label ?? key,
+      renderer: source?.renderer ?? fallbackSection?.renderer ?? key,
       enabled: source?.isEnabled ?? fallbackSection?.enabled ?? true,
       order: source?.order ?? fallbackSection?.order ?? 0,
-      nav: source?.nav || fallbackSection?.nav,
-      emptyMessage: source?.emptyMessage || fallbackSection?.emptyMessage || "No content added yet.",
-      data: source?.data || fallbackSection?.data || {},
+      nav: source?.nav ?? fallbackSection?.nav,
+      emptyMessage: source?.emptyMessage ?? fallbackSection?.emptyMessage ?? "",
+      data: source?.data ?? fallbackSection?.data ?? {},
       items,
     };
     return acc;
   }, {} as NonNullable<SiteData["sections"]>);
 
-  built.about.items = built.about.items?.length ? built.about.items : settings?.extra?.about?.stats || [];
-  built.working.items = built.working.items?.length ? built.working.items : settings?.extra?.workingProjects || [];
-  built.completed.items = built.completed.items?.length ? built.completed.items : settings?.completedProjects || [];
-  built.education.items = built.education.items?.length ? built.education.items : settings?.education || [];
-  built.services.items = built.services.items?.length ? built.services.items : settings?.services || [];
-  built.contact.items = built.contact.items?.length ? built.contact.items : settings?.socials || [];
+  built.about.items = built.about.items ?? [];
+  built.working.items = built.working.items ?? [];
+  built.completed.items = built.completed.items ?? [];
+  built.education.items = built.education.items ?? [];
+  built.services.items = built.services.items ?? [];
+  built.contact.items = built.contact.items ?? [];
   const journeyData = built.journey.data as Record<string, unknown>;
   if (!journeyData.currentWork && settings?.extra?.journeyNow?.currentWork) {
     built.journey.data = {
@@ -468,7 +468,7 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     mediaLibrary: settings.mediaLibrary || [],
     websiteSettings: settings.websiteSettings,
     websiteControl: settings.websiteControl,
-    shell: settings.shell || cloneSeedData().shell,
+    shell: settings.shell ?? cloneSeedData().shell,
     githubConfig: settings.githubConfig,
     updatedAt: settings.updatedAt || new Date().toISOString(),
   });

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { requireAdminSession } from "@/lib/admin/server";
 import { syncGitHubStats } from "@/lib/github-stats";
-import { getSiteContentState, saveSiteData } from "@/lib/site-data-store";
+import { DEFAULT_REVALIDATE_PATHS, getSiteContentState, saveSiteData } from "@/lib/site-data-store";
 import { normalizeSiteData } from "@/lib/site-data-transform";
 import { siteDataSchema } from "@/schemas/site-data";
 
@@ -13,6 +13,16 @@ function sanitizeCommitMessage(input: string) {
 
 function response(success: boolean, message: string, data?: unknown, error?: string, status = 200) {
   return NextResponse.json({ success, ok: success, message, data: data ?? null, error: error ?? null }, { status });
+}
+
+function previewSavedFields(body: Record<string, unknown>, savedData: Record<string, unknown>) {
+  const keys = ["owner", "websiteSettings", "githubConfig", "sections", "socials", "shell"] as const;
+  return keys.reduce<Record<string, unknown>>((acc, key) => {
+    if (body[key] !== undefined || savedData[key] !== undefined) {
+      acc[key] = savedData[key] ?? body[key];
+    }
+    return acc;
+  }, {});
 }
 
 export async function GET() {
@@ -69,9 +79,12 @@ export async function PUT(request: Request) {
     return response(true, "Content saved", {
       updatedAt: saved.data.updatedAt,
       data: saved.data,
+      activeSource: saved.activeSource,
       source: saved.activeSource,
       requestedSource: saved.requestedSource,
       fallbackActivated: saved.fallbackActivated,
+      savedFieldPreview: previewSavedFields(body?.data || {}, saved.data),
+      revalidatedPaths: DEFAULT_REVALIDATE_PATHS,
       meta: {
         lastMongoUpdateAt: saved.lastMongoUpdateAt,
         lastGitHubSyncAt: saved.lastGitHubSyncAt,

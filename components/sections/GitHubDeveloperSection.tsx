@@ -82,9 +82,9 @@ export function GitHubDeveloperSection() {
   }
 
   const data = section.data as Record<string, string>;
-  const title = data.title || "GitHub Activity";
-  const description = data.description || "A clean preview of live GitHub activity and featured repositories.";
-  const eyebrow = data.eyebrow || "GitHub";
+  const title = data.title;
+  const description = data.description;
+  const eyebrow = data.eyebrow;
 
   return (
     <AnimatedSection id="github" className="bg-page-bg py-20">

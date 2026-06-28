@@ -28,13 +28,18 @@ export function useSiteDataEditor() {
     lastGitHubSyncAt: null,
   });
 
+  async function fetchLatestContent() {
+    const cacheBust = Date.now();
+    const res = await fetch(`/api/admin/site-data?_ts=${cacheBust}`, { cache: "no-store" });
+    if (!res.ok) throw new Error("Failed to load site data");
+    return res.json();
+  }
+
   const load = useCallback(async () => {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/admin/content", { cache: "no-store" });
-      if (!res.ok) throw new Error("Failed to load site data");
-      const payload = await res.json();
+      const payload = await fetchLatestContent();
       const contentPayload = (payload.data || {}) as {
         data?: SiteData;
         source?: "mongodb" | "github";
@@ -101,18 +106,42 @@ export function useSiteDataEditor() {
           lastGitHubSyncAt?: string | null;
         };
       };
-      const normalized = normalizeSiteData((contentPayload.data || nextData) as SiteData);
+      const latestPayload = await fetchLatestContent().catch(() => null);
+      const latestContentPayload = (latestPayload?.data || {}) as {
+        data?: SiteData;
+        source?: "mongodb" | "github";
+        requestedSource?: "mongodb" | "github" | "auto";
+        fallbackActivated?: boolean;
+        meta?: {
+          lastMongoUpdateAt?: string | null;
+          lastGitHubSyncAt?: string | null;
+        };
+      };
+      const authoritativeData = (latestContentPayload.data || contentPayload.data || nextData) as SiteData;
+      const normalized = normalizeSiteData(authoritativeData);
       setData(normalized);
       setSavedData(normalized);
-      setLastSaveMeta(payload || null);
-      setContentMeta({
-        source: contentPayload.source || "mongodb",
-        requestedSource: contentPayload.requestedSource || normalized.websiteControl?.dataSource || "auto",
-        fallbackActivated: Boolean(contentPayload.fallbackActivated),
-        lastMongoUpdateAt: contentPayload.meta?.lastMongoUpdateAt || null,
-        lastGitHubSyncAt: contentPayload.meta?.lastGitHubSyncAt || null,
+      setLastSaveMeta({
+        ...payload,
+        latestFetch: latestPayload,
       });
-      return { ok: true, data: contentPayload.data || null } as const;
+      setContentMeta({
+        source: latestContentPayload.source || contentPayload.source || "mongodb",
+        requestedSource: latestContentPayload.requestedSource || contentPayload.requestedSource || normalized.websiteControl?.dataSource || "auto",
+        fallbackActivated: Boolean(latestContentPayload.fallbackActivated ?? contentPayload.fallbackActivated),
+        lastMongoUpdateAt: latestContentPayload.meta?.lastMongoUpdateAt || contentPayload.meta?.lastMongoUpdateAt || null,
+        lastGitHubSyncAt: latestContentPayload.meta?.lastGitHubSyncAt || contentPayload.meta?.lastGitHubSyncAt || null,
+      });
+      if (process.env.NODE_ENV !== "production") {
+        console.debug("[admin/save] response", {
+          success: Boolean(payload?.ok ?? payload?.success),
+          activeSource: payload?.activeSource || payload?.source,
+          updatedAt: payload?.updatedAt || normalized.updatedAt,
+          savedPreview: payload?.savedFieldPreview || null,
+          revalidatedPaths: payload?.revalidatedPaths || [],
+        });
+      }
+      return { ok: true, data: normalized } as const;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Save failed");
       return { ok: false, error: err instanceof Error ? err.message : "Save failed" } as const;

@@ -97,9 +97,9 @@ export const sectionContentConfigs: Record<string, SectionContentConfig> = {
     arrayFields: [
       {
         label: "Stats",
-        path: "about.stats",
+        path: "sections.about.items",
         itemLabel: "Stat",
-        createItem: () => ({ label: "", value: "" }),
+        createItem: () => ({ label: "", value: "", isEnabled: true, order: 1 }),
         fields: [
           { key: "label", label: "Label" },
           { key: "value", label: "Value" },

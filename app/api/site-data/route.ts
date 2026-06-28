@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { authorizeSiteDataWrite } from "@/lib/admin/server";
 import { toPublicSiteData } from "@/lib/public-site-data";
-import { getSiteContentState, saveSiteData } from "@/lib/site-data-store";
+import { DEFAULT_REVALIDATE_PATHS, getSiteContentState, saveSiteData } from "@/lib/site-data-store";
 import { normalizeSiteData } from "@/lib/site-data-transform";
 import { siteDataSchema } from "@/schemas/site-data";
 import type { SiteData } from "@/src/types/site-data";
@@ -22,17 +22,38 @@ function noStoreJson(body: unknown, init?: ResponseInit) {
   });
 }
 
-export async function GET() {
+function analyzeSiteData(data: ReturnType<typeof toPublicSiteData>) {
+  const renderedPaths = Object.keys(data.sections || {}).flatMap((sectionId) => {
+    const section = data.sections?.[sectionId];
+    if (!section) return [];
+    return Object.keys(section.data || {}).map((field) => `sections.${sectionId}.data.${field}`);
+  });
+  const duplicatePaths = renderedPaths.filter((path, index) => renderedPaths.indexOf(path) !== index);
+  return {
+    renderedPaths: Array.from(new Set(renderedPaths)),
+    duplicatePaths: Array.from(new Set(duplicatePaths)),
+    staleFields: [] as string[],
+    aboutStats: data.sections?.about?.items ?? [],
+    heroTitle: (data.sections?.hero?.data as Record<string, unknown> | undefined)?.title ?? "",
+    footerText: (data.sections?.footer?.data as Record<string, unknown> | undefined)?.copyrightText ?? "",
+    githubEnabled: Boolean(data.githubConfig?.enabled),
+  };
+}
+
+export async function GET(request: Request) {
   try {
     const state = await getSiteContentState();
     const siteData = toPublicSiteData(state.data);
+    const debug = new URL(request.url).searchParams.get("debug") === "true";
     return noStoreJson({
       ok: true,
       data: siteData,
       updatedAt: siteData.updatedAt || new Date().toISOString(),
+      activeSource: state.activeSource,
       source: state.activeSource,
       requestedSource: state.requestedSource,
       fallbackActivated: state.fallbackActivated,
+      ...(debug ? analyzeSiteData(siteData) : {}),
       meta: {
         lastMongoUpdateAt: state.lastMongoUpdateAt,
         lastGitHubSyncAt: state.lastGitHubSyncAt,
@@ -76,9 +97,11 @@ export async function PUT(request: Request) {
       ok: true,
       data: saved.data,
       updatedAt: saved.data.updatedAt,
+      activeSource: saved.activeSource,
       source: saved.activeSource,
       requestedSource: saved.requestedSource,
       fallbackActivated: saved.fallbackActivated,
+      revalidatedPaths: DEFAULT_REVALIDATE_PATHS,
       meta: {
         lastMongoUpdateAt: saved.lastMongoUpdateAt,
         lastGitHubSyncAt: saved.lastGitHubSyncAt,

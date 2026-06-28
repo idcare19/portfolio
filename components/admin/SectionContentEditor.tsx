@@ -104,6 +104,10 @@ export function SectionContentEditor({ slug }: { slug: string }) {
   }
 
   async function handleSave() {
+    if (process.env.NODE_ENV !== "production" && config.sectionId === "about") {
+      const aboutItems = (data?.sections?.about?.items || []).map((item: any) => ({ label: item.label, value: item.value, order: item.order }));
+      console.debug("[admin/about] save payload about.items", aboutItems);
+    }
     const result = await save(data!, config.saveMessage);
     if (result.ok) notify("success", `${config.title} saved`);
     else notify("error", result.error || "Save failed");

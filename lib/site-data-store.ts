@@ -1,7 +1,7 @@
 import "server-only";
 
 import { readGitHubJsonFile, updateGitHubJsonFile } from "@/lib/github-content";
-import { readLocalSiteData, writeLocalSiteData } from "@/lib/local-site-data";
+import { readLocalSiteData } from "@/lib/local-site-data";
 import { getPortfolioSiteData, savePortfolioSiteData } from "@/lib/portfolio/repository";
 import { revalidateSitePaths } from "@/lib/site-revalidation";
 import { normalizeSiteData } from "@/lib/site-data-transform";
@@ -20,6 +20,8 @@ export type SiteContentState = {
   lastMongoUpdateAt: string | null;
   lastGitHubSyncAt: string | null;
 };
+
+export const DEFAULT_REVALIDATE_PATHS = ["/", "/projects", "/blogs", "/github", "/resume", "/maintenance"];
 
 function logSync(message: string, details?: Record<string, unknown>) {
   if (details) {
@@ -72,8 +74,6 @@ async function readGitHubState(): Promise<SiteContentState> {
     lastGitHubSyncAt: (file.json as SiteData)?.websiteControl?.syncStatus?.lastGitHubSync || (file.json as SiteData)?.updatedAt,
   });
 
-  await writeLocalSiteData(normalized);
-
   return {
     data: normalized,
     requestedSource: normalized.websiteControl?.dataSource || "auto",
@@ -113,7 +113,6 @@ async function persistMongo(
 
   const saved = await savePortfolioSiteData(normalized);
   const finalData = applySyncStatus(saved, meta);
-  await writeLocalSiteData(finalData);
 
   return {
     data: finalData,
@@ -258,15 +257,15 @@ export async function saveSiteData(nextData: SiteData) {
       }
     );
 
-    revalidateSitePaths();
-    logSync("[SYNC] Revalidation completed");
+    revalidateSitePaths(DEFAULT_REVALIDATE_PATHS);
+    logSync("[SYNC] Revalidation completed", { paths: DEFAULT_REVALIDATE_PATHS });
     return withSyncMeta;
   } catch (error) {
     console.error("[site-data-store] GitHub backup failed after MongoDB save", {
       message: error instanceof Error ? error.message : "Unknown GitHub sync error",
     });
-    revalidateSitePaths();
-    logSync("[SYNC] Revalidation completed");
+    revalidateSitePaths(DEFAULT_REVALIDATE_PATHS);
+    logSync("[SYNC] Revalidation completed", { paths: DEFAULT_REVALIDATE_PATHS });
     return {
       ...mongoState,
       requestedSource,
@@ -296,9 +295,9 @@ export async function syncGitHubToMongo() {
     }
   );
 
-  revalidateSitePaths();
+  revalidateSitePaths(DEFAULT_REVALIDATE_PATHS);
   logSync("[SYNC] GitHub -> MongoDB success");
-  logSync("[SYNC] Revalidation completed");
+  logSync("[SYNC] Revalidation completed", { paths: DEFAULT_REVALIDATE_PATHS });
   return persisted;
 }
 
@@ -322,8 +321,8 @@ export async function syncMongoToGitHub() {
     }
   );
 
-  revalidateSitePaths();
-  logSync("[SYNC] Revalidation completed");
+  revalidateSitePaths(DEFAULT_REVALIDATE_PATHS);
+  logSync("[SYNC] Revalidation completed", { paths: DEFAULT_REVALIDATE_PATHS });
   return {
     ...persisted,
     github: backup.githubResult,

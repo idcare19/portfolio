@@ -9,9 +9,9 @@ export function HeroSection() {
   const portfolioData = useSiteDataContext();
   const section = useSectionData("hero");
   const heroData = section.data as Record<string, any>;
-  const stats = Array.isArray(heroData.stats) ? heroData.stats : portfolioData.about.stats;
-  const badges = Array.isArray(heroData.badges) ? heroData.badges : portfolioData.owner.badges;
-  const resumeUrl = portfolioData.owner.resumeUrl?.trim();
+  const stats = Array.isArray(heroData.stats) ? heroData.stats : [];
+  const badges = Array.isArray(heroData.badges) ? heroData.badges : [];
+  const resumeUrl = String(heroData.resumeUrl || "").trim();
   const hasResume = Boolean(resumeUrl && resumeUrl !== "#");
 
   return (
@@ -22,14 +22,14 @@ export function HeroSection() {
         <div className="mx-auto max-w-5xl text-center">
           <FadeInUp immediate>
             <p className="mb-4 inline-flex rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">
-              {heroData.eyebrow || portfolioData.owner.identityLine}
+              {heroData.eyebrow}
             </p>
           </FadeInUp>
           <FadeInUp delay={0.06} immediate>
             <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-text-main sm:text-6xl lg:text-7xl">
-              <span className="block">{heroData.title || `Hi, I'm ${portfolioData.owner.name}`}</span>
+              <span className="block">{heroData.title}</span>
               <TypewriterLines
-                text={heroData.animatedRole || portfolioData.owner.role}
+                text={heroData.animatedRole}
                 className="text-gradient-animated mt-4 inline-block align-top"
                 typeSpeedMs={80}
                 holdMs={1800}
@@ -37,14 +37,14 @@ export function HeroSection() {
             </h1>
           </FadeInUp>
           <FadeInUp delay={0.12} immediate>
-            <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-text-muted sm:text-lg md:text-xl">{heroData.description || portfolioData.owner.tagline}</p>
+            <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-text-muted sm:text-lg md:text-xl">{heroData.description}</p>
           </FadeInUp>
 
           <FadeInUp delay={0.18}>
             <div className="mt-12 flex flex-wrap justify-center gap-4">
-              <Button href={heroData.primaryCtaHref || "#projects"}>{heroData.primaryCtaLabel || "View Projects"}</Button>
+              <Button href={heroData.primaryCtaHref || "#projects"}>{heroData.primaryCtaLabel}</Button>
               <Button href={heroData.secondaryCtaHref || "#contact"} variant="secondary">
-                {heroData.secondaryCtaLabel || "Contact Me"}
+                {heroData.secondaryCtaLabel}
               </Button>
               {hasResume ? (
                 <Button href={resumeUrl} variant="secondary" target="_blank" download>

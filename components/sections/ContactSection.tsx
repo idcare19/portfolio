@@ -10,11 +10,10 @@ import type { FormEvent } from "react";
 import { useState } from "react";
 
 export function ContactSection() {
-  const portfolioData = useSiteDataContext();
   const section = useSectionData("contact");
   const data = section.data as Record<string, any>;
-  const socials = section.items.length ? section.items : portfolioData.socials;
-  const resumeUrl = portfolioData.owner.resumeUrl?.trim();
+  const socials = section.items.length ? section.items : [];
+  const resumeUrl = String(data.resumeUrl || "").trim();
   const hasResume = Boolean(resumeUrl && resumeUrl !== "#");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -68,16 +67,16 @@ export function ContactSection() {
     <AnimatedSection id="contact" className="bg-page-bg py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "Contact"}
-          title={data.title || "Let's talk about your next project"}
-          description={data.description || "Freelance projects, internships, and collaboration opportunities are always welcome."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
           <FadeInUp className="glass rounded-3xl p-6 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
-            <h3 className="text-xl font-semibold text-text-main">{data.cardTitle || "Let's build something amazing together."}</h3>
+            <h3 className="text-xl font-semibold text-text-main">{data.cardTitle}</h3>
             <p className="mt-3 text-sm text-text-muted">
-              {data.cardDescription || "Whether it's a startup idea, website revamp, or app concept - I'd love to help build it."}
+              {data.cardDescription}
             </p>
 
             <div className="mt-5 space-y-2">

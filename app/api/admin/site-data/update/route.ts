@@ -1,10 +1,20 @@
 import { NextResponse } from "next/server";
 import { syncGitHubStats } from "@/lib/github-stats";
 import { requireAdminSession } from "@/lib/admin/server";
-import { getSiteContentState, saveSiteData } from "@/lib/site-data-store";
+import { DEFAULT_REVALIDATE_PATHS, getSiteContentState, saveSiteData } from "@/lib/site-data-store";
 import { normalizeSiteData } from "@/lib/site-data-transform";
 
 export const runtime = "nodejs";
+
+function previewSavedFields(body: Record<string, unknown>, savedData: Record<string, unknown>) {
+  const keys = ["owner", "websiteSettings", "githubConfig", "sections", "socials", "shell"] as const;
+  return keys.reduce<Record<string, unknown>>((acc, key) => {
+    if (body[key] !== undefined || savedData[key] !== undefined) {
+      acc[key] = savedData[key] ?? body[key];
+    }
+    return acc;
+  }, {});
+}
 
 export async function POST(request: Request) {
   const auth = await requireAdminSession();
@@ -44,9 +54,12 @@ export async function POST(request: Request) {
       success: true,
       ok: true,
       data: saved.data,
+      activeSource: saved.activeSource,
       source: saved.activeSource,
       requestedSource: saved.requestedSource,
       fallbackActivated: saved.fallbackActivated,
+      savedFieldPreview: previewSavedFields(body || {}, saved.data),
+      revalidatedPaths: DEFAULT_REVALIDATE_PATHS,
       meta: {
         lastMongoUpdateAt: saved.lastMongoUpdateAt,
         lastGitHubSyncAt: saved.lastGitHubSyncAt,

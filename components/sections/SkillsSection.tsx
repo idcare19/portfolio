@@ -7,18 +7,14 @@ import { SkillCard } from "@/components/ui/SkillCard";
 import { renderSkillIcon } from "@/lib/skill-icons";
 
 export function SkillsSection() {
-  const portfolioData = useSiteDataContext();
   const section = useSectionData("skills");
   const data = section.data as Record<string, any>;
-  const skillItems =
-    section.items.length > 0
-      ? section.items.filter((item: any) => item?.name)
-      : portfolioData.skillsDetailed;
+  const skillItems = section.items.length > 0 ? section.items.filter((item: any) => item?.name) : [];
   const skillNames = skillItems.map((item: any) => item.name).filter(Boolean);
   const skillsA = skillNames.slice(0, 5);
   const skillsB = skillNames.slice(5);
   const movingSkills = skillItems.concat(skillItems);
-  const learningItems = Array.isArray(data.learningItems) ? data.learningItems : portfolioData.learningPhase;
+  const learningItems = Array.isArray(data.learningItems) ? data.learningItems : [];
 
   function renderSkillPill(skill: { name: string; icon?: string }, key: string) {
     return (
@@ -36,9 +32,9 @@ export function SkillsSection() {
     <AnimatedSection id="skills" className="bg-page-bg py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "Skills"}
-          title={data.title || "Comfortable across the stack"}
-          description={data.description || "Core tools and technologies I use to design, develop, and ship production-ready web products."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <div className="grid gap-4 md:grid-cols-2">
@@ -47,7 +43,7 @@ export function SkillsSection() {
         </div>
 
         <div className="mt-4">
-          <SkillCard title={data.learningTitle || "Currently in Learning Phase"} items={learningItems} delay={0.12} />
+          <SkillCard title={data.learningTitle} items={learningItems} delay={0.12} />
         </div>
 
         <div className="mt-6 space-y-2 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-4 shadow-[0_8px_20px_rgba(15,23,42,0.04)]">

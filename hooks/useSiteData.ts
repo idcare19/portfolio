@@ -12,15 +12,15 @@ export function useSiteData() {
     setLoading(true);
     setError(null);
     try {
-      const res = await fetch("/api/site-data", {
+      const cacheBust = Date.now();
+      const payload = await (await fetch(`/api/site-data?_ts=${cacheBust}`, {
         cache: "no-store",
         headers: {
-          'Cache-Control': 'no-cache',
-          'Pragma': 'no-cache'
-        }
-      });
-      const payload = await res.json();
-      if (!res.ok || !payload?.ok) {
+          "Cache-Control": "no-cache",
+          Pragma: "no-cache",
+        },
+      })).json();
+      if (!payload?.ok) {
         throw new Error(payload?.error || "Failed to fetch site data");
       }
       setData(payload.data);

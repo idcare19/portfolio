@@ -7,19 +7,18 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { motion } from "framer-motion";
 
 export function JourneySection() {
-  const portfolioData = useSiteDataContext();
   const section = useSectionData("journey");
   const data = section.data as Record<string, any>;
-  const experience = section.items.length ? section.items : portfolioData.experience;
-  const milestones = Array.isArray(data.milestones) ? data.milestones : portfolioData.journeyNow?.ongoingMilestones || [];
+  const experience = section.items.length ? section.items : [];
+  const milestones = Array.isArray(data.milestones) ? data.milestones : [];
 
   return (
     <AnimatedSection id="journey" className="bg-section-bg py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "Experience"}
-          title={data.title || "Timeline of roles & milestones"}
-          description={data.description || "Hands-on roles that shaped my practical engineering and security-first development approach."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <div className="mx-auto mb-5 max-w-4xl rounded-2xl border border-[rgb(var(--border))] bg-card-bg p-4 backdrop-blur-sm">
@@ -38,10 +37,10 @@ export function JourneySection() {
           </div>
         </div>
 
-        {data.currentWork || portfolioData.journeyNow ? (
+        {data.currentWork ? (
           <div className="mx-auto mb-5 max-w-4xl rounded-2xl border border-[rgb(var(--border))] bg-white p-4 shadow-sm">
-            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-text-muted">{data.currentWorkTitle || "Where I Am Working Right Now"}</p>
-            <p className="mt-2 text-sm font-semibold text-text-main">{data.currentWork || portfolioData.journeyNow?.currentWork}</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.12em] text-text-muted">{data.currentWorkTitle}</p>
+            <p className="mt-2 text-sm font-semibold text-text-main">{data.currentWork}</p>
             {milestones.length > 0 ? (
               <div className="mt-3">
                 <p className="text-xs font-semibold uppercase tracking-[0.12em] text-[#1D4ED8]">Ongoing Milestones</p>

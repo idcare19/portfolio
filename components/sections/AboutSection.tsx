@@ -3,26 +3,25 @@
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { HoverCard } from "@/components/effects/HoverCard";
 import { FadeInUp } from "@/components/effects/FadeInUp";
-import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
+import { useSectionData } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
 export function AboutSection() {
-  const portfolioData = useSiteDataContext();
   const section = useSectionData("about");
   const data = section.data as Record<string, any>;
-  const stats = section.items.length ? section.items : portfolioData.about.stats;
+  const stats = section.items;
 
   return (
     <AnimatedSection id="about" className="bg-section-bg py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "About"}
-          title={data.title || "Building modern products with clean execution"}
-          description={data.description || "I love transforming ideas into smooth, responsive, and practical digital experiences."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <FadeInUp className="glass mb-6 rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.05)]">
-          <p className="text-text-muted" style={{ opacity: 0.9 }}>{data.intro || portfolioData.about.intro}</p>
+          <p className="text-text-muted" style={{ opacity: 0.9 }}>{data.intro}</p>
         </FadeInUp>
 
         <div className="grid gap-4 md:grid-cols-3">

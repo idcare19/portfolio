@@ -7,47 +7,31 @@ import type {
   SiteSectionBlock,
 } from "@/src/types/site-data";
 
-const DEFAULT_SECTION_META: Record<
-  DynamicSectionId,
-  { label: string; renderer: SectionRendererId; order: number; navHref?: string; navLabel?: string }
-> = {
-  hero: { label: "Hero", renderer: "hero", order: 1, navHref: "#home", navLabel: "Home" },
-  about: { label: "About", renderer: "about", order: 2, navHref: "#about", navLabel: "About" },
-  skills: { label: "Skills", renderer: "skills", order: 3, navHref: "#skills", navLabel: "Skills" },
-  projects: { label: "Projects", renderer: "projects", order: 4, navHref: "#projects", navLabel: "Projects" },
-  working: { label: "Working Projects", renderer: "working", order: 5 },
-  completed: { label: "Completed Projects", renderer: "completed", order: 6 },
-  reviews: { label: "Reviews", renderer: "reviews", order: 7 },
-  journey: { label: "Experience", renderer: "journey", order: 8, navHref: "#journey", navLabel: "Experience" },
-  education: { label: "Education", renderer: "education", order: 9 },
-  services: { label: "Services", renderer: "services", order: 10, navHref: "#services", navLabel: "Services" },
-  contact: { label: "Contact", renderer: "contact", order: 99, navHref: "#contact", navLabel: "Contact" },
-  blogs: { label: "Blogs", renderer: "blogs", order: 11, navHref: "#blogs", navLabel: "Blogs" },
-  github: { label: "GitHub Activity", renderer: "github", order: 8, navHref: "#github", navLabel: "GitHub" },
-  footer: { label: "Footer", renderer: "footer", order: 100 },
-};
+import seedData from "@/src/data/siteData.json";
+
+function cloneSeedData(): SiteData {
+  return JSON.parse(JSON.stringify(seedData)) as SiteData;
+}
 
 function makeBlock<K extends DynamicSectionId>(
   key: K,
   incoming: Partial<SiteSectionBlock> | undefined,
   patch: Pick<SiteSectionBlock, "data" | "items">,
 ): SiteSectionBlock {
-  const defaults = DEFAULT_SECTION_META[key];
-
   return {
     id: key,
-    label: incoming?.label?.trim() || defaults.label,
-    renderer: incoming?.renderer || defaults.renderer,
+    label: incoming?.label?.trim() || key,
+    renderer: incoming?.renderer || key,
     enabled: incoming?.enabled ?? true,
-    order: incoming?.order ?? defaults.order,
+    order: incoming?.order ?? 0,
     layout: incoming?.layout || "default",
     status: incoming?.status || "published",
     nav: {
-      show: incoming?.nav?.show ?? Boolean(defaults.navHref),
-      href: incoming?.nav?.href || defaults.navHref || `#${key}`,
-      label: incoming?.nav?.label || defaults.navLabel || defaults.label,
+      show: incoming?.nav?.show ?? false,
+      href: incoming?.nav?.href || `#${key}`,
+      label: incoming?.nav?.label || incoming?.label || key,
     },
-    emptyMessage: incoming?.emptyMessage || "No content added yet.",
+    emptyMessage: incoming?.emptyMessage || "",
     textBlocks: (incoming?.textBlocks || []).map((block) => ({
       ...block,
       sectionId: block.sectionId || key,
@@ -60,41 +44,42 @@ function makeBlock<K extends DynamicSectionId>(
 
 export function normalizeSiteData(input: SiteData): SiteData {
   const sectionsInput = input.sections || ({} as SectionRecord);
+  const seedSections = cloneSeedData().sections || {};
   const themeMode = input.websiteSettings?.themeMode || (input.websiteSettings as SiteData["websiteSettings"] & { theme?: SiteData["websiteSettings"]["themeMode"] })?.theme || "light";
 
   const sections: SectionRecord = {
     hero: makeBlock("hero", sectionsInput.hero, {
       data: {
-        eyebrow: input.owner.identityLine,
-        title: input.owner.introLine || `Hi, I'm ${input.owner.name}`,
-        animatedRole: input.owner.role,
-        description: input.owner.tagline,
-        primaryCtaLabel: "View Projects",
-        primaryCtaHref: "#projects",
-        secondaryCtaLabel: "Contact Me",
-        secondaryCtaHref: "#contact",
-        badges: input.owner.badges,
-        stats: input.about.stats,
-        techStack: input.heroTech,
+        eyebrow: sectionsInput.hero?.data?.eyebrow ?? seedSections.hero?.data?.eyebrow ?? input.owner.identityLine ?? "",
+        title: sectionsInput.hero?.data?.title ?? seedSections.hero?.data?.title ?? input.owner.introLine ?? "",
+        animatedRole: sectionsInput.hero?.data?.animatedRole ?? seedSections.hero?.data?.animatedRole ?? input.owner.role ?? "",
+        description: sectionsInput.hero?.data?.description ?? seedSections.hero?.data?.description ?? input.owner.tagline ?? "",
+        primaryCtaLabel: sectionsInput.hero?.data?.primaryCtaLabel ?? seedSections.hero?.data?.primaryCtaLabel ?? "",
+        primaryCtaHref: sectionsInput.hero?.data?.primaryCtaHref ?? seedSections.hero?.data?.primaryCtaHref ?? "",
+        secondaryCtaLabel: sectionsInput.hero?.data?.secondaryCtaLabel ?? seedSections.hero?.data?.secondaryCtaLabel ?? "",
+        secondaryCtaHref: sectionsInput.hero?.data?.secondaryCtaHref ?? seedSections.hero?.data?.secondaryCtaHref ?? "",
+        badges: sectionsInput.hero?.data?.badges ?? seedSections.hero?.data?.badges ?? input.owner.badges,
+        stats: sectionsInput.hero?.data?.stats ?? seedSections.hero?.data?.stats ?? input.about.stats,
+        techStack: sectionsInput.hero?.data?.techStack ?? seedSections.hero?.data?.techStack ?? input.heroTech,
       },
       items: [],
     }),
     about: makeBlock("about", sectionsInput.about, {
       data: {
-        eyebrow: "About",
-        title: "Building modern products with clean execution",
-        description: "I love transforming ideas into smooth, responsive, and practical digital experiences.",
-        intro: input.about.intro,
+        eyebrow: sectionsInput.about?.data?.eyebrow ?? seedSections.about?.data?.eyebrow ?? "",
+        title: sectionsInput.about?.data?.title ?? seedSections.about?.data?.title ?? "",
+        description: sectionsInput.about?.data?.description ?? seedSections.about?.data?.description ?? "",
+        intro: sectionsInput.about?.data?.intro ?? seedSections.about?.data?.intro ?? input.about.intro ?? "",
       },
-      items: input.about.stats,
+      items: (sectionsInput.about?.items as SiteData["about"]["stats"] | undefined) ?? (seedSections.about?.items as SiteData["about"]["stats"] | undefined) ?? input.about.stats,
     }),
     skills: makeBlock("skills", sectionsInput.skills, {
       data: {
-        eyebrow: "Skills",
-        title: "Comfortable across the stack",
-        description: "Core tools and technologies I use to design, develop, and ship production-ready web products.",
-        learningTitle: "Currently in Learning Phase",
-        learningItems: input.learningPhase,
+        eyebrow: sectionsInput.skills?.data?.eyebrow ?? seedSections.skills?.data?.eyebrow ?? "",
+        title: sectionsInput.skills?.data?.title ?? seedSections.skills?.data?.title ?? "",
+        description: sectionsInput.skills?.data?.description ?? seedSections.skills?.data?.description ?? "",
+        learningTitle: sectionsInput.skills?.data?.learningTitle ?? seedSections.skills?.data?.learningTitle ?? "",
+        learningItems: sectionsInput.skills?.data?.learningItems ?? seedSections.skills?.data?.learningItems ?? input.learningPhase,
       },
       items: input.skillsDetailed.length
         ? input.skillsDetailed
@@ -108,9 +93,9 @@ export function normalizeSiteData(input: SiteData): SiteData {
     }),
     projects: makeBlock("projects", sectionsInput.projects, {
       data: {
-        eyebrow: "Projects",
-        title: "Featured work",
-        description: "Fast, clean project cards with minimal motion and better performance.",
+        eyebrow: sectionsInput.projects?.data?.eyebrow ?? seedSections.projects?.data?.eyebrow ?? "",
+        title: sectionsInput.projects?.data?.title ?? seedSections.projects?.data?.title ?? "",
+        description: sectionsInput.projects?.data?.description ?? seedSections.projects?.data?.description ?? "",
       },
       items: input.projectsDetailed.length
         ? [...input.projectsDetailed].sort((a, b) => a.order - b.order)
@@ -130,25 +115,25 @@ export function normalizeSiteData(input: SiteData): SiteData {
     }),
     working: makeBlock("working", sectionsInput.working, {
       data: {
-        eyebrow: "Currently Working On",
-        title: "Projects in progress",
-        description: "A live snapshot of what I am building right now and where the work is headed next.",
+        eyebrow: sectionsInput.working?.data?.eyebrow ?? seedSections.working?.data?.eyebrow ?? "",
+        title: sectionsInput.working?.data?.title ?? seedSections.working?.data?.title ?? "",
+        description: sectionsInput.working?.data?.description ?? seedSections.working?.data?.description ?? "",
       },
       items: input.workingProjects || [],
     }),
     completed: makeBlock("completed", sectionsInput.completed, {
       data: {
-        eyebrow: "Projects I Worked On",
-        title: "Completed work and what I delivered",
-        description: "A clear record of finished projects and the exact work I handled in each.",
+        eyebrow: sectionsInput.completed?.data?.eyebrow ?? seedSections.completed?.data?.eyebrow ?? "",
+        title: sectionsInput.completed?.data?.title ?? seedSections.completed?.data?.title ?? "",
+        description: sectionsInput.completed?.data?.description ?? seedSections.completed?.data?.description ?? "",
       },
       items: input.completedProjects || [],
     }),
     reviews: makeBlock("reviews", sectionsInput.reviews, {
       data: {
-        eyebrow: "Client Reviews",
-        title: "What clients say",
-        description: "Feedback from recent portfolio projects delivered for clients.",
+        eyebrow: sectionsInput.reviews?.data?.eyebrow ?? seedSections.reviews?.data?.eyebrow ?? "",
+        title: sectionsInput.reviews?.data?.title ?? seedSections.reviews?.data?.title ?? "",
+        description: sectionsInput.reviews?.data?.description ?? seedSections.reviews?.data?.description ?? "",
       },
       items: input.testimonialsDetailed.length
         ? input.testimonialsDetailed
@@ -162,63 +147,63 @@ export function normalizeSiteData(input: SiteData): SiteData {
     }),
     journey: makeBlock("journey", sectionsInput.journey, {
       data: {
-        eyebrow: "Experience",
-        title: "Timeline of roles & milestones",
-        description: "Hands-on roles that shaped my practical engineering and security-first development approach.",
-        currentWorkTitle: "Where I Am Working Right Now",
-        currentWork: input.journeyNow?.currentWork || "",
-        milestones: input.journeyNow?.ongoingMilestones || [],
+        eyebrow: sectionsInput.journey?.data?.eyebrow ?? seedSections.journey?.data?.eyebrow ?? "",
+        title: sectionsInput.journey?.data?.title ?? seedSections.journey?.data?.title ?? "",
+        description: sectionsInput.journey?.data?.description ?? seedSections.journey?.data?.description ?? "",
+        currentWorkTitle: sectionsInput.journey?.data?.currentWorkTitle ?? seedSections.journey?.data?.currentWorkTitle ?? "",
+        currentWork: sectionsInput.journey?.data?.currentWork ?? seedSections.journey?.data?.currentWork ?? input.journeyNow?.currentWork ?? "",
+        milestones: sectionsInput.journey?.data?.milestones ?? seedSections.journey?.data?.milestones ?? input.journeyNow?.ongoingMilestones ?? [],
       },
       items: input.experience,
     }),
     education: makeBlock("education", sectionsInput.education, {
       data: {
-        eyebrow: "Education",
-        title: "Academic foundation",
-        description: "Education, training, and practical study that shaped the work I do today.",
+        eyebrow: sectionsInput.education?.data?.eyebrow ?? seedSections.education?.data?.eyebrow ?? "",
+        title: sectionsInput.education?.data?.title ?? seedSections.education?.data?.title ?? "",
+        description: sectionsInput.education?.data?.description ?? seedSections.education?.data?.description ?? "",
       },
       items: input.education || [],
     }),
     services: makeBlock("services", sectionsInput.services, {
       data: {
-        eyebrow: "Services",
-        title: "How I can help",
-        description: "Flexible product, design, and development support for founders, teams, and fast-moving ideas.",
+        eyebrow: sectionsInput.services?.data?.eyebrow ?? seedSections.services?.data?.eyebrow ?? "",
+        title: sectionsInput.services?.data?.title ?? seedSections.services?.data?.title ?? "",
+        description: sectionsInput.services?.data?.description ?? seedSections.services?.data?.description ?? "",
       },
       items: input.services || [],
     }),
     contact: makeBlock("contact", sectionsInput.contact, {
       data: {
-        eyebrow: "Contact",
-        title: "Let's talk about your next project",
-        description: "Freelance projects, internships, and collaboration opportunities are always welcome.",
-        cardTitle: "Let's build something amazing together.",
-        cardDescription: "Whether it's a startup idea, website revamp, or app concept - I'd love to help build it.",
-        formTitle: "Send a message",
+        eyebrow: sectionsInput.contact?.data?.eyebrow ?? seedSections.contact?.data?.eyebrow ?? "",
+        title: sectionsInput.contact?.data?.title ?? seedSections.contact?.data?.title ?? "",
+        description: sectionsInput.contact?.data?.description ?? seedSections.contact?.data?.description ?? "",
+        cardTitle: sectionsInput.contact?.data?.cardTitle ?? seedSections.contact?.data?.cardTitle ?? "",
+        cardDescription: sectionsInput.contact?.data?.cardDescription ?? seedSections.contact?.data?.cardDescription ?? "",
+        formTitle: sectionsInput.contact?.data?.formTitle ?? seedSections.contact?.data?.formTitle ?? "",
       },
       items: input.socials,
     }),
     blogs: makeBlock("blogs", sectionsInput.blogs, {
       data: {
-        eyebrow: "Blogs",
-        title: "Notes, experiments, and practical write-ups",
-        description: "Published posts, learnings, and project breakdowns from real work.",
+        eyebrow: sectionsInput.blogs?.data?.eyebrow ?? seedSections.blogs?.data?.eyebrow ?? "",
+        title: sectionsInput.blogs?.data?.title ?? seedSections.blogs?.data?.title ?? "",
+        description: sectionsInput.blogs?.data?.description ?? seedSections.blogs?.data?.description ?? "",
       },
       items: input.blogs,
     }),
     github: makeBlock("github", sectionsInput.github, {
       data: {
-        eyebrow: "Developer Activity",
-        title: "Live from GitHub",
-        description: "A real-time look at my recent contributions, projects, and statistics.",
+        eyebrow: sectionsInput.github?.data?.eyebrow ?? seedSections.github?.data?.eyebrow ?? "",
+        title: sectionsInput.github?.data?.title ?? seedSections.github?.data?.title ?? "",
+        description: sectionsInput.github?.data?.description ?? seedSections.github?.data?.description ?? "",
       },
       items: [],
     }),
     footer: makeBlock("footer", sectionsInput.footer, {
       data: {
-        copyrightText: input.shell?.footer?.copyrightText || input.websiteSettings?.footerText || "All rights reserved.",
-        ctaLabel: input.shell?.footer?.ctaLabel || "Let's work together",
-        ctaHref: input.shell?.footer?.ctaHref || "#contact",
+        copyrightText: sectionsInput.footer?.data?.copyrightText ?? seedSections.footer?.data?.copyrightText ?? input.shell?.footer?.copyrightText ?? input.websiteSettings?.footerText ?? "",
+        ctaLabel: sectionsInput.footer?.data?.ctaLabel ?? seedSections.footer?.data?.ctaLabel ?? input.shell?.footer?.ctaLabel ?? "",
+        ctaHref: sectionsInput.footer?.data?.ctaHref ?? seedSections.footer?.data?.ctaHref ?? input.shell?.footer?.ctaHref ?? "",
       },
       items: input.shell?.footer?.quickLinks || [],
     }),
@@ -250,31 +235,31 @@ export function normalizeSiteData(input: SiteData): SiteData {
     },
     shell: {
       navbar: {
-        desktopCtaLabel: input.shell?.navbar?.desktopCtaLabel || "Hire Me",
-        desktopCtaHref: input.shell?.navbar?.desktopCtaHref || "#contact",
-        mobileMenuLabel: input.shell?.navbar?.mobileMenuLabel || "Toggle menu",
-        brandBadgePrefix: input.shell?.navbar?.brandBadgePrefix || "Version",
+        desktopCtaLabel: input.shell?.navbar?.desktopCtaLabel || "",
+        desktopCtaHref: input.shell?.navbar?.desktopCtaHref || "",
+        mobileMenuLabel: input.shell?.navbar?.mobileMenuLabel || "",
+        brandBadgePrefix: input.shell?.navbar?.brandBadgePrefix || "",
       },
       footer: {
-        copyrightText: input.shell?.footer?.copyrightText || input.websiteSettings?.footerText || "All rights reserved.",
-        backToTopLabel: input.shell?.footer?.backToTopLabel || "Back to top",
+        copyrightText: input.shell?.footer?.copyrightText || input.websiteSettings?.footerText || "",
+        backToTopLabel: input.shell?.footer?.backToTopLabel || "",
         quickLinks: input.shell?.footer?.quickLinks || [],
-        ctaLabel: input.shell?.footer?.ctaLabel || "Let's work together",
-        ctaHref: input.shell?.footer?.ctaHref || "#contact",
+        ctaLabel: input.shell?.footer?.ctaLabel || "",
+        ctaHref: input.shell?.footer?.ctaHref || "",
       },
       search: {
-        buttonLabel: input.shell?.search?.buttonLabel || "Search",
-        shortcutLabel: input.shell?.search?.shortcutLabel || "Ctrl K",
-        inputPlaceholder: input.shell?.search?.inputPlaceholder || "Search projects, blogs, skills, technologies...",
-        emptyPrompt: input.shell?.search?.emptyPrompt || "Start typing to search across your portfolio.",
+        buttonLabel: input.shell?.search?.buttonLabel || "",
+        shortcutLabel: input.shell?.search?.shortcutLabel || "",
+        inputPlaceholder: input.shell?.search?.inputPlaceholder || "",
+        emptyPrompt: input.shell?.search?.emptyPrompt || "",
       },
       assistant: {
-        buttonLabel: input.shell?.assistant?.buttonLabel || "Ask Portfolio AI",
-        panelTitle: input.shell?.assistant?.panelTitle || "Portfolio Assistant",
-        panelDescription: input.shell?.assistant?.panelDescription || "Answers only from portfolio content",
-        inputPlaceholder: input.shell?.assistant?.inputPlaceholder || "Ask about projects, skills, experience, or blogs...",
-        submitLabel: input.shell?.assistant?.submitLabel || "Ask",
-        loadingLabel: input.shell?.assistant?.loadingLabel || "Searching...",
+        buttonLabel: input.shell?.assistant?.buttonLabel || "",
+        panelTitle: input.shell?.assistant?.panelTitle || "",
+        panelDescription: input.shell?.assistant?.panelDescription || "",
+        inputPlaceholder: input.shell?.assistant?.inputPlaceholder || "",
+        submitLabel: input.shell?.assistant?.submitLabel || "",
+        loadingLabel: input.shell?.assistant?.loadingLabel || "",
       },
     },
     nav,

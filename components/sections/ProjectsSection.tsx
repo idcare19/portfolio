@@ -7,7 +7,6 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 
 export function ProjectsSection() {
-  const portfolioData = useSiteDataContext();
   const section = useSectionData("projects");
   const data = section.data as Record<string, any>;
   const projects = section.items.length
@@ -19,15 +18,15 @@ export function ProjectsSection() {
         liveUrl: item.liveDemoUrl,
         githubUrl: item.githubUrl,
       }))
-    : portfolioData.projects;
+    : [];
 
   return (
     <AnimatedSection id="projects" className="bg-section-bg py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "Projects"}
-          title={data.title || "Featured work"}
-          description={data.description || "Fast, clean project cards with minimal motion and better performance."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">

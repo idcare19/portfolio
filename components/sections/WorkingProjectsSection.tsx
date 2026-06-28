@@ -8,10 +8,9 @@ import { ArrowUpRight, Clock3 } from "lucide-react";
 import Link from "next/link";
 
 export function WorkingProjectsSection() {
-  const portfolioData = useSiteDataContext();
   const section = useSectionData("working");
   const data = section.data as Record<string, any>;
-  const workingProjects = (section.items.length ? section.items : portfolioData.workingProjects) || [];
+  const workingProjects = section.items || [];
 
   if (workingProjects.length === 0) {
     return null;
@@ -21,9 +20,9 @@ export function WorkingProjectsSection() {
     <AnimatedSection id="working" className="py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "Currently Working On"}
-          title={data.title || "Projects in progress"}
-          description={data.description || "A live snapshot of what I am building right now and where the work is headed next."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">

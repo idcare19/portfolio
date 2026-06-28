@@ -35,7 +35,6 @@ function getReviewIcon(icon?: string): LucideIcon {
 }
 
 export function ReviewsSection() {
-  const portfolioData = useSiteDataContext();
   const section = useSectionData("reviews");
   const data = section.data as Record<string, any>;
   const reviews = section.items.length
@@ -45,7 +44,7 @@ export function ReviewsSection() {
         quote: item.message,
         icon: item.image,
       }))
-    : portfolioData.reviews;
+    : [];
   const railRef = useRef<HTMLDivElement | null>(null);
   const dragState = useRef<{ active: boolean; startX: number; startLeft: number }>({
     active: false,
@@ -169,9 +168,9 @@ export function ReviewsSection() {
     <AnimatedSection id="reviews" className="py-20">
       <div className="section-wrap">
         <SectionHeader
-          eyebrow={data.eyebrow || "Client Reviews"}
-          title={data.title || "What clients say"}
-          description={data.description || "Feedback from recent portfolio projects delivered for clients."}
+          eyebrow={data.eyebrow}
+          title={data.title}
+          description={data.description}
         />
 
         <FadeInUp>
