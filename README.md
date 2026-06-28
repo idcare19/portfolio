@@ -78,6 +78,9 @@ GITHUB_CONTENT_PATH=src/data/siteData.json
 
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
 VERCEL_DEPLOY_HOOK_URL=optional_deploy_hook_url
+
+
+GEMINI_API_KEY=your_gemini_api_key
 ```
 
 Notes:
