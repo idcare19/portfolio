@@ -294,7 +294,6 @@ export const siteDataSchema = z.object({
     animations: z.enum(["minimal", "smooth", "rich"]).optional(),
   }),
   websiteControl: websiteControlSchema,
-<<<<<<< HEAD
   aiConfig: z.object({
     enabled: z.boolean().default(true),
     model: z.string().default("gemini-2.5-flash"),
@@ -390,8 +389,6 @@ export const siteDataSchema = z.object({
       loadingLabel: "Searching...",
     },
   }),
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   sections: z
     .object({
       hero: dynamicSectionSchema,
@@ -407,10 +404,7 @@ export const siteDataSchema = z.object({
       contact: dynamicSectionSchema,
       blogs: dynamicSectionSchema,
       github: dynamicSectionSchema,
-<<<<<<< HEAD
       footer: dynamicSectionSchema,
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     })
     .optional(),
   collaboration: z.object({
@@ -424,7 +418,6 @@ export const siteDataSchema = z.object({
     token: z.string().optional().default(''),
     enabled: z.boolean().default(false),
     refreshInterval: z.number().default(30),
-<<<<<<< HEAD
     includePrivateRepos: z.boolean().default(false),
     includePrivateCommits: z.boolean().default(false),
     showLifetimeCommits: z.boolean().default(true),
@@ -434,14 +427,11 @@ export const siteDataSchema = z.object({
     commitCountMode: z.enum(["publicCommitsOnly", "publicAndPrivateCommits", "publicReposOnly", "selectedRepositoriesOnly", "customRepositoryList"]).default("publicCommitsOnly"),
     repositorySelectionMode: z.enum(["all", "publicOnly", "privateOnly", "selected"]).default("all"),
     selectedRepositories: z.array(z.string()).default([]),
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   }).optional().default({
     username: "",
     token: "",
     enabled: false,
     refreshInterval: 30,
-<<<<<<< HEAD
     includePrivateRepos: false,
     includePrivateCommits: false,
     showLifetimeCommits: true,
@@ -451,8 +441,6 @@ export const siteDataSchema = z.object({
     commitCountMode: "publicCommitsOnly",
     repositorySelectionMode: "all",
     selectedRepositories: [],
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   }),
   updatedAt: z.string().default(() => new Date().toISOString()),
   siteConnection: siteConnectionSchema.optional(),

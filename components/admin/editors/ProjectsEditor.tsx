@@ -43,7 +43,6 @@ const emptyProject: ProjectItem = {
 export function ProjectsEditor({ data, onChange }: Props) {
   const [activeId, setActiveId] = useState<string>(data.projectsDetailed[0]?.id || "");
   const [githubImages, setGithubImages] = useState<string[]>([]);
-<<<<<<< HEAD
   const [showAdvanced, setShowAdvanced] = useState(false);
   const active = data.projectsDetailed.find((p) => p.id === activeId) || null;
 
@@ -62,10 +61,6 @@ export function ProjectsEditor({ data, onChange }: Props) {
     });
   }
 
-=======
-  const active = data.projectsDetailed.find((p) => p.id === activeId) || null;
-
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   useEffect(() => {
     let cancelled = false;
 
@@ -96,7 +91,6 @@ export function ProjectsEditor({ data, onChange }: Props) {
   }, [githubImages, data.mediaLibrary, active?.image]);
 
   function addProject() {
-<<<<<<< HEAD
     const id = `project-${Date.now()}`;
     const nextProject = {
       ...emptyProject,
@@ -120,72 +114,6 @@ export function ProjectsEditor({ data, onChange }: Props) {
     const nextProjects = data.projectsDetailed.map((project) => (project.id === active.id ? { ...project, ...patch } : project));
     syncProjects(nextProjects);
   }
-=======
-  const id = `project-${Date.now()}`;
-
-  const nextProject = {
-    ...emptyProject,
-    id,
-    order: data.projectsDetailed.length + 1,
-  };
-
-  const nextList = [...data.projectsDetailed, nextProject];
-
-  onChange({
-  ...data,
-  projectsDetailed: nextList,
-  projects: nextList.map((project) => ({
-    title: project.title,
-    description: project.shortDescription,
-    image: project.image,
-    tech: project.techStack,
-    liveUrl: project.liveDemoUrl,
-    githubUrl: project.githubUrl,
-  })),
-});
-  setActiveId(id);
-}
-
-  function removeProject(id: string) {
-  if (!confirm("Delete this project?")) return;
-
-  const nextList = data.projectsDetailed.filter((p) => p.id !== id);
-
-  onChange({
-  ...data,
-  projectsDetailed: nextList,
-  projects: nextList.map((project) => ({
-    title: project.title,
-    description: project.shortDescription,
-    image: project.image,
-    tech: project.techStack,
-    liveUrl: project.liveDemoUrl,
-    githubUrl: project.githubUrl,
-  })),
-});
-  setActiveId(nextList[0]?.id || "");
-}
-  function updateActive(patch: Partial<ProjectItem>) {
-  if (!active) return;
-
-  const nextProjects = data.projectsDetailed.map((p) =>
-    p.id === active.id ? { ...p, ...patch } : p
-  );
-
-  onChange({
-  ...data,
-  projectsDetailed: nextProjects,
-  projects: nextProjects.map((project) => ({
-    title: project.title,
-    description: project.shortDescription,
-    image: project.image,
-    tech: project.techStack,
-    liveUrl: project.liveDemoUrl,
-    githubUrl: project.githubUrl,
-  })),
-});
-}
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-[280px,1fr]">
@@ -259,7 +187,6 @@ export function ProjectsEditor({ data, onChange }: Props) {
               <input type="checkbox" checked={active.featured} onChange={(e) => updateActive({ featured: e.target.checked })} /> Featured
             </label>
             <input type="number" className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2" value={active.order} onChange={(e) => updateActive({ order: Number(e.target.value || 0) })} placeholder="Order" />
-<<<<<<< HEAD
             
             <button
               type="button"
@@ -285,8 +212,6 @@ export function ProjectsEditor({ data, onChange }: Props) {
                 <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={(active.futureImprovements || []).join(", ")} onChange={(e) => updateActive({ futureImprovements: e.target.value.split(",").map((v) => v.trim()).filter(Boolean) })} placeholder="Future improvements (comma separated)" />
               </>
             ) : null}
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
           </div>
         )}
       </section>

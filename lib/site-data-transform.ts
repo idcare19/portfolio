@@ -24,10 +24,7 @@ const DEFAULT_SECTION_META: Record<
   contact: { label: "Contact", renderer: "contact", order: 99, navHref: "#contact", navLabel: "Contact" },
   blogs: { label: "Blogs", renderer: "blogs", order: 11, navHref: "#blogs", navLabel: "Blogs" },
   github: { label: "GitHub Activity", renderer: "github", order: 8, navHref: "#github", navLabel: "GitHub" },
-<<<<<<< HEAD
   footer: { label: "Footer", renderer: "footer", order: 100 },
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
 };
 
 function makeBlock<K extends DynamicSectionId>(
@@ -217,7 +214,6 @@ export function normalizeSiteData(input: SiteData): SiteData {
       },
       items: [],
     }),
-<<<<<<< HEAD
     footer: makeBlock("footer", sectionsInput.footer, {
       data: {
         copyrightText: input.shell?.footer?.copyrightText || input.websiteSettings?.footerText || "All rights reserved.",
@@ -226,8 +222,6 @@ export function normalizeSiteData(input: SiteData): SiteData {
       },
       items: input.shell?.footer?.quickLinks || [],
     }),
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
   };
 
   const nav = input.nav?.length
@@ -246,7 +240,6 @@ export function normalizeSiteData(input: SiteData): SiteData {
       ...input.websiteSettings,
       themeMode,
     },
-<<<<<<< HEAD
     aiConfig: {
       enabled: input.aiConfig?.enabled ?? true,
       model: input.aiConfig?.model || "gemini-2.5-flash",
@@ -284,8 +277,6 @@ export function normalizeSiteData(input: SiteData): SiteData {
         loadingLabel: input.shell?.assistant?.loadingLabel || "Searching...",
       },
     },
-=======
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
     nav,
     sections,
     projectsDetailed: sections.projects.items as SiteData["projectsDetailed"],
@@ -329,7 +320,6 @@ export function normalizeSiteData(input: SiteData): SiteData {
       token: input.githubConfig?.token ?? "",
       enabled: input.githubConfig?.enabled ?? false,
       refreshInterval: input.githubConfig?.refreshInterval ?? 30,
-<<<<<<< HEAD
       includePrivateRepos: input.githubConfig?.includePrivateRepos ?? false,
       includePrivateCommits: input.githubConfig?.includePrivateCommits ?? false,
       showLifetimeCommits: input.githubConfig?.showLifetimeCommits ?? true,
@@ -342,8 +332,3 @@ export function normalizeSiteData(input: SiteData): SiteData {
     },
   };
 }
-=======
-    },
-  };
-}
->>>>>>> c974e6d18f7e4d84cefd23b3ad822ac4cf9981fc
