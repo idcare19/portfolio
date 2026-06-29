@@ -28,6 +28,47 @@ type GitHubPrivacyConfig = {
   selectedRepositories?: string[];
   commitMessageIncludes?: string[];
   commitMessageExcludes?: string[];
+  recentCommitsEnabled?: boolean;
+  recentCommitsLimit?: number;
+  recentCommitsHideRepositories?: string[];
+  recentCommitsHideKeywords?: string[];
+  recentCommitsSelectedRepositories?: string[];
+  recentCommitsShowMessage?: boolean;
+  recentCommitsShowRepository?: boolean;
+  recentCommitsShowDate?: boolean;
+  recentCommitsShowAuthor?: boolean;
+  recentCommitsShowAvatar?: boolean;
+  recentCommitsSortNewest?: boolean;
+  recentActivityEnabled?: boolean;
+  recentActivityLimit?: number;
+  recentActivityHiddenTypes?: string[];
+  recentActivityHideRepositories?: string[];
+  recentActivityHideKeywords?: string[];
+  repositoryCardsLimit?: number;
+  repositoryCardsSelectedRepositories?: string[];
+  repositoryCardsHideArchived?: boolean;
+  repositoryCardsHideForked?: boolean;
+  repositoryCardsHidePrivate?: boolean;
+  repositoryCardsSort?: "stars" | "updated" | "name" | "manual";
+  repositoryCardsManualOrder?: string[];
+  showTotalCommits?: boolean;
+  showStars?: boolean;
+  showFollowers?: boolean;
+  showFollowing?: boolean;
+  showForks?: boolean;
+  showPullRequests?: boolean;
+  showIssues?: boolean;
+  showOrganizations?: boolean;
+  showContributionStreak?: boolean;
+  pinnedProjectsLimit?: number;
+  pinnedProjectsOrder?: string[];
+  cardsPerRow?: number;
+  paginationSize?: number;
+  infiniteScroll?: boolean;
+  showViewOnGitHubButtons?: boolean;
+  openLinksInNewTab?: boolean;
+  showGitHubIcons?: boolean;
+  showLanguageColors?: boolean;
 };
 
 type GitHubHeaders = HeadersInit;
@@ -142,6 +183,42 @@ function getPrivacyConfig(siteData?: Awaited<ReturnType<typeof getFullSiteData>>
     commitCountMode: siteData?.githubConfig?.commitCountMode || "publicCommitsOnly",
     repositorySelectionMode: siteData?.githubConfig?.repositorySelectionMode || "all",
     selectedRepositories: siteData?.githubConfig?.selectedRepositories || [],
+    recentCommitsEnabled: siteData?.githubConfig?.recentCommitsEnabled ?? true,
+    recentCommitsLimit: siteData?.githubConfig?.recentCommitsLimit ?? 10,
+    recentCommitsHideRepositories: siteData?.githubConfig?.recentCommitsHideRepositories || [],
+    recentCommitsHideKeywords: siteData?.githubConfig?.recentCommitsHideKeywords || [],
+    recentCommitsSelectedRepositories: siteData?.githubConfig?.recentCommitsSelectedRepositories || [],
+    recentCommitsSortNewest: siteData?.githubConfig?.recentCommitsSortNewest ?? true,
+    recentActivityEnabled: siteData?.githubConfig?.recentActivityEnabled ?? true,
+    recentActivityLimit: siteData?.githubConfig?.recentActivityLimit ?? 10,
+    recentActivityHiddenTypes: siteData?.githubConfig?.recentActivityHiddenTypes || [],
+    recentActivityHideRepositories: siteData?.githubConfig?.recentActivityHideRepositories || [],
+    recentActivityHideKeywords: siteData?.githubConfig?.recentActivityHideKeywords || [],
+    repositoryCardsLimit: siteData?.githubConfig?.repositoryCardsLimit ?? 12,
+    repositoryCardsSelectedRepositories: siteData?.githubConfig?.repositoryCardsSelectedRepositories || [],
+    repositoryCardsHideArchived: siteData?.githubConfig?.repositoryCardsHideArchived ?? false,
+    repositoryCardsHideForked: siteData?.githubConfig?.repositoryCardsHideForked ?? false,
+    repositoryCardsHidePrivate: siteData?.githubConfig?.repositoryCardsHidePrivate ?? true,
+    repositoryCardsSort: siteData?.githubConfig?.repositoryCardsSort || "stars",
+    repositoryCardsManualOrder: siteData?.githubConfig?.repositoryCardsManualOrder || [],
+    showTotalCommits: siteData?.githubConfig?.showTotalCommits ?? true,
+    showStars: siteData?.githubConfig?.showStars ?? true,
+    showFollowers: siteData?.githubConfig?.showFollowers ?? true,
+    showFollowing: siteData?.githubConfig?.showFollowing ?? true,
+    showForks: siteData?.githubConfig?.showForks ?? true,
+    showPullRequests: siteData?.githubConfig?.showPullRequests ?? true,
+    showIssues: siteData?.githubConfig?.showIssues ?? true,
+    showOrganizations: siteData?.githubConfig?.showOrganizations ?? true,
+    showContributionStreak: siteData?.githubConfig?.showContributionStreak ?? true,
+    pinnedProjectsLimit: siteData?.githubConfig?.pinnedProjectsLimit ?? 6,
+    pinnedProjectsOrder: siteData?.githubConfig?.pinnedProjectsOrder || [],
+    cardsPerRow: siteData?.githubConfig?.cardsPerRow ?? 3,
+    paginationSize: siteData?.githubConfig?.paginationSize ?? 12,
+    infiniteScroll: siteData?.githubConfig?.infiniteScroll ?? false,
+    showViewOnGitHubButtons: siteData?.githubConfig?.showViewOnGitHubButtons ?? true,
+    openLinksInNewTab: siteData?.githubConfig?.openLinksInNewTab ?? true,
+    showGitHubIcons: siteData?.githubConfig?.showGitHubIcons ?? true,
+    showLanguageColors: siteData?.githubConfig?.showLanguageColors ?? true,
   };
 }
 
@@ -424,16 +501,27 @@ function toPublicStats(fullStats: CachedGitHubStats, privacyConfig: GitHubPrivac
   const visibleRepositories = (fullStats.repositories || []).filter((repo: any) => !repo.private || allowPrivateRepoNames);
   const latestRepos = visibleRepositories
     .sort((a: any, b: any) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime())
-    .slice(0, MAX_PUBLIC_REPOS)
+    .slice(0, Number(privacyConfig.repositoryCardsLimit || MAX_PUBLIC_REPOS))
     .map((repo: any) => sanitizeRepositoryForPublic(repo, allowPrivateRepoNames));
   const pinnedRepos = (fullStats.pinnedRepositories || [])
     .filter((repo: any) => !repo.private || allowPrivateRepoNames)
-    .slice(0, 6)
+    .slice(0, Number(privacyConfig.pinnedProjectsLimit || 6))
     .map((repo: any) => sanitizeRepositoryForPublic(repo, allowPrivateRepoNames));
   const latestCommits = (fullStats.recentCommits || [])
     .filter((commit: any) => !commit.isPrivate || allowPrivateCommitMessages)
     .filter((commit: any) => commitMatchesFilters(commit, privacyConfig))
-    .slice(0, MAX_PUBLIC_COMMITS)
+    .filter((commit: any) => {
+      const hiddenRepos = privacyConfig.recentCommitsHideRepositories || [];
+      const hiddenKeywords = privacyConfig.recentCommitsHideKeywords || [];
+      const selectedRepos = privacyConfig.recentCommitsSelectedRepositories || [];
+      const repoMatch =
+        selectedRepos.length === 0 || selectedRepos.some((repo) => repo.toLowerCase() === String(commit.repoName || "").toLowerCase());
+      return repoMatch && matchesTextFilters(commit, hiddenRepos, hiddenKeywords);
+    })
+    .sort((a: any, b: any) =>
+      privacyConfig.recentCommitsSortNewest === false ? new Date(String(a.createdAt)).getTime() - new Date(String(b.createdAt)).getTime() : new Date(String(b.createdAt)).getTime() - new Date(String(a.createdAt)).getTime()
+    )
+    .slice(0, Number(privacyConfig.recentCommitsLimit || MAX_PUBLIC_COMMITS))
     .map((commit: any) =>
       commit.isPrivate && !allowPrivateCommitMessages
         ? {
@@ -446,7 +534,11 @@ function toPublicStats(fullStats: CachedGitHubStats, privacyConfig: GitHubPrivac
     );
   const recentActivity = (fullStats.recentActivity || [])
     .filter((item: any) => !item.isPrivate || allowPrivateRepoNames)
-    .slice(0, MAX_PUBLIC_ACTIVITY)
+    .filter((item: any) => {
+      if ((privacyConfig.recentActivityHiddenTypes || []).includes(String(item.type))) return false;
+      return matchesTextFilters(item, privacyConfig.recentActivityHideRepositories || [], privacyConfig.recentActivityHideKeywords || []);
+    })
+    .slice(0, Number(privacyConfig.recentActivityLimit || MAX_PUBLIC_ACTIVITY))
     .map((item: any) =>
       item.isPrivate && !allowPrivateRepoNames
         ? {
@@ -743,5 +835,13 @@ function commitMatchesFilters(commit: { repoName?: string; message?: string }, c
     return false;
   }
 
+  return true;
+}
+
+function matchesTextFilters(item: { repoName?: string; summary?: string; message?: string }, hiddenRepos: string[], hiddenKeywords: string[]) {
+  const repo = String(item.repoName || "").toLowerCase();
+  const text = `${item.summary || ""} ${item.message || ""}`.toLowerCase();
+  if (hiddenRepos.some((name) => repo === name.toLowerCase())) return false;
+  if (hiddenKeywords.some((term) => text.includes(term.toLowerCase()))) return false;
   return true;
 }

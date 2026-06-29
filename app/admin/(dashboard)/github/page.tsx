@@ -24,6 +24,47 @@ type GitHubConfig = {
   selectedRepositories: string[];
   commitMessageIncludes: string[];
   commitMessageExcludes: string[];
+  recentCommitsEnabled: boolean;
+  recentCommitsLimit: number;
+  recentCommitsHideRepositories: string[];
+  recentCommitsHideKeywords: string[];
+  recentCommitsSelectedRepositories: string[];
+  recentCommitsShowMessage: boolean;
+  recentCommitsShowRepository: boolean;
+  recentCommitsShowDate: boolean;
+  recentCommitsShowAuthor: boolean;
+  recentCommitsShowAvatar: boolean;
+  recentCommitsSortNewest: boolean;
+  recentActivityEnabled: boolean;
+  recentActivityLimit: number;
+  recentActivityHiddenTypes: string[];
+  recentActivityHideRepositories: string[];
+  recentActivityHideKeywords: string[];
+  repositoryCardsLimit: number;
+  repositoryCardsSelectedRepositories: string[];
+  repositoryCardsHideArchived: boolean;
+  repositoryCardsHideForked: boolean;
+  repositoryCardsHidePrivate: boolean;
+  repositoryCardsSort: "stars" | "updated" | "name" | "manual";
+  repositoryCardsManualOrder: string[];
+  showTotalCommits: boolean;
+  showStars: boolean;
+  showFollowers: boolean;
+  showFollowing: boolean;
+  showForks: boolean;
+  showPullRequests: boolean;
+  showIssues: boolean;
+  showOrganizations: boolean;
+  showContributionStreak: boolean;
+  pinnedProjectsLimit: number;
+  pinnedProjectsOrder: string[];
+  cardsPerRow: number;
+  paginationSize: number;
+  infiniteScroll: boolean;
+  showViewOnGitHubButtons: boolean;
+  openLinksInNewTab: boolean;
+  showGitHubIcons: boolean;
+  showLanguageColors: boolean;
 };
 
 type GitHubStats = {
@@ -63,6 +104,47 @@ const defaultConfig: GitHubConfig = {
   selectedRepositories: [],
   commitMessageIncludes: [],
   commitMessageExcludes: [],
+  recentCommitsEnabled: true,
+  recentCommitsLimit: 10,
+  recentCommitsHideRepositories: [],
+  recentCommitsHideKeywords: [],
+  recentCommitsSelectedRepositories: [],
+  recentCommitsShowMessage: true,
+  recentCommitsShowRepository: true,
+  recentCommitsShowDate: true,
+  recentCommitsShowAuthor: false,
+  recentCommitsShowAvatar: false,
+  recentCommitsSortNewest: true,
+  recentActivityEnabled: true,
+  recentActivityLimit: 10,
+  recentActivityHiddenTypes: [],
+  recentActivityHideRepositories: [],
+  recentActivityHideKeywords: [],
+  repositoryCardsLimit: 12,
+  repositoryCardsSelectedRepositories: [],
+  repositoryCardsHideArchived: false,
+  repositoryCardsHideForked: false,
+  repositoryCardsHidePrivate: true,
+  repositoryCardsSort: "stars",
+  repositoryCardsManualOrder: [],
+  showTotalCommits: true,
+  showStars: true,
+  showFollowers: true,
+  showFollowing: true,
+  showForks: true,
+  showPullRequests: true,
+  showIssues: true,
+  showOrganizations: true,
+  showContributionStreak: true,
+  pinnedProjectsLimit: 6,
+  pinnedProjectsOrder: [],
+  cardsPerRow: 3,
+  paginationSize: 12,
+  infiniteScroll: false,
+  showViewOnGitHubButtons: true,
+  openLinksInNewTab: true,
+  showGitHubIcons: true,
+  showLanguageColors: true,
 };
 
 function normalizeConfig(input?: Partial<GitHubConfig> | null): GitHubConfig {
@@ -74,6 +156,47 @@ function normalizeConfig(input?: Partial<GitHubConfig> | null): GitHubConfig {
     selectedRepositories: Array.isArray(input?.selectedRepositories) ? input.selectedRepositories : [],
     commitMessageIncludes: Array.isArray(input?.commitMessageIncludes) ? input.commitMessageIncludes : [],
     commitMessageExcludes: Array.isArray(input?.commitMessageExcludes) ? input.commitMessageExcludes : [],
+    recentCommitsEnabled: input?.recentCommitsEnabled ?? true,
+    recentCommitsLimit: input?.recentCommitsLimit ?? 10,
+    recentCommitsHideRepositories: Array.isArray(input?.recentCommitsHideRepositories) ? input.recentCommitsHideRepositories : [],
+    recentCommitsHideKeywords: Array.isArray(input?.recentCommitsHideKeywords) ? input.recentCommitsHideKeywords : [],
+    recentCommitsSelectedRepositories: Array.isArray(input?.recentCommitsSelectedRepositories) ? input.recentCommitsSelectedRepositories : [],
+    recentCommitsShowMessage: input?.recentCommitsShowMessage ?? true,
+    recentCommitsShowRepository: input?.recentCommitsShowRepository ?? true,
+    recentCommitsShowDate: input?.recentCommitsShowDate ?? true,
+    recentCommitsShowAuthor: input?.recentCommitsShowAuthor ?? false,
+    recentCommitsShowAvatar: input?.recentCommitsShowAvatar ?? false,
+    recentCommitsSortNewest: input?.recentCommitsSortNewest ?? true,
+    recentActivityEnabled: input?.recentActivityEnabled ?? true,
+    recentActivityLimit: input?.recentActivityLimit ?? 10,
+    recentActivityHiddenTypes: Array.isArray(input?.recentActivityHiddenTypes) ? input.recentActivityHiddenTypes : [],
+    recentActivityHideRepositories: Array.isArray(input?.recentActivityHideRepositories) ? input.recentActivityHideRepositories : [],
+    recentActivityHideKeywords: Array.isArray(input?.recentActivityHideKeywords) ? input.recentActivityHideKeywords : [],
+    repositoryCardsLimit: input?.repositoryCardsLimit ?? 12,
+    repositoryCardsSelectedRepositories: Array.isArray(input?.repositoryCardsSelectedRepositories) ? input.repositoryCardsSelectedRepositories : [],
+    repositoryCardsHideArchived: input?.repositoryCardsHideArchived ?? false,
+    repositoryCardsHideForked: input?.repositoryCardsHideForked ?? false,
+    repositoryCardsHidePrivate: input?.repositoryCardsHidePrivate ?? true,
+    repositoryCardsSort: input?.repositoryCardsSort ?? "stars",
+    repositoryCardsManualOrder: Array.isArray(input?.repositoryCardsManualOrder) ? input.repositoryCardsManualOrder : [],
+    showTotalCommits: input?.showTotalCommits ?? true,
+    showStars: input?.showStars ?? true,
+    showFollowers: input?.showFollowers ?? true,
+    showFollowing: input?.showFollowing ?? true,
+    showForks: input?.showForks ?? true,
+    showPullRequests: input?.showPullRequests ?? true,
+    showIssues: input?.showIssues ?? true,
+    showOrganizations: input?.showOrganizations ?? true,
+    showContributionStreak: input?.showContributionStreak ?? true,
+    pinnedProjectsLimit: input?.pinnedProjectsLimit ?? 6,
+    pinnedProjectsOrder: Array.isArray(input?.pinnedProjectsOrder) ? input.pinnedProjectsOrder : [],
+    cardsPerRow: input?.cardsPerRow ?? 3,
+    paginationSize: input?.paginationSize ?? 12,
+    infiniteScroll: input?.infiniteScroll ?? false,
+    showViewOnGitHubButtons: input?.showViewOnGitHubButtons ?? true,
+    openLinksInNewTab: input?.openLinksInNewTab ?? true,
+    showGitHubIcons: input?.showGitHubIcons ?? true,
+    showLanguageColors: input?.showLanguageColors ?? true,
   };
 }
 

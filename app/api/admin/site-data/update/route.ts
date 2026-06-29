@@ -69,6 +69,86 @@ function normalizeGitHubConfig(existing: NonNullable<SiteData["githubConfig"]>, 
       : Array.isArray(existing.commitMessageExcludes)
         ? existing.commitMessageExcludes
         : [],
+    recentCommitsEnabled: typeof incoming.recentCommitsEnabled === "boolean" ? incoming.recentCommitsEnabled : Boolean(existing.recentCommitsEnabled ?? true),
+    recentCommitsLimit: Number.isFinite(Number(incoming.recentCommitsLimit)) ? Number(incoming.recentCommitsLimit) : existing.recentCommitsLimit ?? 10,
+    recentCommitsHideRepositories: Array.isArray(incoming.recentCommitsHideRepositories)
+      ? incoming.recentCommitsHideRepositories.filter((value): value is string => typeof value === "string")
+      : Array.isArray(existing.recentCommitsHideRepositories)
+        ? existing.recentCommitsHideRepositories
+        : [],
+    recentCommitsHideKeywords: Array.isArray(incoming.recentCommitsHideKeywords)
+      ? incoming.recentCommitsHideKeywords.filter((value): value is string => typeof value === "string")
+      : Array.isArray(existing.recentCommitsHideKeywords)
+        ? existing.recentCommitsHideKeywords
+        : [],
+    recentCommitsSelectedRepositories: Array.isArray(incoming.recentCommitsSelectedRepositories)
+      ? incoming.recentCommitsSelectedRepositories.filter((value): value is string => typeof value === "string")
+      : Array.isArray(existing.recentCommitsSelectedRepositories)
+        ? existing.recentCommitsSelectedRepositories
+        : [],
+    recentCommitsShowMessage: typeof incoming.recentCommitsShowMessage === "boolean" ? incoming.recentCommitsShowMessage : Boolean(existing.recentCommitsShowMessage ?? true),
+    recentCommitsShowRepository: typeof incoming.recentCommitsShowRepository === "boolean" ? incoming.recentCommitsShowRepository : Boolean(existing.recentCommitsShowRepository ?? true),
+    recentCommitsShowDate: typeof incoming.recentCommitsShowDate === "boolean" ? incoming.recentCommitsShowDate : Boolean(existing.recentCommitsShowDate ?? true),
+    recentCommitsShowAuthor: typeof incoming.recentCommitsShowAuthor === "boolean" ? incoming.recentCommitsShowAuthor : Boolean(existing.recentCommitsShowAuthor ?? false),
+    recentCommitsShowAvatar: typeof incoming.recentCommitsShowAvatar === "boolean" ? incoming.recentCommitsShowAvatar : Boolean(existing.recentCommitsShowAvatar ?? false),
+    recentCommitsSortNewest: typeof incoming.recentCommitsSortNewest === "boolean" ? incoming.recentCommitsSortNewest : Boolean(existing.recentCommitsSortNewest ?? true),
+    recentActivityEnabled: typeof incoming.recentActivityEnabled === "boolean" ? incoming.recentActivityEnabled : Boolean(existing.recentActivityEnabled ?? true),
+    recentActivityLimit: Number.isFinite(Number(incoming.recentActivityLimit)) ? Number(incoming.recentActivityLimit) : existing.recentActivityLimit ?? 10,
+    recentActivityHiddenTypes: Array.isArray(incoming.recentActivityHiddenTypes)
+      ? incoming.recentActivityHiddenTypes.filter((value): value is string => typeof value === "string")
+      : Array.isArray(existing.recentActivityHiddenTypes)
+        ? existing.recentActivityHiddenTypes
+        : [],
+    recentActivityHideRepositories: Array.isArray(incoming.recentActivityHideRepositories)
+      ? incoming.recentActivityHideRepositories.filter((value): value is string => typeof value === "string")
+      : Array.isArray(existing.recentActivityHideRepositories)
+        ? existing.recentActivityHideRepositories
+        : [],
+    recentActivityHideKeywords: Array.isArray(incoming.recentActivityHideKeywords)
+      ? incoming.recentActivityHideKeywords.filter((value): value is string => typeof value === "string")
+      : Array.isArray(existing.recentActivityHideKeywords)
+        ? existing.recentActivityHideKeywords
+        : [],
+    repositoryCardsLimit: Number.isFinite(Number(incoming.repositoryCardsLimit)) ? Number(incoming.repositoryCardsLimit) : existing.repositoryCardsLimit ?? 12,
+    repositoryCardsSelectedRepositories: Array.isArray(incoming.repositoryCardsSelectedRepositories)
+      ? incoming.repositoryCardsSelectedRepositories.filter((value): value is string => typeof value === "string")
+      : Array.isArray(existing.repositoryCardsSelectedRepositories)
+        ? existing.repositoryCardsSelectedRepositories
+        : [],
+    repositoryCardsHideArchived: typeof incoming.repositoryCardsHideArchived === "boolean" ? incoming.repositoryCardsHideArchived : Boolean(existing.repositoryCardsHideArchived ?? false),
+    repositoryCardsHideForked: typeof incoming.repositoryCardsHideForked === "boolean" ? incoming.repositoryCardsHideForked : Boolean(existing.repositoryCardsHideForked ?? false),
+    repositoryCardsHidePrivate: typeof incoming.repositoryCardsHidePrivate === "boolean" ? incoming.repositoryCardsHidePrivate : Boolean(existing.repositoryCardsHidePrivate ?? true),
+    repositoryCardsSort:
+      typeof incoming.repositoryCardsSort === "string"
+        ? (incoming.repositoryCardsSort as NonNullable<SiteData["githubConfig"]>["repositoryCardsSort"])
+        : existing.repositoryCardsSort || "stars",
+    repositoryCardsManualOrder: Array.isArray(incoming.repositoryCardsManualOrder)
+      ? incoming.repositoryCardsManualOrder.filter((value): value is string => typeof value === "string")
+      : Array.isArray(existing.repositoryCardsManualOrder)
+        ? existing.repositoryCardsManualOrder
+        : [],
+    showTotalCommits: typeof incoming.showTotalCommits === "boolean" ? incoming.showTotalCommits : Boolean(existing.showTotalCommits ?? true),
+    showStars: typeof incoming.showStars === "boolean" ? incoming.showStars : Boolean(existing.showStars ?? true),
+    showFollowers: typeof incoming.showFollowers === "boolean" ? incoming.showFollowers : Boolean(existing.showFollowers ?? true),
+    showFollowing: typeof incoming.showFollowing === "boolean" ? incoming.showFollowing : Boolean(existing.showFollowing ?? true),
+    showForks: typeof incoming.showForks === "boolean" ? incoming.showForks : Boolean(existing.showForks ?? true),
+    showPullRequests: typeof incoming.showPullRequests === "boolean" ? incoming.showPullRequests : Boolean(existing.showPullRequests ?? true),
+    showIssues: typeof incoming.showIssues === "boolean" ? incoming.showIssues : Boolean(existing.showIssues ?? true),
+    showOrganizations: typeof incoming.showOrganizations === "boolean" ? incoming.showOrganizations : Boolean(existing.showOrganizations ?? true),
+    showContributionStreak: typeof incoming.showContributionStreak === "boolean" ? incoming.showContributionStreak : Boolean(existing.showContributionStreak ?? true),
+    pinnedProjectsLimit: Number.isFinite(Number(incoming.pinnedProjectsLimit)) ? Number(incoming.pinnedProjectsLimit) : existing.pinnedProjectsLimit ?? 6,
+    pinnedProjectsOrder: Array.isArray(incoming.pinnedProjectsOrder)
+      ? incoming.pinnedProjectsOrder.filter((value): value is string => typeof value === "string")
+      : Array.isArray(existing.pinnedProjectsOrder)
+        ? existing.pinnedProjectsOrder
+        : [],
+    cardsPerRow: Number.isFinite(Number(incoming.cardsPerRow)) ? Number(incoming.cardsPerRow) : existing.cardsPerRow ?? 3,
+    paginationSize: Number.isFinite(Number(incoming.paginationSize)) ? Number(incoming.paginationSize) : existing.paginationSize ?? 12,
+    infiniteScroll: typeof incoming.infiniteScroll === "boolean" ? incoming.infiniteScroll : Boolean(existing.infiniteScroll ?? false),
+    showViewOnGitHubButtons: typeof incoming.showViewOnGitHubButtons === "boolean" ? incoming.showViewOnGitHubButtons : Boolean(existing.showViewOnGitHubButtons ?? true),
+    openLinksInNewTab: typeof incoming.openLinksInNewTab === "boolean" ? incoming.openLinksInNewTab : Boolean(existing.openLinksInNewTab ?? true),
+    showGitHubIcons: typeof incoming.showGitHubIcons === "boolean" ? incoming.showGitHubIcons : Boolean(existing.showGitHubIcons ?? true),
+    showLanguageColors: typeof incoming.showLanguageColors === "boolean" ? incoming.showLanguageColors : Boolean(existing.showLanguageColors ?? true),
   };
 
   const token = typeof incoming.token === "string" ? incoming.token.trim() : "";
@@ -108,6 +188,47 @@ export async function POST(request: Request) {
         selectedRepositories: [],
         commitMessageIncludes: [],
         commitMessageExcludes: [],
+        recentCommitsEnabled: true,
+        recentCommitsLimit: 10,
+        recentCommitsHideRepositories: [],
+        recentCommitsHideKeywords: [],
+        recentCommitsSelectedRepositories: [],
+        recentCommitsShowMessage: true,
+        recentCommitsShowRepository: true,
+        recentCommitsShowDate: true,
+        recentCommitsShowAuthor: false,
+        recentCommitsShowAvatar: false,
+        recentCommitsSortNewest: true,
+        recentActivityEnabled: true,
+        recentActivityLimit: 10,
+        recentActivityHiddenTypes: [],
+        recentActivityHideRepositories: [],
+        recentActivityHideKeywords: [],
+        repositoryCardsLimit: 12,
+        repositoryCardsSelectedRepositories: [],
+        repositoryCardsHideArchived: false,
+        repositoryCardsHideForked: false,
+        repositoryCardsHidePrivate: true,
+        repositoryCardsSort: "stars",
+        repositoryCardsManualOrder: [],
+        showTotalCommits: true,
+        showStars: true,
+        showFollowers: true,
+        showFollowing: true,
+        showForks: true,
+        showPullRequests: true,
+        showIssues: true,
+        showOrganizations: true,
+        showContributionStreak: true,
+        pinnedProjectsLimit: 6,
+        pinnedProjectsOrder: [],
+        cardsPerRow: 3,
+        paginationSize: 12,
+        infiniteScroll: false,
+        showViewOnGitHubButtons: true,
+        openLinksInNewTab: true,
+        showGitHubIcons: true,
+        showLanguageColors: true,
       };
     const safeGithubConfig = normalizeGitHubConfig(existingGithubConfig, githubConfigInput);
     const mergedSiteData: SiteData = {
