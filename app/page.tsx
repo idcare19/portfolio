@@ -13,28 +13,55 @@ export const revalidate = 0;
 
 export default async function HomePage() {
   const portfolioData = await getPortfolioData();
+  const coreSectionIds = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "github", "blogs", "footer"];
+  console.log("[homepage] section keys", Object.keys(portfolioData.sections || {}));
   const sections = Object.values(portfolioData.sections || {})
-    .filter((section) => section.enabled)
+    .filter((section) => section.enabled !== false && section.showOnHomepage !== false)
     .sort((a, b) => a.order - b.order);
+  console.log("[homepage] visibleSections", sections.length);
+  console.log(
+    "[homepage] visibleSections detail",
+    sections.map((section) => ({
+      slug: (section as any).slug,
+      enabled: section.enabled,
+      showOnHomepage: section.showOnHomepage,
+      renderer: section.renderer,
+    }))
+  );
+  const footerSection = portfolioData.sections?.footer;
+  const showFooter = footerSection?.enabled !== false && footerSection?.showOnHomepage !== false;
+  const visibleSections =
+    sections.length > 0
+      ? sections
+      : coreSectionIds
+          .map((id) => portfolioData.sections?.[id])
+          .filter((section): section is NonNullable<typeof section> => Boolean(section))
+          .filter((section) => section.enabled !== false)
+          .sort((a, b) => a.order - b.order);
 
   return (
     <main className="min-h-screen bg-page-bg">
       <ScrollProgress />
       <Navbar />
       <div>
-        {sections.map((section) => (
-          <DeferredSection
-            key={section.id}
-            id={section.id === "hero" ? "home" : section.id === "journey" ? "experience" : section.id}
-            className="min-h-[420px]"
-          >
-            <DynamicSectionRenderer section={section} />
-          </DeferredSection>
-        ))}
+        {visibleSections.map((section) => {
+          console.log("[homepage] Rendering section:", section.id, section.renderer);
+          return (
+            <DeferredSection
+              key={section.id}
+              id={section.id === "hero" ? "home" : section.id === "journey" ? "experience" : section.id}
+              className="min-h-[420px]"
+            >
+              <DynamicSectionRenderer section={section} />
+            </DeferredSection>
+          );
+        })}
 
-        <DeferredSection className="min-h-[240px]">
-          <DeferredFooterSection />
-        </DeferredSection>
+        {showFooter ? (
+          <DeferredSection className="min-h-[240px]">
+            <DeferredFooterSection />
+          </DeferredSection>
+        ) : null}
       </div>
     </main>
   );

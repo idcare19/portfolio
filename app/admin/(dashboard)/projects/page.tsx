@@ -8,7 +8,7 @@ import { useToast } from "@/components/admin/ToastProvider";
 
 export default function ProjectsAdminPage() {
   const { notify } = useToast();
-  const { data, setData, loading, saving, error, save } = useSiteDataEditor();
+  const { data, setData, loading, saving, error, save, resetToLastSaved } = useSiteDataEditor();
 
   async function handleSave() {
     if (!data) return;
@@ -42,9 +42,14 @@ export default function ProjectsAdminPage() {
         </div>
       ) : null}
       <div>
-        <button onClick={handleSave} disabled={!data || saving} className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white hover:bg-[#1D4ED8] disabled:opacity-80">
-          {saving ? "Saving..." : "Save Projects"}
-        </button>
+        <div className="flex gap-3">
+          <button onClick={handleSave} disabled={!data || saving} className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white hover:bg-[#1D4ED8] disabled:opacity-80">
+            {saving ? "Saving..." : "Save Projects"}
+          </button>
+          <button onClick={resetToLastSaved} disabled={!data || saving} className="rounded-xl border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text disabled:opacity-80">
+            Cancel Changes
+          </button>
+        </div>
       </div>
     </div>
   );

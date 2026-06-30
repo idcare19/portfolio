@@ -24,6 +24,50 @@ const SECTION_ORDER = [
   "contact",
 ] as const;
 
+const CORE_RENDERERS = new Set([
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "working",
+  "completed",
+  "reviews",
+  "journey",
+  "education",
+  "services",
+  "contact",
+  "blogs",
+  "github",
+  "footer",
+  "generic",
+]);
+
+const CORE_SECTION_IDS = new Set([
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "working",
+  "completed",
+  "reviews",
+  "journey",
+  "education",
+  "services",
+  "contact",
+  "blogs",
+  "github",
+  "footer",
+]);
+
+function normalizeSectionRenderer(sectionId: string, renderer?: string) {
+  if (sectionId === "blogs") return "blogs";
+  if (sectionId === "footer") return "footer";
+  if (CORE_RENDERERS.has(sectionId)) return sectionId;
+  const value = (renderer || "").trim();
+  if (!value) return sectionId;
+  return CORE_RENDERERS.has(value) ? value : "generic";
+}
+
 function cloneSeedData(): SiteData {
   return JSON.parse(JSON.stringify(seedData)) as SiteData;
 }
@@ -48,13 +92,13 @@ function makeBlock<K extends DynamicSectionId>(
   return {
     id: key,
     label: incoming?.label?.trim() || key,
-    renderer: incoming?.renderer || key,
-    enabled: incoming?.enabled ?? true,
+    renderer: normalizeSectionRenderer(key, incoming?.renderer || key),
+    enabled: incoming?.enabled ?? (incoming as any)?.isEnabled ?? true,
     order: incoming?.order ?? 0,
     layout: incoming?.layout || "default",
     status: incoming?.status || "published",
     nav: {
-      show: incoming?.nav?.show ?? false,
+      show: incoming?.nav?.show ?? (incoming as any)?.showOnHomepage ?? false,
       href: incoming?.nav?.href || `#${key}`,
       label: incoming?.nav?.label || incoming?.label || key,
     },
@@ -66,7 +110,52 @@ function makeBlock<K extends DynamicSectionId>(
     settings: incoming?.settings || {},
     data: patch.data ?? incoming?.data ?? {},
     items: patch.items ?? incoming?.items ?? [],
+    showOnHomepage: (incoming as any)?.showOnHomepage ?? incoming?.nav?.show ?? CORE_SECTION_IDS.has(key),
   };
+}
+
+function resolveSectionItems<T>(
+  sectionItems: T[] | undefined,
+  legacyItems: T[] | undefined,
+  bootstrapItems: T[]
+): T[] {
+  if (sectionItems !== undefined) return sectionItems;
+  if (legacyItems !== undefined) return legacyItems;
+  return bootstrapItems;
+}
+
+function buildSectionBlockFromInput(key: string, incoming: Partial<SiteSectionBlock> | undefined, fallback?: Partial<SiteSectionBlock>): SiteSectionBlock {
+  const merged = { ...(fallback || {}), ...(incoming || {}) } as Partial<SiteSectionBlock>;
+  return {
+    id: key,
+    label: merged.label?.trim() || key,
+    renderer: normalizeSectionRenderer(key, merged.renderer || key),
+    enabled: merged.enabled ?? true,
+    order: merged.order ?? 0,
+    layout: merged.layout || "default",
+    status: merged.status || "published",
+    nav: {
+      show: merged.nav?.show ?? merged.showOnHomepage ?? false,
+      href: merged.nav?.href || `#${key}`,
+      label: merged.nav?.label || merged.label || key,
+    },
+    emptyMessage: merged.emptyMessage || "",
+    textBlocks: (merged.textBlocks || []).map((block) => ({
+      ...block,
+      sectionId: block.sectionId || key,
+    })),
+    settings: merged.settings || {},
+    data: merged.data || {},
+    items: merged.items || [],
+    showOnHomepage: merged.showOnHomepage ?? merged.nav?.show ?? CORE_SECTION_IDS.has(key),
+  };
+}
+
+export function summarizeSectionCounts(sections?: SectionRecord) {
+  const ids = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "services", "github", "contact", "footer"] as const;
+  return Object.fromEntries(
+    ids.map((id) => [id, Array.isArray(sections?.[id]?.items) ? sections[id]!.items.length : null])
+  ) as Record<(typeof ids)[number], number | null>;
 }
 
 export function normalizeSiteData(input: SiteData): SiteData {
@@ -110,17 +199,19 @@ export function normalizeSiteData(input: SiteData): SiteData {
         learningTitle: sectionsInput.skills?.data?.learningTitle ?? "",
         learningItems: sectionsInput.skills?.data?.learningItems ?? [],
       },
-      items:
-        (sectionsInput.skills?.items as SiteData["skillsDetailed"] | undefined) ??
-        (input.skillsDetailed.length
-          ? input.skillsDetailed
-          : input.skills.map((name, index) => ({
+      items: resolveSectionItems(
+        sectionsInput.skills?.items as SiteData["skillsDetailed"] | undefined,
+        input.skillsDetailed.length ? input.skillsDetailed : undefined,
+        input.skills.length
+          ? input.skills.map((name, index) => ({
               id: `skill-${index + 1}`,
               name,
               category: "Tools",
               icon: "",
               level: 80,
-            }))),
+            }))
+          : []
+      ),
     }),
     projects: makeBlock("projects", sectionsInput.projects, {
       data: {
@@ -128,9 +219,10 @@ export function normalizeSiteData(input: SiteData): SiteData {
         title: sectionsInput.projects?.data?.title ?? "",
         description: sectionsInput.projects?.data?.description ?? "",
       },
-      items: input.projectsDetailed.length
-        ? [...input.projectsDetailed].sort((a, b) => a.order - b.order)
-        : input.projects.map((project, index) => ({
+      items: resolveSectionItems(
+        sectionsInput.projects?.items as SiteData["projectsDetailed"] | undefined,
+        undefined,
+        input.projects.map((project, index) => ({
             id: `project-${index + 1}`,
             title: project.title,
             shortDescription: project.description,
@@ -142,7 +234,8 @@ export function normalizeSiteData(input: SiteData): SiteData {
             githubUrl: project.githubUrl,
             featured: index < 3,
             order: index + 1,
-          })),
+          }))
+      ).sort((a: any, b: any) => Number(a.order ?? 0) - Number(b.order ?? 0)),
     }),
     working: makeBlock("working", sectionsInput.working, {
       data: {
@@ -150,7 +243,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
         title: sectionsInput.working?.data?.title ?? "",
         description: sectionsInput.working?.data?.description ?? "",
       },
-      items: [],
+      items: resolveSectionItems(sectionsInput.working?.items as SiteData["workingProjects"] | undefined, undefined, []),
     }),
     completed: makeBlock("completed", sectionsInput.completed, {
       data: {
@@ -158,7 +251,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
         title: sectionsInput.completed?.data?.title ?? "",
         description: sectionsInput.completed?.data?.description ?? "",
       },
-      items: [],
+      items: resolveSectionItems(sectionsInput.completed?.items as SiteData["completedProjects"] | undefined, undefined, []),
     }),
     reviews: makeBlock("reviews", sectionsInput.reviews, {
       data: {
@@ -166,15 +259,19 @@ export function normalizeSiteData(input: SiteData): SiteData {
         title: sectionsInput.reviews?.data?.title ?? "",
         description: sectionsInput.reviews?.data?.description ?? "",
       },
-      items: input.testimonialsDetailed.length
-        ? input.testimonialsDetailed
-        : input.reviews.map((review, index) => ({
+      items: resolveSectionItems(
+        sectionsInput.reviews?.items as SiteData["testimonialsDetailed"] | undefined,
+        undefined,
+        input.testimonialsDetailed.length
+          ? input.testimonialsDetailed
+          : input.reviews.map((review, index) => ({
             id: `review-${index + 1}`,
             clientName: review.clientName,
             roleCompany: review.website,
             message: review.quote,
             image: review.icon || "",
-          })),
+          }))
+      ),
     }),
     journey: makeBlock("journey", sectionsInput.journey, {
       data: {
@@ -185,7 +282,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
         currentWork: sectionsInput.journey?.data?.currentWork ?? "",
         milestones: sectionsInput.journey?.data?.milestones ?? [],
       },
-      items: Array.isArray(sectionsInput.journey?.items) ? (sectionsInput.journey.items as SiteData["experience"]) : [],
+      items: resolveSectionItems(sectionsInput.journey?.items as SiteData["experience"] | undefined, undefined, input.experience.length ? input.experience : []),
     }),
     education: makeBlock("education", sectionsInput.education, {
       data: {
@@ -201,7 +298,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
         title: sectionsInput.services?.data?.title ?? "",
         description: sectionsInput.services?.data?.description ?? "",
       },
-      items: Array.isArray(sectionsInput.services?.items) ? (sectionsInput.services.items as SiteData["services"]) : [],
+      items: resolveSectionItems(sectionsInput.services?.items as SiteData["services"] | undefined, undefined, input.services.length ? input.services : []),
     }),
     contact: makeBlock("contact", sectionsInput.contact, {
       data: {
@@ -212,7 +309,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
         cardDescription: sectionsInput.contact?.data?.cardDescription ?? "",
         formTitle: sectionsInput.contact?.data?.formTitle ?? "",
       },
-      items: Array.isArray(sectionsInput.contact?.items) ? (sectionsInput.contact.items as SiteData["socials"]) : [],
+      items: resolveSectionItems(sectionsInput.contact?.items as SiteData["socials"] | undefined, undefined, input.socials.length ? input.socials : []),
     }),
     blogs: makeBlock("blogs", sectionsInput.blogs, {
       data: {
@@ -220,7 +317,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
         title: sectionsInput.blogs?.data?.title ?? "",
         description: sectionsInput.blogs?.data?.description ?? "",
       },
-      items: Array.isArray(sectionsInput.blogs?.items) ? (sectionsInput.blogs.items as SiteData["blogs"]) : [],
+      items: resolveSectionItems(sectionsInput.blogs?.items as SiteData["blogs"] | undefined, undefined, input.blogs.length ? input.blogs : []),
     }),
     github: makeBlock("github", sectionsInput.github, {
       data: {
@@ -228,7 +325,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
         title: sectionsInput.github?.data?.title ?? "",
         description: sectionsInput.github?.data?.description ?? "",
       },
-      items: Array.isArray(sectionsInput.github?.items) ? sectionsInput.github.items : [],
+      items: resolveSectionItems(sectionsInput.github?.items as any[] | undefined, undefined, []),
     }),
     footer: makeBlock("footer", sectionsInput.footer, {
       data: {
@@ -236,9 +333,14 @@ export function normalizeSiteData(input: SiteData): SiteData {
         ctaLabel: sectionsInput.footer?.data?.ctaLabel ?? "",
         ctaHref: sectionsInput.footer?.data?.ctaHref ?? "",
       },
-      items: Array.isArray(sectionsInput.footer?.items) ? sectionsInput.footer.items : [],
+      items: resolveSectionItems(sectionsInput.footer?.items as any[] | undefined, undefined, input.shell?.footer?.quickLinks || []),
     }),
   };
+
+  for (const [sectionId, section] of Object.entries(sectionsInput)) {
+    if (sectionId in sections) continue;
+    sections[sectionId] = buildSectionBlockFromInput(sectionId, section, seedSections[sectionId]);
+  }
 
   for (const [sectionId, block] of Object.entries(sections)) {
     block.order = sectionOrder(sectionId, block.order);

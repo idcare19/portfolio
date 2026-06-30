@@ -264,7 +264,9 @@ export type SiteSectionBlock = {
   enabled: boolean;
   order: number;
   layout?: string;
+  template?: string;
   status?: "draft" | "published";
+  showOnHomepage?: boolean;
   nav?: {
     show: boolean;
     href: string;

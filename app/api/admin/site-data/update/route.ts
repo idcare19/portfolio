@@ -167,10 +167,33 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
+    console.log("[admin/site-data/update] body.projects.sections", {
+      projectCount: Array.isArray((body as any)?.sections?.projects?.items) ? (body as any).sections.projects.items.length : null,
+      projectIds: Array.isArray((body as any)?.sections?.projects?.items)
+        ? (body as any).sections.projects.items.map((project: any) => project?.id).filter(Boolean)
+        : [],
+    });
+    const incomingSiteData = (body?.data ?? body) as Partial<SiteData> & Record<string, unknown>;
+    console.log("[admin/site-data/update] before saveSiteData", {
+      projectCount: Array.isArray((incomingSiteData as any)?.sections?.projects?.items) ? (incomingSiteData as any).sections.projects.items.length : null,
+      projectIds: Array.isArray((incomingSiteData as any)?.sections?.projects?.items)
+        ? (incomingSiteData as any).sections.projects.items.map((project: any) => project?.id).filter(Boolean)
+        : [],
+      sectionsProjects: (incomingSiteData as any)?.sections?.projects?.items,
+      blogs: {
+        enabled: (incomingSiteData as any)?.sections?.blogs?.enabled,
+        showOnHomepage: (incomingSiteData as any)?.sections?.blogs?.showOnHomepage,
+        nav: (incomingSiteData as any)?.sections?.blogs?.nav,
+      },
+      footer: {
+        enabled: (incomingSiteData as any)?.sections?.footer?.enabled,
+        showOnHomepage: (incomingSiteData as any)?.sections?.footer?.showOnHomepage,
+        nav: (incomingSiteData as any)?.sections?.footer?.nav,
+      },
+    });
+    const githubConfigInput = (incomingSiteData.githubConfig ?? body?.githubConfig ?? {}) as Record<string, unknown>;
     const existingSiteData = await getPortfolioSiteData();
     const normalizedExistingSiteData = normalizeSiteData(existingSiteData);
-    const incomingSiteData = (body?.data ?? body) as Partial<SiteData> & Record<string, unknown>;
-    const githubConfigInput = (incomingSiteData.githubConfig ?? body?.githubConfig ?? {}) as Record<string, unknown>;
     const existingGithubConfig =
       normalizedExistingSiteData.githubConfig ?? {
         username: "",
@@ -229,19 +252,29 @@ export async function POST(request: Request) {
         openLinksInNewTab: true,
         showGitHubIcons: true,
         showLanguageColors: true,
-      };
+    };
     const safeGithubConfig = normalizeGitHubConfig(existingGithubConfig, githubConfigInput);
-    const mergedSiteData: SiteData = {
-      ...normalizedExistingSiteData,
+    const mergedSiteData: SiteData = normalizeSiteData({
       ...(incomingSiteData as Partial<SiteData>),
       githubConfig: safeGithubConfig,
-    };
+    } as SiteData);
 
-    const normalizedIncoming = normalizeSiteData(mergedSiteData);
     const githubConfigToSave: NonNullable<SiteData["githubConfig"]> = {
       ...safeGithubConfig,
       token: "",
     };
+
+    const incomingProjects = Array.isArray((incomingSiteData.sections as any)?.projects?.items)
+      ? (incomingSiteData.sections as any).projects.items
+      : [];
+    console.log("[admin/site-data/update] incoming payload", {
+      projectCount: incomingProjects.length,
+      projectIds: incomingProjects.map((project: any) => project?.id).filter(Boolean),
+      sectionsProjectCount: Array.isArray((incomingSiteData.sections as any)?.projects?.items)
+        ? (incomingSiteData.sections as any).projects.items.length
+        : null,
+      hasProjectsDetailed: Array.isArray(incomingSiteData.projectsDetailed),
+    });
 
     console.log("[admin/site-data/update] githubConfig payload", {
       githubConfig: {
@@ -254,12 +287,46 @@ export async function POST(request: Request) {
     });
 
     const nextData: SiteData = {
-      ...normalizedIncoming,
+      ...mergedSiteData,
       githubConfig: githubConfigToSave,
       updatedAt: new Date().toISOString(),
     };
+    console.log("[admin/site-data/update] nextData before saveSiteData", {
+      projectCount: Array.isArray((nextData as any)?.sections?.projects?.items) ? (nextData as any).sections.projects.items.length : null,
+      projectIds: Array.isArray((nextData as any)?.sections?.projects?.items)
+        ? (nextData as any).sections.projects.items.map((project: any) => project?.id).filter(Boolean)
+        : [],
+      blogs: {
+        enabled: (nextData as any)?.sections?.blogs?.enabled,
+        showOnHomepage: (nextData as any)?.sections?.blogs?.showOnHomepage,
+        nav: (nextData as any)?.sections?.blogs?.nav,
+      },
+      footer: {
+        enabled: (nextData as any)?.sections?.footer?.enabled,
+        showOnHomepage: (nextData as any)?.sections?.footer?.showOnHomepage,
+        nav: (nextData as any)?.sections?.footer?.nav,
+      },
+    });
 
     const saved = await saveSiteData(nextData);
+    const savedProjects = Array.isArray(saved.data.sections?.projects?.items) ? saved.data.sections.projects.items : [];
+    console.log("[admin/site-data/update] save readback", {
+      projectCount: savedProjects.length,
+      projectIds: savedProjects.map((project: any) => project?.id).filter(Boolean),
+      matchedIncomingProjectIds: incomingProjects
+        .map((project: any) => project?.id)
+        .filter((id: string | undefined) => Boolean(id) && savedProjects.some((project: any) => project?.id === id)),
+      blogs: saved.data.sections?.blogs ? {
+        enabled: saved.data.sections.blogs.enabled,
+        showOnHomepage: saved.data.sections.blogs.showOnHomepage,
+        nav: saved.data.sections.blogs.nav,
+      } : null,
+      footer: saved.data.sections?.footer ? {
+        enabled: saved.data.sections.footer.enabled,
+        showOnHomepage: saved.data.sections.footer.showOnHomepage,
+        nav: saved.data.sections.footer.nav,
+      } : null,
+    });
     let githubSync: { success: boolean; error?: string } | null = null;
 
     if (saved.data.githubConfig?.enabled && saved.data.githubConfig.username) {
@@ -290,22 +357,21 @@ export async function POST(request: Request) {
       githubSync,
     });
   } catch (error) {
-    const details =
-      error instanceof Error
-        ? error.stack && process.env.NODE_ENV !== "production"
-          ? `${error.message}\n${error.stack}`
-          : error.message
-        : "Failed to update site data";
+    const message = error instanceof Error ? error.message : "Failed to update site data";
     console.error("[admin/site-data/update] save failed", {
       name: error instanceof Error ? error.name : "UnknownError",
-      message: error instanceof Error ? error.message : String(error),
-      stack: error instanceof Error && process.env.NODE_ENV !== "production" ? error.stack : undefined,
+      message,
+      stack: error instanceof Error ? error.stack : undefined,
+      receivedSectionKeys: Object.keys(((error as any)?.body?.sections as Record<string, unknown>) || {}),
+      invalidSectionRenderers: [],
     });
+    const details =
+      error instanceof Error && process.env.NODE_ENV !== "production" ? `${message}\n${error.stack || ""}` : message;
     return NextResponse.json(
       {
         success: false,
         ok: false,
-        error: error instanceof Error ? error.message : "Failed to update site data",
+        error: message,
         details,
       },
       { status: 500 }

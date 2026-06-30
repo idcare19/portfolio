@@ -2,65 +2,123 @@
 
 import Link from "next/link";
 import { useMemo, useState } from "react";
+import { ProjectCard } from "@/components/ui/ProjectCard";
 
-const FILTERS = ["All", "AI", "SaaS", "Next.js", "React", "Django", "MongoDB"];
+type Project = {
+  id: string;
+  slug: string;
+  title: string;
+  shortDescription: string;
+  image: string;
+  status: string;
+  category: string;
+  techStack: string[];
+  liveDemoUrl: string;
+  githubUrl: string;
+  featured: boolean;
+  order: number;
+};
 
-export function ProjectsCatalog({ initialProjects }: { initialProjects: any[] }) {
-  const [activeFilter, setActiveFilter] = useState("All");
-  const projects = useMemo(
-    () =>
-      activeFilter === "All"
-        ? initialProjects
-        : initialProjects.filter((project) =>
-            [project.category, ...(project.tags || []), ...(project.techStack || [])].some(
-              (value: string) => value?.toLowerCase() === activeFilter.toLowerCase()
-            )
-          ),
-    [activeFilter, initialProjects]
-  );
+const SORT_OPTIONS = [
+  { value: "featured", label: "Featured first" },
+  { value: "newest", label: "Newest" },
+  { value: "order", label: "Order" },
+];
+
+export function ProjectsCatalog({ initialProjects }: { initialProjects: Project[] }) {
+  const [query, setQuery] = useState("");
+  const [filter, setFilter] = useState("all");
+  const [sort, setSort] = useState("featured");
+
+  const categories = useMemo(() => {
+    const values = new Set<string>(["all"]);
+    initialProjects.forEach((project) => {
+      if (project.category) values.add(project.category);
+      if (project.status) values.add(project.status);
+    });
+    return Array.from(values);
+  }, [initialProjects]);
+
+  const projects = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+    const filtered = initialProjects.filter((project) => {
+      const matchesQuery =
+        !normalizedQuery ||
+        [project.title, project.shortDescription, project.status, project.category, ...(project.techStack || [])]
+          .join(" ")
+          .toLowerCase()
+          .includes(normalizedQuery);
+      const matchesFilter = filter === "all" || project.category === filter || project.status === filter;
+      return matchesQuery && matchesFilter;
+    });
+
+    return filtered.sort((a, b) => {
+      if (sort === "newest") return b.order - a.order;
+      if (sort === "order") return a.order - b.order;
+      return Number(b.featured) - Number(a.featured) || a.order - b.order;
+    });
+  }, [filter, initialProjects, query, sort]);
 
   return (
     <main className="min-h-screen bg-page-bg py-24">
       <div className="section-wrap space-y-10">
         <div className="max-w-3xl">
           <p className="mb-3 text-sm font-semibold uppercase tracking-[0.18em] text-primary">Projects</p>
-          <h1 className="text-4xl font-bold tracking-tight text-text-main sm:text-5xl">Selected case studies and product work</h1>
-          <p className="mt-4 text-base text-text-muted">Fixed page layout, dynamic MongoDB content. Every project here is rendered from the portfolio collection layer.</p>
+          <h1 className="text-4xl font-bold tracking-tight text-text-main sm:text-5xl">Selected work and public case studies</h1>
+          <p className="mt-4 text-base text-text-muted">All enabled projects are rendered from the CMS section data. Search, filter, and sort the live portfolio archive here.</p>
         </div>
 
-        <div className="flex flex-wrap gap-2">
-          {FILTERS.map((filter) => (
-            <button key={filter} type="button" onClick={() => setActiveFilter(filter)} className={`rounded-full px-4 py-2 text-sm font-semibold ${activeFilter === filter ? "bg-primary text-white" : "border border-[rgb(var(--border))] text-text-main"}`}>
-              {filter}
-            </button>
-          ))}
+        <div className="grid gap-3 md:grid-cols-[1fr_auto_auto]">
+          <input
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search projects..."
+            className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main"
+          />
+          <select value={filter} onChange={(e) => setFilter(e.target.value)} className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main">
+            {categories.map((category) => (
+              <option key={category} value={category}>
+                {category === "all" ? "All categories" : category}
+              </option>
+            ))}
+          </select>
+          <select value={sort} onChange={(e) => setSort(e.target.value)} className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main">
+            {SORT_OPTIONS.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </select>
         </div>
 
-        <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project) => (
-            <article key={project.id} className="glass rounded-3xl p-5 shadow-[0_10px_30px_rgba(15,23,42,0.08)]">
-              {project.image ? <img src={project.image} alt={project.title} className="h-52 w-full rounded-2xl object-cover" /> : null}
-              <div className="mt-5">
-                <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">{project.category || "Project"}</p>
-                <h2 className="mt-2 text-2xl font-semibold text-text-main">{project.title}</h2>
-                <p className="mt-3 text-sm leading-6 text-text-muted">{project.shortDescription}</p>
-                {project.timeline ? <p className="mt-2 text-xs font-medium text-primary">{project.timeline}</p> : null}
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {project.techStack?.map((tech: string) => (
-                    <span key={tech} className="rounded-full border border-[rgb(var(--border))] bg-white px-3 py-1 text-xs text-text-main">
-                      {tech}
-                    </span>
-                  ))}
-                </div>
-                <div className="mt-6 flex gap-3">
-                  <Link href={`/projects/${project.slug || project.id}`} className="rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white">
-                    View Case Study
-                  </Link>
-                  {project.liveDemoUrl ? <a href={project.liveDemoUrl} target="_blank" rel="noreferrer" className="rounded-full border border-[rgb(var(--border))] px-4 py-2 text-sm font-semibold text-text-main">Live Demo</a> : null}
-                </div>
-              </div>
-            </article>
-          ))}
+        {projects.length ? (
+          <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+            {projects.map((project) => (
+              <ProjectCard
+                key={project.id}
+                project={{
+                  slug: project.slug,
+                  title: project.title,
+                  description: project.shortDescription,
+                  image: project.image,
+                  status: project.status,
+                  tech: project.techStack,
+                  liveUrl: project.liveDemoUrl,
+                  githubUrl: project.githubUrl || "#",
+                  backendRepo: undefined,
+                  documentationUrl: undefined,
+                }}
+              />
+            ))}
+          </div>
+        ) : (
+          <p className="rounded-3xl border border-dashed border-[rgb(var(--border))] bg-white p-8 text-center text-sm text-text-muted">No projects matched your search.</p>
+        )}
+
+        <div className="flex justify-center">
+          <Link href="/" className="rounded-full border border-[rgb(var(--border))] bg-white px-5 py-2.5 text-sm font-semibold text-text-main">
+            Back to Home
+          </Link>
         </div>
       </div>
     </main>

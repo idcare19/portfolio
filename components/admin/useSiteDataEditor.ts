@@ -33,7 +33,12 @@ export function useSiteDataEditor() {
     const res = await fetch(`/api/admin/site-data?_ts=${cacheBust}`, { cache: "no-store" });
     if (!res.ok) throw new Error("Failed to load site data");
     const text = await res.text();
-    return text ? JSON.parse(text) : null;
+    if (!text.trim()) return null;
+    try {
+      return JSON.parse(text);
+    } catch {
+      throw new Error(text.slice(0, 200) || "Failed to load site data");
+    }
   }
 
   async function readJsonOrTextResponse(response: Response) {
@@ -46,7 +51,7 @@ export function useSiteDataEditor() {
     try {
       return { json: JSON.parse(text) as any, text };
     } catch (parseError) {
-      throw new Error(`Invalid JSON response: ${text.slice(0, 200)}`);
+      return { json: null as any, text };
     }
   }
 
@@ -131,7 +136,13 @@ export function useSiteDataEditor() {
       const { json: rawPayload, text } = await readJsonOrTextResponse(res);
 
       if (!res.ok) {
-        const message = rawPayload?.error || rawPayload?.reason || text || "Failed to update content";
+        let message = rawPayload?.error || rawPayload?.reason || text || "Failed to update content";
+        try {
+          const parsed = text ? JSON.parse(text) : null;
+          message = parsed?.error || parsed?.reason || message;
+        } catch {
+          message = text || message;
+        }
         throw new Error(message);
       }
 

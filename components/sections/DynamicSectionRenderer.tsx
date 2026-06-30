@@ -12,6 +12,7 @@ import { WorkingProjectsSection } from "@/components/sections/WorkingProjectsSec
 import { EducationSection } from "@/components/sections/EducationSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { GitHubDeveloperSection } from "@/components/sections/GitHubDeveloperSection";
+import { GenericSection } from "@/components/sections/GenericSection";
 import type { SiteSectionBlock } from "@/src/types/site-data";
 
 type Props = {
@@ -19,6 +20,9 @@ type Props = {
 };
 
 export function DynamicSectionRenderer({ section }: Props) {
+  if (section.enabled === false || section.showOnHomepage === false) {
+    return null;
+  }
   switch (section.renderer) {
     case "hero":
       return <HeroSection />;
@@ -45,6 +49,6 @@ export function DynamicSectionRenderer({ section }: Props) {
     case "github":
       return <GitHubDeveloperSection />;
     default:
-      return null;
+      return <GenericSection section={section} />;
   }
 }

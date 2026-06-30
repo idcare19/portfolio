@@ -82,3 +82,7 @@ export function getManagedNavItems(navItems: NavItem[], controls?: SectionContro
     })
     .filter((item): item is NavItem => Boolean(item));
 }
+
+export function getSectionHref(id: string) {
+  return id === "journey" ? "#experience" : `#${id}`;
+}

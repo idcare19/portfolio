@@ -5,6 +5,32 @@ import { SectionManager } from "@/components/admin/SectionManager";
 import { useSiteDataEditor } from "@/components/admin/useSiteDataEditor";
 import { useToast } from "@/components/admin/ToastProvider";
 import { buildAdminSections, saveAdminSections } from "@/lib/admin/content-manager";
+import type { SiteSectionBlock } from "@/src/types/site-data";
+
+const CORE_RENDERERS = new Set([
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "working",
+  "completed",
+  "reviews",
+  "journey",
+  "education",
+  "services",
+  "contact",
+  "blogs",
+  "github",
+  "footer",
+]);
+
+function validateSections(sections: SiteSectionBlock[]) {
+  const invalidRenderers = sections.filter((section) => CORE_RENDERERS.has(section.id) && section.renderer !== section.id);
+  if (invalidRenderers.length) {
+    return `Invalid renderer for core sections: ${invalidRenderers.map((section) => `${section.id}=>${section.renderer}`).join(", ")}`;
+  }
+  return "";
+}
 
 export default function SectionsAdminPage() {
   const { notify } = useToast();
@@ -12,6 +38,25 @@ export default function SectionsAdminPage() {
 
   async function handleSave() {
     if (!data) return;
+    const sections = Object.values(data.sections || {});
+    console.log("[admin/sections] save payload", {
+      sectionCount: sections.length,
+      sections: sections.map((section) => ({
+        key: section.id,
+        renderer: section.renderer,
+        order: section.order,
+        enabled: section.enabled,
+        nav: section.nav,
+      })),
+      blogs: (data.sections as any)?.blogs,
+      footer: (data.sections as any)?.footer,
+      about: (data.sections as any)?.about,
+    });
+    const validationError = validateSections(sections);
+    if (validationError) {
+      notify("error", validationError);
+      return;
+    }
     const result = await save(data, "chore: update sections from admin panel");
     if (result.ok) notify("success", "Sections updated");
     else notify("error", result.error || "Save failed");

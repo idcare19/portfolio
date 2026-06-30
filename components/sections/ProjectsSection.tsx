@@ -5,20 +5,26 @@ import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ProjectCard } from "@/components/ui/ProjectCard";
+import Link from "next/link";
 
 export function ProjectsSection() {
   const section = useSectionData("projects");
   const data = section.data as Record<string, any>;
-  const projects = section.items.length
-    ? section.items.filter((item: any) => item.isEnabled !== false).map((item: any) => ({
-        title: item.title,
-        description: item.shortDescription,
-        image: item.image,
-        tech: item.techStack,
-        liveUrl: item.liveDemoUrl,
-        githubUrl: item.githubUrl,
-      }))
-    : [];
+  const projects = section.items
+    .filter((item: any) => item.isEnabled !== false && (item.featured || item.isFeatured))
+    .slice(0, Number(data.homepageLimit || 6))
+    .map((item: any) => ({
+      slug: item.slug || item.id || item.title,
+      title: item.title,
+      description: item.shortDescription || item.description || "",
+      image: item.image || item.thumbnail || "",
+      status: item.status || item.category || "Project",
+      tech: item.techStack || item.technologies || [],
+      liveUrl: item.liveDemoUrl || "",
+      githubUrl: item.githubUrl || "",
+      backendRepo: item.backendRepo || "",
+      documentationUrl: item.documentationUrl || "",
+    }));
   const hasHeader = Boolean(data.eyebrow || data.title || data.description);
 
   return (
@@ -32,6 +38,12 @@ export function ProjectsSection() {
               <ProjectCard project={project} />
             </FadeInUp>
           ))}
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <Link href="/projects" className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:bg-[#1D4ED8]">
+            View All Projects
+          </Link>
         </div>
       </div>
     </AnimatedSection>

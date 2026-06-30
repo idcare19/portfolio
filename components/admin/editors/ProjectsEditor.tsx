@@ -63,6 +63,21 @@ export function ProjectsEditor({ data, onChange }: Props) {
     });
   }
 
+  function moveProject(id: string, direction: -1 | 1) {
+    const index = data.projectsDetailed.findIndex((project) => project.id === id);
+    const nextIndex = index + direction;
+    if (index < 0 || nextIndex < 0 || nextIndex >= data.projectsDetailed.length) return;
+
+    const nextProjects = [...data.projectsDetailed];
+    const [moved] = nextProjects.splice(index, 1);
+    nextProjects.splice(nextIndex, 0, moved);
+    const normalized = nextProjects.map((project, idx) => ({
+      ...project,
+      order: idx + 1,
+    }));
+    syncProjects(normalized);
+  }
+
   useEffect(() => {
     let cancelled = false;
 
@@ -131,7 +146,27 @@ export function ProjectsEditor({ data, onChange }: Props) {
                 <p className="truncate text-sm font-medium text-admin-text">{project.title || "Untitled Project"}</p>
                 <p className="text-xs text-admin-text-muted">{project.category || "No category"}</p>
               </button>
-              <button onClick={() => removeProject(project.id)} className="mt-2 text-xs font-semibold text-rose-600">Delete</button>
+              <div className="mt-2 flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => moveProject(project.id, -1)}
+                  className="text-xs font-semibold text-admin-text-muted disabled:opacity-40"
+                  disabled={data.projectsDetailed[0]?.id === project.id}
+                >
+                  Up
+                </button>
+                <button
+                  type="button"
+                  onClick={() => moveProject(project.id, 1)}
+                  className="text-xs font-semibold text-admin-text-muted disabled:opacity-40"
+                  disabled={data.projectsDetailed[data.projectsDetailed.length - 1]?.id === project.id}
+                >
+                  Down
+                </button>
+                <button type="button" onClick={() => removeProject(project.id)} className="text-xs font-semibold text-rose-600">
+                  Delete
+                </button>
+              </div>
             </div>
           ))}
           {data.projectsDetailed.length === 0 ? <p className="text-xs text-admin-text-muted">No projects yet.</p> : null}

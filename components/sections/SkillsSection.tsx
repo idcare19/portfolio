@@ -16,13 +16,28 @@ type SkillItem = {
   iconColor?: string;
 };
 
+function normalizeCategory(category?: string) {
+  const value = (category || "").trim().toLowerCase();
+  if (!value) return "Other Skills";
+  if (["frontend", "ui", "client"].includes(value)) return "Frontend";
+  if (["backend", "server", "api"].includes(value)) return "Backend";
+  if (["database", "db", "data"].includes(value)) return "Database";
+  if (["tools", "tooling", "devops", "cms"].includes(value)) return "Tools";
+  if (["frameworks", "workflow", "frameworks & workflow"].includes(value)) return "Frameworks & Workflow";
+  if (["core", "core skills"].includes(value)) return "Core Skills";
+  if (["currently learning", "learning"].includes(value)) return "Currently Learning";
+  return category?.trim() || "Other Skills";
+}
+
 function groupSkills(items: SkillItem[]) {
-  const core = items.filter((item) => ["frontend", "quality", "tools"].includes((item.category || "").toLowerCase()));
-  const workflow = items.filter((item) => ["backend", "devops", "database", "cms"].includes((item.category || "").toLowerCase()));
-  return {
-    core,
-    workflow,
-  };
+  const groups = new Map<string, SkillItem[]>();
+  for (const item of items) {
+    const label = normalizeCategory(item.category);
+    const list = groups.get(label) || [];
+    list.push(item);
+    groups.set(label, list);
+  }
+  return groups;
 }
 
 export function SkillsSection() {
@@ -34,10 +49,9 @@ export function SkillsSection() {
   const shouldReduceMotion = useReducedMotion();
   const resumeUrl = String(siteData.owner?.resumeUrl || "").trim();
   const grouped = groupSkills(skills);
-  const sections = [
-    { title: "Core Skills", items: grouped.core },
-    { title: "Frameworks & Workflow", items: grouped.workflow },
-  ].filter((group) => group.items.length > 0);
+  const sections = Array.from(grouped.entries())
+    .map(([title, items]) => ({ title, items }))
+    .sort((a, b) => a.title.localeCompare(b.title));
 
   const buttonRow = (
     <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">

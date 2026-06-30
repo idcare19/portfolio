@@ -7,6 +7,7 @@ import { ChevronDown } from "lucide-react";
 
 import { adminNavSections } from "@/components/admin/admin-nav";
 import { cn } from "@/lib/utils";
+import type { SiteSectionBlock } from "@/src/types/site-data";
 
 const defaultOpenGroups: Record<string, boolean> = {
   Dashboard: true,
@@ -27,9 +28,36 @@ const closeAllGroups = {
 export function AdminSidebar() {
   const pathname = usePathname();
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>(defaultOpenGroups);
+  const [sections, setSections] = useState(adminNavSections);
 
   useEffect(() => {
-    const activeSection = adminNavSections.find((section) =>
+    let mounted = true;
+    fetch("/api/admin/site-data", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((payload) => {
+        const customSections = Object.values((payload?.data?.sections || payload?.data?.data?.sections || {}) as Record<string, SiteSectionBlock>)
+          .filter((section) => section && !["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github", "footer"].includes(section.id))
+          .sort((a, b) => a.order - b.order)
+          .map((section) => ({ label: section.label, href: `/admin/custom-sections/${section.id}` }));
+
+        if (!mounted || !customSections.length) return;
+        setSections([
+          ...adminNavSections.map((group) =>
+            group.label === "Website"
+              ? { ...group, items: [...group.items, ...customSections] }
+              : group
+          ),
+        ]);
+      })
+      .catch(() => undefined);
+
+    return () => {
+      mounted = false;
+    };
+  }, []);
+
+  useEffect(() => {
+    const activeSection = sections.find((section) =>
       section.items.some((item) => item.href === pathname)
     );
 
@@ -39,7 +67,7 @@ export function AdminSidebar() {
         [activeSection.label]: true,
       });
     }
-  }, [pathname]);
+  }, [pathname, sections]);
 
   const toggleGroup = (label: string) => {
     setOpenGroups((prev) => {
@@ -65,7 +93,7 @@ export function AdminSidebar() {
       </div>
 
       <nav className="max-h-[calc(100vh-160px)] space-y-3 overflow-y-auto pb-4 pr-1">
-        {adminNavSections.map((section) => (
+        {sections.map((section) => (
           <div key={section.label} className="space-y-2">
             <button
               type="button"

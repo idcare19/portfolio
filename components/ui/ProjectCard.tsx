@@ -4,14 +4,30 @@ import Link from "next/link";
 import { AnimatedCard } from "@/components/ui/AnimatedCard";
 import { Badge } from "@/components/ui/Badge";
 
+const FALLBACK_IMAGE =
+  "data:image/svg+xml;charset=UTF-8," +
+  encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="960" height="560" viewBox="0 0 960 560"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0%" stop-color="#dbeafe"/><stop offset="100%" stop-color="#eff6ff"/></linearGradient></defs><rect width="960" height="560" fill="url(#g)"/><rect x="64" y="64" width="832" height="432" rx="36" fill="#ffffff" opacity="0.72"/><path d="M260 350l106-126 76 88 56-64 132 146H260z" fill="#93c5fd"/><circle cx="365" cy="223" r="30" fill="#60a5fa"/><text x="480" y="392" text-anchor="middle" font-family="Arial, sans-serif" font-size="30" fill="#1d4ed8">Project preview unavailable</text></svg>');
+
+function getSafeImageSrc(src: string) {
+  const value = (src || "").trim();
+  if (!value) return FALLBACK_IMAGE;
+  if (value.startsWith("data:image/")) return value;
+  if (value.startsWith("http://") || value.startsWith("https://") || value.startsWith("/")) return value;
+  return FALLBACK_IMAGE;
+}
+
 type ProjectCardProps = {
   project: {
+    slug: string;
     title: string;
     description: string;
     image: string;
+    status?: string;
     tech: string[];
     liveUrl: string;
     githubUrl: string;
+    backendRepo?: string;
+    documentationUrl?: string;
   };
 };
 
@@ -20,7 +36,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
     <AnimatedCard className="p-4">
       <div className="relative overflow-hidden rounded-2xl border border-[rgb(var(--border))]">
         <Image
-          src={project.image}
+          src={getSafeImageSrc(project.image)}
           alt={project.title}
           width={960}
           height={560}
@@ -33,6 +49,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
 
       <div className="relative mt-4">
         <h3 className="text-lg font-semibold text-text-main">{project.title}</h3>
+        <div className="mt-2 flex flex-wrap gap-2 text-xs font-semibold">
+          {project.status ? <span className="rounded-full border border-[rgb(var(--border))] bg-white px-2.5 py-1 text-text-muted">{project.status}</span> : null}
+        </div>
         <p className="mt-2 text-sm leading-6 text-text-muted">{project.description}</p>
 
         <div className="mt-4 flex flex-wrap gap-2">
@@ -61,6 +80,9 @@ export function ProjectCard({ project }: ProjectCardProps) {
             className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-3.5 py-2 text-xs font-semibold text-text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary"
           >
             <Github className="h-3.5 w-3.5 transition group-hover:-rotate-6" /> Code
+          </Link>
+          <Link href={`/projects/${project.slug}`} className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-3.5 py-2 text-xs font-semibold text-text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary">
+            View Details
           </Link>
         </div>
       </div>

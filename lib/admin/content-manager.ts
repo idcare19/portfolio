@@ -1,5 +1,40 @@
 import type { SiteData, SiteSectionBlock, TextBlock } from "@/src/types/site-data";
 
+const CORE_SECTION_IDS = new Set([
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "working",
+  "completed",
+  "reviews",
+  "journey",
+  "education",
+  "services",
+  "contact",
+  "blogs",
+  "github",
+  "footer",
+]);
+
+const CORE_RENDERERS = new Set([
+  "hero",
+  "about",
+  "skills",
+  "projects",
+  "working",
+  "completed",
+  "reviews",
+  "journey",
+  "education",
+  "services",
+  "contact",
+  "blogs",
+  "github",
+  "footer",
+  "generic",
+]);
+
 function makeTextBlock(key: string, label: string, value: unknown, order: number, type: TextBlock["type"] = "plain"): TextBlock {
   return {
     key,
@@ -30,8 +65,16 @@ export function buildAdminSections(siteData: SiteData) {
   return Object.values(siteData.sections || {})
     .map((section) => ({
       ...section,
+      renderer: CORE_SECTION_IDS.has(section.id) ? section.id : CORE_RENDERERS.has(section.renderer) ? section.renderer : "generic",
       layout: section.layout || "default",
       status: section.status || "published",
+      nav: {
+        show: section.nav?.show ?? section.showOnHomepage ?? CORE_SECTION_IDS.has(section.id),
+        href: section.nav?.href || `#${section.id}`,
+        label: section.nav?.label || section.label || section.id,
+      },
+      enabled: section.enabled ?? true,
+      showOnHomepage: section.showOnHomepage ?? CORE_SECTION_IDS.has(section.id),
       textBlocks: ensureSectionTextBlocks(section),
     }))
     .sort((a, b) => a.order - b.order);
@@ -95,14 +138,34 @@ export function updateTextBlockValue(siteData: SiteData, block: TextBlock & { se
 
 export function saveAdminSections(siteData: SiteData, sections: SiteSectionBlock[]) {
   const next = structuredClone(siteData) as SiteData;
-  const sectionMap = Object.fromEntries(sections.map((section) => [section.id, {
-    ...section,
-    textBlocks: section.textBlocks || [],
-    data: (section.textBlocks || []).reduce<Record<string, unknown>>((acc, block) => {
-      if (block.isEnabled) acc[block.key] = block.value;
-      return acc;
-    }, { ...section.data }),
-  }]));
+  const sectionMap = Object.fromEntries(
+    sections.map((section) => {
+      const renderer = CORE_SECTION_IDS.has(section.id) ? section.id : CORE_RENDERERS.has(section.renderer) ? section.renderer : section.id;
+      const safeRenderer = CORE_SECTION_IDS.has(section.id) ? section.id : CORE_RENDERERS.has(section.renderer) ? section.renderer : "generic";
+      return [
+        section.id,
+        {
+          ...section,
+          renderer: safeRenderer,
+          enabled: section.enabled ?? true,
+          showOnHomepage: section.showOnHomepage ?? CORE_SECTION_IDS.has(section.id),
+          nav: {
+            show: section.nav?.show ?? CORE_SECTION_IDS.has(section.id),
+            href: section.nav?.href || `#${section.id}`,
+            label: section.nav?.label || section.label || section.id,
+          },
+          textBlocks: section.textBlocks || [],
+          data: (section.textBlocks || []).reduce<Record<string, unknown>>(
+            (acc, block) => {
+              if (block.isEnabled) acc[block.key] = block.value;
+              return acc;
+            },
+            { ...section.data }
+          ),
+        },
+      ];
+    })
+  );
   next.sections = sectionMap as SiteData["sections"];
   next.nav = sections
     .filter((section) => section.enabled && section.nav?.show)

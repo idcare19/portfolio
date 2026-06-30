@@ -7,6 +7,7 @@ import { Menu, X, ChevronDown } from "lucide-react";
 
 import { adminNavSections } from "@/components/admin/admin-nav";
 import { cn } from "@/lib/utils";
+import type { SiteSectionBlock } from "@/src/types/site-data";
 
 const defaultMobileGroups: Record<string, boolean> = {
   Dashboard: true,
@@ -28,9 +29,28 @@ export function MobileAdminHeader() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [groups, setGroups] = useState<Record<string, boolean>>(defaultMobileGroups);
+  const [sections, setSections] = useState(adminNavSections);
 
   useEffect(() => {
-    const activeSection = adminNavSections.find((section) =>
+    fetch("/api/admin/site-data", { cache: "no-store" })
+      .then((res) => (res.ok ? res.json() : null))
+      .then((payload) => {
+        const customSections = Object.values((payload?.data?.sections || payload?.data?.data?.sections || {}) as Record<string, SiteSectionBlock>)
+          .filter((section) => section && !["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github", "footer"].includes(section.id))
+          .sort((a, b) => a.order - b.order)
+          .map((section) => ({ label: section.label, href: `/admin/custom-sections/${section.id}` }));
+        if (!customSections.length) return;
+        setSections(
+          adminNavSections.map((group) =>
+            group.label === "Website" ? { ...group, items: [...group.items, ...customSections] } : group
+          )
+        );
+      })
+      .catch(() => undefined);
+  }, []);
+
+  useEffect(() => {
+    const activeSection = sections.find((section) =>
       section.items.some((item) => item.href === pathname)
     );
 
@@ -40,7 +60,7 @@ export function MobileAdminHeader() {
         [activeSection.label]: true,
       });
     }
-  }, [pathname]);
+  }, [pathname, sections]);
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -111,7 +131,7 @@ export function MobileAdminHeader() {
             </div>
 
             <nav className="space-y-3">
-              {adminNavSections.map((section) => (
+              {sections.map((section) => (
                 <div key={section.label} className="space-y-1">
                   <button
                     type="button"

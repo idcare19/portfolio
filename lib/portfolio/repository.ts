@@ -3,7 +3,7 @@ import "server-only";
 import siteDataSeed from "@/src/data/siteData.json";
 import { calculateReadingTimeMinutes, slugify } from "@/lib/content-utils";
 import { connectToDatabase } from "@/lib/mongodb";
-import { normalizeSiteData } from "@/lib/site-data-transform";
+import { normalizeSiteData, summarizeSectionCounts } from "@/lib/site-data-transform";
 import { Blog } from "@/models/Blog";
 import { Experience } from "@/models/Experience";
 import { Message } from "@/models/Message";
@@ -46,15 +46,20 @@ function cloneSeedData(): SiteData {
 }
 
 function createSectionDoc(section: SiteSectionBlock) {
+  const showOnHomepage = (section as any).showOnHomepage ?? section.nav?.show ?? true;
   return {
     key: section.id,
     id: section.id,
     label: section.label,
     renderer: section.renderer,
     isEnabled: section.enabled,
+    enabled: section.enabled,
     order: section.order,
     nav: section.nav,
     emptyMessage: section.emptyMessage,
+    showOnHomepage,
+    layout: section.layout || "default",
+    settings: section.settings || {},
     data: section.data,
     items: section.items || [],
     textBlocks: section.textBlocks || [],
@@ -92,32 +97,60 @@ function buildSiteDataFromSections(
   const built = sectionIds.reduce((acc, key) => {
     const source = map[key];
     const fallbackSection = fallback[key];
+    const sectionItems = source?.items;
     const items =
-      key === "projects"
-        ? projects
-        : key === "skills"
-          ? skills
-          : key === "journey"
-            ? experience
-            : key === "reviews"
-              ? testimonials
-              : key === "blogs"
-                ? blogs
-                : source?.items ?? fallbackSection?.items ?? [];
+      sectionItems !== undefined
+        ? sectionItems
+        : key === "projects"
+          ? projects
+          : key === "skills"
+            ? skills
+            : key === "journey"
+              ? experience
+              : key === "reviews"
+                ? testimonials
+                : key === "blogs"
+                  ? blogs
+                  : fallbackSection?.items ?? [];
 
     acc[key] = {
       id: key,
       label: source?.label ?? fallbackSection?.label ?? key,
       renderer: source?.renderer ?? fallbackSection?.renderer ?? key,
-      enabled: source?.isEnabled ?? fallbackSection?.enabled ?? true,
+      enabled: source?.enabled ?? source?.isEnabled ?? fallbackSection?.enabled ?? true,
       order: source?.order ?? fallbackSection?.order ?? 0,
-      nav: source?.nav ?? fallbackSection?.nav,
+      template: source?.template ?? fallbackSection?.template ?? "",
+      nav: source?.nav ?? fallbackSection?.nav ?? { show: source?.showOnHomepage ?? fallbackSection?.nav?.show ?? false, href: `#${key}`, label: source?.label ?? key },
       emptyMessage: source?.emptyMessage ?? fallbackSection?.emptyMessage ?? "",
       data: source?.data ?? fallbackSection?.data ?? {},
+      layout: source?.layout ?? fallbackSection?.layout ?? "default",
+      settings: source?.settings ?? fallbackSection?.settings ?? {},
+      showOnHomepage: source?.showOnHomepage ?? source?.nav?.show ?? fallbackSection?.nav?.show ?? false,
       items,
     };
     return acc;
   }, {} as NonNullable<SiteData["sections"]>);
+
+  for (const section of sections) {
+    const key = section.key || section.id;
+    if (!key || key in built) continue;
+    built[key] = {
+      id: key,
+      label: section.label ?? key,
+      renderer: section.renderer ?? key,
+      enabled: section.enabled ?? section.isEnabled ?? true,
+      order: section.order ?? 0,
+      template: section.template ?? "",
+      nav: section.nav ?? { show: section.showOnHomepage ?? false, href: `#${key}`, label: section.label ?? key },
+      emptyMessage: section.emptyMessage ?? "",
+      data: section.data ?? {},
+      layout: section.layout ?? "default",
+      settings: section.settings ?? {},
+      showOnHomepage: section.showOnHomepage ?? section.nav?.show ?? false,
+      items: Array.isArray(section.items) ? section.items : [],
+      textBlocks: Array.isArray(section.textBlocks) ? section.textBlocks : [],
+    } as any;
+  }
 
   built.about.items = built.about.items ?? [];
   built.working.items = built.working.items ?? [];
@@ -295,18 +328,21 @@ function buildSectionMap(sections: any[], settings: any, projects: any[], skills
   const built = sectionIds.reduce((acc, key) => {
     const source = map[key];
     const fallbackSection = fallback[key];
+    const sectionItems = source?.items;
     const items =
-      key === "projects"
-        ? projects
-        : key === "skills"
-          ? skills
-          : key === "journey"
-            ? experience
-            : key === "reviews"
-              ? testimonials
-              : key === "blogs"
-                ? blogs
-                : source?.items ?? fallbackSection?.items ?? [];
+      sectionItems !== undefined
+        ? sectionItems
+        : key === "projects"
+          ? projects
+          : key === "skills"
+            ? skills
+            : key === "journey"
+              ? experience
+              : key === "reviews"
+                ? testimonials
+                : key === "blogs"
+                  ? blogs
+                  : fallbackSection?.items ?? [];
 
     acc[key] = {
       id: key,
@@ -321,6 +357,27 @@ function buildSectionMap(sections: any[], settings: any, projects: any[], skills
     };
     return acc;
   }, {} as NonNullable<SiteData["sections"]>);
+
+  for (const section of sections) {
+    const key = section.key || section.id;
+    if (!key || key in built) continue;
+    built[key] = {
+      id: key,
+      label: section.label ?? key,
+      renderer: section.renderer ?? key,
+      enabled: section.enabled ?? section.isEnabled ?? true,
+      order: section.order ?? 0,
+      nav: section.nav ?? { show: section.showOnHomepage ?? false, href: `#${key}`, label: section.label ?? key },
+      emptyMessage: section.emptyMessage ?? "",
+      data: section.data ?? {},
+      items: Array.isArray(section.items) ? section.items : [],
+      layout: section.layout ?? "default",
+      settings: section.settings ?? {},
+      showOnHomepage: section.showOnHomepage ?? section.nav?.show ?? false,
+      template: section.template ?? "",
+      textBlocks: Array.isArray(section.textBlocks) ? section.textBlocks : [],
+    } as any;
+  }
 
   built.about.items = built.about.items ?? [];
   built.working.items = built.working.items ?? [];
@@ -338,6 +395,57 @@ function buildSectionMap(sections: any[], settings: any, projects: any[], skills
   }
 
   return built;
+}
+
+function normalizeProjectRecord(project: any, index: number) {
+  return {
+    id: String(project?.id || project?.slug || `project-${index + 1}`),
+    slug: String(project?.slug || project?.id || ""),
+    title: String(project?.title || ""),
+    shortDescription: String(project?.shortDescription || project?.description || ""),
+    longDescription: String(project?.longDescription || project?.description || ""),
+    techStack: Array.isArray(project?.techStack) ? project.techStack : Array.isArray(project?.technologies) ? project.technologies : [],
+    category: String(project?.category || project?.status || "Project"),
+    image: String(project?.image || project?.thumbnail || ""),
+    liveDemoUrl: String(project?.liveDemoUrl || ""),
+    githubUrl: String(project?.githubUrl || ""),
+    featured: Boolean(project?.featured ?? project?.isFeatured),
+    order: Number(project?.order ?? index + 1),
+    overview: String(project?.overview || ""),
+    problem: String(project?.problem || ""),
+    solution: String(project?.solution || ""),
+    myRole: String(project?.myRole || ""),
+    responsibilities: Array.isArray(project?.responsibilities) ? project.responsibilities : [],
+    features: Array.isArray(project?.features) ? project.features : [],
+    screenshots: Array.isArray(project?.screenshots) ? project.screenshots : [],
+    architectureDiagram: String(project?.architectureDiagram || ""),
+    databaseSchema: String(project?.databaseSchema || ""),
+    apiFlow: String(project?.apiFlow || ""),
+    folderStructure: String(project?.folderStructure || ""),
+    challenges: String(project?.challenges || ""),
+    lessonsLearned: String(project?.lessonsLearned || ""),
+    futureImprovements: Array.isArray(project?.futureImprovements) ? project.futureImprovements : [],
+    timeline: String(project?.timeline || ""),
+    tags: Array.isArray(project?.tags) ? project.tags : [],
+    readingTimeMinutes: Number(project?.readingTimeMinutes || 1),
+    outcome: String(project?.outcome || ""),
+    isEnabled: project?.isEnabled !== false,
+    thumbnail: String(project?.thumbnail || ""),
+    banner: String(project?.banner || ""),
+    galleryImages: Array.isArray(project?.galleryImages) ? project.galleryImages : [],
+    backendRepo: String(project?.backendRepo || ""),
+    documentationUrl: String(project?.documentationUrl || ""),
+    client: String(project?.client || ""),
+    company: String(project?.company || ""),
+    role: String(project?.role || ""),
+    teamSize: String(project?.teamSize || ""),
+    duration: String(project?.duration || ""),
+    startDate: String(project?.startDate || ""),
+    endDate: String(project?.endDate || ""),
+    metaTitle: String(project?.metaTitle || ""),
+    metaDescription: String(project?.metaDescription || ""),
+    achievements: Array.isArray(project?.achievements) ? project.achievements : [],
+  };
 }
 
 export async function getPortfolioSiteData(): Promise<SiteData> {
@@ -416,38 +524,9 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
   }
   const settings = rawSettings as unknown as StoredSettings;
 
-  const projectItems = projects.map((project: any, index) => ({
-    id: project.slug || `project-${index + 1}`,
-    slug: project.slug,
-    title: project.title,
-    shortDescription: project.shortDescription || "",
-    longDescription: project.longDescription || "",
-    techStack: project.techStack || [],
-    category: project.category || "",
-    image: project.image || "",
-    liveDemoUrl: project.liveDemoUrl || "",
-    githubUrl: project.githubUrl || "",
-    featured: Boolean(project.featured),
-    order: project.order ?? index + 1,
-    overview: project.overview || "",
-    problem: project.problem || "",
-    solution: project.solution || "",
-    myRole: project.myRole || "",
-    responsibilities: project.responsibilities || [],
-    features: project.features || [],
-    screenshots: project.screenshots || [],
-    architectureDiagram: project.architectureDiagram || "",
-    databaseSchema: project.databaseSchema || "",
-    apiFlow: project.apiFlow || "",
-    folderStructure: project.folderStructure || "",
-    challenges: project.challenges || "",
-    lessonsLearned: project.lessonsLearned || "",
-    futureImprovements: project.futureImprovements || [],
-    timeline: project.timeline || "",
-    tags: project.tags || [],
-    readingTimeMinutes: Number(project.readingTimeMinutes || 1),
-    outcome: project.outcome || "",
-  }));
+  const projectsSection = sections.find((section: any) => section.key === "projects" || section.id === "projects");
+  const projectSource = Array.isArray(projectsSection?.items) && projectsSection.items.length ? projectsSection.items : projects;
+  const projectItems = projectSource.map((project: any, index: number) => normalizeProjectRecord(project, index));
 
   const skillItems = skills.map((skill: any, index) => ({
     id: skill.key || `skill-${index + 1}`,
@@ -593,6 +672,9 @@ export async function createPortfolioMessage(input: {
 
 export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteData> {
   const now = nextData.updatedAt || new Date().toISOString();
+  console.log("[portfolio/repository] savePortfolioSiteData entry", {
+    sections: summarizeSectionCounts(nextData.sections),
+  });
 
   const savedSettings = await SiteSettings.findOneAndUpdate(
     { key: SETTINGS_KEY },
@@ -636,6 +718,8 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
       upsert: true,
     },
   }));
+  const sectionIds = Object.values(nextData.sections || {}).map((section) => section.id);
+  await Section.deleteMany(sectionIds.length ? { key: { $nin: sectionIds } } : {});
   if (sectionWrites.length) {
     await Section.bulkWrite(sectionWrites, { ordered: true });
   }
@@ -645,20 +729,23 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
   const readback = await SiteSettings.findOne({ key: SETTINGS_KEY }).lean();
   const readbackData = readback as unknown as { _id?: unknown; sections?: SiteData["sections"] };
 
-  await Project.deleteMany({});
-  const projects = (nextData.projectsDetailed || []).map((project, index) => ({
-    slug: slugify((project as any).slug || project.title),
+  const projectItemsRaw = (nextData.sections?.projects?.items || nextData.projectsDetailed || []) as any[];
+  console.log("[portfolio/repository] before Mongo write", {
+    sections: summarizeSectionCounts(nextData.sections),
+  });
+  const projects = projectItemsRaw.map((project, index) => ({
+    slug: slugify((project as any).slug || project.id || project.title || `project-${index + 1}`),
     title: project.title,
-    shortDescription: project.shortDescription,
-    longDescription: project.longDescription,
-    image: project.image,
-    category: project.category,
-    techStack: project.techStack || [],
-    featured: Boolean(project.featured),
+    shortDescription: project.shortDescription || project.description || "",
+    longDescription: project.longDescription || project.description || "",
+    image: project.image || project.thumbnail || "",
+    category: project.category || project.status || "Project",
+    techStack: project.techStack || project.technologies || [],
+    featured: Boolean(project.featured ?? project.isFeatured),
     order: project.order ?? index + 1,
     status: "published",
     problem: String((project as any).problem || ""),
-    overview: String((project as any).overview || project.shortDescription || ""),
+    overview: String((project as any).overview || project.shortDescription || project.description || ""),
     solution: String((project as any).solution || ""),
     myRole: String((project as any).myRole || ""),
     responsibilities: Array.isArray((project as any).responsibilities) ? (project as any).responsibilities : [],
@@ -673,14 +760,42 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
     futureImprovements: Array.isArray((project as any).futureImprovements) ? (project as any).futureImprovements : [],
     timeline: String((project as any).timeline || ""),
     tags: Array.isArray((project as any).tags) ? (project as any).tags : [],
-    readingTimeMinutes: Number((project as any).readingTimeMinutes || calculateReadingTimeMinutes(`${project.longDescription} ${(project as any).solution || ""}`)),
+    readingTimeMinutes: Number((project as any).readingTimeMinutes || calculateReadingTimeMinutes(`${project.longDescription || project.description || ""} ${(project as any).solution || ""}`)),
     outcome: String((project as any).outcome || ""),
     liveDemoUrl: project.liveDemoUrl,
     githubUrl: project.githubUrl,
+    thumbnail: project.thumbnail || "",
+    banner: project.banner || "",
+    galleryImages: Array.isArray(project.galleryImages) ? project.galleryImages : [],
+    backendRepo: project.backendRepo || "",
+    documentationUrl: project.documentationUrl || "",
+    client: project.client || "",
+    company: project.company || "",
+    role: project.role || "",
+    teamSize: project.teamSize || "",
+    duration: project.duration || "",
+    startDate: project.startDate || "",
+    endDate: project.endDate || "",
+    achievements: Array.isArray(project.achievements) ? project.achievements : [],
+    metaTitle: project.metaTitle || "",
+    metaDescription: project.metaDescription || "",
+    isEnabled: project.isEnabled !== false,
     updatedAt: now,
   }));
   if (projects.length) {
-    await Project.insertMany(projects, { ordered: false });
+    await Project.deleteMany({ slug: { $nin: projects.map((project) => project.slug) } });
+    await Project.bulkWrite(
+      projects.map((project) => ({
+        updateOne: {
+          filter: { slug: project.slug },
+          update: { $set: project },
+          upsert: true,
+        },
+      })),
+      { ordered: true }
+    );
+  } else {
+    await Project.deleteMany({});
   }
 
   await Skill.deleteMany({});
@@ -774,6 +889,30 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
     blogs.length ? blogs : []
   );
 
+  const projectReadback = await Project.find({}).sort({ order: 1, createdAt: 1 }).lean();
+  const sectionProjectReadback = await Section.findOne({ key: "projects" }).lean();
+  const sectionMetadataReadback = sectionReadback.reduce<Record<string, any>>((acc, section: any) => {
+    acc[section.key || section.id] = {
+      order: section.order,
+      enabled: section.enabled ?? section.isEnabled,
+      renderer: section.renderer,
+      nav: section.nav,
+      showOnHomepage: section.showOnHomepage,
+    };
+    return acc;
+  }, {});
+  console.log("[portfolio/repository] project save readback", {
+    sectionsBefore: summarizeSectionCounts(nextData.sections),
+    readbackProjectCount: projectReadback.length,
+    readbackSectionProjectCount: Array.isArray((sectionProjectReadback as any)?.items) ? (sectionProjectReadback as any).items.length : null,
+    readbackSectionMetadata: {
+      about: sectionMetadataReadback.about,
+      projects: sectionMetadataReadback.projects,
+      blogs: sectionMetadataReadback.blogs,
+      footer: sectionMetadataReadback.footer,
+    },
+  });
+
   return normalizeSiteData({
     ...nextData,
     sections: rebuilt,
@@ -782,7 +921,8 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
 
 export async function getPublishedProjects() {
   const data = await getPortfolioSiteData();
-  return data.projectsDetailed.filter((project: any) => !project.status || project.status === "published");
+  const sectionProjects = (data.sections?.projects?.items || []) as any[];
+  return (sectionProjects.length ? sectionProjects : data.projectsDetailed).filter((project: any) => project.isEnabled !== false);
 }
 
 export async function getPublishedBlogs() {
