@@ -51,6 +51,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
           <div className="space-y-5">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">{project.category}</p>
             <h1 className="text-4xl font-bold tracking-tight text-text-main sm:text-5xl">{project.title}</h1>
+            {project.subtitle ? <p className="text-lg font-medium text-text-muted">{project.subtitle}</p> : null}
             <p className="text-base leading-7 text-text-muted">{project.longDescription || project.shortDescription}</p>
 
             <div className="flex flex-wrap gap-2">
@@ -89,6 +90,12 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
               {project.startDate ? <span>{project.startDate}{project.endDate ? ` - ${project.endDate}` : ""}</span> : null}
             </div>
 
+            {project.tags.length ? (
+              <div className="flex flex-wrap gap-2">
+                {project.tags.map((tag) => <span key={tag} className="rounded-full border border-[rgb(var(--border))] bg-white px-3 py-1 text-xs font-semibold text-text-muted">{tag}</span>)}
+              </div>
+            ) : null}
+
             <div className="space-y-3">
               <ViewCounter targetType="project" targetSlug={project.slug || slugify(project.title)} />
               <LikeButton targetType="project" targetSlug={project.slug || slugify(project.title)} />
@@ -99,7 +106,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
           <div className="space-y-4">
             <div className="overflow-hidden rounded-[32px] border border-[rgb(var(--border))] bg-white shadow-[0_18px_40px_rgba(15,23,42,0.10)]">
               {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img src={project.banner || project.image || gallery[0] || ""} alt={project.title} className="h-full w-full object-cover" />
+              <img src={project.coverImage || project.banner || project.image || gallery[0] || ""} alt={project.title} className="h-full w-full object-cover" />
             </div>
           </div>
         </section>
@@ -127,6 +134,16 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
           </div>
         </section>
 
+        {project.problemStatement || project.solution || project.targetUsers || project.businessValue || project.impact ? (
+          <section className="grid gap-6 lg:grid-cols-2">
+            {project.problemStatement ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6"><h2 className="text-xl font-semibold text-text-main">Problem Statement</h2><p className="mt-3 text-sm leading-6 text-text-muted">{project.problemStatement}</p></div> : null}
+            {project.solution ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6"><h2 className="text-xl font-semibold text-text-main">Solution</h2><p className="mt-3 text-sm leading-6 text-text-muted">{project.solution}</p></div> : null}
+            {project.targetUsers ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6"><h2 className="text-xl font-semibold text-text-main">Target Users</h2><p className="mt-3 text-sm leading-6 text-text-muted">{project.targetUsers}</p></div> : null}
+            {project.businessValue ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6"><h2 className="text-xl font-semibold text-text-main">Business Value</h2><p className="mt-3 text-sm leading-6 text-text-muted">{project.businessValue}</p></div> : null}
+            {project.impact ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6 lg:col-span-2"><h2 className="text-xl font-semibold text-text-main">Impact</h2><p className="mt-3 text-sm leading-6 text-text-muted">{project.impact}</p></div> : null}
+          </section>
+        ) : null}
+
         {project.features.length ? (
           <section className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6">
             <h2 className="text-xl font-semibold text-text-main">Features</h2>
@@ -151,6 +168,14 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
             <ul className="mt-4 grid gap-2 text-sm text-text-muted md:grid-cols-2">
               {project.achievements.map((item) => <li key={item}>• {item}</li>)}
             </ul>
+          </section>
+        ) : null}
+
+        {(project.keyFeatures.length || project.coreModules.length || project.futureRoadmap.length) ? (
+          <section className="grid gap-6 lg:grid-cols-3">
+            {project.keyFeatures.length ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6"><h2 className="text-xl font-semibold text-text-main">Key Features</h2><ul className="mt-4 space-y-2 text-sm text-text-muted">{project.keyFeatures.map((item) => <li key={item}>• {item}</li>)}</ul></div> : null}
+            {project.coreModules.length ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6"><h2 className="text-xl font-semibold text-text-main">Core Modules</h2><ul className="mt-4 space-y-2 text-sm text-text-muted">{project.coreModules.map((item) => <li key={item}>• {item}</li>)}</ul></div> : null}
+            {project.futureRoadmap.length ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6"><h2 className="text-xl font-semibold text-text-main">Future Roadmap</h2><ul className="mt-4 space-y-2 text-sm text-text-muted">{project.futureRoadmap.map((item) => <li key={item}>• {item}</li>)}</ul></div> : null}
           </section>
         ) : null}
 
