@@ -583,8 +583,8 @@
       "endDate": "Ongoing",
       "isFeatured": false,
       "featured": true,
-      "draft": true,
-      "published": false,
+      "draft": false,
+      "published": true,
       "isEnabled": true,
       "order": 2,
       "features": [],
@@ -653,7 +653,7 @@
       "isFeatured": false,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-07-01T08:03:34.684Z",
+      "publishedAt": "2026-07-01T11:01:00.025Z",
       "order": 1,
       "isEnabled": true
     },
@@ -674,7 +674,7 @@
       "isFeatured": false,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-07-01T08:03:34.684Z",
+      "publishedAt": "2026-07-01T11:01:00.025Z",
       "order": 2,
       "isEnabled": true
     },
@@ -695,7 +695,7 @@
       "isFeatured": false,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-07-01T08:03:34.684Z",
+      "publishedAt": "2026-07-01T11:01:00.025Z",
       "order": 3,
       "isEnabled": true
     }
@@ -720,8 +720,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-07-01T11:01:00.025Z",
-      "lastGitHubSync": "2026-07-01T11:01:03.834Z"
+      "lastMongoUpdate": "2026-07-01T11:01:34.734Z",
+      "lastGitHubSync": "2026-07-01T11:01:38.461Z"
     },
     "popupAnnouncement": {
       "enabled": true,
@@ -861,7 +861,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-07-01T11:01:00.025Z",
+  "updatedAt": "2026-07-01T11:01:34.734Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -1257,8 +1257,8 @@
           "endDate": "Ongoing",
           "isFeatured": false,
           "featured": true,
-          "draft": true,
-          "published": false,
+          "draft": false,
+          "published": true,
           "isEnabled": true,
           "order": 2,
           "features": [],
