@@ -653,7 +653,7 @@
       "isFeatured": false,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-07-04T12:49:10.840Z",
+      "publishedAt": "2026-07-04T12:50:11.139Z",
       "order": 1,
       "isEnabled": true
     },
@@ -674,7 +674,7 @@
       "isFeatured": false,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-07-04T12:49:10.840Z",
+      "publishedAt": "2026-07-04T12:50:11.139Z",
       "order": 2,
       "isEnabled": true
     },
@@ -695,7 +695,7 @@
       "isFeatured": false,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-07-04T12:49:10.840Z",
+      "publishedAt": "2026-07-04T12:50:11.139Z",
       "order": 3,
       "isEnabled": true
     }
@@ -720,8 +720,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-07-04T12:50:11.139Z",
-      "lastGitHubSync": "2026-07-04T12:50:14.915Z"
+      "lastMongoUpdate": "2026-07-04T12:53:47.214Z",
+      "lastGitHubSync": "2026-07-04T12:53:50.931Z"
     },
     "popupAnnouncement": {
       "enabled": true,
@@ -814,9 +814,16 @@
     "showPrivateReposPublicly": false,
     "showPrivateCommitsPublicly": false,
     "publicDisplayMode": "publicOnly",
-    "commitCountMode": "publicAndPrivateCommits",
+    "commitCountMode": "selectedRepositoriesOnly",
     "repositorySelectionMode": "all",
-    "selectedRepositories": [],
+    "selectedRepositories": [
+      "linkpilot",
+      "smartqueue-ai",
+      "VisionSuite-MVP",
+      "devvault",
+      "ReqFlow-AI",
+      "vainsh"
+    ],
     "commitMessageIncludes": [],
     "commitMessageExcludes": [],
     "recentCommitsEnabled": true,
@@ -861,7 +868,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-07-04T12:50:11.139Z",
+  "updatedAt": "2026-07-04T12:53:47.214Z",
   "sections": {
     "hero": {
       "id": "hero",
