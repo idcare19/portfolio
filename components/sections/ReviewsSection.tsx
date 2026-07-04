@@ -34,13 +34,23 @@ function getReviewIcon(icon?: string): LucideIcon {
   return reviewIconMap[icon.toLowerCase()] || Code2;
 }
 
+function normalizeHref(value?: string) {
+  const href = String(value || "").trim();
+  if (!href) return "";
+  if (href.toLowerCase() === "none") return "";
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(href)) return href;
+  if (href.startsWith("/") || href.startsWith("#")) return href;
+  return "";
+}
+
 export function ReviewsSection() {
   const section = useSectionData("reviews");
   const data = section.data as Record<string, any>;
   const reviews = section.items.length
     ? section.items.map((item: any) => ({
         clientName: item.clientName,
-        website: item.roleCompany,
+        roleCompany: item.roleCompany,
+        website: item.website || item.websiteUrl || item.companyUrl || item.reviewerUrl,
         quote: item.message,
         icon: item.image,
       }))
@@ -214,6 +224,7 @@ export function ReviewsSection() {
               <div aria-hidden className="w-[4px] shrink-0" />
               {reviews.map((review, index) => {
                 const ReviewIcon = getReviewIcon(review.icon);
+                const href = normalizeHref(review.website);
 
                 return (
                   <article
@@ -230,14 +241,18 @@ export function ReviewsSection() {
                         </span>
                         {review.clientName}
                       </p>
-                      <Link
-                        href={review.website}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1.5 text-xs font-semibold text-[#1D4ED8] transition-colors duration-200 hover:border-[#93C5FD] hover:bg-[#DBEAFE] sm:w-auto"
-                      >
-                        Visit Site <ExternalLink className="h-3.5 w-3.5" />
-                      </Link>
+                      {href ? (
+                        <Link
+                          href={href}
+                          target={href.startsWith("http") ? "_blank" : undefined}
+                          rel={href.startsWith("http") ? "noreferrer" : undefined}
+                          className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1.5 text-xs font-semibold text-[#1D4ED8] transition-colors duration-200 hover:border-[#93C5FD] hover:bg-[#DBEAFE] sm:w-auto"
+                        >
+                          Visit Site <ExternalLink className="h-3.5 w-3.5" />
+                        </Link>
+                      ) : review.roleCompany ? (
+                        <p className="text-xs font-semibold text-text-muted">{review.roleCompany}</p>
+                      ) : null}
                     </div>
                   </article>
                 );
