@@ -16,27 +16,27 @@
   },
   "nav": [
     {
-      "label": "skills",
+      "label": "Skills",
       "href": "#skills"
     },
     {
-      "label": "projects",
+      "label": "Projects",
       "href": "#projects"
     },
     {
-      "label": "blogs",
+      "label": "Blogs",
       "href": "#blogs"
     },
     {
-      "label": "reviews",
+      "label": "Reviews",
       "href": "#reviews"
     },
     {
-      "label": "github",
+      "label": "Github",
       "href": "#github"
     },
     {
-      "label": "contact",
+      "label": "Contact",
       "href": "#contact"
     }
   ],
@@ -653,7 +653,7 @@
       "isFeatured": false,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-07-01T11:01:34.734Z",
+      "publishedAt": "2026-07-04T12:49:10.840Z",
       "order": 1,
       "isEnabled": true
     },
@@ -674,7 +674,7 @@
       "isFeatured": false,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-07-01T11:01:34.734Z",
+      "publishedAt": "2026-07-04T12:49:10.840Z",
       "order": 2,
       "isEnabled": true
     },
@@ -695,7 +695,7 @@
       "isFeatured": false,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-07-01T11:01:34.734Z",
+      "publishedAt": "2026-07-04T12:49:10.840Z",
       "order": 3,
       "isEnabled": true
     }
@@ -720,8 +720,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-07-04T12:49:10.840Z",
-      "lastGitHubSync": "2026-07-04T12:49:14.613Z"
+      "lastMongoUpdate": "2026-07-04T12:50:11.139Z",
+      "lastGitHubSync": "2026-07-04T12:50:14.915Z"
     },
     "popupAnnouncement": {
       "enabled": true,
@@ -861,7 +861,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-07-04T12:49:10.840Z",
+  "updatedAt": "2026-07-04T12:50:11.139Z",
   "sections": {
     "hero": {
       "id": "hero",
