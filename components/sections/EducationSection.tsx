@@ -10,7 +10,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 export function EducationSection() {
   const section = useSectionData("education");
   const data = section.data as Record<string, any>;
-  const items = section.items as Array<{ id?: string; school: string; degree: string; period: string; description: string }>;
+  const items = Array.isArray(section.items) ? (section.items as Array<{ id?: string; school: string; degree: string; period: string; description: string }>) : [];
 
   if (items.length === 0) {
     return null;

@@ -29,7 +29,15 @@ export function useSectionData(sectionId: DynamicSectionId): SiteSectionBlock {
   const section = siteData.sections?.[sectionId];
 
   if (!section) {
-    throw new Error(`Missing section data for ${sectionId}`);
+    return {
+      id: sectionId,
+      label: sectionId,
+      renderer: sectionId,
+      enabled: false,
+      order: 0,
+      data: {},
+      items: [],
+    };
   }
 
   return section;

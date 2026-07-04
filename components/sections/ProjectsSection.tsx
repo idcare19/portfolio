@@ -10,16 +10,16 @@ import Link from "next/link";
 export function ProjectsSection() {
   const section = useSectionData("projects");
   const data = section.data as Record<string, any>;
-  const projects = section.items
-    .filter((item: any) => item.isEnabled !== false && (item.featured || item.isFeatured))
+  const projects = (Array.isArray(section.items) ? section.items : [])
+    .filter((item: any) => item && item.isEnabled !== false && (item.featured || item.isFeatured))
     .slice(0, Number(data.homepageLimit || 6))
     .map((item: any) => ({
-      slug: item.slug || item.id || item.title,
-      title: item.title,
-      description: item.shortDescription || item.description || "",
+      slug: String(item.slug || item.id || item.title || ""),
+      title: String(item.title || ""),
+      description: String(item.shortDescription || item.description || ""),
       image: item.image || item.thumbnail || "",
       status: item.status || item.category || "Project",
-      tech: item.techStack || item.technologies || [],
+      tech: Array.isArray(item.techStack) ? item.techStack : Array.isArray(item.technologies) ? item.technologies : [],
       liveUrl: item.liveDemoUrl || "",
       githubUrl: item.githubUrl || "",
       backendRepo: item.backendRepo || "",

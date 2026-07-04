@@ -12,7 +12,7 @@ import { useState } from "react";
 export function ContactSection() {
   const section = useSectionData("contact");
   const data = section.data as Record<string, any>;
-  const socials = section.items.length ? section.items.filter((item: any) => item.isEnabled !== false) : [];
+  const socials = Array.isArray(section.items) ? section.items.filter((item: any) => item && item.isEnabled !== false) : [];
   const resumeUrl = String(data.resumeUrl || "").trim();
   const hasResume = Boolean(resumeUrl && resumeUrl !== "#");
   const [name, setName] = useState("");
@@ -71,9 +71,9 @@ export function ContactSection() {
 
         <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
           <FadeInUp className="glass rounded-3xl p-6 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
-            <h3 className="text-xl font-semibold text-text-main">{data.cardTitle}</h3>
+            <h3 className="text-xl font-semibold text-text-main">{String(data.cardTitle || "")}</h3>
             <p className="mt-3 text-sm text-text-muted">
-              {data.cardDescription}
+              {String(data.cardDescription || "")}
             </p>
 
             <div className="mt-5 space-y-2">

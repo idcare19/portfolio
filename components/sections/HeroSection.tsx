@@ -14,6 +14,10 @@ export function HeroSection() {
   const badges = Array.isArray(heroData.badges) ? heroData.badges : [];
   const resumeUrl = String(heroData.resumeUrl || portfolioData.owner?.resumeUrl || "").trim();
   const hasResume = Boolean(resumeUrl && resumeUrl !== "#");
+  const title = String(heroData.title || "Hi, I'm Abhishek");
+  const description = String(heroData.description || portfolioData.owner?.tagline || "");
+  const eyebrow = String(heroData.eyebrow || portfolioData.owner?.identityLine || "");
+  const animatedRole = String(heroData.animatedRole || portfolioData.owner?.role || "");
   return (
     <section id="home" className="relative overflow-hidden bg-section-bg pt-32 sm:pt-36 pb-24">
       {/* Removed blobs that were causing washed out colors */}
@@ -21,16 +25,16 @@ export function HeroSection() {
       <div className="section-wrap">
         <div className="mx-auto max-w-5xl text-center">
           <FadeInUp immediate>
-            {heroData.eyebrow ? <p className="mb-4 inline-flex rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">{heroData.eyebrow}</p> : null}
+            {eyebrow ? <p className="mb-4 inline-flex rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">{eyebrow}</p> : null}
           </FadeInUp>
           <FadeInUp delay={0.06} immediate>
             <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-text-main sm:text-6xl lg:text-7xl">
-              {heroData.title ? <span className="block">{heroData.title}</span> : null}
-              {heroData.animatedRole ? <TypewriterLines text={heroData.animatedRole} className="text-gradient-animated mt-4 inline-block align-top" typeSpeedMs={80} holdMs={1800} /> : null}
+              {title ? <span className="block">{title}</span> : null}
+              {animatedRole ? <TypewriterLines text={animatedRole} className="text-gradient-animated mt-4 inline-block align-top" typeSpeedMs={80} holdMs={1800} /> : null}
             </h1>
           </FadeInUp>
           <FadeInUp delay={0.12} immediate>
-            {heroData.description ? <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-text-muted sm:text-lg md:text-xl">{heroData.description}</p> : null}
+            {description ? <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-text-muted sm:text-lg md:text-xl">{description}</p> : null}
           </FadeInUp>
 
           <FadeInUp delay={0.18}>

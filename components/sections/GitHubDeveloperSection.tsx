@@ -12,7 +12,42 @@ import type { GitHubStatsResponse } from "@/components/github/types";
 function normalizeExternalHref(value?: string) {
   const href = String(value || "").trim();
   if (!href || href.toLowerCase() === "none") return "";
-  return href;
+  if (/^[a-z][a-z0-9+.-]*:\/\//i.test(href)) return href;
+  if (href.startsWith("/")) return href;
+  return "";
+}
+
+function safeList<T>(value: T[] | undefined | null): T[] {
+  return Array.isArray(value) ? value : [];
+}
+
+function normalizeStats(input: GitHubStatsResponse | null | undefined): GitHubStatsResponse | null {
+  if (!input) return null;
+  return {
+    ...input,
+    profile: {
+      login: input.profile?.login || "",
+      name: input.profile?.name || "GitHub Profile",
+      avatarUrl: input.profile?.avatarUrl || "",
+      bio: input.profile?.bio || "",
+      company: input.profile?.company || "",
+      location: input.profile?.location || "",
+      blog: input.profile?.blog || "",
+      profileUrl: input.profile?.profileUrl || "",
+      joinedAt: input.profile?.joinedAt,
+    },
+    languages: safeList(input.languages),
+    organizations: safeList(input.organizations),
+    latestRepos: safeList(input.latestRepos),
+    pinnedRepos: safeList(input.pinnedRepos),
+    recentActivity: safeList(input.recentActivity),
+    latestCommits: safeList(input.latestCommits),
+    contributions: {
+      total: input.contributions?.total || 0,
+      weeks: input.contributions?.weeks || 0,
+      heatmap: safeList(input.contributions?.heatmap),
+    },
+  };
 }
 
 export function GitHubDeveloperSection() {
@@ -33,7 +68,7 @@ export function GitHubDeveloperSection() {
       try {
         const response = await fetch("/api/github/stats?refresh=true");
         const payload = (await response.json()) as { success?: boolean; data?: GitHubStatsResponse };
-        if (!cancelled) setStats(payload.success && payload.data ? payload.data : null);
+        if (!cancelled) setStats(payload.success ? normalizeStats(payload.data) : null);
       } catch {
         if (!cancelled) setStats(null);
       } finally {
@@ -55,9 +90,9 @@ export function GitHubDeveloperSection() {
   const eyebrow = data.eyebrow || "GitHub Live";
   const summary = data.summary || "";
   const hasHeader = Boolean(eyebrow || title || description);
-  const topLanguages = stats?.languages.slice(0, 4) || [];
-  const latestRepo = stats?.latestRepos?.[0];
-  const latestCommit = stats?.latestCommits?.[0];
+  const topLanguages = safeList(stats?.languages).slice(0, 4);
+  const latestRepo = stats?.latestRepos[0];
+  const latestCommit = stats?.latestCommits[0];
   const resolveRepoUrl = (repo: { url?: string; name?: string }) => {
     if (normalizeExternalHref(repo.url)) return normalizeExternalHref(repo.url);
     if (repo.name && stats?.profile.login) return `https://github.com/${stats.profile.login}/${repo.name}`;
@@ -163,7 +198,7 @@ export function GitHubDeveloperSection() {
                 <span className="rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">Public</span>
               </div>
               <div className="space-y-4">
-                {stats.latestRepos.slice(0, 3).map((repo) => (
+                {safeList(stats.latestRepos).slice(0, 3).map((repo) => (
                   <a
                     key={repo.name}
                     href={resolveRepoUrl(repo)}

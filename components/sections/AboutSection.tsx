@@ -9,8 +9,9 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 export function AboutSection() {
   const section = useSectionData("about");
   const data = section.data as Record<string, any>;
-  const stats = section.items;
+  const stats = Array.isArray(section.items) ? section.items : [];
   const hasHeader = Boolean(data.eyebrow || data.title || data.description);
+  const intro = String(data.intro || "");
 
   return (
     <AnimatedSection id="about" className="bg-section-bg py-20">
@@ -18,7 +19,7 @@ export function AboutSection() {
         {hasHeader ? <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} /> : null}
 
         <FadeInUp className="glass mb-6 rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.05)]">
-          <p className="text-text-muted" style={{ opacity: 0.9 }}>{data.intro}</p>
+          <p className="text-text-muted" style={{ opacity: 0.9 }}>{intro}</p>
         </FadeInUp>
 
         <div className="grid gap-4 md:grid-cols-3">

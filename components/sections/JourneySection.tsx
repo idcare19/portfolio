@@ -9,7 +9,7 @@ import { motion } from "framer-motion";
 export function JourneySection() {
   const section = useSectionData("journey");
   const data = section.data as Record<string, any>;
-  const experience = section.items.length ? section.items.filter((item: any) => item.isEnabled !== false) : [];
+  const experience = Array.isArray(section.items) ? section.items.filter((item: any) => item && item.isEnabled !== false) : [];
   const milestones = Array.isArray(data.milestones) ? data.milestones : [];
   const eyebrow = data.eyebrow || "Experience";
   const title = data.title || "Professional Journey";

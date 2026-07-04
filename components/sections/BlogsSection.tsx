@@ -10,8 +10,8 @@ export function BlogsSection() {
   const section = useSectionData("blogs");
   const siteData = useSiteDataContext();
   const data = section.data as Record<string, any>;
-  const blogs = (siteData.blogs || [])
-    .filter((blog) => blog.status === "published" && blog.isEnabled)
+  const blogs = (Array.isArray(siteData.blogs) ? siteData.blogs : [])
+    .filter((blog) => blog && blog.status === "published" && blog.isEnabled)
     .sort((left, right) => Number(left.order ?? 0) - Number(right.order ?? 0));
   const title = data.title || "Blogs";
   const description = data.description || "Writing, notes, and build lessons from the portfolio.";
@@ -36,7 +36,7 @@ export function BlogsSection() {
                   {blog.coverImage || blog.thumbnail ? (
                     <img
                       src={blog.coverImage || blog.thumbnail}
-                      alt={blog.title}
+                      alt={String(blog.title || "Blog post")}
                       className="h-48 w-full rounded-2xl object-cover"
                     />
                   ) : null}
@@ -47,8 +47,8 @@ export function BlogsSection() {
                       </span>
                     ))}
                   </div>
-                  <h3 className="mt-4 text-2xl font-semibold tracking-tight text-text-main">{blog.title}</h3>
-                  <p className="mt-3 text-sm leading-7 text-text-muted">{blog.excerpt || String(blog.content || "").slice(0, 180)}</p>
+                  <h3 className="mt-4 text-2xl font-semibold tracking-tight text-text-main">{String(blog.title || "")}</h3>
+                  <p className="mt-3 text-sm leading-7 text-text-muted">{String(blog.excerpt || blog.content || "").slice(0, 180)}</p>
                   <div className="mt-4 flex flex-wrap items-center gap-3 text-xs font-medium text-text-muted">
                     {blog.readingTimeMinutes ? <span>{blog.readingTimeMinutes} min read</span> : null}
                     {blog.featured || blog.isFeatured ? <span>Featured</span> : null}

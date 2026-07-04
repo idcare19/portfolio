@@ -16,7 +16,7 @@ function normalizeHref(value?: string) {
 export function WorkingProjectsSection() {
   const section = useSectionData("working");
   const data = section.data as Record<string, any>;
-  const workingProjects = (section.items || []).filter((project: any) => project.isEnabled !== false);
+  const workingProjects = (Array.isArray(section.items) ? section.items : []).filter((project: any) => project && project.isEnabled !== false);
 
   if (workingProjects.length === 0) {
     return null;

@@ -46,8 +46,9 @@ function normalizeHref(value?: string) {
 export function ReviewsSection() {
   const section = useSectionData("reviews");
   const data = section.data as Record<string, any>;
-  const reviews = section.items.length
-    ? section.items.map((item: any) => ({
+  const reviewItems = Array.isArray(section.items) ? section.items : [];
+  const reviews = reviewItems.length
+    ? reviewItems.map((item: any) => ({
         clientName: item.clientName,
         roleCompany: item.roleCompany,
         website: item.website || item.websiteUrl || item.companyUrl || item.reviewerUrl,
@@ -232,7 +233,7 @@ export function ReviewsSection() {
                     className="glass flex-shrink-0 snap-start rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition-transform duration-200 hover:-translate-y-0.5 w-[calc(100%-1rem)] sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)]"
                   >
                     <Quote className="h-5 w-5 text-[#1D4ED8]" />
-                    <p className="mt-3 text-sm leading-relaxed text-text-muted">"{review.quote}"</p>
+                    <p className="mt-3 text-sm leading-relaxed text-text-muted">&quot;{review.quote}&quot;</p>
 
                     <div className="mt-5 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
                       <p className="inline-flex items-center gap-2 text-sm font-semibold text-text-main">
