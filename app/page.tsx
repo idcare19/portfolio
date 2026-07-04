@@ -14,20 +14,9 @@ export const revalidate = 0;
 export default async function HomePage() {
   const portfolioData = await getPortfolioData();
   const coreSectionIds = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "github", "blogs", "footer"];
-  console.log("[homepage] section keys", Object.keys(portfolioData.sections || {}));
   const sections = Object.values(portfolioData.sections || {})
     .filter((section) => section.enabled !== false && section.showOnHomepage !== false)
     .sort((a, b) => a.order - b.order);
-  console.log("[homepage] visibleSections", sections.length);
-  console.log(
-    "[homepage] visibleSections detail",
-    sections.map((section) => ({
-      slug: (section as any).slug,
-      enabled: section.enabled,
-      showOnHomepage: section.showOnHomepage,
-      renderer: section.renderer,
-    }))
-  );
   const footerSection = portfolioData.sections?.footer;
   const showFooter = footerSection?.enabled !== false && footerSection?.showOnHomepage !== false;
   const visibleSections =
@@ -45,7 +34,6 @@ export default async function HomePage() {
       <Navbar />
       <div>
         {visibleSections.map((section) => {
-          console.log("[homepage] Rendering section:", section.id, section.renderer);
           return (
             <DeferredSection
               key={section.id}

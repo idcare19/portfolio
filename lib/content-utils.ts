@@ -6,6 +6,10 @@ export function slugify(value: string) {
     .replace(/^-+|-+$/g, "") || `item-${Date.now()}`;
 }
 
+export function normalizeSlug(value: string) {
+  return slugify(String(value || "").trim());
+}
+
 export function stripMarkdown(markdown: string) {
   return markdown
     .replace(/```[\s\S]*?```/g, " ")

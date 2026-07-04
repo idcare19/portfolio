@@ -133,6 +133,7 @@ export type BlogItem = {
   excerpt: string;
   content: string;
   coverImage?: string;
+  author?: string;
   tags: string[];
   category: string;
   status: "draft" | "published";

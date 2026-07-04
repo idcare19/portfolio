@@ -24,12 +24,8 @@ export type SiteContentState = {
 export const DEFAULT_REVALIDATE_PATHS = ["/", "/projects", "/blogs", "/github", "/resume", "/maintenance"];
 
 function logSync(message: string, details?: Record<string, unknown>) {
-  if (details) {
-    console.log(message, details);
-    return;
-  }
-
-  console.log(message);
+  void message;
+  void details;
 }
 
 function applySyncStatus(
@@ -220,9 +216,6 @@ export async function getOrSeedSiteData(): Promise<SiteData> {
 export async function saveSiteData(nextData: SiteData) {
   const now = new Date().toISOString();
   const requestedSource = nextData.websiteControl?.dataSource || "auto";
-  console.log("[site-data-store] saveSiteData entry", {
-    sections: summarizeSectionCounts(nextData.sections),
-  });
   const normalized = applySyncStatus(
     {
       ...nextData,
@@ -233,18 +226,10 @@ export async function saveSiteData(nextData: SiteData) {
       lastGitHubSyncAt: nextData.websiteControl?.syncStatus?.lastGitHubSync || "",
     }
   );
-  console.log("[site-data-store] before persistMongo", {
-    sections: summarizeSectionCounts(normalized.sections),
-  });
-
   const mongoState = await persistMongo(normalized, {
     lastMongoUpdateAt: now,
     lastGitHubSyncAt: normalized.websiteControl?.syncStatus?.lastGitHubSync || "",
   });
-  console.log("[site-data-store] after persistMongo", {
-    sections: summarizeSectionCounts(mongoState.data.sections),
-  });
-
   try {
     const backup = await backupMongoToGitHub(mongoState.data);
     const withSyncMeta = await persistMongo(

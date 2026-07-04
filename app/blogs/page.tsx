@@ -29,7 +29,7 @@ export default async function BlogsPage() {
                   <p className="mt-3 text-sm leading-7 text-text-muted">{blog.excerpt || String(blog.content).slice(0, 180)}</p>
                   <div className="mt-3 flex flex-wrap gap-3 text-xs font-medium text-primary">
                     {blog.readingTimeMinutes ? <span>{blog.readingTimeMinutes} min read</span> : null}
-                    {blog.featured ? <span>Featured</span> : null}
+                    {blog.isFeatured || blog.featured ? <span>Featured</span> : null}
                     {blog.scheduledFor ? <span>Scheduled: {blog.scheduledFor}</span> : null}
                   </div>
                   <Link href={`/blogs/${blog.slug}`} className="mt-5 inline-flex rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white">

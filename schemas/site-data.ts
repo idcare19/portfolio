@@ -19,6 +19,7 @@ export const blogSchema = z.object({
   excerpt: z.string(),
   content: z.string(),
   coverImage: z.string().optional(),
+  author: z.string().optional(),
   tags: z.array(z.string()),
   category: z.string(),
   status: z.enum(["draft", "published"]),

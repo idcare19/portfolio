@@ -5,14 +5,29 @@ import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
+import { normalizeSlug } from "@/lib/content-utils";
 
 export function BlogsSection() {
   const section = useSectionData("blogs");
   const siteData = useSiteDataContext();
   const data = section.data as Record<string, any>;
-  const blogs = (Array.isArray(siteData.blogs) ? siteData.blogs : [])
-    .filter((blog) => blog && blog.status === "published" && blog.isEnabled)
-    .sort((left, right) => Number(left.order ?? 0) - Number(right.order ?? 0));
+  const sectionBlogs = Array.isArray(section.items) ? section.items : [];
+  const blogs = [...(Array.isArray(siteData.blogs) ? siteData.blogs : []), ...sectionBlogs]
+    .filter((blog, index, all) => {
+      if (!blog || blog.status !== "published" || !blog.isEnabled) return false;
+      const slug = normalizeSlug(String(blog.slug || blog.title || ""));
+      return slug ? all.findIndex((item) => normalizeSlug(String(item?.slug || item?.title || "")) === slug) === index : true;
+    })
+    .sort((left, right) => {
+      const featuredScore = Number(right.isFeatured || right.featured || false) - Number(left.isFeatured || left.featured || false);
+      if (featuredScore) return featuredScore;
+      const rightDate = new Date(right.publishedAt || right.createdAt || right.updatedAt || 0).getTime();
+      const leftDate = new Date(left.publishedAt || left.createdAt || left.updatedAt || 0).getTime();
+      if (rightDate !== leftDate) return rightDate - leftDate;
+      const orderScore = Number(left.order ?? 0) - Number(right.order ?? 0);
+      if (orderScore) return orderScore;
+      return String(normalizeSlug(String(left.slug || left.title || ""))).localeCompare(String(normalizeSlug(String(right.slug || right.title || ""))));
+    });
   const title = data.title || "Blogs";
   const description = data.description || "Writing, notes, and build lessons from the portfolio.";
   const eyebrow = data.eyebrow || "Blogs";
@@ -53,7 +68,7 @@ export function BlogsSection() {
                     {blog.readingTimeMinutes ? <span>{blog.readingTimeMinutes} min read</span> : null}
                     {blog.featured || blog.isFeatured ? <span>Featured</span> : null}
                   </div>
-                  <Link href={`/blogs/${blog.slug}`} className="mt-5 inline-flex rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4ED8]">
+                    <Link href={`/blogs/${normalizeSlug(String(blog.slug || blog.title || ""))}`} className="mt-5 inline-flex rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4ED8]">
                     Read Article
                   </Link>
                 </article>

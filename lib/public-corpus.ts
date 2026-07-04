@@ -2,6 +2,7 @@ import "server-only";
 
 import { getPublicGitHubStats } from "@/lib/github-stats";
 import { scoreFuzzy } from "@/lib/content-utils";
+import { getPublishedBlogs } from "@/lib/portfolio/repository";
 import { getSiteData } from "@/src/lib/site-data";
 
 export type PublicCorpusEntry = {
@@ -96,7 +97,7 @@ export async function buildPublicCorpus() {
         .join(" "),
       keywords: [...project.techStack, ...(project.tags || []), project.category],
     })),
-    ...siteData.blogs.map((blog) => ({
+    ...(await getPublishedBlogs()).map((blog) => ({
       type: "blog",
       title: blog.title,
       href: `/blogs/${blog.slug}`,

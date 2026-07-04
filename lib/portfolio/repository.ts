@@ -1,7 +1,7 @@
 import "server-only";
 
 import siteDataSeed from "@/src/data/siteData.json";
-import { calculateReadingTimeMinutes, slugify } from "@/lib/content-utils";
+import { calculateReadingTimeMinutes, normalizeSlug, slugify } from "@/lib/content-utils";
 import { connectToDatabase } from "@/lib/mongodb";
 import { normalizeSiteData, summarizeSectionCounts } from "@/lib/site-data-transform";
 import { Blog } from "@/models/Blog";
@@ -12,7 +12,7 @@ import { Section } from "@/models/Section";
 import { SiteSettings } from "@/models/SiteSettings";
 import { Skill } from "@/models/Skill";
 import { Testimonial } from "@/models/Testimonial";
-import type { SiteData, SiteSectionBlock } from "@/src/types/site-data";
+import type { BlogItem, SiteData, SiteSectionBlock } from "@/src/types/site-data";
 
 const SETTINGS_KEY = "primary";
 
@@ -43,6 +43,55 @@ type StoredSettings = {
 
 function cloneSeedData(): SiteData {
   return JSON.parse(JSON.stringify(siteDataSeed)) as SiteData;
+}
+
+function toBoolean(value: unknown, fallback = false) {
+  if (typeof value === "boolean") return value;
+  if (typeof value === "string") return value.toLowerCase() === "true";
+  if (value === null || value === undefined) return fallback;
+  return Boolean(value);
+}
+
+function normalizeBlogRecord(blog: Record<string, unknown>, index: number, fallback?: Partial<Record<string, unknown>>): BlogItem & {
+  published: boolean;
+  createdAt: string;
+  updatedAt: string;
+  markdown: string;
+  relatedSlugs: string[];
+  scheduledFor: string;
+  readingTimeMinutes: number;
+} {
+  const slug = normalizeSlug(String(blog.slug || blog.title || fallback?.slug || `blog-${index + 1}`));
+  const title = String(blog.title || fallback?.title || `Blog ${index + 1}`).trim();
+  const excerpt = String(blog.excerpt || blog.description || fallback?.excerpt || "");
+  const content = String(blog.content || fallback?.content || "");
+  const publishedAt = String(blog.publishedAt || blog.updatedAt || fallback?.publishedAt || fallback?.updatedAt || "");
+  const createdAt = String(blog.createdAt || fallback?.createdAt || publishedAt || "");
+  return {
+    id: String(blog.id || fallback?.id || slug || `blog-${index + 1}`),
+    slug,
+    title,
+    excerpt,
+    content,
+    coverImage: String(blog.coverImage || blog.thumbnail || blog.image || fallback?.coverImage || ""),
+    author: String(blog.author || fallback?.author || ""),
+    tags: Array.isArray(blog.tags) ? blog.tags.map(String) : Array.isArray(fallback?.tags) ? (fallback.tags as string[]) : [],
+    category: String(blog.category || (Array.isArray(blog.categories) ? blog.categories[0] : "") || fallback?.category || "General"),
+    status: (blog.status === "draft" || blog.status === "published" ? blog.status : (toBoolean(blog.published, true) ? "published" : "draft")) as "draft" | "published",
+    isFeatured: toBoolean(blog.isFeatured ?? blog.featured ?? fallback?.isFeatured, false),
+    published: toBoolean(blog.published, true),
+    isEnabled: toBoolean(blog.isEnabled ?? blog.enabled ?? fallback?.isEnabled, true),
+    seoTitle: String(blog.seoTitle || fallback?.seoTitle || title),
+    seoDescription: String(blog.seoDescription || fallback?.seoDescription || excerpt),
+    publishedAt,
+    order: Number(blog.order ?? fallback?.order ?? index + 1),
+    readingTimeMinutes: Number(blog.readingTimeMinutes || calculateReadingTimeMinutes(String(blog.markdown || content))),
+    relatedSlugs: Array.isArray(blog.relatedSlugs) ? blog.relatedSlugs.map((value) => normalizeSlug(String(value))) : [],
+    createdAt,
+    updatedAt: String(blog.updatedAt || fallback?.updatedAt || publishedAt || createdAt || ""),
+    scheduledFor: String(blog.scheduledFor || fallback?.scheduledFor || ""),
+    markdown: String(blog.markdown || content),
+  };
 }
 
 function createSectionDoc(section: SiteSectionBlock) {
@@ -250,25 +299,9 @@ async function seedCollectionsFromSiteData(siteData: SiteData) {
   }
 
   await Blog.deleteMany({});
-  const blogs = (siteData.blogs || []).map((blog: Record<string, unknown>, index) => ({
-    slug: slugify(String(blog.slug || blog.title || `blog-${index + 1}`)),
-    title: String(blog.title || `Blog ${index + 1}`),
-    excerpt: String(blog.excerpt || blog.description || ""),
-    content: String(blog.content || ""),
-    markdown: String(blog.markdown || blog.content || ""),
-    thumbnail: String(blog.thumbnail || blog.image || ""),
-    tags: Array.isArray(blog.tags) ? blog.tags.map(String) : [],
-    categories: Array.isArray(blog.categories) ? blog.categories.map(String) : [],
-    published: blog.published !== false,
-    scheduledFor: String(blog.scheduledFor || ""),
-    featured: Boolean(blog.featured),
-    seoTitle: String(blog.seoTitle || blog.title || ""),
-    seoDescription: String(blog.seoDescription || blog.excerpt || ""),
-    readingTimeMinutes: Number(blog.readingTimeMinutes || calculateReadingTimeMinutes(String(blog.markdown || blog.content || ""))),
-    relatedSlugs: Array.isArray(blog.relatedSlugs) ? blog.relatedSlugs.map(String) : [],
-    order: index + 1,
-    updatedAt: siteData.updatedAt || now,
-  }));
+  const blogs = (siteData.blogs || []).map((blog: Record<string, unknown>, index) =>
+    normalizeBlogRecord(blog, index, { updatedAt: siteData.updatedAt || now })
+  );
   if (blogs.length) {
     await Blog.insertMany(blogs, { ordered: false });
   }
@@ -570,23 +603,25 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     image: item.image || "",
   }));
 
-  const normalizedBlogs: SiteData["blogs"] = blogs.map((blog: any, index) => ({
-    id: blog.slug || `blog-${index + 1}`,
-    slug: blog.slug || slugify(blog.title || `blog-${index + 1}`),
-    title: blog.title || `Blog ${index + 1}`,
-    excerpt: blog.excerpt || "",
-    content: blog.content || blog.markdown || "",
-    coverImage: blog.thumbnail || blog.coverImage || "",
-    tags: blog.tags || [],
-    category: Array.isArray(blog.categories) ? String(blog.categories[0] || "General") : "General",
-    status: blog.published === false ? "draft" : "published",
-    isFeatured: Boolean(blog.featured),
-    seoTitle: blog.seoTitle || blog.title || "",
-    seoDescription: blog.seoDescription || blog.excerpt || "",
-    publishedAt: blog.published !== false ? String(blog.updatedAt || settings.updatedAt || new Date().toISOString()) : "",
-    order: Number(blog.order ?? index + 1),
-    isEnabled: blog.published !== false,
-  }));
+  const normalizedBlogs: SiteData["blogs"] = blogs.map((blog: any, index) =>
+    normalizeBlogRecord(blog, index, {
+      id: blog._id ? String(blog._id) : undefined,
+      title: blog.title,
+      excerpt: blog.excerpt,
+      content: blog.content || blog.markdown,
+      coverImage: blog.coverImage || blog.thumbnail,
+      author: blog.author,
+      tags: blog.tags,
+      category: Array.isArray(blog.categories) ? blog.categories[0] : blog.category,
+      publishedAt: blog.publishedAt || blog.updatedAt || settings.updatedAt || new Date().toISOString(),
+      updatedAt: blog.updatedAt || settings.updatedAt || new Date().toISOString(),
+      createdAt: blog.createdAt || settings.updatedAt || new Date().toISOString(),
+      order: Number(blog.order ?? index + 1),
+      isFeatured: blog.featured,
+      isEnabled: blog.isEnabled,
+      status: blog.published === false ? "draft" : "published",
+    })
+  );
 
   const aboutSection = sections.find((section: any) => section.key === "about" || section.id === "about");
 
@@ -695,10 +730,6 @@ export async function createPortfolioMessage(input: {
 
 export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteData> {
   const now = nextData.updatedAt || new Date().toISOString();
-  console.log("[portfolio/repository] savePortfolioSiteData entry", {
-    sections: summarizeSectionCounts(nextData.sections),
-  });
-
   const savedSettings = await SiteSettings.findOneAndUpdate(
     { key: SETTINGS_KEY },
     {
@@ -753,9 +784,6 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
   const readbackData = readback as unknown as { _id?: unknown; sections?: SiteData["sections"] };
 
   const projectItemsRaw = (nextData.sections?.projects?.items || nextData.projectsDetailed || []) as any[];
-  console.log("[portfolio/repository] before Mongo write", {
-    sections: summarizeSectionCounts(nextData.sections),
-  });
   const projects = projectItemsRaw.map((project, index) => ({
     slug: slugify((project as any).slug || project.id || project.title || `project-${index + 1}`),
     title: project.title,
@@ -930,18 +958,6 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
     };
     return acc;
   }, {});
-  console.log("[portfolio/repository] project save readback", {
-    sectionsBefore: summarizeSectionCounts(nextData.sections),
-    readbackProjectCount: projectReadback.length,
-    readbackSectionProjectCount: Array.isArray((sectionProjectReadback as any)?.items) ? (sectionProjectReadback as any).items.length : null,
-    readbackSectionMetadata: {
-      about: sectionMetadataReadback.about,
-      projects: sectionMetadataReadback.projects,
-      blogs: sectionMetadataReadback.blogs,
-      footer: sectionMetadataReadback.footer,
-    },
-  });
-
   return normalizeSiteData({
     ...nextData,
     sections: rebuilt,
@@ -956,10 +972,24 @@ export async function getPublishedProjects() {
 
 export async function getPublishedBlogs() {
   const data = await getPortfolioSiteData();
+  const seen = new Set<string>();
   return data.blogs
+    .map((blog, index) => normalizeBlogRecord(blog as any, index))
     .filter((blog) => blog.status === "published" && blog.isEnabled)
+    .filter((blog) => {
+      const key = blog.slug || blog.id;
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    })
+    .sort((left, right) =>
+      Number(right.isFeatured) - Number(left.isFeatured) ||
+      new Date(right.publishedAt || right.createdAt || right.updatedAt || 0).getTime() - new Date(left.publishedAt || left.createdAt || left.updatedAt || 0).getTime() ||
+      Number(left.order || 0) - Number(right.order || 0) ||
+      String(left.slug).localeCompare(String(right.slug))
+    )
     .map((blog) => ({
       ...blog,
-      thumbnail: blog.coverImage || (blog as any).thumbnail || "",
+      thumbnail: blog.coverImage || "",
     }));
 }

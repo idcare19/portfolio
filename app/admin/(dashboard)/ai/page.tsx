@@ -24,9 +24,6 @@ export default function AiAdminPage() {
   const { data, setData, loading, saving, error, save } = useSiteDataEditor();
   const { notify } = useToast();
   const [status, setStatus] = useState<AiStatusPayload | null>(null);
-  const [testQuestion, setTestQuestion] = useState("What services does Abhishek offer?");
-  const [testAnswer, setTestAnswer] = useState("");
-  const [testing, setTesting] = useState(false);
 
   useEffect(() => {
     fetch("/api/admin/ai/status", { cache: "no-store" })
@@ -60,27 +57,11 @@ export default function AiAdminPage() {
     else notify("error", result.error || "Save failed");
   }
 
-  async function handleTest() {
-    if (!testQuestion.trim()) return;
-    setTesting(true);
-    try {
-      const response = await fetch("/api/assistant/ask", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: testQuestion, history: [] }),
-      });
-      const payload = await response.json();
-      setTestAnswer(String(payload.answer || ""));
-    } finally {
-      setTesting(false);
-    }
-  }
-
   return (
     <div className="space-y-6">
       <PageHeader title="Portfolio AI" description="Configure Gemini-assisted hybrid retrieval for the public portfolio assistant." />
 
-      <SectionCard title="Basic" description="Core AI controls and a quick test surface.">
+      <SectionCard title="Basic" description="Core AI controls.">
         <div className="grid gap-4 md:grid-cols-2">
           <label className="text-sm">
             <span className="mb-1 block font-medium text-admin-text">Enable AI</span>
@@ -93,24 +74,11 @@ export default function AiAdminPage() {
           <div className="text-sm text-admin-text-muted">
             Gemini API status: <span className="font-medium text-admin-text">{status?.geminiConfigured ? "Configured" : "Missing GEMINI_API_KEY"}</span>
           </div>
-          <label className="text-sm md:col-span-2">
-            <span className="mb-1 block font-medium text-admin-text">Test question</span>
-            <textarea
-              rows={3}
-              value={testQuestion}
-              onChange={(event) => setTestQuestion(event.target.value)}
-              className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
-            />
-          </label>
           <div className="md:col-span-2 flex flex-wrap gap-3">
-            <button onClick={handleTest} disabled={testing} className="rounded-xl bg-admin-secondary px-4 py-2 text-sm font-semibold text-white">
-              {testing ? "Testing..." : "Test Question"}
-            </button>
             <button onClick={handleSave} disabled={saving} className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white">
               {saving ? "Saving..." : "Save"}
             </button>
           </div>
-          {testAnswer ? <pre className="md:col-span-2 rounded-xl border border-admin-border bg-admin-input p-4 text-xs text-admin-text whitespace-pre-wrap">{testAnswer}</pre> : null}
         </div>
       </SectionCard>
 
@@ -142,21 +110,6 @@ export default function AiAdminPage() {
           </div>
           <div className="md:col-span-2 rounded-xl border border-admin-border bg-admin-input p-4 text-sm text-admin-text-muted">
             Rebuild index: public portfolio retrieval is rebuilt automatically from the current public corpus on each server refresh. No separate vector index exists in this architecture yet.
-          </div>
-          <div className="md:col-span-2">
-            <p className="mb-2 font-medium text-admin-text">Logs</p>
-            <div className="space-y-2">
-              {(status?.logs || []).length ? (
-                status?.logs?.map((entry, index) => (
-                  <div key={`${entry.timestamp}-${index}`} className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-xs text-admin-text">
-                    <div>{entry.timestamp} - {entry.usedGemini ? "Gemini" : "Fallback"} - {entry.success ? "Success" : "Fallback"}</div>
-                    <div className="text-admin-text-muted">{entry.question}</div>
-                  </div>
-                ))
-              ) : (
-                <p className="text-sm text-admin-text-muted">No AI logs yet.</p>
-              )}
-            </div>
           </div>
         </div>
       </details>

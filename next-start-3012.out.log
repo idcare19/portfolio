@@ -91,3 +91,181 @@
 [homepage] Rendering section: github github
 [homepage] Rendering section: services services
 [homepage] Rendering section: contact contact
+[homepage] section keys [
+  'hero',      'about',
+  'skills',    'projects',
+  'working',   'completed',
+  'reviews',   'journey',
+  'education', 'services',
+  'contact',   'blogs',
+  'github',    'footer'
+]
+[homepage] visibleSections 11
+[homepage] visibleSections detail [
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'hero'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'about'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'skills'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'projects'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'working'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'completed'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'reviews'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'blogs'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'github'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'services'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'contact'
+  }
+]
+[homepage] Rendering section: hero hero
+[homepage] Rendering section: about about
+[homepage] Rendering section: skills skills
+[homepage] Rendering section: projects projects
+[homepage] Rendering section: working working
+[homepage] Rendering section: completed completed
+[homepage] Rendering section: reviews reviews
+[homepage] Rendering section: blogs blogs
+[homepage] Rendering section: github github
+[homepage] Rendering section: services services
+[homepage] Rendering section: contact contact
+[homepage] section keys [
+  'hero',      'about',
+  'skills',    'projects',
+  'working',   'completed',
+  'reviews',   'journey',
+  'education', 'services',
+  'contact',   'blogs',
+  'github',    'footer'
+]
+[homepage] visibleSections 11
+[homepage] visibleSections detail [
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'hero'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'about'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'skills'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'projects'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'working'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'completed'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'reviews'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'blogs'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'github'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'services'
+  },
+  {
+    slug: undefined,
+    enabled: true,
+    showOnHomepage: true,
+    renderer: 'contact'
+  }
+]
+[homepage] Rendering section: hero hero
+[homepage] Rendering section: about about
+[homepage] Rendering section: skills skills
+[homepage] Rendering section: projects projects
+[homepage] Rendering section: working working
+[homepage] Rendering section: completed completed
+[homepage] Rendering section: reviews reviews
+[homepage] Rendering section: blogs blogs
+[homepage] Rendering section: github github
+[homepage] Rendering section: services services
+[homepage] Rendering section: contact contact

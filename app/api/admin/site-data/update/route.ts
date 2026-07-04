@@ -167,30 +167,7 @@ export async function POST(request: Request) {
 
   try {
     const body = await request.json();
-    console.log("[admin/site-data/update] body.projects.sections", {
-      projectCount: Array.isArray((body as any)?.sections?.projects?.items) ? (body as any).sections.projects.items.length : null,
-      projectIds: Array.isArray((body as any)?.sections?.projects?.items)
-        ? (body as any).sections.projects.items.map((project: any) => project?.id).filter(Boolean)
-        : [],
-    });
     const incomingSiteData = (body?.data ?? body) as Partial<SiteData> & Record<string, unknown>;
-    console.log("[admin/site-data/update] before saveSiteData", {
-      projectCount: Array.isArray((incomingSiteData as any)?.sections?.projects?.items) ? (incomingSiteData as any).sections.projects.items.length : null,
-      projectIds: Array.isArray((incomingSiteData as any)?.sections?.projects?.items)
-        ? (incomingSiteData as any).sections.projects.items.map((project: any) => project?.id).filter(Boolean)
-        : [],
-      sectionsProjects: (incomingSiteData as any)?.sections?.projects?.items,
-      blogs: {
-        enabled: (incomingSiteData as any)?.sections?.blogs?.enabled,
-        showOnHomepage: (incomingSiteData as any)?.sections?.blogs?.showOnHomepage,
-        nav: (incomingSiteData as any)?.sections?.blogs?.nav,
-      },
-      footer: {
-        enabled: (incomingSiteData as any)?.sections?.footer?.enabled,
-        showOnHomepage: (incomingSiteData as any)?.sections?.footer?.showOnHomepage,
-        nav: (incomingSiteData as any)?.sections?.footer?.nav,
-      },
-    });
     const githubConfigInput = (incomingSiteData.githubConfig ?? body?.githubConfig ?? {}) as Record<string, unknown>;
     const existingSiteData = await getPortfolioSiteData();
     const normalizedExistingSiteData = normalizeSiteData(existingSiteData);
@@ -279,69 +256,13 @@ export async function POST(request: Request) {
       token: "",
     };
 
-    const incomingProjects = Array.isArray((incomingSiteData.sections as any)?.projects?.items)
-      ? (incomingSiteData.sections as any).projects.items
-      : [];
-    console.log("[admin/site-data/update] incoming payload", {
-      projectCount: incomingProjects.length,
-      projectIds: incomingProjects.map((project: any) => project?.id).filter(Boolean),
-      sectionsProjectCount: Array.isArray((incomingSiteData.sections as any)?.projects?.items)
-        ? (incomingSiteData.sections as any).projects.items.length
-        : null,
-      hasProjectsDetailed: Array.isArray(incomingSiteData.projectsDetailed),
-    });
-
-    console.log("[admin/site-data/update] githubConfig payload", {
-      githubConfig: {
-        ...githubConfigToSave,
-        token: undefined,
-      },
-      selectedRepositoriesLength: Array.isArray(githubConfigToSave.selectedRepositories) ? githubConfigToSave.selectedRepositories.length : 0,
-      commitMessageIncludesLength: Array.isArray(githubConfigToSave.commitMessageIncludes) ? githubConfigToSave.commitMessageIncludes.length : 0,
-      commitMessageExcludesLength: Array.isArray(githubConfigToSave.commitMessageExcludes) ? githubConfigToSave.commitMessageExcludes.length : 0,
-    });
-
     const nextData: SiteData = {
       ...mergedSiteData,
       githubConfig: githubConfigToSave,
       updatedAt: new Date().toISOString(),
     };
-    console.log("[admin/site-data/update] nextData before saveSiteData", {
-      projectCount: Array.isArray((nextData as any)?.sections?.projects?.items) ? (nextData as any).sections.projects.items.length : null,
-      projectIds: Array.isArray((nextData as any)?.sections?.projects?.items)
-        ? (nextData as any).sections.projects.items.map((project: any) => project?.id).filter(Boolean)
-        : [],
-      blogs: {
-        enabled: (nextData as any)?.sections?.blogs?.enabled,
-        showOnHomepage: (nextData as any)?.sections?.blogs?.showOnHomepage,
-        nav: (nextData as any)?.sections?.blogs?.nav,
-      },
-      footer: {
-        enabled: (nextData as any)?.sections?.footer?.enabled,
-        showOnHomepage: (nextData as any)?.sections?.footer?.showOnHomepage,
-        nav: (nextData as any)?.sections?.footer?.nav,
-      },
-    });
 
     const saved = await saveSiteData(nextData);
-    const savedProjects = Array.isArray(saved.data.sections?.projects?.items) ? saved.data.sections.projects.items : [];
-    console.log("[admin/site-data/update] save readback", {
-      projectCount: savedProjects.length,
-      projectIds: savedProjects.map((project: any) => project?.id).filter(Boolean),
-      matchedIncomingProjectIds: incomingProjects
-        .map((project: any) => project?.id)
-        .filter((id: string | undefined) => Boolean(id) && savedProjects.some((project: any) => project?.id === id)),
-      blogs: saved.data.sections?.blogs ? {
-        enabled: saved.data.sections.blogs.enabled,
-        showOnHomepage: saved.data.sections.blogs.showOnHomepage,
-        nav: saved.data.sections.blogs.nav,
-      } : null,
-      footer: saved.data.sections?.footer ? {
-        enabled: saved.data.sections.footer.enabled,
-        showOnHomepage: saved.data.sections.footer.showOnHomepage,
-        nav: saved.data.sections.footer.nav,
-      } : null,
-    });
     let githubSync: { success: boolean; error?: string } | null = null;
 
     if (saved.data.githubConfig?.enabled && saved.data.githubConfig.username) {
@@ -373,13 +294,6 @@ export async function POST(request: Request) {
     });
   } catch (error) {
     const message = error instanceof Error ? error.message : "Failed to update site data";
-    console.error("[admin/site-data/update] save failed", {
-      name: error instanceof Error ? error.name : "UnknownError",
-      message,
-      stack: error instanceof Error ? error.stack : undefined,
-      receivedSectionKeys: Object.keys(((error as any)?.body?.sections as Record<string, unknown>) || {}),
-      invalidSectionRenderers: [],
-    });
     const details =
       error instanceof Error && process.env.NODE_ENV !== "production" ? `${message}\n${error.stack || ""}` : message;
     return NextResponse.json(

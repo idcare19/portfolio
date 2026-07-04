@@ -14,8 +14,6 @@ export async function POST(request: Request) {
       revalidatePath(path);
     }
 
-    console.log("[SYNC] Revalidation completed", { paths });
-
     return NextResponse.json({
       success: true,
       ok: true,

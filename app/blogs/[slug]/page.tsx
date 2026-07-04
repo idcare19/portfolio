@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import { LikeButton } from "@/components/site/LikeButton";
 import { ShareButtons } from "@/components/site/ShareButtons";
 import { ViewCounter } from "@/components/site/ViewCounter";
-import { extractToc } from "@/lib/content-utils";
+import { extractToc, normalizeSlug } from "@/lib/content-utils";
 import { getPublishedBlogs } from "@/lib/portfolio/repository";
 
 export const dynamic = "force-dynamic";
@@ -20,14 +20,18 @@ type BlogDetail = {
 };
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params;
+  const { slug: rawSlug } = await params;
+  const slug = normalizeSlug(rawSlug);
+  if (!slug) notFound();
   const blogs = (await getPublishedBlogs()) as BlogDetail[];
-  const blog = blogs.find((item) => item.slug === slug);
+  const blog = blogs.find((item) => normalizeSlug(item.slug) === slug);
 
   if (!blog) notFound();
 
   const toc = extractToc(blog.content || "");
-  const related = blogs.filter((item) => item.slug !== blog.slug && ((item.tags || []).some((tag) => (blog.tags || []).includes(tag)))).slice(0, 3);
+  const related = blogs
+    .filter((item) => item.slug !== blog.slug && (item.tags || []).some((tag) => (blog.tags || []).includes(tag)))
+    .slice(0, 3);
 
   return (
     <main className="min-h-screen bg-page-bg py-24">
@@ -45,7 +49,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
           <div className="mt-4">
             <ShareButtons title={blog.title} path={`/blogs/${blog.slug}`} />
           </div>
-          {blog.coverImage || blog.thumbnail ? <img src={blog.coverImage || blog.thumbnail} alt={blog.title} className="mt-8 w-full rounded-[24px] object-cover" /> : null}
+          {blog.coverImage || blog.thumbnail ? <img src={blog.coverImage || blog.thumbnail} alt={blog.title} className="mt-8 w-full rounded-[24px] object-cover" /> : <div className="mt-8 h-64 rounded-[24px] border border-dashed border-[rgb(var(--border))] bg-[rgb(var(--page-bg))]" />}
           {toc.length ? (
             <div className="mt-8 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4">
               <p className="text-sm font-semibold text-text-main">Table of Contents</p>

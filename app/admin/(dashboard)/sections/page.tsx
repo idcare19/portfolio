@@ -39,19 +39,6 @@ export default function SectionsAdminPage() {
   async function handleSave() {
     if (!data) return;
     const sections = Object.values(data.sections || {});
-    console.log("[admin/sections] save payload", {
-      sectionCount: sections.length,
-      sections: sections.map((section) => ({
-        key: section.id,
-        renderer: section.renderer,
-        order: section.order,
-        enabled: section.enabled,
-        nav: section.nav,
-      })),
-      blogs: (data.sections as any)?.blogs,
-      footer: (data.sections as any)?.footer,
-      about: (data.sections as any)?.about,
-    });
     const validationError = validateSections(sections);
     if (validationError) {
       notify("error", validationError);

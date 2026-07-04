@@ -22,33 +22,10 @@ function noStoreJson(body: unknown, init?: ResponseInit) {
   });
 }
 
-function analyzeSiteData(data: ReturnType<typeof toPublicSiteData>) {
-  const sectionSummaries = Object.fromEntries(
-    Object.entries(data.sections || {}).map(([sectionId, section]) => [
-      sectionId,
-      {
-        eyebrow: (section.data as Record<string, unknown> | undefined)?.eyebrow ?? "",
-        title: (section.data as Record<string, unknown> | undefined)?.title ?? "",
-        description: (section.data as Record<string, unknown> | undefined)?.description ?? "",
-        itemCount: Array.isArray(section.items) ? section.items.length : 0,
-      },
-    ])
-  );
-  return {
-    sections: sectionSummaries,
-    rawAboutItems: data.sections?.about?.items ?? [],
-    normalizedAboutItems: data.sections?.about?.items ?? [],
-    publicAboutItems: data.sections?.about?.items ?? [],
-    duplicateRenderWarnings: [] as string[],
-  };
-}
-
 export async function GET(request: Request) {
   try {
     const state = await getSiteContentState();
-    const normalizedSiteData = normalizeSiteData(state.data);
     const siteData = toPublicSiteData(state.data);
-    const debug = new URL(request.url).searchParams.get("debug") === "true";
     return noStoreJson({
       ok: true,
       data: siteData,
@@ -57,14 +34,6 @@ export async function GET(request: Request) {
       source: state.activeSource,
       requestedSource: state.requestedSource,
       fallbackActivated: state.fallbackActivated,
-      ...(debug ? analyzeSiteData(siteData) : {}),
-      ...(debug
-        ? {
-            rawAboutItems: state.data.sections?.about?.items ?? [],
-            normalizedAboutItems: normalizedSiteData.sections?.about?.items ?? [],
-            publicAboutItems: siteData.sections?.about?.items ?? [],
-          }
-        : {}),
       meta: {
         lastMongoUpdateAt: state.lastMongoUpdateAt,
         lastGitHubSyncAt: state.lastGitHubSyncAt,
