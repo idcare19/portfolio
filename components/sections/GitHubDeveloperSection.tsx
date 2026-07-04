@@ -9,6 +9,12 @@ import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataPr
 import { Badge } from "@/components/ui/Badge";
 import type { GitHubStatsResponse } from "@/components/github/types";
 
+function normalizeExternalHref(value?: string) {
+  const href = String(value || "").trim();
+  if (!href || href.toLowerCase() === "none") return "";
+  return href;
+}
+
 export function GitHubDeveloperSection() {
   const section = useSectionData("github");
   const siteData = useSiteDataContext();
@@ -53,9 +59,9 @@ export function GitHubDeveloperSection() {
   const latestRepo = stats?.latestRepos?.[0];
   const latestCommit = stats?.latestCommits?.[0];
   const resolveRepoUrl = (repo: { url?: string; name?: string }) => {
-    if (repo.url) return repo.url;
+    if (normalizeExternalHref(repo.url)) return normalizeExternalHref(repo.url);
     if (repo.name && stats?.profile.login) return `https://github.com/${stats.profile.login}/${repo.name}`;
-    return stats?.profile.profileUrl || "/github";
+    return normalizeExternalHref(stats?.profile.profileUrl) || "/github";
   };
 
   return (
@@ -88,7 +94,7 @@ export function GitHubDeveloperSection() {
                   <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-text-muted">GitHub Profile</p>
                   <h3 className="text-xl font-semibold text-text-main">@{stats.profile.login}</h3>
                 </div>
-                <a href={stats.profile.profileUrl} target="_blank" rel="noopener noreferrer" className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-white text-text-muted transition hover:-translate-y-0.5 hover:text-primary">
+                <a href={normalizeExternalHref(stats.profile.profileUrl) || "/github"} target="_blank" rel="noopener noreferrer" className="ml-auto inline-flex h-10 w-10 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-white text-text-muted transition hover:-translate-y-0.5 hover:text-primary">
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </div>

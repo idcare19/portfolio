@@ -7,6 +7,12 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowUpRight, Clock3 } from "lucide-react";
 import Link from "next/link";
 
+function normalizeHref(value?: string) {
+  const href = String(value || "").trim();
+  if (!href || href.toLowerCase() === "none") return "";
+  return href;
+}
+
 export function WorkingProjectsSection() {
   const section = useSectionData("working");
   const data = section.data as Record<string, any>;
@@ -44,11 +50,11 @@ export function WorkingProjectsSection() {
                 <h3 className="mt-3 text-lg font-semibold text-text-main">{project.title}</h3>
                 <p className="mt-2 text-sm leading-relaxed text-text-muted">{project.description}</p>
 
-                {project.link ? (
+                {normalizeHref(project.link) ? (
                   <Link
-                    href={project.link}
-                    target={project.link.startsWith("http") ? "_blank" : undefined}
-                    rel={project.link.startsWith("http") ? "noreferrer" : undefined}
+                    href={normalizeHref(project.link)}
+                    target={normalizeHref(project.link).startsWith("http") ? "_blank" : undefined}
+                    rel={normalizeHref(project.link).startsWith("http") ? "noreferrer" : undefined}
                     className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1D4ED8] hover:text-[#1E40AF]"
                   >
                     View update <ArrowUpRight className="h-3.5 w-3.5" />

@@ -239,6 +239,7 @@ function getPrivacyConfig(siteData?: Awaited<ReturnType<typeof getFullSiteData>>
 
 function normalizeBlogUrl(value: unknown) {
   const text = String(value || "").trim();
+  if (!text || text.toLowerCase() === "none") return "";
   return text;
 }
 
@@ -463,7 +464,7 @@ function mapRepository(repo: any, isPinned = false) {
     forks: Number(repo.forks_count || repo.forks || 0),
     language: primaryLanguage,
     languages: repo.languages || {},
-    url: repo.html_url || repo.url || "",
+    url: normalizeBlogUrl(repo.html_url || repo.url),
     updatedAt: repo.pushed_at || repo.updatedAt || new Date().toISOString(),
     commitCount,
     publicCommitCount: Number(repo.publicCommitCount || 0),
@@ -846,7 +847,7 @@ export async function syncGitHubStats(username: string) {
         company: user.company || "",
         location: user.location || "",
         blog: normalizeBlogUrl(user.blog),
-        profileUrl: user.html_url || `https://github.com/${user.login}`,
+      profileUrl: normalizeBlogUrl(user.html_url) || `https://github.com/${user.login}`,
         joinedAt: user.created_at || "",
       },
       totals: {
