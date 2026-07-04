@@ -1,5 +1,5 @@
-import { redirect } from "next/navigation";
+import { SectionContentEditor } from "@/components/admin/SectionContentEditor";
 
 export default function SkillsRedirectPage() {
-  redirect("/admin/text-blocks");
+  return <SectionContentEditor slug="skills-content" />;
 }

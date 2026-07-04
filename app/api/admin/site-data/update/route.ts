@@ -254,9 +254,24 @@ export async function POST(request: Request) {
         showLanguageColors: true,
     };
     const safeGithubConfig = normalizeGitHubConfig(existingGithubConfig, githubConfigInput);
+    const sectionSkillItems = Array.isArray((incomingSiteData as any)?.sections?.skills?.items)
+      ? (incomingSiteData as any).sections.skills.items.filter((item: any) => item && typeof item === "object")
+      : [];
+    const topLevelSkills = Array.isArray((incomingSiteData as any)?.skillsDetailed) ? (incomingSiteData as any).skillsDetailed : [];
+    const mergedSkillItems = (sectionSkillItems.length ? sectionSkillItems : topLevelSkills).map((skill: any, index: number) => {
+      const title = String(skill?.title || skill?.name || skill?.label || "").trim();
+      return {
+        ...skill,
+        id: skill?.id || skill?.key || `skill-${index + 1}`,
+        title,
+        name: String(skill?.name || title),
+      };
+    });
     const mergedSiteData: SiteData = normalizeSiteData({
       ...(incomingSiteData as Partial<SiteData>),
       githubConfig: safeGithubConfig,
+      skillsDetailed: mergedSkillItems,
+      skills: mergedSkillItems.map((skill: any) => String(skill?.name || skill?.title || "")).filter(Boolean),
     } as SiteData);
 
     const githubConfigToSave: NonNullable<SiteData["githubConfig"]> = {

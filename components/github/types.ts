@@ -72,6 +72,20 @@ export type GitHubStatsResponse = {
     heatmap: Array<{ date: string; count: number; level: number }>;
   };
   repositories?: GitHubRepository[];
+  repositoryStats?: Array<{
+    name: string;
+    fullName: string;
+    private: boolean;
+    commitCount: number;
+    publicCommitCount: number;
+    privateCommitCount: number;
+    selected: boolean;
+    syncStatus: "success" | "failed";
+    error?: string;
+    archived?: boolean;
+    fork?: boolean;
+    updatedAt?: string;
+  }>;
   latestRepos: GitHubRepository[];
   pinnedRepos: GitHubRepository[];
   recentActivity: GitHubActivityItem[];

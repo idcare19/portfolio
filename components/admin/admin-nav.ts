@@ -31,6 +31,7 @@ export const adminNavSections: AdminNavSection[] = [
       { label: "Reviews Content", href: "/admin/reviews-content" },
       { label: "Experience Content", href: "/admin/experience-content" },
       { label: "Services Content", href: "/admin/services-content" },
+      { label: "Blogs Content", href: "/admin/blogs-content" },
       { label: "GitHub Content", href: "/admin/github-content" },
       { label: "Contact Content", href: "/admin/contact-content" },
       { label: "Footer Content", href: "/admin/footer-content" },

@@ -1596,11 +1596,7 @@
       "emptyMessage": "",
       "textBlocks": [],
       "settings": {},
-      "data": {
-        "eyebrow": "GitHub Live",
-        "title": "Live developer activity",
-        "description": "Latest repositories, commits, languages, and GitHub stats."
-      },
+      "data": {},
       "items": [
         {
           "id": "how-to-build-a-portfolio-that-converts",

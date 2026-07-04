@@ -11,6 +11,7 @@ import { SkillsSection } from "@/components/sections/SkillsSection";
 import { WorkingProjectsSection } from "@/components/sections/WorkingProjectsSection";
 import { EducationSection } from "@/components/sections/EducationSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
+import { BlogsSection } from "@/components/sections/BlogsSection";
 import { GitHubDeveloperSection } from "@/components/sections/GitHubDeveloperSection";
 import { GenericSection } from "@/components/sections/GenericSection";
 import type { SiteSectionBlock } from "@/src/types/site-data";
@@ -46,6 +47,8 @@ export function DynamicSectionRenderer({ section }: Props) {
       return <ServicesSection />;
     case "contact":
       return <ContactSection />;
+    case "blogs":
+      return <BlogsSection />;
     case "github":
       return <GitHubDeveloperSection />;
     default:

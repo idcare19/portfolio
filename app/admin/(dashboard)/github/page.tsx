@@ -84,6 +84,8 @@ type GitHubStats = {
     totalCommits?: number;
   };
   repositories?: Array<{ name: string; fullName?: string; private?: boolean; commitCount?: number; publicCommitCount?: number; privateCommitCount?: number }>;
+  repositoryStats?: Array<{ name: string; fullName: string; private: boolean; commitCount: number; publicCommitCount: number; privateCommitCount: number; selected: boolean; syncStatus: "success" | "failed"; error?: string }>;
+  availableRepositories?: Array<{ name: string; fullName?: string; private?: boolean; commitCount?: number; publicCommitCount?: number; privateCommitCount?: number; selected?: boolean }>;
   selectedRepositories?: string[];
   lastSyncError?: string;
 };
@@ -225,6 +227,8 @@ function normalizeStats(input?: Partial<GitHubStats> | null) {
       totalCommits: totals.totalCommits ?? input?.totalCommits ?? 0,
     },
     repositories: Array.isArray(input?.repositories) ? input.repositories : [],
+    repositoryStats: Array.isArray(input?.repositoryStats) ? input.repositoryStats : [],
+    availableRepositories: Array.isArray(input?.availableRepositories) ? input.availableRepositories : [],
     selectedRepositories: Array.isArray(input?.selectedRepositories) ? input.selectedRepositories : [],
     lastSyncError: input?.lastSyncError || "",
   };
@@ -238,19 +242,39 @@ export default function GitHubAdminPage() {
   const [showToken, setShowToken] = useState(false);
   const [config, setConfig] = useState<GitHubConfig>(defaultConfig);
   const [stats, setStats] = useState<ReturnType<typeof normalizeStats> | null>(null);
+  const [repoOptions, setRepoOptions] = useState<NonNullable<GitHubStats["availableRepositories"]>>([]);
 
   useEffect(() => {
     async function fetchData() {
-      const siteRes = await fetch("/api/admin/site-data");
+      const siteRes = await fetch("/api/admin/github/settings");
       if (siteRes.ok) {
         const siteData = await siteRes.json();
-        if (siteData.data?.githubConfig) setConfig(normalizeConfig(siteData.data.githubConfig));
+        if (siteData.data) setConfig(normalizeConfig(siteData.data));
+      }
+
+      const reposRes = await fetch("/api/admin/github/repositories");
+      if (reposRes.ok) {
+        const reposData = await reposRes.json();
+        if (reposData.success) {
+          const nextRepos = Array.isArray(reposData.availableRepositories) ? reposData.availableRepositories : [];
+          setRepoOptions(nextRepos);
+          setStats((current) => normalizeStats({ ...(current || {}), availableRepositories: nextRepos, selectedRepositories: Array.isArray(reposData.selectedRepositories) ? reposData.selectedRepositories : [] }));
+        }
       }
 
       const statsRes = await fetch("/api/admin/github/stats");
       if (statsRes.ok) {
         const statsData = await statsRes.json();
-        if (statsData.success) setStats(normalizeStats(statsData.data));
+        if (statsData.success) {
+          setStats(normalizeStats(statsData.data));
+          if (Array.isArray(statsData.data?.availableRepositories) && statsData.data.availableRepositories.length > 0) {
+            setRepoOptions(statsData.data.availableRepositories);
+          } else if (Array.isArray(statsData.data?.repositoryStats) && statsData.data.repositoryStats.length > 0) {
+            setRepoOptions(statsData.data.repositoryStats);
+          } else if (Array.isArray(statsData.data?.repositories) && statsData.data.repositories.length > 0) {
+            setRepoOptions(statsData.data.repositories);
+          }
+        }
         else setStats(normalizeStats(null));
       }
     }
@@ -258,11 +282,21 @@ export default function GitHubAdminPage() {
     void fetchData();
   }, []);
 
-  const repoOptions = useMemo(() => stats?.repositories ?? [], [stats?.repositories]);
+  const repoList = useMemo(() => repoOptions.length ? repoOptions : (stats?.availableRepositories ?? stats?.repositoryStats ?? stats?.repositories ?? []), [repoOptions, stats?.availableRepositories, stats?.repositoryStats, stats?.repositories]);
   const selectedRepositories = config.selectedRepositories ?? [];
+  const recentCommitsSelectedRepositories = config.recentCommitsSelectedRepositories ?? [];
+  const recentActivityHiddenTypes = config.recentActivityHiddenTypes ?? [];
+  const recentActivityHideRepositories = config.recentActivityHideRepositories ?? [];
   const includeRules = config.commitMessageIncludes ?? [];
   const excludeRules = config.commitMessageExcludes ?? [];
   const selectedSet = useMemo(() => new Set(selectedRepositories), [selectedRepositories]);
+  const recentCommitsSelectedSet = useMemo(() => new Set(recentCommitsSelectedRepositories), [recentCommitsSelectedRepositories]);
+  const recentActivityHideRepoSet = useMemo(() => new Set(recentActivityHideRepositories), [recentActivityHideRepositories]);
+  const recentActivityHiddenTypeSet = useMemo(() => new Set(recentActivityHiddenTypes), [recentActivityHiddenTypes]);
+  const visibleRepoCount = repoList.length;
+  const selectedVisibleRepoCount = repoList.filter((repo) => selectedSet.has((repo as any).fullName || (repo as any).name) || Boolean((repo as any).selected)).length;
+  const selectedRecentCommitRepoCount = repoList.filter((repo) => recentCommitsSelectedSet.has((repo as any).fullName || (repo as any).name) || Boolean((repo as any).selected)).length;
+  const selectedRecentActivityRepoCount = repoList.filter((repo) => recentActivityHideRepoSet.has((repo as any).fullName || (repo as any).name) || Boolean((repo as any).selected)).length;
 
   function updateConfig(next: Partial<GitHubConfig>) {
     setConfig((current) => ({ ...current, ...next }));
@@ -277,34 +311,19 @@ export default function GitHubAdminPage() {
         commitMessageIncludes: config.commitMessageIncludes ?? [],
         commitMessageExcludes: config.commitMessageExcludes ?? [],
       });
-      const siteRes = await fetch("/api/admin/site-data?_ts=" + Date.now());
-      const sitePayload = siteRes.ok ? await siteRes.json() : null;
-      const currentSiteData = sitePayload?.data ?? {};
-      const mergedSiteData = {
-        ...currentSiteData,
-        githubConfig: {
-          ...(currentSiteData.githubConfig ?? {}),
-          ...nextConfig,
-          selectedRepositories: nextConfig.selectedRepositories ?? [],
-          commitMessageIncludes: nextConfig.commitMessageIncludes ?? [],
-          commitMessageExcludes: nextConfig.commitMessageExcludes ?? [],
-        },
-      };
-      const response = await fetch("/api/admin/site-data/update", {
-        method: "POST",
+      const response = await fetch("/api/admin/github/settings", {
+        method: "PUT",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ data: mergedSiteData }),
+        body: JSON.stringify({ data: nextConfig }),
       });
       const payload = await response.json();
       if (!payload.success) throw new Error(payload.error || payload.reason || payload.details || "Failed to save configuration");
       notify("success", "GitHub configuration saved.");
-      if (nextConfig.repositorySelectionMode === "selected" || nextConfig.commitCountMode === "selectedRepositoriesOnly") {
-        notify("success", "Repository selection updated. Run sync to recalculate commit totals.");
-      }
-      const refreshed = await fetch("/api/admin/site-data?_ts=" + Date.now());
-      if (refreshed.ok) {
-        const refreshedPayload = await refreshed.json();
-        if (refreshedPayload.data?.githubConfig) setConfig(normalizeConfig(refreshedPayload.data.githubConfig));
+      if (payload.data) setConfig(normalizeConfig(payload.data));
+      const reposRes = await fetch("/api/admin/github/repositories");
+      if (reposRes.ok) {
+        const reposData = await reposRes.json();
+        if (reposData.success) setStats((current) => normalizeStats({ ...(current || {}), availableRepositories: Array.isArray(reposData.availableRepositories) ? reposData.availableRepositories : [], selectedRepositories: Array.isArray(reposData.selectedRepositories) ? reposData.selectedRepositories : [] }));
       }
     } catch (error) {
       notify("error", error instanceof Error ? error.message : "Failed to save configuration.");
@@ -320,6 +339,11 @@ export default function GitHubAdminPage() {
       const payload = await response.json();
       if (!response.ok || !payload.success) throw new Error(payload.details || payload.error || "GitHub sync failed");
       notify("success", "GitHub stats synced.");
+      const reposRes = await fetch("/api/admin/github/repositories");
+      if (reposRes.ok) {
+        const reposData = await reposRes.json();
+        if (reposData.success) setStats((current) => normalizeStats({ ...(current || {}), availableRepositories: Array.isArray(reposData.availableRepositories) ? reposData.availableRepositories : [], selectedRepositories: Array.isArray(reposData.selectedRepositories) ? reposData.selectedRepositories : [] }));
+      }
       const statsRes = await fetch("/api/admin/github/stats");
       if (statsRes.ok) {
         const statsData = await statsRes.json();
@@ -356,6 +380,33 @@ export default function GitHubAdminPage() {
     });
   }
 
+  function toggleRecentCommitRepository(name: string) {
+    setConfig((current) => {
+      const next = new Set(current.recentCommitsSelectedRepositories ?? []);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return { ...current, recentCommitsSelectedRepositories: Array.from(next) };
+    });
+  }
+
+  function toggleRecentActivityHiddenRepository(name: string) {
+    setConfig((current) => {
+      const next = new Set(current.recentActivityHideRepositories ?? []);
+      if (next.has(name)) next.delete(name);
+      else next.add(name);
+      return { ...current, recentActivityHideRepositories: Array.from(next) };
+    });
+  }
+
+  function toggleRecentActivityHiddenType(type: string) {
+    setConfig((current) => {
+      const next = new Set(current.recentActivityHiddenTypes ?? []);
+      if (next.has(type)) next.delete(type);
+      else next.add(type);
+      return { ...current, recentActivityHiddenTypes: Array.from(next) };
+    });
+  }
+
   function parseList(value: string) {
     return value
       .split("\n")
@@ -378,6 +429,10 @@ export default function GitHubAdminPage() {
             <option value="customRepositoryList">Custom repository list</option>
           </select>
           <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+            <input type="checkbox" checked={config.includePrivateRepos} onChange={(e) => updateConfig({ includePrivateRepos: e.target.checked })} />
+            Fetch private repositories during sync
+          </label>
+          <label className="inline-flex items-center gap-2 text-sm text-admin-text">
             <input type="checkbox" checked={config.includePrivateCommits} onChange={(e) => updateConfig({ includePrivateCommits: e.target.checked })} />
             Include Private Commits
           </label>
@@ -389,7 +444,40 @@ export default function GitHubAdminPage() {
       </section>
 
       <section className="rounded-2xl border border-admin-border bg-admin-card p-6 space-y-4">
+        <h3 className="text-lg font-semibold text-admin-text">Public Visibility</h3>
+        <p className="text-sm text-admin-text-muted">
+          Choose how much private GitHub data can appear on the public site.
+        </p>
+        <div className="grid gap-3 md:grid-cols-2">
+          <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+            <input type="checkbox" checked={config.showPrivateReposPublicly} onChange={(e) => updateConfig({ showPrivateReposPublicly: e.target.checked })} />
+            Show private repository names publicly
+          </label>
+          <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+            <input type="checkbox" checked={config.showPrivateCommitsPublicly} onChange={(e) => updateConfig({ showPrivateCommitsPublicly: e.target.checked })} />
+            Show private commit messages publicly
+          </label>
+          <label className="block text-sm text-admin-text">
+            <span className="mb-1 block font-medium">Public display mode</span>
+            <select className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={config.publicDisplayMode} onChange={(e) => updateConfig({ publicDisplayMode: e.target.value as GitHubConfig["publicDisplayMode"] })}>
+              <option value="publicOnly">Public only</option>
+              <option value="aggregatePrivateOnly">Show private totals only</option>
+              <option value="includePrivateNames">Show private repo names</option>
+              <option value="includePrivateWithCommits">Show private names and commit details</option>
+            </select>
+          </label>
+          <label className="inline-flex items-center gap-2 text-sm text-admin-text pt-7">
+            <input type="checkbox" checked={config.recentActivityEnabled} onChange={(e) => updateConfig({ recentActivityEnabled: e.target.checked })} />
+            Enable recent activity
+          </label>
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-admin-border bg-admin-card p-6 space-y-4">
         <h3 className="text-lg font-semibold text-admin-text">Repository Selection</h3>
+        <p className="text-sm text-admin-text-muted">
+          {selectedVisibleRepoCount} selected of {visibleRepoCount} repositories
+        </p>
         <select className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={config.repositorySelectionMode} onChange={(e) => updateConfig({ repositorySelectionMode: e.target.value as RepositorySelectionMode })}>
           <option value="all">All repositories</option>
           <option value="publicOnly">Public only</option>
@@ -397,22 +485,118 @@ export default function GitHubAdminPage() {
           <option value="selected">Selected repositories</option>
         </select>
         <div className="flex flex-wrap gap-2">
-          <button type="button" className="rounded-full border border-admin-border px-3 py-1 text-sm" onClick={() => updateConfig({ selectedRepositories: repoOptions.map((repo) => repo.fullName || repo.name) })}>Select all</button>
+          <button type="button" className="rounded-full border border-admin-border px-3 py-1 text-sm" onClick={() => updateConfig({ selectedRepositories: repoList.map((repo) => repo.fullName || repo.name) })}>Select all</button>
           <button type="button" className="rounded-full border border-admin-border px-3 py-1 text-sm" onClick={() => updateConfig({ selectedRepositories: [] })}>Clear</button>
         </div>
         <div className="grid gap-2 md:grid-cols-2">
-          {repoOptions.map((repo) => {
+          {repoList.map((repo) => {
             const key = repo.fullName || repo.name;
-            const checked = selectedSet.has(key);
+            const checked = selectedSet.has(key) || Boolean((repo as any).selected);
             return (
               <label key={key} className="flex items-center gap-3 rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-sm text-admin-text">
                 <input type="checkbox" checked={checked} onChange={() => toggleSelectedRepository(key)} />
                 <span className="flex-1 truncate">{repo.name}</span>
                 <Badge>{repo.private ? "Private" : "Public"}</Badge>
-                <span className="text-admin-text-muted">{repo.commitCount ?? 0} commits</span>
+                <span className="text-admin-text-muted">
+                  {config.commitCountMode === "publicAndPrivateCommits"
+                    ? (repo.publicCommitCount ?? 0) + (repo.privateCommitCount ?? 0)
+                    : repo.commitCount ?? 0}{" "}
+                  commits
+                </span>
               </label>
             );
           })}
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-admin-border bg-admin-card p-6 space-y-4">
+        <h3 className="text-lg font-semibold text-admin-text">Commit Display</h3>
+        <p className="text-sm text-admin-text-muted">
+          {selectedRecentCommitRepoCount} selected of {visibleRepoCount} repositories will be used for the recent commit list.
+        </p>
+        <div className="flex flex-wrap gap-2">
+          <button type="button" className="rounded-full border border-admin-border px-3 py-1 text-sm" onClick={() => updateConfig({ recentCommitsSelectedRepositories: repoList.map((repo) => repo.fullName || repo.name) })}>Select all</button>
+          <button type="button" className="rounded-full border border-admin-border px-3 py-1 text-sm" onClick={() => updateConfig({ recentCommitsSelectedRepositories: [] })}>Clear</button>
+        </div>
+        <div className="grid gap-2 md:grid-cols-2">
+          {repoList.map((repo) => {
+            const key = repo.fullName || repo.name;
+            const checked = recentCommitsSelectedSet.has(key) || Boolean((repo as any).selected);
+            return (
+              <label key={`${key}-recent`} className="flex items-center gap-3 rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-sm text-admin-text">
+                <input type="checkbox" checked={checked} onChange={() => toggleRecentCommitRepository(key)} />
+                <span className="flex-1 truncate">{repo.name}</span>
+                <Badge>{repo.private ? "Private" : "Public"}</Badge>
+              </label>
+            );
+          })}
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-admin-border bg-admin-card p-6 space-y-4">
+        <h3 className="text-lg font-semibold text-admin-text">Recent Public Activity</h3>
+        <p className="text-sm text-admin-text-muted">
+          Control which cached GitHub events stay visible on the public timeline.
+        </p>
+        <div className="grid gap-4 md:grid-cols-2">
+          <label className="block text-sm text-admin-text">
+            <span className="mb-1 block font-medium">Activity limit</span>
+            <input
+              type="number"
+              min={1}
+              className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+              value={config.recentActivityLimit}
+              onChange={(e) => updateConfig({ recentActivityLimit: Number(e.target.value) || 10 })}
+            />
+          </label>
+          <label className="inline-flex items-center gap-2 text-sm text-admin-text pt-7">
+            <input
+              type="checkbox"
+              checked={config.recentActivityEnabled}
+              onChange={(e) => updateConfig({ recentActivityEnabled: e.target.checked })}
+            />
+            Enable recent activity
+          </label>
+        </div>
+        <div className="rounded-xl border border-dashed border-admin-border/80 p-4 space-y-3">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-sm font-medium text-admin-text">Hide activity from these repositories</p>
+            <div className="flex flex-wrap gap-2">
+              <button type="button" className="rounded-full border border-admin-border px-3 py-1 text-sm" onClick={() => updateConfig({ recentActivityHideRepositories: repoList.map((repo) => repo.fullName || repo.name) })}>Hide all</button>
+              <button type="button" className="rounded-full border border-admin-border px-3 py-1 text-sm" onClick={() => updateConfig({ recentActivityHideRepositories: [] })}>Show all</button>
+            </div>
+          </div>
+          <div className="grid gap-2 md:grid-cols-2">
+            {repoList.map((repo) => {
+              const key = repo.fullName || repo.name;
+              const checked = recentActivityHideRepoSet.has(key);
+              return (
+                <label key={`${key}-activity`} className="flex items-center gap-3 rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-sm text-admin-text">
+                  <input type="checkbox" checked={checked} onChange={() => toggleRecentActivityHiddenRepository(key)} />
+                  <span className="flex-1 truncate">{repo.name}</span>
+                  <Badge>{repo.private ? "Private" : "Public"}</Badge>
+                </label>
+              );
+            })}
+          </div>
+        </div>
+        <div className="rounded-xl border border-dashed border-admin-border/80 p-4 space-y-3">
+          <p className="text-sm font-medium text-admin-text">Hide activity event types</p>
+          <div className="flex flex-wrap gap-2">
+            {["PushEvent", "CreateEvent", "PullRequestEvent", "IssuesEvent", "ReleaseEvent", "ForkEvent"].map((type) => {
+              const active = recentActivityHiddenTypeSet.has(type);
+              return (
+                <button
+                  key={type}
+                  type="button"
+                  className={`rounded-full border px-3 py-1 text-sm ${active ? "border-admin-primary bg-admin-primary text-white" : "border-admin-border"}`}
+                  onClick={() => toggleRecentActivityHiddenType(type)}
+                >
+                  {type}
+                </button>
+              );
+            })}
+          </div>
         </div>
       </section>
 

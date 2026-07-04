@@ -104,13 +104,13 @@ export async function buildPublicCorpus() {
       content: ["blog article post writing", blog.excerpt, blog.content, blog.category, ...(blog.tags || [])].filter(Boolean).join(" "),
       keywords: [...blog.tags, blog.category],
     })),
-    ...siteData.skillsDetailed.map((skill) => ({
+    ...siteData.skillsDetailed.map((skill: any) => ({
       type: "skill",
-      title: skill.name,
+      title: skill.title || skill.name,
       href: "#skills",
       description: skill.category,
-      content: `${skill.name} ${skill.category} ${skill.level}`,
-      keywords: [skill.category, skill.name],
+      content: `${skill.title || skill.name} ${skill.category} ${skill.level}`,
+      keywords: [skill.category, skill.title || skill.name],
     })),
     ...siteData.experience.map((item) => ({
       type: "experience",

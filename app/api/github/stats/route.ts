@@ -1,17 +1,18 @@
 import { NextResponse } from 'next/server';
 import { getSiteData } from "@/src/lib/site-data";
-import { getPublicGitHubStats } from '@/lib/github-stats';
+import { getPublicGitHubStats, syncGitHubStats } from '@/lib/github-stats';
 
-export async function GET() {
+export async function GET(request: Request) {
   try {
     const siteData = await getSiteData();
     const githubConfig = siteData?.githubConfig;
+    const shouldRefresh = new URL(request.url).searchParams.get("refresh") === "true";
 
     if (!githubConfig?.enabled || !githubConfig.username) {
       return NextResponse.json({ success: false, reason: 'GitHub integration disabled or username not configured.' });
     }
 
-    const stats = await getPublicGitHubStats(githubConfig.username);
+    const stats = shouldRefresh ? (await syncGitHubStats(githubConfig.username)).stats : await getPublicGitHubStats(githubConfig.username);
     
     if (!stats) {
       return NextResponse.json({ success: false, reason: 'GitHub data not synced yet. Please sync from admin.' });

@@ -165,6 +165,21 @@ type PublicGitHubStats = {
   lastSyncError: string | null;
 };
 
+type GitHubRepositoryStats = {
+  name: string;
+  fullName: string;
+  private: boolean;
+  commitCount: number;
+  publicCommitCount: number;
+  privateCommitCount: number;
+  selected: boolean;
+  syncStatus: "success" | "failed";
+  error?: string;
+  archived?: boolean;
+  fork?: boolean;
+  updatedAt?: string;
+};
+
 function getConfiguredRefreshInterval(siteData?: Awaited<ReturnType<typeof getFullSiteData>>) {
   return siteData?.githubConfig?.refreshInterval || STALE_FALLBACK_MINUTES;
 }
@@ -235,6 +250,19 @@ function normalizeTerms(values?: string[]) {
   return (values || []).map((term) => term.trim().toLowerCase()).filter(Boolean);
 }
 
+function normalizeRepositorySelection(values?: string[]) {
+  return (values || []).map((value) => value.trim().toLowerCase()).filter(Boolean);
+}
+
+function normalizeCommitRuleInput(value?: string | string[]) {
+  const lines = Array.isArray(value) ? value : String(value || "").split("\n");
+  return lines
+    .map((line) => line.replace(/\\n/g, "\n"))
+    .flatMap((line) => line.split("\n"))
+    .map((line) => line.trim())
+    .filter(Boolean);
+}
+
 async function getHeaders() {
   const siteData = await getFullSiteData();
   const token = siteData.githubConfig?.token || process.env.GITHUB_TOKEN || process.env.GITHUB_PAT;
@@ -290,6 +318,30 @@ async function fetchAllPages(endpoint: string) {
   return allData;
 }
 
+async function fetchAllRepositories(token: string) {
+  const repositories: any[] = [];
+  const headers: HeadersInit = {
+    Authorization: `Bearer ${token}`,
+    Accept: "application/vnd.github+json",
+    "X-GitHub-Api-Version": "2022-11-28",
+  };
+  let page = 1;
+  while (true) {
+    const response = await fetch(`https://api.github.com/user/repos?per_page=100&page=${page}&affiliation=owner,collaborator,organization_member&sort=updated`, {
+      headers,
+      cache: "no-store",
+    });
+    if (!response.ok) {
+      throw new Error(`GitHub repository fetch failed: ${response.status}`);
+    }
+    const currentPage = (await response.json()) as any[];
+    repositories.push(...currentPage);
+    if (!Array.isArray(currentPage) || currentPage.length < 100) break;
+    page += 1;
+  }
+  return repositories;
+}
+
 function getRepoKey(repo: { full_name?: string; name: string }) {
   return repo.full_name || repo.name;
 }
@@ -317,9 +369,28 @@ function shouldUsePrivateRepos(config: GitHubPrivacyConfig) {
   );
 }
 
-async function countRepoCommits(repoFullName: string, username: string) {
-  const commits = await fetchAllPages(`/repos/${repoFullName}/commits?author=${encodeURIComponent(username)}`);
-  return Array.isArray(commits) ? commits.length : 0;
+async function countRepoCommits(repoFullName: string, username: string, includeRules: string[], excludeRules: string[]) {
+  const seen = new Set<string>();
+  const firstPage: any[] = [];
+  let page = 1;
+
+  while (page <= 10) {
+    const { data } = await fetchGitHubApi(`/repos/${repoFullName}/commits?author=${encodeURIComponent(username)}&per_page=100&page=${page}`);
+    const commits = Array.isArray(data) ? data : [];
+    if (!commits.length) break;
+
+    for (const commit of commits) {
+      const sha = String(commit?.sha || commit?.node_id || "").trim();
+      const message = String(commit?.commit?.message || "");
+      if (sha && commitVisibleByRules(message, includeRules, excludeRules)) seen.add(sha);
+    }
+    if (page === 1) firstPage.push(...commits);
+
+    if (commits.length < 100) break;
+    page += 1;
+  }
+
+  return { count: seen.size, firstPage };
 }
 
 async function fetchGraphQL<T>(query: string, variables: Record<string, unknown>) {
@@ -377,17 +448,26 @@ function buildContributionHeatmap(commits: Array<{ createdAt: string }>) {
 }
 
 function mapRepository(repo: any, isPinned = false) {
+  const commitCount =
+    Number(repo.commitCount ?? 0) ||
+    Number(repo.publicCommitCount ?? 0) +
+      Number(repo.privateCommitCount ?? 0);
+  const languageEntries = repo.languages && typeof repo.languages === "object" ? Object.entries(repo.languages).sort(([, left], [, right]) => Number(right) - Number(left)) : [];
+  const primaryLanguage = String(repo.language || languageEntries[0]?.[0] || "").trim();
+
   return {
     name: repo.name,
     description: repo.description || "",
     private: Boolean(repo.private),
     stars: Number(repo.stargazers_count || repo.stars || 0),
     forks: Number(repo.forks_count || repo.forks || 0),
-    language: repo.language || "",
+    language: primaryLanguage,
     languages: repo.languages || {},
     url: repo.html_url || repo.url || "",
     updatedAt: repo.pushed_at || repo.updatedAt || new Date().toISOString(),
-    commitCount: Number(repo.commitCount || 0),
+    commitCount,
+    publicCommitCount: Number(repo.publicCommitCount || 0),
+    privateCommitCount: Number(repo.privateCommitCount || 0),
     pullRequestCount: Number(repo.pullRequestCount || 0),
     issueCount: Number(repo.open_issues_count || repo.issueCount || 0),
     homepage: normalizeBlogUrl(repo.homepage),
@@ -624,6 +704,9 @@ export async function syncGitHubStats(username: string) {
     const hasToken = Boolean(privacyConfig.token || process.env.GITHUB_TOKEN || process.env.GITHUB_PAT);
     const includePrivateRepos = shouldUsePrivateRepos(privacyConfig) && hasToken;
     const reposEndpoint = includePrivateRepos ? `/user/repos?visibility=all&affiliation=owner&sort=updated` : `/users/${username}/repos?type=owner&sort=updated`;
+    const includeRules = normalizeCommitRulesInput(privacyConfig.commitMessageIncludes);
+    const excludeRules = normalizeCommitRulesInput(privacyConfig.commitMessageExcludes);
+    const selectedRepositories = normalizeRepositorySelection(privacyConfig.selectedRepositories);
 
     const [{ data: user, rateLimit }, reposPayload, publicEvents, orgs] = await Promise.all([
       fetchGitHubApi(`/users/${username}`),
@@ -631,12 +714,14 @@ export async function syncGitHubStats(username: string) {
       fetchGitHubApi(`/users/${username}/events/public?per_page=30`),
       fetchGitHubApi(`/users/${username}/orgs?per_page=20`),
     ]);
-    const repos = reposPayload.filter((repo: any) => repo.owner?.login === username && isRepoSelected(repo, privacyConfig));
+    const repos = reposPayload.filter((repo: any) => repo.owner?.login?.toLowerCase() === username.toLowerCase());
 
     const pinnedRepositories = await fetchPinnedRepositories(username, Boolean(privacyConfig.includePrivateRepos));
     const languages: Record<string, number> = {};
     const recentCommits: Array<Record<string, unknown>> = [];
     const recentActivity: Array<Record<string, unknown>> = [];
+    const repositoryStats: GitHubRepositoryStats[] = [];
+    const seenCommitShas = new Set<string>();
     let totalStars = 0;
     let totalForks = 0;
     let totalCommits = 0;
@@ -667,16 +752,20 @@ export async function syncGitHubStats(username: string) {
         const countPrivate = repo.private && shouldCountPrivateCommits(privacyConfig);
         const repoShouldCount = !repo.private || countPrivate;
         let repoCommitCount = 0;
+        let repoError = "";
 
         if (repoShouldCount) {
           try {
-            repoCommitCount = await countRepoCommits(repo.full_name, username);
-            const { data: commits } = await fetchGitHubApi(`/repos/${repo.full_name}/commits?author=${encodeURIComponent(username)}&per_page=8`);
-            if (Array.isArray(commits)) {
-              for (const commit of commits) {
+            const repoCount = await countRepoCommits(repo.full_name, username, includeRules, excludeRules);
+            repoCommitCount = repoCount.count;
+            for (const commit of repoCount.firstPage) {
+              const sha = String(commit?.sha || "").trim();
+              const message = String(commit?.commit?.message || "");
+              if (sha && !seenCommitShas.has(sha) && commitVisibleByRules(message, includeRules, excludeRules)) {
+                seenCommitShas.add(sha);
                 recentCommits.push({
                   repoName: repo.name,
-                  message: commit.commit?.message || "",
+                  message,
                   createdAt: commit.commit?.author?.date || repo.pushed_at,
                   url: commit.html_url,
                   isPrivate: Boolean(repo.private),
@@ -684,25 +773,44 @@ export async function syncGitHubStats(username: string) {
               }
             }
           } catch {
-            // Keep syncing even if commit fetch fails for one repo.
+            repoError = "Failed to fetch commits";
           }
         }
 
-        if (repo.private) privateCommits += repoCommitCount;
-        else publicCommits += repoCommitCount;
-        totalCommits += repoCommitCount;
-        return mapRepository({
+        if (shouldCountRepoInTotals(repo, privacyConfig)) {
+          if (repo.private) privateCommits += repoCommitCount;
+          else publicCommits += repoCommitCount;
+          totalCommits += repoCommitCount;
+        }
+        const mappedRepo = mapRepository({
           ...repo,
           fullName: repo.full_name,
-          commitCount: 0,
           publicCommitCount: repo.private ? 0 : repoCommitCount,
           privateCommitCount: repo.private ? repoCommitCount : 0,
+          commitCount: repoCommitCount,
           pullRequestCount: repo.open_prs_count || 0,
           issueCount: repo.open_issues_count || 0,
           languages: repoLanguages,
           topics: repo.topics || [],
           homepage: repo.homepage || "",
         });
+
+        repositoryStats.push({
+          name: mappedRepo.name,
+          fullName: repo.full_name,
+          private: Boolean(repo.private),
+          commitCount: repoCommitCount,
+          publicCommitCount: repo.private ? 0 : repoCommitCount,
+          privateCommitCount: repo.private ? repoCommitCount : 0,
+          selected: selectedRepositories.length ? selectedRepositories.includes(repositoryKey(repo)) || selectedRepositories.includes(String(repo.name || "").toLowerCase()) : true,
+          syncStatus: repoError ? "failed" : "success",
+          error: repoError || undefined,
+          archived: Boolean(repo.archived),
+          fork: Boolean(repo.fork),
+          updatedAt: repo.pushed_at || repo.updated_at,
+        });
+
+        return mappedRepo;
       })
     );
 
@@ -773,11 +881,15 @@ export async function syncGitHubStats(username: string) {
       commitCountMode: privacyConfig.commitCountMode || "publicCommitsOnly",
       repositorySelectionMode: privacyConfig.repositorySelectionMode || "all",
       selectedRepositories: privacyConfig.selectedRepositories || [],
+      includeKeywords: includeRules,
+      excludeKeywords: excludeRules,
       commitSelection: {
         includePrivateCommits: Boolean(privacyConfig.includePrivateCommits),
         repositoryMode: privacyConfig.repositorySelectionMode || "all",
         selectedRepositories: privacyConfig.selectedRepositories || [],
       },
+      repositoryStats,
+      availableRepositories: repositoryStats,
       activity: {},
       privateSummary: {
         totalPrivateRepos: repos.filter((repo: any) => repo.private).length,
@@ -835,6 +947,54 @@ function commitMatchesFilters(commit: { repoName?: string; message?: string }, c
     return false;
   }
 
+  return true;
+}
+
+function repositoryKey(repo: { fullName?: string; full_name?: string; name: string }) {
+  return String(repo.fullName || repo.full_name || repo.name || "").toLowerCase();
+}
+
+function repoMatchesCommitMode(repo: any, config: GitHubPrivacyConfig) {
+  const mode = config.commitCountMode || "publicCommitsOnly";
+  const selected = normalizeRepositorySelection(config.selectedRepositories);
+  const repoKey = repositoryKey(repo);
+  const isSelected = selected.length === 0 ? true : selected.includes(repoKey) || selected.includes(String(repo.name || "").toLowerCase());
+
+  if (mode === "selectedRepositoriesOnly" || mode === "customRepositoryList") {
+    return isSelected;
+  }
+
+  if (mode === "publicReposOnly") {
+    return !repo.private;
+  }
+
+  return true;
+}
+
+function shouldCountRepoInTotals(repo: any, config: GitHubPrivacyConfig) {
+  const mode = config.commitCountMode || "publicCommitsOnly";
+  const selected = normalizeRepositorySelection(config.selectedRepositories);
+  const repoKey = repositoryKey(repo);
+  const isSelected = selected.length === 0 ? true : selected.includes(repoKey) || selected.includes(String(repo.name || "").toLowerCase());
+
+  if (mode === "selectedRepositoriesOnly" || mode === "customRepositoryList") return isSelected;
+  if (mode === "publicReposOnly") return !repo.private;
+  return true;
+}
+
+function normalizeCommitRulesInput(values?: string[] | string) {
+  return normalizeCommitRuleInput(values).map((value) => value.toLowerCase());
+}
+
+function commitVisibleByRules(commitMessage: string, includeRules: string[], excludeRules: string[]) {
+  const haystack = commitMessage.toLowerCase();
+  const hasIncludes = includeRules.length > 0;
+  if (hasIncludes && !includeRules.some((term) => haystack.includes(term.toLowerCase()))) {
+    return false;
+  }
+  if (excludeRules.some((term) => haystack.includes(term.toLowerCase()))) {
+    return false;
+  }
   return true;
 }
 

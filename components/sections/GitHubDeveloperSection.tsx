@@ -4,44 +4,10 @@ import { useEffect, useState } from "react";
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { Button } from "@/components/ui/Button";
-import { Star, GitFork, Code, ExternalLink, Calendar, Github } from "lucide-react";
+import { Star, GitFork, Code, ExternalLink, Calendar, Github, GitCommitHorizontal, Layers3, Activity } from "lucide-react";
 import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { Badge } from "@/components/ui/Badge";
 import type { GitHubStatsResponse } from "@/components/github/types";
-
-interface GitHubRepo {
-  name: string;
-  description: string;
-  stars: number;
-  forks: number;
-  language: string;
-  url: string;
-  updatedAt: string;
-  private?: boolean;
-}
-
-interface GitHubActivity {
-  repoName: string;
-  message: string;
-  createdAt: string;
-  url: string;
-  isPrivate: boolean;
-}
-
-interface GitHubStats {
-  username: string;
-  latestPublicRepos: GitHubRepo[];
-  recentPublicActivity: GitHubActivity[];
-  totalRepos: number;
-  publicRepos: number;
-  privateRepos: number;
-  totalStars: number;
-  totalForks: number;
-  topLanguages: Record<string, number>;
-  syncedAt: string;
-  profileUrl: string;
-}
 
 export function GitHubDeveloperSection() {
   const section = useSectionData("github");
@@ -59,11 +25,9 @@ export function GitHubDeveloperSection() {
       }
 
       try {
-        const response = await fetch("/api/github/stats");
+        const response = await fetch("/api/github/stats?refresh=true");
         const payload = (await response.json()) as { success?: boolean; data?: GitHubStatsResponse };
-        if (!cancelled) {
-          setStats(payload.success && payload.data ? payload.data : null);
-        }
+        if (!cancelled) setStats(payload.success && payload.data ? payload.data : null);
       } catch {
         if (!cancelled) setStats(null);
       } finally {
@@ -77,16 +41,18 @@ export function GitHubDeveloperSection() {
     };
   }, [siteData.githubConfig?.enabled]);
 
-  if (!section.enabled || !siteData.githubConfig?.enabled) {
-    return null;
-  }
+  if (!section.enabled || !siteData.githubConfig?.enabled) return null;
 
   const data = section.data as Record<string, string>;
   const title = data.title || "GitHub";
   const description = data.description || "Live repositories, commits, and activity from GitHub.";
   const eyebrow = data.eyebrow || "GitHub Live";
+  const summary = data.summary || "";
   const hasHeader = Boolean(eyebrow || title || description);
-  const resolveRepoUrl = (repo: GitHubRepo) => {
+  const topLanguages = stats?.languages.slice(0, 4) || [];
+  const latestRepo = stats?.latestRepos?.[0];
+  const latestCommit = stats?.latestCommits?.[0];
+  const resolveRepoUrl = (repo: { url?: string; name?: string }) => {
     if (repo.url) return repo.url;
     if (repo.name && stats?.profile.login) return `https://github.com/${stats.profile.login}/${repo.name}`;
     return stats?.profile.profileUrl || "/github";
@@ -95,13 +61,24 @@ export function GitHubDeveloperSection() {
   return (
     <AnimatedSection id="github" className="bg-page-bg py-20">
       <div className="container mx-auto px-4">
-        {hasHeader ? <FadeInUp><SectionHeader title={title} description={description} eyebrow={eyebrow} /></FadeInUp> : null}
+        {hasHeader ? (
+          <FadeInUp>
+            <SectionHeader title={title} description={description} eyebrow={eyebrow} />
+          </FadeInUp>
+        ) : null}
+
+        {summary ? (
+          <FadeInUp>
+            <div className="mx-auto mt-5 max-w-3xl rounded-3xl border border-[rgb(var(--border))] bg-white/85 px-5 py-4 text-sm leading-6 text-text-muted shadow-[0_12px_30px_rgba(15,23,42,0.05)]">
+              {summary}
+            </div>
+          </FadeInUp>
+        ) : null}
 
         {loading ? (
           <div className="mt-12 text-center">Loading GitHub stats...</div>
         ) : stats ? (
           <div className="mt-12 grid gap-8 lg:grid-cols-2">
-            {/* Stats Overview */}
             <div className="rounded-[30px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.92))] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
               <div className="mb-6 flex items-center gap-3">
                 <span className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-[#BFDBFE] bg-[#EFF6FF] text-[#1D4ED8]">
@@ -115,7 +92,6 @@ export function GitHubDeveloperSection() {
                   <ExternalLink className="h-4 w-4" />
                 </a>
               </div>
-
               <div className="mb-6 grid grid-cols-2 gap-4">
                 <div className="flex items-center gap-2">
                   <Code className="h-4 w-4 text-text-muted" />
@@ -134,24 +110,51 @@ export function GitHubDeveloperSection() {
                   <span className="text-sm text-text-main">Synced recently</span>
                 </div>
               </div>
-
-              {/* Top Languages */}
+              <div className="mb-6 grid gap-3 sm:grid-cols-3">
+                <div className="rounded-2xl border border-[rgb(var(--border))] bg-white/85 p-4">
+                  <div className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-text-muted">
+                    <GitCommitHorizontal className="h-4 w-4" />
+                    Commits
+                  </div>
+                  <p className="mt-2 text-xl font-semibold text-text-main">{stats.totalCommits}</p>
+                  <p className="text-xs text-text-muted">{stats.publicCommits} public, {stats.privateCommits} private</p>
+                </div>
+                <div className="rounded-2xl border border-[rgb(var(--border))] bg-white/85 p-4">
+                  <div className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-text-muted">
+                    <Layers3 className="h-4 w-4" />
+                    Repos
+                  </div>
+                  <p className="mt-2 text-xl font-semibold text-text-main">{stats.totalRepositories}</p>
+                  <p className="text-xs text-text-muted">{stats.publicRepos} public, {stats.privateRepos} private</p>
+                </div>
+                <div className="rounded-2xl border border-[rgb(var(--border))] bg-white/85 p-4">
+                  <div className="flex items-center gap-2 text-xs uppercase tracking-[0.16em] text-text-muted">
+                    <Activity className="h-4 w-4" />
+                    Stars
+                  </div>
+                  <p className="mt-2 text-xl font-semibold text-text-main">{stats.stars}</p>
+                  <p className="text-xs text-text-muted">{stats.forks} forks tracked</p>
+                </div>
+              </div>
               <div className="flex flex-wrap gap-2">
-                {stats.languages.slice(0, 5).map((language) => (
+                {topLanguages.map((language) => (
                   <Badge key={language.name} className="bg-white/90">
                     {language.name}
                   </Badge>
                 ))}
               </div>
+              {latestCommit ? (
+                <div className="mt-6 rounded-2xl border border-[rgb(var(--border))] bg-white/85 p-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-text-muted">Latest commit</p>
+                  <p className="mt-2 text-sm font-medium text-text-main">{latestCommit.repoName}</p>
+                  <p className="mt-1 text-sm text-text-muted line-clamp-2">{latestCommit.message}</p>
+                </div>
+              ) : null}
             </div>
-
-            {/* Latest Repos */}
             <div className="rounded-[30px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.92))] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)]">
               <div className="mb-6 flex items-center justify-between gap-3">
                 <h3 className="text-xl font-semibold text-text-main">Latest Repositories</h3>
-                <span className="rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">
-                  Public
-                </span>
+                <span className="rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">Public</span>
               </div>
               <div className="space-y-4">
                 {stats.latestRepos.slice(0, 3).map((repo) => (
@@ -166,7 +169,6 @@ export function GitHubDeveloperSection() {
                     <div className="flex items-start justify-between">
                       <div>
                         <h4 className="font-medium text-text-main transition-colors group-hover:text-primary">{repo.name}</h4>
-                        <p className="line-clamp-1 text-sm text-text-muted">{repo.description}</p>
                       </div>
                       <ExternalLink className="h-4 w-4 text-text-muted" aria-hidden="true" />
                     </div>
@@ -182,6 +184,12 @@ export function GitHubDeveloperSection() {
                   </a>
                 ))}
               </div>
+              {latestRepo ? (
+                <div className="mt-6 rounded-2xl border border-dashed border-[rgb(var(--border))] bg-white/70 p-4">
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.2em] text-text-muted">Latest repo update</p>
+                  <p className="mt-2 text-sm font-medium text-text-main">{latestRepo.name}</p>
+                </div>
+              ) : null}
               <div className="mt-6">
                 <a href="/github" className="inline-flex items-center gap-2 rounded-full bg-primary px-5 py-2.5 text-sm font-semibold text-white shadow-[0_14px_30px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:bg-[#1D4ED8]">
                   See more on GitHub <ExternalLink className="h-4 w-4" aria-hidden="true" />

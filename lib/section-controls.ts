@@ -9,7 +9,7 @@ export const SECTION_DEFINITIONS: Array<{ id: SectionId; label: string; href: st
   { id: "reviews", label: "Reviews", href: "#reviews", showInNavByDefault: true },
   { id: "journey", label: "Experience", href: "#experience", showInNavByDefault: true },
   { id: "education", label: "Education", href: "#education", showInNavByDefault: false },
-  { id: "github", label: "GitHub Live", href: "#github", showInNavByDefault: true },
+  { id: "github", label: "GitHub", href: "#github", showInNavByDefault: true },
   { id: "services", label: "Services", href: "#services", showInNavByDefault: true },
   { id: "contact", label: "Contact", href: "#contact", showInNavByDefault: true },
 ];

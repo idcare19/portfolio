@@ -108,7 +108,6 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
   const [stats, setStats] = useState<GitHubStatsResponse | null>(initialStats);
   const [isAdmin, setIsAdmin] = useState(false);
   const [query, setQuery] = useState("");
-  const [language, setLanguage] = useState("all");
   const [sortBy, setSortBy] = useState<SortOption>("updated");
   const [repoPage, setRepoPage] = useState(1);
   const [commitPage, setCommitPage] = useState(1);
@@ -134,20 +133,37 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
     };
   }, []);
 
-  const repositoryList = stats?.repositories || [];
-  const languageOptions = useMemo(
-    () => ["all", ...new Set(repositoryList.map((repo) => repo.language).filter(Boolean))],
-    [repositoryList]
+  const repositoryList = stats?.latestRepos || stats?.repositories || [];
+  const selectedRepositoryKeys = useMemo(
+    () =>
+      new Set(
+        [
+          ...(siteData.githubConfig?.repositoryCardsSelectedRepositories || []),
+          ...(siteData.githubConfig?.selectedRepositories || []),
+        ]
+          .map((value) => String(value || "").trim().toLowerCase())
+          .filter(Boolean)
+      ),
+    [siteData.githubConfig?.repositoryCardsSelectedRepositories, siteData.githubConfig?.selectedRepositories]
   );
-
+  const repositorySelectionMode = siteData.githubConfig?.repositorySelectionMode || "all";
+  const selectedOnly = repositorySelectionMode === "selected" || selectedRepositoryKeys.size > 0;
+  const isSelectedRepo = (repo: GitHubRepository) => {
+    if (!selectedOnly) return true;
+    const keys = [repo.fullName, repo.name].map((value) => String(value || "").trim().toLowerCase()).filter(Boolean);
+    return keys.some((key) => selectedRepositoryKeys.has(key));
+  };
+  const repositoryExplorerTitle = selectedOnly ? "Selected Repositories" : "Repository Explorer";
+  const repositoryExplorerDescription = selectedOnly
+    ? "Only the repositories selected in admin are shown here."
+    : "Search, filter, and sort the public repositories already cached in MongoDB.";
   const filteredRepositories = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
     const next = repositoryList.filter((repo) => {
       const matchesQuery =
         !normalizedQuery ||
-        `${repo.name} ${repo.description || ""} ${repo.language || ""} ${(repo.topics || []).join(" ")}`.toLowerCase().includes(normalizedQuery);
-      const matchesLanguage = language === "all" || repo.language === language;
-      return matchesQuery && matchesLanguage;
+        `${repo.name} ${repo.language || ""} ${(repo.topics || []).join(" ")}`.toLowerCase().includes(normalizedQuery);
+      return matchesQuery && isSelectedRepo(repo);
     });
 
     return next.sort((left, right) => {
@@ -156,7 +172,7 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
       if (sortBy === "name") return left.name.localeCompare(right.name);
       return new Date(right.updatedAt).getTime() - new Date(left.updatedAt).getTime();
     });
-  }, [language, query, repositoryList, sortBy]);
+  }, [isSelectedRepo, query, repositoryList, sortBy]);
 
   const totalLanguageCount = useMemo(
     () => stats?.languages.reduce((sum, item) => sum + item.value, 0) || 0,
@@ -205,7 +221,7 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
 
   useEffect(() => {
     setRepoPage(1);
-  }, [query, language, sortBy]);
+  }, [query, sortBy]);
 
   if (!enabled) {
     return (
@@ -405,7 +421,6 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-lg font-semibold text-text-main transition-colors group-hover:text-primary">{repo.name}</p>
-                    <p className="mt-2 line-clamp-3 text-sm leading-7 text-text-muted">{repo.description || "No description provided."}</p>
                   </div>
                   <ArrowUpRight className="mt-1 h-4 w-4 shrink-0 text-text-muted transition group-hover:text-primary" />
                 </div>
@@ -426,8 +441,8 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
       <section className="rounded-[34px] border border-[rgb(var(--border))] bg-white/80 p-6 shadow-[0_20px_55px_rgba(15,23,42,0.05)]">
         <div className="flex flex-col gap-4 lg:flex-row lg:items-end lg:justify-between">
           <div>
-            <p className="text-sm font-semibold text-text-main">Repository Explorer</p>
-            <p className="text-sm text-text-muted">Search, filter, and sort the public repositories already cached in MongoDB.</p>
+            <p className="text-sm font-semibold text-text-main">{repositoryExplorerTitle}</p>
+            <p className="text-sm text-text-muted">{repositoryExplorerDescription}</p>
           </div>
           <div className="grid gap-3 sm:grid-cols-3">
             <label className="relative block">
@@ -438,18 +453,6 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
                 placeholder="Search repositories"
                 className="w-full rounded-full border border-[rgb(var(--border))] bg-white py-2.5 pl-10 pr-4 text-sm text-text-main outline-none"
               />
-            </label>
-            <label className="relative block">
-              <Filter className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-text-muted" />
-              <select
-                value={language}
-                onChange={(event) => setLanguage(event.target.value)}
-                className="w-full appearance-none rounded-full border border-[rgb(var(--border))] bg-white py-2.5 pl-10 pr-4 text-sm text-text-main outline-none"
-              >
-                {languageOptions.map((item) => (
-                  <option key={item} value={item}>{item === "all" ? "All languages" : item}</option>
-                ))}
-              </select>
             </label>
             <select
               value={sortBy}
@@ -479,7 +482,7 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
                 <div className="flex items-start justify-between gap-3">
                   <div>
                     <p className="text-lg font-semibold text-text-main transition-colors group-hover:text-primary">{repo.name}</p>
-                    <p className="mt-2 line-clamp-3 text-sm leading-7 text-text-muted">{repo.description || "No description provided."}</p>
+                    <p className="mt-2 line-clamp-3 text-sm leading-7 text-text-muted">{(repo.topics || []).join(" ") || repo.homepage || repo.language || "Repository snapshot"}</p>
                   </div>
                   <ExternalLink className="h-4 w-4 text-text-muted transition group-hover:text-primary" />
                 </div>
@@ -520,7 +523,7 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
         ) : null}
       </section>
 
-      <section id="recent-commits" className="grid gap-8 xl:grid-cols-2">
+      <section id="recent-commits" className="grid gap-8 xl:grid-cols-1">
         <div className="rounded-[34px] border border-[rgb(var(--border))] bg-white/80 p-6 shadow-[0_20px_55px_rgba(15,23,42,0.05)]">
           <div className="flex items-center justify-between gap-4">
             <div>
@@ -566,41 +569,6 @@ export function GitHubDashboardPage({ enabled, initialStats }: Props) {
               </div>
             </div>
           ) : null}
-        </div>
-
-        <div className="rounded-[34px] border border-[rgb(var(--border))] bg-white/80 p-6 shadow-[0_20px_55px_rgba(15,23,42,0.05)]">
-          <div className="flex items-center justify-between gap-4">
-            <div>
-              <p className="text-sm font-semibold text-text-main">Recent Public Activity</p>
-              <p className="text-sm text-text-muted">Timeline of GitHub events already cached for the profile</p>
-            </div>
-            <Sparkles className="h-4 w-4 text-primary" />
-          </div>
-          <div className="mt-6 space-y-4">
-            {stats.recentActivity.length ? (
-              stats.recentActivity.map((activity) => (
-              <a
-                key={`${activity.repoName}-${activity.createdAt}-${activity.type}`}
-                href={activity.url || activityHref}
-                target="_blank"
-                rel="noreferrer"
-                  onClick={() => trackClientEvent("github-click", { targetType: "activity", targetSlug: activity.repoName })}
-                className="block rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-4 transition hover:border-primary/30 hover:bg-white"
-              >
-                  <div className="flex items-start justify-between gap-4">
-                    <div>
-                      <p className="text-sm font-semibold uppercase tracking-[0.16em] text-primary">{activity.type}</p>
-                      <p className="mt-2 text-base font-semibold text-text-main">{activity.repoName}</p>
-                      <p className="mt-1 text-sm leading-7 text-text-muted">{activity.summary}</p>
-                    </div>
-                    <p className="shrink-0 text-xs text-text-muted">{formatDate(activity.createdAt, { month: "short", day: "numeric" })}</p>
-                  </div>
-                </a>
-              ))
-            ) : (
-              <p className="text-sm text-text-muted">No recent public activity is available yet.</p>
-            )}
-          </div>
         </div>
       </section>
 

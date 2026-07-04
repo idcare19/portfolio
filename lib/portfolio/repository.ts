@@ -222,8 +222,8 @@ async function seedCollectionsFromSiteData(siteData: SiteData) {
 
   await Skill.deleteMany({});
   const skills = (siteData.skillsDetailed || []).map((skill, index) => ({
-    key: skill.id || slugify(skill.name),
-    name: skill.name,
+    key: skill.id || slugify(skill.name || (skill as any).title),
+    name: skill.name || (skill as any).title || "",
     category: skill.category,
     icon: skill.icon,
     level: skill.level,
@@ -397,6 +397,23 @@ function buildSectionMap(sections: any[], settings: any, projects: any[], skills
   return built;
 }
 
+function normalizeSkillRecord(skill: any, index: number) {
+  const title = String(skill?.title || skill?.name || skill?.label || "");
+  return {
+    id: skill?.id || skill?.key || `skill-${index + 1}`,
+    title,
+    name: String(skill?.name || title),
+    category: String(skill?.category || "Tools"),
+    icon: String(skill?.icon || ""),
+    iconKey: String(skill?.iconKey || ""),
+    iconColor: String(skill?.iconColor || ""),
+    level: Number(skill?.level ?? 0),
+    summary: String(skill?.summary || ""),
+    order: Number(skill?.order ?? index + 1),
+    isEnabled: skill?.isEnabled !== false,
+  };
+}
+
 function normalizeProjectRecord(project: any, index: number) {
   return {
     id: String(project?.id || project?.slug || `project-${index + 1}`),
@@ -528,13 +545,16 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
   const projectSource = Array.isArray(projectsSection?.items) && projectsSection.items.length ? projectsSection.items : projects;
   const projectItems = projectSource.map((project: any, index: number) => normalizeProjectRecord(project, index));
 
-  const skillItems = skills.map((skill: any, index) => ({
-    id: skill.key || `skill-${index + 1}`,
-    name: skill.name,
-    category: skill.category,
-    icon: skill.icon,
-    level: skill.level,
-  }));
+  const sectionSkillItems = Array.isArray((sections.find((section: any) => section.key === "skills" || section.id === "skills")?.items))
+    ? (sections.find((section: any) => section.key === "skills" || section.id === "skills")?.items || [])
+    : [];
+  const sourceSkillItems = [
+    ...sectionSkillItems,
+    ...skills.filter((skill: any) => !sectionSkillItems.some((sectionSkill: any) => String(sectionSkill.id || sectionSkill.key || sectionSkill.name || "").trim().toLowerCase() === String(skill.id || skill.key || skill.name || "").trim().toLowerCase())),
+  ];
+  const skillItems = sourceSkillItems
+    .map((skill: any, index: number) => normalizeSkillRecord(skill, index))
+    .sort((left: { order?: number }, right: { order?: number }) => Number(left.order || 0) - Number(right.order || 0));
 
   const experienceItems = experience.map((item: any) => ({
     role: item.role,
@@ -576,7 +596,7 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     sectionControls: settings.extra?.sectionControls || [],
     heroTech: settings.heroTech || [],
     about: settings.extra?.about || { intro: "", stats: [] },
-    skills: skillItems.map((item) => item.name),
+    skills: skillItems.map((item: { name: string }) => item.name),
     learningPhase: settings.learningPhase || [],
     projects: projectItems.map((project) => ({
       title: project.title,
@@ -604,7 +624,10 @@ export async function getPortfolioSiteData(): Promise<SiteData> {
     journeyNow: settings.extra?.journeyNow || { currentWork: "", ongoingMilestones: [] },
     socials: settings.socials || [],
     services: settings.services || [],
-    skillsDetailed: skillItems,
+    skillsDetailed: skillItems.map((skill) => ({
+      ...skill,
+      category: (["Frontend", "Backend", "Database", "Tools"].includes(skill.category) ? skill.category : "Tools") as "Frontend" | "Backend" | "Database" | "Tools",
+    })),
     projectsDetailed: projectItems as SiteData["projectsDetailed"],
     testimonialsDetailed: testimonialItems,
     contactMessages: messages.map((item: any) => ({
@@ -799,13 +822,19 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
   }
 
   await Skill.deleteMany({});
-  const skills = (nextData.skillsDetailed || []).map((skill, index) => ({
-    key: skill.id || slugify(skill.name),
-    name: skill.name,
+  const sectionSkills = Array.isArray(nextData.sections?.skills?.items) ? nextData.sections.skills.items : [];
+  const skillSource = (nextData.skillsDetailed && nextData.skillsDetailed.length ? nextData.skillsDetailed : sectionSkills) as any[];
+  const skills = skillSource.map((skill: any, index: number) => ({
+    key: skill.id || skill.key || slugify(skill.name || skill.title),
+    name: skill.name || skill.title || "",
     category: skill.category,
-    icon: skill.icon,
-    level: skill.level,
-    order: index + 1,
+    icon: skill.icon || "",
+    iconKey: skill.iconKey || "",
+    iconColor: skill.iconColor || "",
+    level: Number(skill.level ?? 0),
+    summary: String(skill.summary || ""),
+    order: Number(skill.order ?? index + 1),
+    isEnabled: skill.isEnabled !== false,
     updatedAt: now,
   }));
   if (skills.length) {

@@ -9,11 +9,14 @@ import { renderSkillIcon } from "@/lib/skill-icons";
 import { motion, useReducedMotion } from "framer-motion";
 
 type SkillItem = {
+  title?: string;
   name: string;
   category?: string;
   icon?: string;
   iconKey?: string;
   iconColor?: string;
+  order?: number;
+  summary?: string;
 };
 
 function normalizeCategory(category?: string) {
@@ -44,7 +47,17 @@ export function SkillsSection() {
   const section = useSectionData("skills");
   const siteData = useSiteDataContext();
   const data = section.data as Record<string, any>;
-  const skills = (section.items || []).filter((item: SkillItem & { isEnabled?: boolean }) => item?.name && item.isEnabled !== false);
+  const rawSkills = [...(section.items || []), ...(siteData.skillsDetailed || [])];
+  const skills = rawSkills
+    .filter((item: SkillItem & { isEnabled?: boolean }) => Boolean(item?.name || item?.title) && item.isEnabled !== false)
+    .map((item) => ({
+      ...item,
+      name: String(item.name || item.title || "").trim(),
+      title: String(item.title || item.name || "").trim(),
+    }))
+    .filter((item) => item.name)
+    .filter((item, index, list) => list.findIndex((entry) => String(entry.name).trim().toLowerCase() === String(item.name).trim().toLowerCase()) === index)
+    .sort((a: SkillItem, b: SkillItem) => Number(a.order ?? 0) - Number(b.order ?? 0));
   const learningItems = Array.isArray(data.learningItems) ? data.learningItems : [];
   const shouldReduceMotion = useReducedMotion();
   const resumeUrl = String(siteData.owner?.resumeUrl || "").trim();
@@ -101,7 +114,7 @@ export function SkillsSection() {
                       className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-3 py-2 text-sm font-medium text-text-main shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition-all duration-300 hover:border-primary/30 hover:shadow-[0_12px_24px_rgba(37,99,235,0.12)]"
                     >
                       {renderSkillIcon(skill.iconKey || skill.icon, skill.iconColor)}
-                      {skill.name}
+                      {skill.title || skill.name}
                     </motion.span>
                   ))}
                 </div>
