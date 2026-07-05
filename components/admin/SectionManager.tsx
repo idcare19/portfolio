@@ -16,6 +16,11 @@ const RENDERERS = [
   "journey",
   "education",
   "services",
+  "faq",
+  "achievements",
+  "companies",
+  "certificates",
+  "open-source",
   "contact",
   "github",
 ];

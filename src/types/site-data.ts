@@ -191,7 +191,7 @@ export type ArrayItem = {
   isEnabled: boolean;
 };
 
-export type SectionId = "about" | "skills" | "projects" | "working" | "completed" | "reviews" | "journey" | "education" | "services" | "contact" | "blogs" | "github" | "footer";
+export type SectionId = "about" | "skills" | "projects" | "working" | "completed" | "reviews" | "journey" | "education" | "services" | "contact" | "blogs" | "github" | "faq" | "achievements" | "companies" | "certificates" | "open-source" | "footer";
 export type DynamicSectionId = string;
 export type SectionRendererId = string;
 

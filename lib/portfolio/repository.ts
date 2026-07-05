@@ -139,6 +139,11 @@ function buildSiteDataFromSections(
     "journey",
     "education",
     "services",
+    "faq",
+    "achievements",
+    "companies",
+    "certificates",
+    "open-source",
     "contact",
     "blogs",
   ] as const;

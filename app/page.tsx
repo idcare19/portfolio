@@ -13,7 +13,7 @@ export const revalidate = 0;
 
 export default async function HomePage() {
   const portfolioData = await getPortfolioData();
-  const coreSectionIds = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "github", "blogs", "footer"];
+  const coreSectionIds = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "faq", "achievements", "companies", "certificates", "open-source", "contact", "github", "blogs", "footer"];
   const sections = Object.values(portfolioData.sections || {})
     .filter((section) => section.enabled !== false && section.showOnHomepage !== false)
     .sort((a, b) => a.order - b.order);

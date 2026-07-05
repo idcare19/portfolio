@@ -13,6 +13,11 @@ import { EducationSection } from "@/components/sections/EducationSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { BlogsSection } from "@/components/sections/BlogsSection";
 import { GitHubDeveloperSection } from "@/components/sections/GitHubDeveloperSection";
+import { FaqSection } from "@/components/sections/FaqSection";
+import { AchievementsSection } from "@/components/sections/AchievementsSection";
+import { CompaniesSection } from "@/components/sections/CompaniesSection";
+import { CertificatesSection } from "@/components/sections/CertificatesSection";
+import { OpenSourceSection } from "@/components/sections/OpenSourceSection";
 import { GenericSection } from "@/components/sections/GenericSection";
 import type { SiteSectionBlock } from "@/src/types/site-data";
 
@@ -45,6 +50,16 @@ export function DynamicSectionRenderer({ section }: Props) {
       return <EducationSection />;
     case "services":
       return <ServicesSection />;
+    case "faq":
+      return <FaqSection section={section} />;
+    case "achievements":
+      return <AchievementsSection section={section} />;
+    case "companies":
+      return <CompaniesSection section={section} />;
+    case "certificates":
+      return <CertificatesSection section={section} />;
+    case "open-source":
+      return <OpenSourceSection section={section} />;
     case "contact":
       return <ContactSection />;
     case "blogs":

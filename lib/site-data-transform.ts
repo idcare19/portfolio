@@ -23,6 +23,11 @@ const SECTION_ORDER = [
   "github",
   "services",
   "contact",
+  "faq",
+  "achievements",
+  "companies",
+  "certificates",
+  "open-source",
 ] as const;
 
 const CORE_RENDERERS = new Set([
@@ -38,6 +43,11 @@ const CORE_RENDERERS = new Set([
   "blogs",
   "services",
   "contact",
+  "faq",
+  "achievements",
+  "companies",
+  "certificates",
+  "open-source",
   "blogs",
   "github",
   "footer",
@@ -57,6 +67,11 @@ const CORE_SECTION_IDS = new Set([
   "blogs",
   "services",
   "contact",
+  "faq",
+  "achievements",
+  "companies",
+  "certificates",
+  "open-source",
   "blogs",
   "github",
   "footer",
@@ -253,7 +268,7 @@ function buildSectionBlockFromInput(key: string, incoming: Partial<SiteSectionBl
 }
 
 export function summarizeSectionCounts(sections?: SectionRecord) {
-  const ids = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "services", "github", "contact", "footer"] as const;
+  const ids = ["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "services", "faq", "achievements", "companies", "certificates", "open-source", "github", "contact", "footer"] as const;
   return Object.fromEntries(
     ids.map((id) => [id, Array.isArray(sections?.[id]?.items) ? sections[id]!.items.length : null])
   ) as Record<(typeof ids)[number], number | null>;
@@ -435,6 +450,46 @@ export function normalizeSiteData(input: SiteData): SiteData {
         description: sectionsInput.blogs?.data?.description ?? "",
       },
       items: resolveSectionItems(sectionsInput.blogs?.items as SiteData["blogs"] | undefined, undefined, input.blogs.length ? input.blogs : []),
+    }),
+    faq: makeBlock("faq", sectionsInput.faq, {
+      data: {
+        eyebrow: sectionsInput.faq?.data?.eyebrow ?? "FAQ",
+        title: sectionsInput.faq?.data?.title ?? "Frequently Asked Questions",
+        description: sectionsInput.faq?.data?.description ?? "",
+      },
+      items: resolveSectionItems(sectionsInput.faq?.items as any[] | undefined, undefined, []),
+    }),
+    achievements: makeBlock("achievements", sectionsInput.achievements, {
+      data: {
+        eyebrow: sectionsInput.achievements?.data?.eyebrow ?? "Highlights",
+        title: sectionsInput.achievements?.data?.title ?? "Achievements",
+        description: sectionsInput.achievements?.data?.description ?? "",
+      },
+      items: resolveSectionItems(sectionsInput.achievements?.items as any[] | undefined, undefined, []),
+    }),
+    companies: makeBlock("companies", sectionsInput.companies, {
+      data: {
+        eyebrow: sectionsInput.companies?.data?.eyebrow ?? "Experience",
+        title: sectionsInput.companies?.data?.title ?? "Companies Worked With",
+        description: sectionsInput.companies?.data?.description ?? "",
+      },
+      items: resolveSectionItems(sectionsInput.companies?.items as any[] | undefined, undefined, []),
+    }),
+    certificates: makeBlock("certificates", sectionsInput.certificates, {
+      data: {
+        eyebrow: sectionsInput.certificates?.data?.eyebrow ?? "Credentials",
+        title: sectionsInput.certificates?.data?.title ?? "Certificates",
+        description: sectionsInput.certificates?.data?.description ?? "",
+      },
+      items: resolveSectionItems(sectionsInput.certificates?.items as any[] | undefined, undefined, []),
+    }),
+    "open-source": makeBlock("open-source", sectionsInput["open-source"], {
+      data: {
+        eyebrow: sectionsInput["open-source"]?.data?.eyebrow ?? "Open Source",
+        title: sectionsInput["open-source"]?.data?.title ?? "Open Source",
+        description: sectionsInput["open-source"]?.data?.description ?? "",
+      },
+      items: resolveSectionItems(sectionsInput["open-source"]?.items as any[] | undefined, undefined, []),
     }),
     github: makeBlock("github", sectionsInput.github, {
       data: {},

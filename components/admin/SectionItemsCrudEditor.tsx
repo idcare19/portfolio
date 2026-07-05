@@ -25,7 +25,7 @@ function asList(value: unknown): string[] {
 }
 
 function labelForIndex(item: any, index: number) {
-  return String(item?.title || item?.label || item?.name || item?.value || `Item ${index + 1}`);
+  return String(item?.question || item?.title || item?.companyName || item?.certificateTitle || item?.projectName || item?.label || item?.name || item?.value || `Item ${index + 1}`);
 }
 
 function StatusPill({ label, tone = "neutral" }: { label: string; tone?: "neutral" | "green" | "blue" | "amber" | "rose" }) {
@@ -371,34 +371,48 @@ export function SectionItemsCrudEditor({ config, items, onChange }: Props) {
             </div>
             {openIndex === index ? (
               <div className="space-y-5 border-t border-admin-border p-4">
-                <div className="grid gap-3 md:grid-cols-2">
-                  <label className="md:col-span-2">
-                    <span className="mb-1 block text-sm font-medium text-admin-text">Title</span>
-                    <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={fieldValue(item, "title")} onChange={(e) => update(index, "title", e.target.value)} />
-                  </label>
-                  {[
-                    { key: "status", label: "Status" },
-                    { key: "category", label: "Category" },
-                    { key: "order", label: "Order", type: "number" },
-                    { key: "isEnabled", label: "Enabled", type: "checkbox" },
-                    { key: "featured", label: "Featured", type: "checkbox" },
-                    { key: "isFeatured", label: "Featured Mirror", type: "checkbox" },
-                  ].map((field) => (
-                    <label key={field.key}>
-                      <span className="mb-1 block text-sm font-medium text-admin-text">{field.label}</span>
-                      {field.type === "checkbox" ? (
-                        <input type="checkbox" checked={Boolean(item[field.key])} onChange={(e) => update(index, field.key, e.target.checked)} />
-                      ) : (
-                        <input
-                          type={field.type === "number" ? "number" : "text"}
-                          value={fieldValue(item, field.key)}
-                          onChange={(e) => update(index, field.key, field.type === "number" ? Number(e.target.value || 0) : e.target.value)}
-                          className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
-                        />
-                      )}
-                    </label>
-                  ))}
-                </div>
+                {config.groups?.length ? null : (
+                  <div className="grid gap-3 md:grid-cols-2">
+                    {config.fields.map((field) => {
+                      if (field.key === "customFields") return null;
+                      const commonClass = field.type === "textarea" ? "md:col-span-2" : "";
+                      if (field.type === "checkbox") {
+                        return (
+                          <label key={field.key} className={commonClass}>
+                            <span className="mb-1 block text-sm font-medium text-admin-text">{field.label}</span>
+                            <input type="checkbox" checked={Boolean(item[field.key])} onChange={(e) => update(index, field.key, e.target.checked)} />
+                          </label>
+                        );
+                      }
+
+                      if (field.type === "textarea") {
+                        return (
+                          <label key={field.key} className={commonClass}>
+                            <span className="mb-1 block text-sm font-medium text-admin-text">{field.label}</span>
+                            <textarea
+                              rows={4}
+                              value={fieldValue(item, field.key)}
+                              onChange={(e) => update(index, field.key, e.target.value)}
+                              className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+                            />
+                          </label>
+                        );
+                      }
+
+                      return (
+                        <label key={field.key} className={commonClass}>
+                          <span className="mb-1 block text-sm font-medium text-admin-text">{field.label}</span>
+                          <input
+                            type={field.type === "number" ? "number" : field.type === "url" ? "url" : "text"}
+                            value={fieldValue(item, field.key)}
+                            onChange={(e) => update(index, field.key, field.type === "number" ? Number(e.target.value || 0) : e.target.value)}
+                            className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+                          />
+                        </label>
+                      );
+                    })}
+                  </div>
+                )}
 
                 {config.groups?.map((group) => (
                   <div key={group.title} className="rounded-2xl border border-admin-border bg-admin-bg p-4">
