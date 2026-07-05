@@ -341,7 +341,33 @@ export function normalizeSiteData(input: SiteData): SiteData {
         title: sectionsInput.completed?.data?.title ?? "",
         description: sectionsInput.completed?.data?.description ?? "",
       },
-      items: resolveSectionItems(sectionsInput.completed?.items as SiteData["completedProjects"] | undefined, undefined, []),
+      items: resolveSectionItems(
+        sectionsInput.completed?.items as SiteData["projectsDetailed"] | undefined,
+        undefined,
+        Array.isArray(input.completedProjects)
+          ? input.completedProjects.map((project, index) =>
+              normalizeProjectItem(
+                {
+                  id: `completed-${index + 1}`,
+                  slug: String((project as any)?.slug || ""),
+                  title: project.title,
+                  shortDescription: String((project as any)?.workDone || ""),
+                  longDescription: String((project as any)?.workDone || ""),
+                  myRole: String((project as any)?.role || ""),
+                  timeline: String((project as any)?.timeline || ""),
+                  liveDemoUrl: String((project as any)?.link || ""),
+                  githubUrl: String((project as any)?.githubUrl || ""),
+                  projectType: "Completed Project",
+                  category: "Completed",
+                  status: "Completed",
+                  featured: false,
+                  isEnabled: true,
+                },
+                index
+              )
+            )
+          : []
+      ),
     }),
     reviews: makeBlock("reviews", sectionsInput.reviews, {
       data: {
