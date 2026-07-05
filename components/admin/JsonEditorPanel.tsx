@@ -6,8 +6,10 @@ import { Copy, Download, FileJson, Upload, RotateCcw } from "lucide-react";
 type JsonEditorPanelProps<T> = {
   value: T;
   onApply: (next: T) => void;
-  getItemId?: (item: any, index: number) => string;
   requiredPaths?: string[];
+  collectionItemRequiredPaths?: string[];
+  collectionRootKeys?: string[];
+  collectionType?: "generic" | "project";
   title?: string;
   description?: string;
 };
@@ -41,30 +43,130 @@ function hasRequiredPath(item: any, path: string) {
   return String(value ?? "").trim().length > 0;
 }
 
-export function JsonEditorPanel<T>({ value, onApply, requiredPaths = ["title", "slug"], title = "JSON Editor", description = "Edit the raw JSON safely." }: JsonEditorPanelProps<T>) {
+function normalizeSlug(value: string) {
+  return value
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
+
+function stringifyLineError(message: string, source: string, position?: number) {
+  if (typeof position !== "number" || Number.isNaN(position)) return message;
+  const before = source.slice(0, position);
+  const line = before.split("\n").length;
+  const column = before.length - before.lastIndexOf("\n");
+  return `${message} (line ${line}, column ${column})`;
+}
+
+type ValidationResult = {
+  ok: boolean;
+  value?: unknown;
+  message?: string;
+  notice?: string;
+};
+
+function normalizeProjectItem(item: any, index: number) {
+  if (!item || typeof item !== "object") {
+    return { ok: false, message: `Item #${index + 1} is missing title` } satisfies ValidationResult;
+  }
+  const current = item as Record<string, unknown>;
+  const title = String(current.title || "").trim();
+  if (!title) {
+    return { ok: false, message: `Item #${index + 1} is missing title` } satisfies ValidationResult;
+  }
+  const id = String(current.id || `project-${index + 1}`);
+  const slugSource = String(current.slug || "").trim();
+  const slug = slugSource || normalizeSlug(title);
+  const notices: string[] = [];
+  if (!slugSource && slug) notices.push(`Item #${index + 1} slug was auto-generated from title`);
+  const normalized = {
+    ...current,
+    id,
+    slug,
+    title,
+    customFields: Array.isArray(current.customFields) ? current.customFields : [],
+  };
+  return { ok: true, value: normalized, notice: notices.join(". ") } satisfies ValidationResult;
+}
+
+function normalizeGenericItem(item: any, index: number, requiredPaths: string[]) {
+  if (!item || typeof item !== "object") {
+    return { ok: false, message: `Item #${index + 1} is not a valid object` } satisfies ValidationResult;
+  }
+  const missing = requiredPaths.find((path) => !hasRequiredPath(item, path));
+  if (missing) return { ok: false, message: `Item #${index + 1} is missing ${missing}` } satisfies ValidationResult;
+  return { ok: true, value: item } satisfies ValidationResult;
+}
+
+function normalizeRootObject(value: any, requiredPaths: string[], collectionType: "generic" | "project", collectionRootKeys: string[]) {
+  if (Array.isArray(value)) {
+    const normalized: any[] = [];
+    for (let index = 0; index < value.length; index += 1) {
+      const result = collectionType === "project" ? normalizeProjectItem(value[index], index) : normalizeGenericItem(value[index], index, requiredPaths);
+      if (!result.ok) return result;
+      normalized.push(result.value);
+    }
+    return { ok: true, value: normalized, notice: undefined } satisfies ValidationResult;
+  }
+  if (value && typeof value === "object") {
+    for (const key of collectionRootKeys) {
+      if (Array.isArray((value as any)[key])) {
+        const next = { ...(value as Record<string, unknown>) };
+        const items = (value as any)[key] as any[];
+        const normalized: any[] = [];
+        for (let index = 0; index < items.length; index += 1) {
+          const result = collectionType === "project" ? normalizeProjectItem(items[index], index) : normalizeGenericItem(items[index], index, requiredPaths);
+          if (!result.ok) return result;
+          normalized.push(result.value);
+        }
+        next[key] = normalized;
+        return { ok: true, value: next, notice: undefined } satisfies ValidationResult;
+      }
+    }
+    const missing = requiredPaths.find((path) => !hasRequiredPath(value, path));
+    if (missing) return { ok: false, message: `Root is missing ${missing}` } satisfies ValidationResult;
+    return { ok: true, value } satisfies ValidationResult;
+  }
+  return { ok: false, message: "JSON root must be an object or array" } satisfies ValidationResult;
+}
+
+export function JsonEditorPanel<T>({
+  value,
+  onApply,
+  requiredPaths = [],
+  collectionItemRequiredPaths = ["title", "slug"],
+  collectionRootKeys = ["items", "projects", "list"],
+  collectionType = "generic",
+  title = "JSON Editor",
+  description = "Edit the raw JSON safely.",
+}: JsonEditorPanelProps<T>) {
   const [draft, setDraft] = useState(() => safeStringify(value));
   const [error, setError] = useState("");
+  const [notice, setNotice] = useState("");
   const [showConfirm, setShowConfirm] = useState(false);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
     setDraft(safeStringify(value));
     setError("");
+    setNotice("");
   }, [value]);
 
   function validate(nextDraft: string) {
     try {
       const parsed = JSON.parse(nextDraft);
-      if (Array.isArray(parsed)) {
-        const invalid = parsed.find((item) => requiredPaths.some((path) => !hasRequiredPath(item, path)));
-        if (invalid) {
-          setError(`Required fields missing: ${requiredPaths.join(", ")}`);
-          return false;
-        }
+      const result = normalizeRootObject(parsed, collectionType === "project" ? collectionItemRequiredPaths : requiredPaths, collectionType, collectionRootKeys);
+      if (!result.ok) {
+        setNotice("");
+        setError(result.message || "Invalid JSON content");
+        return false;
       }
       setError("");
+      setNotice(result.notice || "");
       return true;
     } catch (err) {
+      setNotice("");
       setError(extractJsonError(err, nextDraft));
       return false;
     }
@@ -77,7 +179,13 @@ export function JsonEditorPanel<T>({ value, onApply, requiredPaths = ["title", "
 
   function applyDraft() {
     if (!validate(draft)) return;
-    onApply(JSON.parse(draft));
+    const parsed = JSON.parse(draft);
+    const result = normalizeRootObject(parsed, collectionType === "project" ? collectionItemRequiredPaths : requiredPaths, collectionType, collectionRootKeys);
+    if (!result.ok) {
+      setError(result.message || "Invalid JSON content");
+      return;
+    }
+    onApply(result.value as T);
     setShowConfirm(false);
   }
 
@@ -143,6 +251,7 @@ export function JsonEditorPanel<T>({ value, onApply, requiredPaths = ["title", "
         </div>
       </div>
       {error ? <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{error}</p> : null}
+      {!error && notice ? <p className="rounded-2xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm text-emerald-700">{notice}</p> : null}
       <div className="flex flex-wrap gap-3">
         <button type="button" onClick={() => setShowConfirm(true)} disabled={Boolean(error)} className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">
           Save JSON Changes

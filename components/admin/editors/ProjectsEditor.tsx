@@ -5,10 +5,12 @@ import { ChevronDown, Copy, Image as ImageIcon, Plus, Trash2 } from "lucide-reac
 import type { ProjectItem, SiteData } from "@/src/types/site-data";
 import { CustomFieldsEditor } from "@/components/admin/CustomFieldsEditor";
 import { JsonEditorPanel } from "@/components/admin/JsonEditorPanel";
+import { slugify } from "@/lib/content-utils";
 
 type Props = {
   data: SiteData;
   onChange: (next: SiteData) => void;
+  publicBasePath?: string;
 };
 
 type TabKey = "visual" | "json";
@@ -49,14 +51,6 @@ const emptyProject: ProjectItem = {
   published: false,
 };
 
-function slugify(value: string) {
-  return value
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
 function csv(value?: string[] | string) {
   if (Array.isArray(value)) return value.join(", ");
   return value || "";
@@ -74,61 +68,35 @@ function safeJsonStringify(value: unknown) {
   return JSON.stringify(value, null, 2);
 }
 
-function parseJsonError(error: unknown) {
-  if (!(error instanceof SyntaxError)) return String(error);
-  return error.message;
+function ensureUniqueSlug(slug: string, index: number, seen: Map<string, number>) {
+  const base = slugify(slug || "");
+  if (!base) return "";
+  const count = seen.get(base) || 0;
+  seen.set(base, count + 1);
+  return count === 0 ? base : `${base}-${count + 1}`;
 }
 
-function formatLineError(message: string, source: string) {
-  const lineMatch = /position\s+(\d+)/i.exec(message);
-  if (!lineMatch) return message;
-  const position = Number(lineMatch[1]);
-  const before = source.slice(0, position);
-  const line = before.split("\n").length;
-  const column = before.length - before.lastIndexOf("\n");
-  return `${message} (line ${line}, column ${column})`;
-}
-
-function normalizeProjectsDraft(projects: unknown[]) {
+function normalizeProjectDraft(projects: ProjectItem[]) {
+  const seen = new Map<string, number>();
   return projects.map((project, index) => {
-    if (!project || typeof project !== "object") return { ...emptyProject, id: `project-${index + 1}`, order: index + 1 };
-    const current = project as Record<string, unknown>;
-    const title = String(current.title || "");
-    const slug = String(current.slug || current.id || slugify(title));
+    const title = String(project.title || "").trim();
+    const baseSlug = String(project.slug || "").trim() || title;
+    const slug = ensureUniqueSlug(baseSlug, index, seen) || `project-${index + 1}`;
     return {
-      ...current,
-      id: String(current.id || `project-${index + 1}`),
-      slug,
+      ...project,
+      id: String(project.id || `project-${index + 1}`),
       title,
-      shortDescription: String(current.shortDescription || ""),
-      longDescription: String(current.longDescription || current.fullDescription || ""),
-      techStack: Array.isArray(current.techStack) ? current.techStack : [],
-      category: String(current.category || ""),
-      image: String(current.image || ""),
-      liveDemoUrl: String(current.liveDemoUrl || ""),
-      githubUrl: String(current.githubUrl || ""),
-      order: Number(current.order ?? index + 1),
-      isEnabled: current.isEnabled !== false,
-      featured: Boolean(current.featured),
-      featuredMirror: Boolean(current.featuredMirror ?? current.featured),
-      keyFeatures: Array.isArray(current.keyFeatures) ? current.keyFeatures : Array.isArray(current.features) ? current.features : [],
-      keyResponsibilities: Array.isArray(current.keyResponsibilities) ? current.keyResponsibilities : Array.isArray(current.responsibilities) ? current.responsibilities : [],
-      skillsApplied: Array.isArray(current.skillsApplied) ? current.skillsApplied : [],
-      keywords: Array.isArray(current.keywords) ? current.keywords : [],
-      customFields: Array.isArray(current.customFields) ? current.customFields : [],
+      slug,
+      customFields: Array.isArray(project.customFields) ? project.customFields : [],
     };
   });
 }
 
-export function ProjectsEditor({ data, onChange }: Props) {
+export function ProjectsEditor({ data, onChange, publicBasePath = "/projects" }: Props) {
   const [activeId, setActiveId] = useState<string>(data.projectsDetailed[0]?.id || "");
   const [tab, setTab] = useState<TabKey>("visual");
   const [githubImages, setGithubImages] = useState<string[]>([]);
   const [showAdvanced, setShowAdvanced] = useState(false);
-  const [jsonDraft, setJsonDraft] = useState<string>(safeJsonStringify(data.projectsDetailed));
-  const [jsonError, setJsonError] = useState<string>("");
-  const [jsonDirty, setJsonDirty] = useState(false);
-  const [showSaveConfirm, setShowSaveConfirm] = useState(false);
   const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
     basic: true,
     details: true,
@@ -142,15 +110,12 @@ export function ProjectsEditor({ data, onChange }: Props) {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const active = data.projectsDetailed.find((p) => p.id === activeId) || null;
 
-  useEffect(() => {
-    if (tab === "json" && !jsonDirty) setJsonDraft(safeJsonStringify(data.projectsDetailed));
-  }, [data.projectsDetailed, jsonDirty, tab]);
-
   function syncProjects(nextProjects: ProjectItem[]) {
+    const normalizedProjects = normalizeProjectDraft(nextProjects);
     onChange({
       ...data,
-      projectsDetailed: nextProjects,
-      projects: nextProjects.map((project) => ({
+      projectsDetailed: normalizedProjects,
+      projects: normalizedProjects.map((project) => ({
         title: project.title,
         description: project.shortDescription,
         image: project.image,
@@ -277,62 +242,16 @@ export function ProjectsEditor({ data, onChange }: Props) {
     setOpenGroups((current) => ({ ...current, [key]: !current[key] }));
   }
 
-  function applyJsonDraft(nextJson: string) {
-    setJsonDraft(nextJson);
-    setJsonDirty(true);
-    try {
-      const parsed = JSON.parse(nextJson);
-      if (!Array.isArray(parsed)) {
-        setJsonError("JSON must be an array of project objects.");
-        return;
-      }
-      const normalized = normalizeProjectsDraft(parsed);
-      const invalid = normalized.find((project) => !String(project.title || "").trim() || !String(project.slug || "").trim());
-      if (invalid) {
-        setJsonError("Each project must keep a title and slug.");
-        return;
-      }
-      setJsonError("");
-    } catch (error) {
-      setJsonError(formatLineError(parseJsonError(error), nextJson));
-    }
+  function regenerateSlug() {
+    if (!active) return;
+    const ok = window.confirm("Regenerate the slug from the current title? This will update the public URL.");
+    if (!ok) return;
+    updateActive({ slug: slugify(active.title || "") });
   }
 
-  function commitJsonDraft() {
-    try {
-      const parsed = JSON.parse(jsonDraft);
-      if (!Array.isArray(parsed)) {
-        setJsonError("JSON must be an array of project objects.");
-        return;
-      }
-      const normalized = normalizeProjectsDraft(parsed).map((project, index) => ({
-        ...emptyProject,
-        ...project,
-        id: String(project.id || `project-${index + 1}`),
-        slug: String(project.slug || slugify(String(project.title || ""))),
-        title: String(project.title || ""),
-        shortDescription: String(project.shortDescription || ""),
-        longDescription: String(project.longDescription || ""),
-        techStack: Array.isArray(project.techStack) ? project.techStack : [],
-        keyFeatures: Array.isArray(project.keyFeatures) ? project.keyFeatures : [],
-        keyResponsibilities: Array.isArray(project.keyResponsibilities) ? project.keyResponsibilities : [],
-        skillsApplied: Array.isArray(project.skillsApplied) ? project.skillsApplied : [],
-        order: Number(project.order || index + 1),
-        featured: Boolean(project.featured),
-        featuredMirror: Boolean(project.featuredMirror ?? project.featured),
-      }));
-      const invalid = normalized.find((project) => !project.title.trim() || !project.slug.trim());
-      if (invalid) {
-        setJsonError("Required fields title and slug cannot be empty.");
-        return;
-      }
-      setJsonError("");
-      syncProjects(normalized as ProjectItem[]);
-      setJsonDirty(false);
-      setShowSaveConfirm(false);
-    } catch (error) {
-      setJsonError(formatLineError(parseJsonError(error), jsonDraft));
-    }
+  function openProjectPage() {
+    if (!active?.slug || active.published === false) return;
+    window.open(`${publicBasePath}/${active.slug}`, "_blank", "noopener,noreferrer");
   }
 
   function exportJson() {
@@ -343,12 +262,6 @@ export function ProjectsEditor({ data, onChange }: Props) {
     anchor.download = "projects.json";
     anchor.click();
     URL.revokeObjectURL(url);
-  }
-
-  function resetJson() {
-    setJsonDraft(safeJsonStringify(data.projectsDetailed));
-    setJsonError("");
-    setJsonDirty(false);
   }
 
   return (
@@ -398,7 +311,18 @@ export function ProjectsEditor({ data, onChange }: Props) {
                 {openGroups.basic ? (
                   <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
                     <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.title} onChange={(e) => updateActive({ title: e.target.value, slug: active.slug || slugify(e.target.value) })} placeholder="Project title" />
-                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.slug || ""} onChange={(e) => updateActive({ slug: slugify(e.target.value) })} placeholder="Slug" />
+                    <div className="space-y-2">
+                      <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.slug || ""} onChange={(e) => updateActive({ slug: slugify(e.target.value) })} placeholder="Slug" />
+                      <p className="text-xs text-admin-text-muted">Public page URL is generated from the slug.</p>
+                    </div>
+                    <div className="flex flex-wrap gap-2 md:col-span-2">
+                      <button type="button" onClick={openProjectPage} disabled={!active.slug || active.published === false} className="rounded-full border border-admin-border bg-white px-4 py-2 text-xs font-semibold text-admin-text disabled:opacity-50">
+                        Open Project Page
+                      </button>
+                      <button type="button" onClick={regenerateSlug} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-xs font-semibold text-admin-text">
+                        Regenerate Slug
+                      </button>
+                    </div>
                     <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.subtitle || ""} onChange={(e) => updateActive({ subtitle: e.target.value })} placeholder="Subtitle" />
                     <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.featuredBadge || ""} onChange={(e) => updateActive({ featuredBadge: e.target.value })} placeholder="Featured badge" />
                     <select className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.status || "Planning"} onChange={(e) => updateActive({ status: e.target.value })}>{["Upcoming", "Planning", "In Progress", "Completed", "Archived"].map((value) => <option key={value}>{value}</option>)}</select>
@@ -635,6 +559,11 @@ export function ProjectsEditor({ data, onChange }: Props) {
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-admin-text-muted">Live Preview</p>
                 <h3 className="mt-2 text-lg font-semibold text-admin-text">{active.title || "Untitled Project"}</h3>
                 <p className="text-sm text-admin-text-muted">{active.subtitle || active.shortDescription || "Add a subtitle or short description to preview."}</p>
+                {Boolean((active as any).confidentialProject || (active as any).confidential || (active as any).isConfidential) ? (
+                  <p className="mt-3 rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-800">
+                    Some project details are withheld due to confidentiality agreements.
+                  </p>
+                ) : null}
                 <div className="mt-3 flex flex-wrap gap-2">
                   {active.featuredBadge ? <span className="rounded-full bg-admin-primary/10 px-3 py-1 text-xs font-semibold text-admin-primary">{active.featuredBadge}</span> : null}
                   {active.status ? <span className="rounded-full border border-admin-border px-3 py-1 text-xs text-admin-text-muted">{active.status}</span> : null}
@@ -648,7 +577,8 @@ export function ProjectsEditor({ data, onChange }: Props) {
             <JsonEditorPanel
               value={data.projectsDetailed}
               onApply={(next) => syncProjects(next as ProjectItem[])}
-              requiredPaths={["title", "slug"]}
+              collectionType="project"
+              collectionItemRequiredPaths={["title"]}
               title="Projects JSON"
               description="Advanced admin-only editing with validation, import/export, and safe saving."
             />

@@ -78,7 +78,7 @@ export function ProjectCard({ project }: ProjectCardProps) {
             </Link>
           ) : null}
           <Link href={`/projects/${project.slug}`} className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-3.5 py-2 text-xs font-semibold text-text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary">
-            View Details
+            View Project
           </Link>
         </div>
       </div>

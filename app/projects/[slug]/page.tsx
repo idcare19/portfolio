@@ -27,6 +27,10 @@ function projectLinkButton(href: string, label: string, icon?: React.ReactNode) 
   );
 }
 
+function isConfidential(project: { confidentialProject?: boolean; confidential?: boolean; isConfidential?: boolean }) {
+  return Boolean(project.confidentialProject || project.confidential || project.isConfidential);
+}
+
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
   const { slug } = await params;
   const project = await getPublicProjectBySlug(slug);
@@ -67,7 +71,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
   const previousProject = currentIndex > 0 ? allProjects[currentIndex - 1] : null;
   const nextProject = currentIndex >= 0 && currentIndex < allProjects.length - 1 ? allProjects[currentIndex + 1] : null;
   const gallery = project.galleryImages.length ? project.galleryImages : project.uiScreenshots.length ? project.uiScreenshots : project.image ? [project.image] : [];
-  const confidential = project.confidentialProject;
+  const confidential = isConfidential(project);
   const liveUrlHidden = confidential ? "Live URL withheld due to confidentiality agreement." : "";
 
   return (
@@ -144,13 +148,15 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
             <div className="mt-4 flex flex-wrap gap-2">
               {project.techStack.map((tech) => <span key={tech} className="rounded-full border border-[rgb(var(--border))] px-3 py-1.5 text-sm text-text-main">{tech}</span>)}
             </div>
-            <div className="mt-4 grid gap-3 text-sm text-text-muted">
-              {project.frontend ? <p><span className="font-semibold text-text-main">Frontend:</span> {project.frontend}</p> : null}
-              {project.backend ? <p><span className="font-semibold text-text-main">Backend:</span> {project.backend}</p> : null}
-              {project.database ? <p><span className="font-semibold text-text-main">Database:</span> {project.database}</p> : null}
-              {project.cloudHosting ? <p><span className="font-semibold text-text-main">Cloud / Hosting:</span> {project.cloudHosting}</p> : null}
-              {project.apisServicesUsed ? <p><span className="font-semibold text-text-main">APIs / Services:</span> {project.apisServicesUsed}</p> : null}
-            </div>
+            {!confidential ? (
+              <div className="mt-4 grid gap-3 text-sm text-text-muted">
+                {project.frontend ? <p><span className="font-semibold text-text-main">Frontend:</span> {project.frontend}</p> : null}
+                {project.backend ? <p><span className="font-semibold text-text-main">Backend:</span> {project.backend}</p> : null}
+                {project.database ? <p><span className="font-semibold text-text-main">Database:</span> {project.database}</p> : null}
+                {project.cloudHosting ? <p><span className="font-semibold text-text-main">Cloud / Hosting:</span> {project.cloudHosting}</p> : null}
+                {project.apisServicesUsed ? <p><span className="font-semibold text-text-main">APIs / Services:</span> {project.apisServicesUsed}</p> : null}
+              </div>
+            ) : null}
           </div>
         </section>
 
@@ -159,7 +165,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
           <p className="mt-3 text-sm leading-7 text-text-muted">{project.fullDescription || project.longDescription || project.shortDescription}</p>
         </section>
 
-        {project.keyFeatures.length || project.keyResponsibilities.length || project.skillsApplied.length ? (
+        {!confidential && (project.keyFeatures.length || project.keyResponsibilities.length || project.skillsApplied.length) ? (
           <section className="grid gap-6 lg:grid-cols-3">
             {project.keyFeatures.length ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6"><h2 className="text-xl font-semibold text-text-main">Key Features</h2><ul className="mt-4 space-y-2 text-sm text-text-muted">{sectionList(project.keyFeatures)}</ul></div> : null}
             {project.keyResponsibilities.length ? <div className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6"><h2 className="text-xl font-semibold text-text-main">Responsibilities</h2><ul className="mt-4 space-y-2 text-sm text-text-muted">{sectionList(project.keyResponsibilities)}</ul></div> : null}
@@ -167,7 +173,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
           </section>
         ) : null}
 
-        {gallery.length ? (
+        {!confidential && gallery.length ? (
           <section className="space-y-4">
             <h2 className="text-2xl font-semibold text-text-main">Gallery</h2>
             <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -179,7 +185,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
           </section>
         ) : null}
 
-        {project.demoVideoUrl ? (
+        {!confidential && project.demoVideoUrl ? (
           <section className="rounded-3xl border border-[rgb(var(--border))] bg-white p-6">
             <h2 className="text-xl font-semibold text-text-main">Demo Video</h2>
             <a className="mt-3 inline-flex items-center gap-2 text-sm font-semibold text-primary" href={project.demoVideoUrl} target="_blank" rel="noreferrer">

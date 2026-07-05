@@ -52,16 +52,26 @@ export function CompletedProjectsSection() {
                 {project.role ? <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-[#1D4ED8]">{project.role}</p> : null}
                 <p className="mt-3 text-sm leading-relaxed text-text-muted">{project.workDone}</p>
 
-                {normalizeHref(project.link) ? (
-                  <Link
-                    href={normalizeHref(project.link)}
-                    target={normalizeHref(project.link).startsWith("http") ? "_blank" : undefined}
-                    rel={normalizeHref(project.link).startsWith("http") ? "noreferrer" : undefined}
-                    className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-[#1D4ED8] hover:text-[#1E40AF]"
-                  >
-                    View project <ArrowUpRight className="h-3.5 w-3.5" />
-                  </Link>
-                ) : null}
+                <div className="mt-4 flex flex-wrap gap-3">
+                  {project.slug ? (
+                    <Link
+                      href={`/completed-projects/${project.slug}`}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1D4ED8] hover:text-[#1E40AF]"
+                    >
+                      View project <ArrowUpRight className="h-3.5 w-3.5" />
+                    </Link>
+                  ) : null}
+                  {normalizeHref(project.link) ? (
+                    <Link
+                      href={normalizeHref(project.link)}
+                      target={normalizeHref(project.link).startsWith("http") ? "_blank" : undefined}
+                      rel={normalizeHref(project.link).startsWith("http") ? "noreferrer" : undefined}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-text-main"
+                    >
+                      Open external link <ArrowUpRight className="h-3.5 w-3.5" />
+                    </Link>
+                  ) : null}
+                </div>
               </article>
             </FadeInUp>
           ))}

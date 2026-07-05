@@ -84,5 +84,5 @@ export function CompletedProjectsEditor({
     });
   }
 
-  return <ProjectsEditor data={completedData} onChange={handleChange} />;
+  return <ProjectsEditor data={completedData} onChange={handleChange} publicBasePath="/completed-projects" />;
 }
