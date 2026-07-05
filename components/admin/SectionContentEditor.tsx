@@ -6,6 +6,7 @@ import type { SiteData } from "@/src/types/site-data";
 import { PageHeader } from "@/components/admin/PageHeader";
 import { SectionCard } from "@/components/admin/SectionCard";
 import { SectionItemsCrudEditor } from "@/components/admin/SectionItemsCrudEditor";
+import { JsonEditorPanel } from "@/components/admin/JsonEditorPanel";
 import { useSiteDataEditor } from "@/components/admin/useSiteDataEditor";
 import { useToast } from "@/components/admin/ToastProvider";
 import { getSectionContentConfig, getValueByPath, setValueByPath, type SectionArrayField } from "@/lib/admin/section-content-fields";
@@ -80,6 +81,7 @@ export function SectionContentEditor({ slug }: { slug: string }) {
   const config = getSectionContentConfig(slug);
   const { data, setData, saving, save } = useSiteDataEditor();
   const [draft, setDraft] = useState<SiteData | null>(null);
+  const [activeTab, setActiveTab] = useState<"form" | "json">("form");
 
   useEffect(() => {
     setDraft(data);
@@ -121,48 +123,80 @@ export function SectionContentEditor({ slug }: { slug: string }) {
   return (
     <div className="space-y-4">
       <PageHeader title={config.title} description={config.description} />
-
-      <SectionCard title={`${config.title} Status`} description="Control visibility for this section.">
-        <label className="inline-flex items-center gap-2 text-sm">
-          <input
-            type="checkbox"
-            checked={enabled}
-            onChange={(event) => {
-              if (!enabledPath) return;
-              setPath(enabledPath, event.target.checked);
-            }}
-          />
-          Enabled / Disabled
-        </label>
-      </SectionCard>
-
-      <div className="grid gap-4">
-        {config.fields.map((field) => (
-          <SectionCard key={field.path} title={field.label} description={field.helpText}>
-            {renderInput(field.type, getValueByPath(editorData, field.path), (next) => setPath(field.path, next), field.placeholder)}
-          </SectionCard>
-        ))}
-
-        {config.arrayFields?.map((field) => (
-          <ArrayEditor key={field.path} field={field} value={getValueByPath(editorData, field.path) as any[]} onChange={(next) => setPath(field.path, next)} />
-        ))}
-
-        {config.itemCrud ? (
-          <SectionItemsCrudEditor config={config.itemCrud} items={getValueByPath(editorData, config.itemCrud.path) as any[]} onChange={(next) => setPath(config.itemCrud!.path, next)} />
-        ) : null}
-      </div>
-
-      <div className="flex flex-wrap gap-3">
-        <button type="button" onClick={handleSave} disabled={saving} className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-80">
-          {saving ? "Saving..." : "Save Changes"}
+      <div className="flex flex-wrap gap-2">
+        <button type="button" onClick={() => setActiveTab("form")} className={`rounded-full px-4 py-2 text-sm font-semibold ${activeTab === "form" ? "bg-admin-primary text-white" : "border border-admin-border bg-admin-bg text-admin-text"}`}>
+          Form Editor
         </button>
-        <Link href={config.previewHref} target="_blank" rel="noreferrer" className="rounded-xl border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">
-          Preview Site
-        </Link>
-        <Link href="/admin/text-blocks" className="rounded-xl border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">
-          Advanced Text Blocks
-        </Link>
+        <button type="button" onClick={() => setActiveTab("json")} className={`rounded-full px-4 py-2 text-sm font-semibold ${activeTab === "json" ? "bg-admin-primary text-white" : "border border-admin-border bg-admin-bg text-admin-text"}`}>
+          JSON Editor
+        </button>
       </div>
+
+      {activeTab === "form" ? (
+        <>
+          <SectionCard title={`${config.title} Status`} description="Control visibility for this section.">
+            <label className="inline-flex items-center gap-2 text-sm">
+              <input
+                type="checkbox"
+                checked={enabled}
+                onChange={(event) => {
+                  if (!enabledPath) return;
+                  setPath(enabledPath, event.target.checked);
+                }}
+              />
+              Enabled / Disabled
+            </label>
+          </SectionCard>
+
+          <div className="grid gap-4">
+            {config.fields.map((field) => (
+              <SectionCard key={field.path} title={field.label} description={field.helpText}>
+                {renderInput(field.type, getValueByPath(editorData, field.path), (next) => setPath(field.path, next), field.placeholder)}
+              </SectionCard>
+            ))}
+
+            {config.arrayFields?.map((field) => (
+              <ArrayEditor key={field.path} field={field} value={getValueByPath(editorData, field.path) as any[]} onChange={(next) => setPath(field.path, next)} />
+            ))}
+
+            {config.itemCrud ? (
+              <SectionItemsCrudEditor config={config.itemCrud} items={getValueByPath(editorData, config.itemCrud.path) as any[]} onChange={(next) => setPath(config.itemCrud!.path, next)} />
+            ) : null}
+          </div>
+
+          <div className="flex flex-wrap gap-3">
+            <button type="button" onClick={handleSave} disabled={saving} className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-80">
+              {saving ? "Saving..." : "Save Changes"}
+            </button>
+            <Link href={config.previewHref} target="_blank" rel="noreferrer" className="rounded-xl border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">
+              Preview Site
+            </Link>
+            <Link href="/admin/text-blocks" className="rounded-xl border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">
+              Advanced Text Blocks
+            </Link>
+          </div>
+        </>
+      ) : (
+        <div className="space-y-4">
+          <JsonEditorPanel
+            value={editorData}
+            onApply={(next) => {
+              patch(next);
+              notify("success", "JSON draft applied");
+            }}
+            title={`${config.title} JSON`}
+            description="Edit the full site data snapshot for this section safely."
+          />
+          <div className="flex flex-wrap gap-3">
+            <button type="button" onClick={handleSave} disabled={saving} className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-80">
+              {saving ? "Saving..." : "Save Changes"}
+            </button>
+            <button type="button" onClick={() => setActiveTab("form")} className="rounded-xl border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">
+              Back to Form
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

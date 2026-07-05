@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Copy, Image as ImageIcon, Plus, Trash2 } from "lucide-react";
 import type { ProjectItem, SiteData } from "@/src/types/site-data";
+import { JsonEditorPanel } from "@/components/admin/JsonEditorPanel";
 
 type Props = {
   data: SiteData;
@@ -637,75 +638,13 @@ export function ProjectsEditor({ data, onChange }: Props) {
           )
         ) : (
           <div className="space-y-4">
-            <div className="rounded-3xl border border-admin-border bg-admin-bg p-4">
-              <p className="text-sm font-semibold text-admin-text">JSON Editor</p>
-              <p className="mt-1 text-sm text-admin-text-muted">Advanced admin-only editing with validation, import/export, and safe saving.</p>
-            </div>
-
-            <div className="flex flex-wrap items-center gap-2">
-              <button type="button" onClick={() => setJsonDraft(safeJsonStringify(data.projectsDetailed))} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Format JSON</button>
-              <button type="button" onClick={() => navigator.clipboard.writeText(jsonDraft)} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Copy JSON</button>
-              <button type="button" onClick={() => fileInputRef.current?.click()} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Import JSON</button>
-              <button type="button" onClick={exportJson} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Export JSON</button>
-              <button type="button" onClick={resetJson} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Reset Changes</button>
-            </div>
-
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="application/json"
-              className="hidden"
-              onChange={async (event) => {
-                const file = event.target.files?.[0];
-                if (!file) return;
-                const text = await file.text();
-                applyJsonDraft(text);
-                event.target.value = "";
-              }}
+            <JsonEditorPanel
+              value={data.projectsDetailed}
+              onApply={(next) => syncProjects(next as ProjectItem[])}
+              requiredPaths={["title", "slug"]}
+              title="Projects JSON"
+              description="Advanced admin-only editing with validation, import/export, and safe saving."
             />
-
-            <div className="overflow-hidden rounded-[22px] border border-admin-border bg-admin-input">
-              <div className="grid grid-cols-[auto,1fr]">
-                <pre className="select-none overflow-hidden border-r border-admin-border bg-admin-bg px-3 py-4 text-right text-xs leading-6 text-admin-text-muted">
-                  {jsonDraft.split("\n").map((_, index) => <div key={index}>{index + 1}</div>)}
-                </pre>
-                <textarea
-                  value={jsonDraft}
-                  onChange={(event) => applyJsonDraft(event.target.value)}
-                  rows={24}
-                  className="min-h-[420px] w-full bg-transparent px-4 py-4 font-mono text-sm leading-6 text-admin-text outline-none"
-                  spellCheck={false}
-                  placeholder="Paste projects JSON here"
-                />
-              </div>
-            </div>
-
-            {jsonError ? <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{jsonError}</p> : null}
-
-            <div className="flex flex-wrap items-center gap-3">
-              <button
-                type="button"
-                onClick={() => setShowSaveConfirm(true)}
-                disabled={Boolean(jsonError)}
-                className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
-              >
-                Save JSON Changes
-              </button>
-              <button type="button" onClick={resetJson} className="rounded-xl border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">
-                Reset Changes
-              </button>
-            </div>
-
-            {showSaveConfirm ? (
-              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
-                <p className="text-sm font-semibold text-amber-900">Confirm JSON save</p>
-                <p className="mt-1 text-sm text-amber-800">This will replace the current project list. Title, slug, and existing IDs are preserved and invalid JSON is blocked.</p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  <button type="button" onClick={commitJsonDraft} disabled={Boolean(jsonError)} className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">Confirm Save</button>
-                  <button type="button" onClick={() => setShowSaveConfirm(false)} className="rounded-lg border border-amber-300 bg-white px-4 py-2 text-sm font-semibold text-amber-900">Cancel</button>
-                </div>
-              </div>
-            ) : null}
           </div>
         )}
       </section>
