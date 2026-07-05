@@ -21,6 +21,22 @@ export type SiteConnection = {
   contentPath: string;
 };
 
+export type CustomFieldType = "text" | "textarea" | "richText" | "number" | "boolean" | "date" | "url" | "email" | "image" | "tags" | "select" | "multiSelect" | "json" | "object";
+
+export type CustomField = {
+  id: string;
+  label: string;
+  key: string;
+  type: CustomFieldType;
+  value: string | number | boolean | string[] | Record<string, unknown> | null;
+  required?: boolean;
+  showOnPublic?: boolean;
+  showInAdmin?: boolean;
+  order?: number;
+  description?: string;
+  options?: string[];
+};
+
 export type ProjectItem = {
   id: string;
   slug?: string;
@@ -92,6 +108,7 @@ export type ProjectItem = {
   metaDescription?: string;
   keywords?: string[];
   openGraphImage?: string;
+  customFields?: CustomField[];
   overview?: string;
   problem?: string;
   responsibilities?: string[];
@@ -117,6 +134,7 @@ export type WorkingProjectItem = {
   status: string;
   timeline: string;
   link: string;
+  customFields?: CustomField[];
 };
 
 export type CompletedProjectItem = {
@@ -125,6 +143,7 @@ export type CompletedProjectItem = {
   role: string;
   link: string;
   workDone: string;
+  customFields?: CustomField[];
 };
 
 export type JourneyNow = {
@@ -157,6 +176,7 @@ export type BlogItem = {
   publishedAt?: string;
   order: number;
   isEnabled: boolean;
+  customFields?: CustomField[];
 };
 
 export type ArrayItem = {
@@ -193,6 +213,7 @@ export type SkillItem = {
   level: number;
   isEnabled?: boolean;
   order?: number;
+  customFields?: CustomField[];
 };
 
 export type ServiceItem = {
@@ -202,6 +223,7 @@ export type ServiceItem = {
   icon: string;
   isEnabled?: boolean;
   order?: number;
+  customFields?: CustomField[];
 };
 
 export type TestimonialItem = {
@@ -212,6 +234,7 @@ export type TestimonialItem = {
   image: string;
   isEnabled?: boolean;
   order?: number;
+  customFields?: CustomField[];
 };
 
 export type ContactMessageItem = {

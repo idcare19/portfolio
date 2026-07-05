@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import type { KeyboardEvent } from "react";
 import { ChevronDown, ChevronUp, GripVertical, ImagePlus, Plus, Trash2 } from "lucide-react";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
+import { CustomFieldsEditor } from "@/components/admin/CustomFieldsEditor";
 import { SectionCard } from "@/components/admin/SectionCard";
 import type { SectionItemCrudConfig } from "@/lib/admin/section-content-fields";
 
@@ -471,6 +472,10 @@ export function SectionItemsCrudEditor({ config, items, onChange }: Props) {
                     </div>
                   </div>
                 ))}
+                <CustomFieldsEditor
+                  value={Array.isArray(item.customFields) ? item.customFields : []}
+                  onChange={(next) => update(index, "customFields", next)}
+                />
               </div>
             ) : null}
           </div>

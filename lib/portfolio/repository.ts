@@ -495,6 +495,7 @@ function normalizeProjectRecord(project: any, index: number) {
     metaTitle: String(project?.metaTitle || ""),
     metaDescription: String(project?.metaDescription || ""),
     achievements: Array.isArray(project?.achievements) ? project.achievements : [],
+    customFields: Array.isArray(project?.customFields) ? project.customFields : [],
   };
 }
 

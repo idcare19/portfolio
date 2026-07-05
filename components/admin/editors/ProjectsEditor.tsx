@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ChevronDown, Copy, Image as ImageIcon, Plus, Trash2 } from "lucide-react";
 import type { ProjectItem, SiteData } from "@/src/types/site-data";
+import { CustomFieldsEditor } from "@/components/admin/CustomFieldsEditor";
 import { JsonEditorPanel } from "@/components/admin/JsonEditorPanel";
 
 type Props = {
@@ -114,6 +115,7 @@ function normalizeProjectsDraft(projects: unknown[]) {
       keyResponsibilities: Array.isArray(current.keyResponsibilities) ? current.keyResponsibilities : Array.isArray(current.responsibilities) ? current.responsibilities : [],
       skillsApplied: Array.isArray(current.skillsApplied) ? current.skillsApplied : [],
       keywords: Array.isArray(current.keywords) ? current.keywords : [],
+      customFields: Array.isArray(current.customFields) ? current.customFields : [],
     };
   });
 }
@@ -623,6 +625,11 @@ export function ProjectsEditor({ data, onChange }: Props) {
                   </div>
                 ) : null}
               </section>
+
+              <CustomFieldsEditor
+                value={Array.isArray(active.customFields) ? active.customFields : []}
+                onChange={(next) => updateActive({ customFields: next })}
+              />
 
               <div className="rounded-3xl border border-dashed border-admin-border p-4">
                 <p className="text-xs font-semibold uppercase tracking-[0.18em] text-admin-text-muted">Live Preview</p>

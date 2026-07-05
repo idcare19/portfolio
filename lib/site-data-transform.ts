@@ -194,6 +194,7 @@ function normalizeProjectItem(project: any, index: number) {
     metaDescription: String(project?.metaDescription || ""),
     keywords: Array.isArray(project?.keywords) ? project.keywords : [],
     openGraphImage: String(project?.openGraphImage || project?.banner || project?.image || ""),
+    customFields: Array.isArray(project?.customFields) ? project.customFields : [],
     overview: String(project?.overview || ""),
     problem: String(project?.problem || project?.problemStatement || ""),
     responsibilities,
