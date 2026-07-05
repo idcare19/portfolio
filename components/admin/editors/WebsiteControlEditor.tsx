@@ -135,6 +135,46 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
           <textarea className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2 md:col-span-2" rows={2} value={control.versionInfo.changelogShort} onChange={(e) => setControl({ versionInfo: { ...control.versionInfo, changelogShort: e.target.value } })} placeholder="Short changelog" />
         </div>
       </section>
+
+      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+        <h2 className="text-lg font-semibold text-admin-text">Homepage Projects</h2>
+        <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
+          <select
+            className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2"
+            value={String((data.homepageProjectSettings?.count ?? 6) as string)}
+            onChange={(e) =>
+              onChange({
+                ...data,
+                homepageProjectSettings: {
+                  count: e.target.value === "all" ? "all" : Number(e.target.value) as 3 | 4 | 6 | 8 | 10,
+                  buttonText: data.homepageProjectSettings?.buttonText || "View More Projects",
+                },
+              })
+            }
+          >
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="6">6</option>
+            <option value="8">8</option>
+            <option value="10">10</option>
+            <option value="all">All</option>
+          </select>
+          <input
+            className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2"
+            value={data.homepageProjectSettings?.buttonText || "View More Projects"}
+            onChange={(e) =>
+              onChange({
+                ...data,
+                homepageProjectSettings: {
+                  count: data.homepageProjectSettings?.count ?? 6,
+                  buttonText: e.target.value,
+                },
+              })
+            }
+            placeholder="View More Projects"
+          />
+        </div>
+      </section>
     </div>
   );
 }

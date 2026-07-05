@@ -10,9 +10,11 @@ import Link from "next/link";
 export function ProjectsSection() {
   const section = useSectionData("projects");
   const data = section.data as Record<string, any>;
+  const limitSetting = data.homepageLimit ?? data.homepageProjectsCount ?? data.homepageProjectCount ?? 6;
+  const displayLimit = limitSetting === "all" ? Number.MAX_SAFE_INTEGER : Number(limitSetting || 6);
   const projects = (Array.isArray(section.items) ? section.items : [])
     .filter((item: any) => item && item.isEnabled !== false && (item.featured || item.isFeatured))
-    .slice(0, Number(data.homepageLimit || 6))
+    .slice(0, displayLimit)
     .map((item: any) => ({
       slug: String(item.slug || item.id || item.title || ""),
       title: String(item.title || ""),
@@ -26,6 +28,8 @@ export function ProjectsSection() {
       documentationUrl: item.documentationUrl || "",
     }));
   const hasHeader = Boolean(data.eyebrow || data.title || data.description);
+  const enabledCount = (Array.isArray(section.items) ? section.items : []).filter((item: any) => item && item.isEnabled !== false && (item.featured || item.isFeatured)).length;
+  const showMore = enabledCount > projects.length;
 
   return (
     <AnimatedSection id="projects" className="bg-section-bg py-20">
@@ -40,11 +44,13 @@ export function ProjectsSection() {
           ))}
         </div>
 
-        <div className="mt-8 flex justify-center">
-          <Link href="/projects" className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:bg-[#1D4ED8]">
-            View All Projects
-          </Link>
-        </div>
+        {showMore ? (
+          <div className="mt-8 flex justify-center">
+            <Link href="/projects" className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:bg-[#1D4ED8]">
+              {String(data.homepageButtonText || data.homepageMoreButtonText || "View More Projects")}
+            </Link>
+          </div>
+        ) : null}
       </div>
     </AnimatedSection>
   );

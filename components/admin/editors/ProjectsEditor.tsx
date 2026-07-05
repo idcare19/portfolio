@@ -1,12 +1,15 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { ChevronDown, Copy, Image as ImageIcon, Plus, Trash2 } from "lucide-react";
 import type { ProjectItem, SiteData } from "@/src/types/site-data";
 
 type Props = {
   data: SiteData;
   onChange: (next: SiteData) => void;
 };
+
+type TabKey = "visual" | "json";
 
 const emptyProject: ProjectItem = {
   id: "",
@@ -44,17 +47,6 @@ const emptyProject: ProjectItem = {
   published: false,
 };
 
-const GROUPS = [
-  "General",
-  "Problem & Solution",
-  "Features",
-  "Tech",
-  "Media",
-  "Links",
-  "Timeline",
-  "SEO",
-] as const;
-
 function slugify(value: string) {
   return value
     .toLowerCase()
@@ -72,11 +64,84 @@ function toList(value: string) {
   return value.split(",").map((item) => item.trim()).filter(Boolean);
 }
 
+function joinList(value?: string[]) {
+  return Array.isArray(value) ? value.filter(Boolean).join(", ") : "";
+}
+
+function safeJsonStringify(value: unknown) {
+  return JSON.stringify(value, null, 2);
+}
+
+function parseJsonError(error: unknown) {
+  if (!(error instanceof SyntaxError)) return String(error);
+  return error.message;
+}
+
+function formatLineError(message: string, source: string) {
+  const lineMatch = /position\s+(\d+)/i.exec(message);
+  if (!lineMatch) return message;
+  const position = Number(lineMatch[1]);
+  const before = source.slice(0, position);
+  const line = before.split("\n").length;
+  const column = before.length - before.lastIndexOf("\n");
+  return `${message} (line ${line}, column ${column})`;
+}
+
+function normalizeProjectsDraft(projects: unknown[]) {
+  return projects.map((project, index) => {
+    if (!project || typeof project !== "object") return { ...emptyProject, id: `project-${index + 1}`, order: index + 1 };
+    const current = project as Record<string, unknown>;
+    const title = String(current.title || "");
+    const slug = String(current.slug || current.id || slugify(title));
+    return {
+      ...current,
+      id: String(current.id || `project-${index + 1}`),
+      slug,
+      title,
+      shortDescription: String(current.shortDescription || ""),
+      longDescription: String(current.longDescription || current.fullDescription || ""),
+      techStack: Array.isArray(current.techStack) ? current.techStack : [],
+      category: String(current.category || ""),
+      image: String(current.image || ""),
+      liveDemoUrl: String(current.liveDemoUrl || ""),
+      githubUrl: String(current.githubUrl || ""),
+      order: Number(current.order ?? index + 1),
+      isEnabled: current.isEnabled !== false,
+      featured: Boolean(current.featured),
+      featuredMirror: Boolean(current.featuredMirror ?? current.featured),
+      keyFeatures: Array.isArray(current.keyFeatures) ? current.keyFeatures : Array.isArray(current.features) ? current.features : [],
+      keyResponsibilities: Array.isArray(current.keyResponsibilities) ? current.keyResponsibilities : Array.isArray(current.responsibilities) ? current.responsibilities : [],
+      skillsApplied: Array.isArray(current.skillsApplied) ? current.skillsApplied : [],
+      keywords: Array.isArray(current.keywords) ? current.keywords : [],
+    };
+  });
+}
+
 export function ProjectsEditor({ data, onChange }: Props) {
   const [activeId, setActiveId] = useState<string>(data.projectsDetailed[0]?.id || "");
+  const [tab, setTab] = useState<TabKey>("visual");
   const [githubImages, setGithubImages] = useState<string[]>([]);
   const [showAdvanced, setShowAdvanced] = useState(false);
+  const [jsonDraft, setJsonDraft] = useState<string>(safeJsonStringify(data.projectsDetailed));
+  const [jsonError, setJsonError] = useState<string>("");
+  const [jsonDirty, setJsonDirty] = useState(false);
+  const [showSaveConfirm, setShowSaveConfirm] = useState(false);
+  const [openGroups, setOpenGroups] = useState<Record<string, boolean>>({
+    basic: true,
+    details: true,
+    tech: true,
+    responsibilities: true,
+    links: true,
+    media: true,
+    seo: true,
+    advanced: false,
+  });
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const active = data.projectsDetailed.find((p) => p.id === activeId) || null;
+
+  useEffect(() => {
+    if (tab === "json" && !jsonDirty) setJsonDraft(safeJsonStringify(data.projectsDetailed));
+  }, [data.projectsDetailed, jsonDirty, tab]);
 
   function syncProjects(nextProjects: ProjectItem[]) {
     onChange({
@@ -117,9 +182,7 @@ export function ProjectsEditor({ data, onChange }: Props) {
         const res = await fetch("/api/github/images", { cache: "no-store" });
         const payload = await res.json();
         if (!cancelled && res.ok && payload?.ok) {
-          setGithubImages(
-            (payload.data as Array<{ url: string }>).map((item) => item.url).filter(Boolean)
-          );
+          setGithubImages((payload.data as Array<{ url: string }>).map((item) => item.url).filter(Boolean));
         }
       } catch {
         if (!cancelled) setGithubImages([]);
@@ -189,9 +252,105 @@ export function ProjectsEditor({ data, onChange }: Props) {
     );
   }
 
+  function updateListField(key: keyof ProjectItem, next: string) {
+    updateActive({ [key]: toList(next) } as Partial<ProjectItem>);
+  }
+
+  function updateStack(index: number, nextValue: string) {
+    const next = [...(active?.techStack || [])];
+    next[index] = nextValue;
+    updateActive({ techStack: next.filter(Boolean) });
+  }
+
+  function addStackItem() {
+    updateActive({ techStack: [...(active?.techStack || []), ""] });
+  }
+
+  function removeStackItem(index: number) {
+    updateActive({ techStack: (active?.techStack || []).filter((_, i) => i !== index) });
+  }
+
+  function toggleGroup(key: string) {
+    setOpenGroups((current) => ({ ...current, [key]: !current[key] }));
+  }
+
+  function applyJsonDraft(nextJson: string) {
+    setJsonDraft(nextJson);
+    setJsonDirty(true);
+    try {
+      const parsed = JSON.parse(nextJson);
+      if (!Array.isArray(parsed)) {
+        setJsonError("JSON must be an array of project objects.");
+        return;
+      }
+      const normalized = normalizeProjectsDraft(parsed);
+      const invalid = normalized.find((project) => !String(project.title || "").trim() || !String(project.slug || "").trim());
+      if (invalid) {
+        setJsonError("Each project must keep a title and slug.");
+        return;
+      }
+      setJsonError("");
+    } catch (error) {
+      setJsonError(formatLineError(parseJsonError(error), nextJson));
+    }
+  }
+
+  function commitJsonDraft() {
+    try {
+      const parsed = JSON.parse(jsonDraft);
+      if (!Array.isArray(parsed)) {
+        setJsonError("JSON must be an array of project objects.");
+        return;
+      }
+      const normalized = normalizeProjectsDraft(parsed).map((project, index) => ({
+        ...emptyProject,
+        ...project,
+        id: String(project.id || `project-${index + 1}`),
+        slug: String(project.slug || slugify(String(project.title || ""))),
+        title: String(project.title || ""),
+        shortDescription: String(project.shortDescription || ""),
+        longDescription: String(project.longDescription || ""),
+        techStack: Array.isArray(project.techStack) ? project.techStack : [],
+        keyFeatures: Array.isArray(project.keyFeatures) ? project.keyFeatures : [],
+        keyResponsibilities: Array.isArray(project.keyResponsibilities) ? project.keyResponsibilities : [],
+        skillsApplied: Array.isArray(project.skillsApplied) ? project.skillsApplied : [],
+        order: Number(project.order || index + 1),
+        featured: Boolean(project.featured),
+        featuredMirror: Boolean(project.featuredMirror ?? project.featured),
+      }));
+      const invalid = normalized.find((project) => !project.title.trim() || !project.slug.trim());
+      if (invalid) {
+        setJsonError("Required fields title and slug cannot be empty.");
+        return;
+      }
+      setJsonError("");
+      syncProjects(normalized as ProjectItem[]);
+      setJsonDirty(false);
+      setShowSaveConfirm(false);
+    } catch (error) {
+      setJsonError(formatLineError(parseJsonError(error), jsonDraft));
+    }
+  }
+
+  function exportJson() {
+    const blob = new Blob([safeJsonStringify(data.projectsDetailed)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement("a");
+    anchor.href = url;
+    anchor.download = "projects.json";
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function resetJson() {
+    setJsonDraft(safeJsonStringify(data.projectsDetailed));
+    setJsonError("");
+    setJsonDirty(false);
+  }
+
   return (
-    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[280px,1fr]">
-      <aside className="rounded-2xl border border-admin-border bg-admin-card p-4 shadow-sm">
+    <div className="grid grid-cols-1 gap-4 lg:grid-cols-[300px,1fr]">
+      <aside className="rounded-3xl border border-admin-border bg-admin-card p-4 shadow-sm lg:sticky lg:top-4 lg:h-[calc(100vh-2rem)] lg:overflow-auto">
         <div className="mb-3 flex items-center justify-between">
           <h3 className="text-sm font-semibold text-admin-text">Projects</h3>
           <button onClick={addProject} className="rounded-lg bg-admin-primary px-2.5 py-1 text-xs font-semibold text-white">Add</button>
@@ -204,25 +363,9 @@ export function ProjectsEditor({ data, onChange }: Props) {
                 <p className="text-xs text-admin-text-muted">{project.category || "No category"}</p>
               </button>
               <div className="mt-2 flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={() => moveProject(project.id, -1)}
-                  className="text-xs font-semibold text-admin-text-muted disabled:opacity-40"
-                  disabled={data.projectsDetailed[0]?.id === project.id}
-                >
-                  Up
-                </button>
-                <button
-                  type="button"
-                  onClick={() => moveProject(project.id, 1)}
-                  className="text-xs font-semibold text-admin-text-muted disabled:opacity-40"
-                  disabled={data.projectsDetailed[data.projectsDetailed.length - 1]?.id === project.id}
-                >
-                  Down
-                </button>
-                <button type="button" onClick={() => removeProject(project.id)} className="text-xs font-semibold text-rose-600">
-                  Delete
-                </button>
+                <button type="button" onClick={() => moveProject(project.id, -1)} className="text-xs font-semibold text-admin-text-muted disabled:opacity-40" disabled={data.projectsDetailed[0]?.id === project.id}>Up</button>
+                <button type="button" onClick={() => moveProject(project.id, 1)} className="text-xs font-semibold text-admin-text-muted disabled:opacity-40" disabled={data.projectsDetailed[data.projectsDetailed.length - 1]?.id === project.id}>Down</button>
+                <button type="button" onClick={() => removeProject(project.id)} className="text-xs font-semibold text-rose-600">Delete</button>
               </div>
             </div>
           ))}
@@ -230,154 +373,339 @@ export function ProjectsEditor({ data, onChange }: Props) {
         </div>
       </aside>
 
-      <section className="rounded-2xl border border-admin-border bg-admin-card p-5 shadow-sm">
-        {!active ? (
-          <p className="text-sm text-admin-text-muted">Select a project or add a new one.</p>
+      <section className="rounded-3xl border border-admin-border bg-admin-card p-5 shadow-sm">
+        <div className="mb-4 flex flex-wrap items-center gap-2">
+          <button type="button" onClick={() => setTab("visual")} className={`rounded-full px-4 py-2 text-sm font-semibold ${tab === "visual" ? "bg-admin-primary text-white" : "border border-admin-border bg-admin-bg text-admin-text"}`}>Visual</button>
+          <button type="button" onClick={() => setTab("json")} className={`rounded-full px-4 py-2 text-sm font-semibold ${tab === "json" ? "bg-admin-primary text-white" : "border border-admin-border bg-admin-bg text-admin-text"}`}>JSON Editor</button>
+        </div>
+
+        {tab === "visual" ? (
+          !active ? (
+            <p className="text-sm text-admin-text-muted">Select a project or add a new one.</p>
+          ) : (
+            <div className="space-y-4">
+              <section className="rounded-3xl border border-admin-border bg-admin-bg p-4">
+                <button type="button" onClick={() => toggleGroup("basic")} className="flex w-full items-center justify-between gap-3 text-left">
+                  <div>
+                    <h4 className="text-sm font-semibold text-admin-text">Basic Information</h4>
+                    <p className="mt-1 text-xs text-admin-text-muted">Core identity, visibility, and content summary.</p>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${openGroups.basic ? "rotate-180" : ""}`} />
+                </button>
+                {openGroups.basic ? (
+                  <div className="mt-4 grid grid-cols-1 gap-3 md:grid-cols-2">
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.title} onChange={(e) => updateActive({ title: e.target.value, slug: active.slug || slugify(e.target.value) })} placeholder="Project title" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.slug || ""} onChange={(e) => updateActive({ slug: slugify(e.target.value) })} placeholder="Slug" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.subtitle || ""} onChange={(e) => updateActive({ subtitle: e.target.value })} placeholder="Subtitle" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.featuredBadge || ""} onChange={(e) => updateActive({ featuredBadge: e.target.value })} placeholder="Featured badge" />
+                    <select className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.status || "Planning"} onChange={(e) => updateActive({ status: e.target.value })}>{["Upcoming", "Planning", "In Progress", "Completed", "Archived"].map((value) => <option key={value}>{value}</option>)}</select>
+                    <select className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.projectType || "Personal"} onChange={(e) => updateActive({ projectType: e.target.value })}>{["Personal", "Client", "Internship", "Open Source"].map((value) => <option key={value}>{value}</option>)}</select>
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.category} onChange={(e) => updateActive({ category: e.target.value })} placeholder="Category" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={(active.tags || []).join(", ")} onChange={(e) => updateActive({ tags: toList(e.target.value) })} placeholder="Tags" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.shortDescription} onChange={(e) => updateActive({ shortDescription: e.target.value })} placeholder="Short description" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={5} value={active.fullDescription || active.longDescription} onChange={(e) => updateActive({ fullDescription: e.target.value, longDescription: e.target.value })} placeholder="Full description / markdown" />
+                    <div className="flex flex-wrap gap-4 md:col-span-2">
+                      <label className="inline-flex items-center gap-2 text-sm text-admin-text"><input type="checkbox" checked={active.featured} onChange={(e) => updateActive({ featured: e.target.checked })} /> Featured</label>
+                      <label className="inline-flex items-center gap-2 text-sm text-admin-text"><input type="checkbox" checked={active.published !== false} onChange={(e) => updateActive({ published: e.target.checked, draft: !e.target.checked })} /> Published</label>
+                      <label className="inline-flex items-center gap-2 text-sm text-admin-text"><input type="checkbox" checked={Boolean((active as any).confidentialProject)} onChange={(e) => updateActive({ confidentialProject: e.target.checked } as Partial<ProjectItem>) } /> Confidential project</label>
+                    </div>
+                    <p className="rounded-2xl border border-amber-200 bg-amber-50 px-4 py-3 text-xs text-amber-900 md:col-span-2">Confidential projects hide GitHub, documentation, and sensitive media on the public site.</p>
+                  </div>
+                ) : null}
+              </section>
+
+              <section className="rounded-3xl border border-admin-border bg-admin-bg p-4">
+                <button type="button" onClick={() => toggleGroup("details")} className="flex w-full items-center justify-between gap-3 text-left">
+                  <div>
+                    <h4 className="text-sm font-semibold text-admin-text">Project Details</h4>
+                    <p className="mt-1 text-xs text-admin-text-muted">Role, company, team size, and timeline context.</p>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${openGroups.details ? "rotate-180" : ""}`} />
+                </button>
+                {openGroups.details ? (
+                  <div className="mt-4 grid gap-3 md:grid-cols-2">
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.company || ""} onChange={(e) => updateActive({ company: e.target.value })} placeholder="Company / organization" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.myRole || ""} onChange={(e) => updateActive({ myRole: e.target.value })} placeholder="My role" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.teamSize || ""} onChange={(e) => updateActive({ teamSize: e.target.value })} placeholder="Team size" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.duration || ""} onChange={(e) => updateActive({ duration: e.target.value })} placeholder="Duration" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.startDate || ""} onChange={(e) => updateActive({ startDate: e.target.value })} placeholder="Start date" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.endDate || ""} onChange={(e) => updateActive({ endDate: e.target.value })} placeholder="End date" />
+                  </div>
+                ) : null}
+              </section>
+
+              <section className="rounded-3xl border border-admin-border bg-admin-bg p-4">
+                <button type="button" onClick={() => toggleGroup("tech")} className="flex w-full items-center justify-between gap-3 text-left">
+                  <div>
+                    <h4 className="text-sm font-semibold text-admin-text">Technology</h4>
+                    <p className="mt-1 text-xs text-admin-text-muted">Stack, platforms, and services used to build the project.</p>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${openGroups.tech ? "rotate-180" : ""}`} />
+                </button>
+                {openGroups.tech ? (
+                  <div className="mt-4 space-y-3">
+                    <div>
+                      <div className="mb-2 flex items-center justify-between">
+                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-admin-text-muted">Tech stack</p>
+                        <button type="button" onClick={addStackItem} className="inline-flex items-center gap-2 rounded-full border border-admin-border bg-admin-bg px-3 py-1.5 text-xs font-semibold text-admin-text">
+                          <Plus className="h-3.5 w-3.5" /> Add tag
+                        </button>
+                      </div>
+                      <div className="flex flex-wrap gap-2 rounded-2xl border border-admin-border bg-admin-input px-3 py-3">
+                        {(active.techStack || []).length ? active.techStack.map((stack, index) => (
+                          <div key={`${stack}-${index}`} className="inline-flex items-center gap-2 rounded-full border border-admin-border bg-white px-3 py-1.5 text-sm text-admin-text">
+                            <input
+                              value={stack}
+                              onChange={(e) => updateStack(index, e.target.value)}
+                              placeholder="Technology"
+                              className="min-w-24 bg-transparent outline-none"
+                            />
+                            <button type="button" onClick={() => removeStackItem(index)} aria-label="Remove tech tag" className="text-admin-text-muted hover:text-admin-text">
+                              <Trash2 className="h-3.5 w-3.5" />
+                            </button>
+                          </div>
+                        )) : <p className="text-sm text-admin-text-muted">Add technologies as chips. Example: React, Node.js, PostgreSQL.</p>}
+                      </div>
+                    </div>
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.frontend || ""} onChange={(e) => updateActive({ frontend: e.target.value })} placeholder="Frontend" />
+                      <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.backend || ""} onChange={(e) => updateActive({ backend: e.target.value })} placeholder="Backend" />
+                      <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.database || active.databaseSchema || ""} onChange={(e) => updateActive({ database: e.target.value, databaseSchema: e.target.value })} placeholder="Database" />
+                      <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.hosting || ""} onChange={(e) => updateActive({ hosting: e.target.value })} placeholder="Cloud / hosting" />
+                      <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" value={active.apisIntegrations || active.apiFlow || ""} onChange={(e) => updateActive({ apisIntegrations: e.target.value, apiFlow: e.target.value })} placeholder="APIs & integrations" />
+                    </div>
+                  </div>
+                ) : null}
+              </section>
+
+              <section className="rounded-3xl border border-admin-border bg-admin-bg p-4">
+                <button type="button" onClick={() => toggleGroup("responsibilities")} className="flex w-full items-center justify-between gap-3 text-left">
+                  <div>
+                    <h4 className="text-sm font-semibold text-admin-text">Responsibilities</h4>
+                    <p className="mt-1 text-xs text-admin-text-muted">Repeatable lists for features, responsibilities, skills, and roadmap items.</p>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${openGroups.responsibilities ? "rotate-180" : ""}`} />
+                </button>
+                {openGroups.responsibilities ? (
+                  <div className="mt-4 grid gap-3 md:grid-cols-2">
+                    {renderListInput(active.keyFeatures, "keyFeatures", "Key features")}
+                    {renderListInput(active.keyResponsibilities, "keyResponsibilities", "Key responsibilities")}
+                    {renderListInput(active.skillsApplied, "skillsApplied", "Skills applied")}
+                    {renderListInput(active.futureRoadmap, "futureRoadmap", "Future roadmap")}
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={2} value={active.challengesFaced || active.challenges || ""} onChange={(e) => updateActive({ challengesFaced: e.target.value, challenges: e.target.value })} placeholder="Challenges faced" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={2} value={active.learnings || active.lessonsLearned || ""} onChange={(e) => updateActive({ learnings: e.target.value, lessonsLearned: e.target.value })} placeholder="Learnings" />
+                  </div>
+                ) : null}
+              </section>
+
+              <section className="rounded-3xl border border-admin-border bg-admin-bg p-4">
+                <button type="button" onClick={() => toggleGroup("links")} className="flex w-full items-center justify-between gap-3 text-left">
+                  <div>
+                    <h4 className="text-sm font-semibold text-admin-text">Links</h4>
+                    <p className="mt-1 text-xs text-admin-text-muted">Helper labels keep empty links hidden on the public site.</p>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${openGroups.links ? "rotate-180" : ""}`} />
+                </button>
+                {openGroups.links ? (
+                  <div className="mt-4 grid gap-3 md:grid-cols-2">
+                    <div>
+                      <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.liveDemoUrl} onChange={(e) => updateActive({ liveDemoUrl: e.target.value })} placeholder="Live project URL" />
+                      <p className="mt-1 text-xs text-admin-text-muted">{active.liveDemoUrl ? "Shows as View Live Project" : "Shows a confidentiality message instead of a button."}</p>
+                    </div>
+                    <div>
+                      <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.githubUrl} onChange={(e) => updateActive({ githubUrl: e.target.value })} placeholder="GitHub URL" />
+                      <p className="mt-1 text-xs text-admin-text-muted">{active.githubUrl ? "Visible unless project is confidential." : "Hidden on public project pages."}</p>
+                    </div>
+                    <div>
+                      <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.backendRepo || ""} onChange={(e) => updateActive({ backendRepo: e.target.value })} placeholder="Backend repository URL" />
+                      <p className="mt-1 text-xs text-admin-text-muted">Optional backend code link.</p>
+                    </div>
+                    <div>
+                      <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.apiDocumentationUrl || active.documentationUrl || ""} onChange={(e) => updateActive({ apiDocumentationUrl: e.target.value, documentationUrl: e.target.value })} placeholder="Documentation URL" />
+                      <p className="mt-1 text-xs text-admin-text-muted">Optional docs or case study reference.</p>
+                    </div>
+                    <div>
+                      <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.figmaUrl || ""} onChange={(e) => updateActive({ figmaUrl: e.target.value })} placeholder="Figma design URL" />
+                      <p className="mt-1 text-xs text-admin-text-muted">Optional design handoff link.</p>
+                    </div>
+                    <div>
+                      <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.caseStudyUrl || ""} onChange={(e) => updateActive({ caseStudyUrl: e.target.value })} placeholder="Case study URL" />
+                      <p className="mt-1 text-xs text-admin-text-muted">Optional public case study or article.</p>
+                    </div>
+                    <div>
+                      <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.demoVideoUrl || ""} onChange={(e) => updateActive({ demoVideoUrl: e.target.value })} placeholder="Demo video URL" />
+                      <p className="mt-1 text-xs text-admin-text-muted">Optional video walkthrough.</p>
+                    </div>
+                    <div>
+                      <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.confidentialNote || ""} onChange={(e) => updateActive({ confidentialNote: e.target.value })} placeholder="Confidential fallback label" />
+                      <p className="mt-1 text-xs text-admin-text-muted">Shown only when live URL is withheld.</p>
+                    </div>
+                  </div>
+                ) : null}
+              </section>
+
+              <section className="rounded-3xl border border-admin-border bg-admin-bg p-4">
+                <button type="button" onClick={() => toggleGroup("media")} className="flex w-full items-center justify-between gap-3 text-left">
+                  <div>
+                    <h4 className="text-sm font-semibold text-admin-text">Media</h4>
+                    <p className="mt-1 text-xs text-admin-text-muted">Preview and manage the project visual assets.</p>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${openGroups.media ? "rotate-180" : ""}`} />
+                </button>
+                {openGroups.media ? (
+                  <div className="mt-4 space-y-4">
+                    <div className="grid gap-3 md:grid-cols-2">
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.18em] text-admin-text-muted">Thumbnail / cover</label>
+                        <select aria-label="Project image from uploaded media" className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.image} onChange={(e) => updateActive({ image: e.target.value })}>
+                          <option value="">Select image from public/projects</option>
+                          {imageOptions.map((url) => <option key={url} value={url}>{url}</option>)}
+                        </select>
+                      </div>
+                      <div>
+                        <label className="mb-1 block text-xs font-semibold uppercase tracking-[0.18em] text-admin-text-muted">Custom image URL</label>
+                        <input className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.image} onChange={(e) => updateActive({ image: e.target.value })} placeholder="Or paste custom image URL/path" />
+                      </div>
+                    </div>
+                    {active.image ? (
+                      <div className="overflow-hidden rounded-2xl border border-admin-border bg-admin-bg">
+                        <div className="flex items-center gap-2 border-b border-admin-border px-4 py-3">
+                          <ImageIcon className="h-4 w-4 text-admin-text-muted" />
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-admin-text-muted">Image preview</p>
+                        </div>
+                        <img src={active.image} alt={active.title || "Project image"} className="h-56 w-full object-cover" loading="lazy" />
+                      </div>
+                    ) : null}
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={joinList(active.galleryImages)} onChange={(e) => updateListField("galleryImages", e.target.value)} placeholder="Gallery images (comma separated URLs)" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={joinList(active.uiScreenshots)} onChange={(e) => updateListField("uiScreenshots", e.target.value)} placeholder="UI screenshots (comma separated URLs)" />
+                  </div>
+                ) : null}
+              </section>
+
+              <section className="rounded-3xl border border-admin-border bg-admin-bg p-4">
+                <button type="button" onClick={() => toggleGroup("seo")} className="flex w-full items-center justify-between gap-3 text-left">
+                  <div>
+                    <h4 className="text-sm font-semibold text-admin-text">SEO</h4>
+                    <p className="mt-1 text-xs text-admin-text-muted">Search and social metadata for the dedicated project page.</p>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${openGroups.seo ? "rotate-180" : ""}`} />
+                </button>
+                {openGroups.seo ? (
+                  <div className="mt-4 grid gap-3 md:grid-cols-2">
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={(active as any).seoTitle || ""} onChange={(e) => updateActive({ ...(active as any), seoTitle: e.target.value } as Partial<ProjectItem>)} placeholder="SEO title" />
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.slug || ""} onChange={(e) => updateActive({ slug: slugify(e.target.value) })} placeholder="Slug" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={2} value={(active as any).seoDescription || ""} onChange={(e) => updateActive({ ...(active as any), seoDescription: e.target.value } as Partial<ProjectItem>)} placeholder="SEO description" />
+                  </div>
+                ) : null}
+              </section>
+
+              <section className="rounded-3xl border border-admin-border bg-admin-bg p-4">
+                <button type="button" onClick={() => toggleGroup("advanced")} className="flex w-full items-center justify-between gap-3 text-left">
+                  <div>
+                    <h4 className="text-sm font-semibold text-admin-text">Advanced Settings</h4>
+                    <p className="mt-1 text-xs text-admin-text-muted">Legacy fields and deep case-study structure.</p>
+                  </div>
+                  <ChevronDown className={`h-4 w-4 transition-transform ${openGroups.advanced ? "rotate-180" : ""}`} />
+                </button>
+                {openGroups.advanced ? (
+                  <div className="mt-4 grid gap-3 md:grid-cols-2">
+                    {renderListInput(active.responsibilities, "responsibilities", "Responsibilities")}
+                    {renderListInput(active.features, "features", "Features")}
+                    {renderListInput(active.screenshots, "screenshots", "Screenshot URLs")}
+                    <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" value={active.architectureDiagram || ""} onChange={(e) => updateActive({ architectureDiagram: e.target.value })} placeholder="Architecture diagram URL" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.databaseSchema || ""} onChange={(e) => updateActive({ databaseSchema: e.target.value })} placeholder="Database schema" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.apiFlow || ""} onChange={(e) => updateActive({ apiFlow: e.target.value })} placeholder="API flow" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.folderStructure || ""} onChange={(e) => updateActive({ folderStructure: e.target.value })} placeholder="Folder structure" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.challenges || ""} onChange={(e) => updateActive({ challenges: e.target.value })} placeholder="Challenges" />
+                    <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.lessonsLearned || ""} onChange={(e) => updateActive({ lessonsLearned: e.target.value })} placeholder="Lessons learned" />
+                    {renderListInput(active.futureImprovements, "futureImprovements", "Future improvements")}
+                  </div>
+                ) : null}
+              </section>
+
+              <div className="rounded-3xl border border-dashed border-admin-border p-4">
+                <p className="text-xs font-semibold uppercase tracking-[0.18em] text-admin-text-muted">Live Preview</p>
+                <h3 className="mt-2 text-lg font-semibold text-admin-text">{active.title || "Untitled Project"}</h3>
+                <p className="text-sm text-admin-text-muted">{active.subtitle || active.shortDescription || "Add a subtitle or short description to preview."}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {active.featuredBadge ? <span className="rounded-full bg-admin-primary/10 px-3 py-1 text-xs font-semibold text-admin-primary">{active.featuredBadge}</span> : null}
+                  {active.status ? <span className="rounded-full border border-admin-border px-3 py-1 text-xs text-admin-text-muted">{active.status}</span> : null}
+                  {active.projectType ? <span className="rounded-full border border-admin-border px-3 py-1 text-xs text-admin-text-muted">{active.projectType}</span> : null}
+                </div>
+              </div>
+            </div>
+          )
         ) : (
-          <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.title} onChange={(e) => updateActive({ title: e.target.value, slug: active.slug || slugify(e.target.value) })} placeholder="Project title" />
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.slug || ""} onChange={(e) => updateActive({ slug: slugify(e.target.value) })} placeholder="Slug" />
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.subtitle || ""} onChange={(e) => updateActive({ subtitle: e.target.value })} placeholder="Subtitle" />
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.featuredBadge || ""} onChange={(e) => updateActive({ featuredBadge: e.target.value })} placeholder="Featured badge" />
-            <select className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.status || "Planning"} onChange={(e) => updateActive({ status: e.target.value })}>
-              {["Upcoming", "Planning", "In Progress", "Completed", "Archived"].map((value) => <option key={value}>{value}</option>)}
-            </select>
-            <select className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.projectType || "Personal"} onChange={(e) => updateActive({ projectType: e.target.value })}>
-              {["Personal", "Client", "Internship", "Open Source"].map((value) => <option key={value}>{value}</option>)}
-            </select>
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.category} onChange={(e) => updateActive({ category: e.target.value })} placeholder="Category" />
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={(active.tags || []).join(", ")} onChange={(e) => updateActive({ tags: toList(e.target.value) })} placeholder="Tags" />
-            <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.shortDescription} onChange={(e) => updateActive({ shortDescription: e.target.value })} placeholder="Short description" />
-            <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={5} value={active.fullDescription || active.longDescription} onChange={(e) => updateActive({ fullDescription: e.target.value, longDescription: e.target.value })} placeholder="Full description / markdown" />
-            <label className="inline-flex items-center gap-2 text-sm text-admin-text"><input type="checkbox" checked={active.featured} onChange={(e) => updateActive({ featured: e.target.checked })} /> Featured</label>
-            <label className="inline-flex items-center gap-2 text-sm text-admin-text"><input type="checkbox" checked={active.published !== false} onChange={(e) => updateActive({ published: e.target.checked, draft: !e.target.checked })} /> Published</label>
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.myRole || ""} onChange={(e) => updateActive({ myRole: e.target.value })} placeholder="My role" />
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.timeline || ""} onChange={(e) => updateActive({ timeline: e.target.value })} placeholder="Timeline / date" />
-
-            <button type="button" onClick={() => duplicateProject(active)} className="rounded-xl border border-admin-border bg-admin-bg px-3 py-2 text-sm font-semibold text-admin-text">Duplicate Project</button>
-            <button type="button" onClick={() => updateActive({ slug: slugify(active.title) })} className="rounded-xl border border-admin-border bg-admin-bg px-3 py-2 text-sm font-semibold text-admin-text">Regenerate Slug</button>
-
-            <select
-              aria-label="Project image from uploaded media"
-              className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2"
-              value={active.image}
-              onChange={(e) => updateActive({ image: e.target.value })}
-            >
-              <option value="">Select image from public/projects</option>
-              {imageOptions.map((url) => (
-                <option key={url} value={url}>{url}</option>
-              ))}
-            </select>
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" value={active.image} onChange={(e) => updateActive({ image: e.target.value })} placeholder="Or paste custom image URL/path" />
-            {active.image ? (
-              <div className="md:col-span-2 overflow-hidden rounded-xl border border-admin-border bg-admin-bg p-3">
-                <p className="mb-2 text-xs font-medium text-admin-text-muted">Preview</p>
-                <img src={active.image} alt={active.title || "Project image"} className="h-44 w-full rounded-lg object-cover" loading="lazy" />
-              </div>
-            ) : null}
-            <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" value={active.liveDemoUrl} onChange={(e) => updateActive({ liveDemoUrl: e.target.value })} placeholder="Live demo URL" />
-            <div className="grid gap-2 md:col-span-2 md:grid-cols-2">
-              <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.githubUrl} onChange={(e) => updateActive({ githubUrl: e.target.value })} placeholder="GitHub URL" />
-              <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.backendRepo || ""} onChange={(e) => updateActive({ backendRepo: e.target.value })} placeholder="Backend repository URL" />
-              <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.apiDocumentationUrl || active.documentationUrl || ""} onChange={(e) => updateActive({ apiDocumentationUrl: e.target.value, documentationUrl: e.target.value })} placeholder="API documentation URL" />
-              <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.figmaUrl || ""} onChange={(e) => updateActive({ figmaUrl: e.target.value })} placeholder="Figma design URL" />
-              <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.caseStudyUrl || ""} onChange={(e) => updateActive({ caseStudyUrl: e.target.value })} placeholder="Case study URL" />
-              <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.demoVideoUrl || ""} onChange={(e) => updateActive({ demoVideoUrl: e.target.value })} placeholder="Demo video URL" />
+          <div className="space-y-4">
+            <div className="rounded-3xl border border-admin-border bg-admin-bg p-4">
+              <p className="text-sm font-semibold text-admin-text">JSON Editor</p>
+              <p className="mt-1 text-sm text-admin-text-muted">Advanced admin-only editing with validation, import/export, and safe saving.</p>
             </div>
-            <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={(active.galleryImages || []).join(", ")} onChange={(e) => updateActive({ galleryImages: toList(e.target.value) })} placeholder="Gallery images (comma separated URLs)" />
-            <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={(active.uiScreenshots || []).join(", ")} onChange={(e) => updateActive({ uiScreenshots: toList(e.target.value) })} placeholder="UI screenshots (comma separated URLs)" />
-            <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={(active.techStack || []).join(", ")} onChange={(e) => updateActive({ techStack: toList(e.target.value) })} placeholder="Tech stack (comma separated)" />
-            <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={2} value={(active.techBadges || []).join(", ")} onChange={(e) => updateActive({ techBadges: toList(e.target.value) })} placeholder="Tech badges (comma separated)" />
 
-            <section className="md:col-span-2 space-y-2 rounded-2xl border border-admin-border p-3">
-              <h4 className="text-sm font-semibold text-admin-text">Problem &amp; Solution</h4>
-              <textarea className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" rows={3} value={active.problemStatement || active.problem || ""} onChange={(e) => updateActive({ problemStatement: e.target.value, problem: e.target.value })} placeholder="Problem statement" />
-              <textarea className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" rows={3} value={active.solution || ""} onChange={(e) => updateActive({ solution: e.target.value })} placeholder="Solution" />
-              <textarea className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" rows={2} value={active.targetUsers || ""} onChange={(e) => updateActive({ targetUsers: e.target.value })} placeholder="Target users" />
-              <textarea className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" rows={2} value={active.businessValue || ""} onChange={(e) => updateActive({ businessValue: e.target.value })} placeholder="Business value" />
-              <textarea className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" rows={2} value={active.impact || ""} onChange={(e) => updateActive({ impact: e.target.value })} placeholder="Impact" />
-            </section>
+            <div className="flex flex-wrap items-center gap-2">
+              <button type="button" onClick={() => setJsonDraft(safeJsonStringify(data.projectsDetailed))} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Format JSON</button>
+              <button type="button" onClick={() => navigator.clipboard.writeText(jsonDraft)} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Copy JSON</button>
+              <button type="button" onClick={() => fileInputRef.current?.click()} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Import JSON</button>
+              <button type="button" onClick={exportJson} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Export JSON</button>
+              <button type="button" onClick={resetJson} className="rounded-full border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">Reset Changes</button>
+            </div>
 
-            <section className="md:col-span-2 space-y-2 rounded-2xl border border-admin-border p-3">
-              <h4 className="text-sm font-semibold text-admin-text">Features</h4>
-              {renderListInput(active.keyFeatures, "keyFeatures", "Key features")}
-              {renderListInput(active.coreModules, "coreModules", "Core modules")}
-              {renderListInput(active.futureRoadmap, "futureRoadmap", "Future roadmap")}
-              <textarea className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" rows={2} value={active.challengesFaced || active.challenges || ""} onChange={(e) => updateActive({ challengesFaced: e.target.value, challenges: e.target.value })} placeholder="Challenges faced" />
-              <textarea className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" rows={2} value={active.learnings || active.lessonsLearned || ""} onChange={(e) => updateActive({ learnings: e.target.value, lessonsLearned: e.target.value })} placeholder="Learnings" />
-            </section>
+            <input
+              ref={fileInputRef}
+              type="file"
+              accept="application/json"
+              className="hidden"
+              onChange={async (event) => {
+                const file = event.target.files?.[0];
+                if (!file) return;
+                const text = await file.text();
+                applyJsonDraft(text);
+                event.target.value = "";
+              }}
+            />
 
-            <section className="md:col-span-2 space-y-2 rounded-2xl border border-admin-border p-3">
-              <h4 className="text-sm font-semibold text-admin-text">Tech</h4>
-              <div className="grid gap-2 md:grid-cols-2">
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.frontend || ""} onChange={(e) => updateActive({ frontend: e.target.value })} placeholder="Frontend" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.backend || ""} onChange={(e) => updateActive({ backend: e.target.value })} placeholder="Backend" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.database || active.databaseSchema || ""} onChange={(e) => updateActive({ database: e.target.value, databaseSchema: e.target.value })} placeholder="Database" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.authentication || ""} onChange={(e) => updateActive({ authentication: e.target.value })} placeholder="Authentication" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.hosting || ""} onChange={(e) => updateActive({ hosting: e.target.value })} placeholder="Hosting" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.apisIntegrations || active.apiFlow || ""} onChange={(e) => updateActive({ apisIntegrations: e.target.value, apiFlow: e.target.value })} placeholder="APIs & integrations" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.aiMlUsed || ""} onChange={(e) => updateActive({ aiMlUsed: e.target.value })} placeholder="AI/ML used" />
-                <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" rows={2} value={active.architectureNotes || active.folderStructure || ""} onChange={(e) => updateActive({ architectureNotes: e.target.value, folderStructure: e.target.value })} placeholder="Architecture notes" />
-              </div>
-            </section>
-
-            <section className="md:col-span-2 space-y-2 rounded-2xl border border-admin-border p-3">
-              <h4 className="text-sm font-semibold text-admin-text">Timeline</h4>
-              <div className="grid gap-2 md:grid-cols-2">
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.startDate || ""} onChange={(e) => updateActive({ startDate: e.target.value })} placeholder="Start date" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.endDate || ""} onChange={(e) => updateActive({ endDate: e.target.value })} placeholder="Completion date" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.duration || ""} onChange={(e) => updateActive({ duration: e.target.value })} placeholder="Duration" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.teamSize || ""} onChange={(e) => updateActive({ teamSize: e.target.value })} placeholder="Team size" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.myRole || ""} onChange={(e) => updateActive({ myRole: e.target.value })} placeholder="My role" />
-                <input type="number" min={0} max={100} className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={Number((active as any).currentProgress || 0)} onChange={(e) => updateActive({ ...(active as any), currentProgress: Number(e.target.value || 0) } as Partial<ProjectItem>)} placeholder="Current progress %" />
-              </div>
-            </section>
-
-            <section className="md:col-span-2 space-y-2 rounded-2xl border border-admin-border p-3">
-              <h4 className="text-sm font-semibold text-admin-text">SEO</h4>
-              <div className="grid gap-2 md:grid-cols-2">
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.slug || ""} onChange={(e) => updateActive({ slug: slugify(e.target.value) })} placeholder="Slug" />
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={(active as any).seoTitle || ""} onChange={(e) => updateActive({ ...(active as any), seoTitle: e.target.value } as Partial<ProjectItem>)} placeholder="SEO title" />
-                <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={2} value={(active as any).seoDescription || ""} onChange={(e) => updateActive({ ...(active as any), seoDescription: e.target.value } as Partial<ProjectItem>)} placeholder="SEO description" />
-              </div>
-            </section>
-
-            <input type="number" className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" value={active.order} onChange={(e) => updateActive({ order: Number(e.target.value || 0) })} placeholder="Order" />
-            <label className="inline-flex items-center gap-2 text-sm text-admin-text"><input type="checkbox" checked={active.isEnabled !== false} onChange={(e) => updateActive({ isEnabled: e.target.checked })} /> Enabled</label>
-            <button
-              type="button"
-              onClick={() => setShowAdvanced(!showAdvanced)}
-              className="mt-4 flex w-full items-center justify-between rounded-lg border border-admin-border bg-admin-secondary px-4 py-3 text-left text-admin-text md:col-span-2"
-            >
-              <span className="font-semibold">Advanced Settings</span>
-              <svg className={`h-5 w-5 transition-transform ${showAdvanced ? 'rotate-180' : ''}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {showAdvanced ? (
-              <>
-                {renderListInput(active.responsibilities, "responsibilities", "Responsibilities")}
-                {renderListInput(active.features, "features", "Features")}
-                {renderListInput(active.screenshots, "screenshots", "Screenshot URLs")}
-                <input className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" value={active.architectureDiagram || ""} onChange={(e) => updateActive({ architectureDiagram: e.target.value })} placeholder="Architecture diagram URL" />
-                <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.databaseSchema || ""} onChange={(e) => updateActive({ databaseSchema: e.target.value })} placeholder="Database schema" />
-                <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.apiFlow || ""} onChange={(e) => updateActive({ apiFlow: e.target.value })} placeholder="API flow" />
-                <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.folderStructure || ""} onChange={(e) => updateActive({ folderStructure: e.target.value })} placeholder="Folder structure" />
-                <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.challenges || ""} onChange={(e) => updateActive({ challenges: e.target.value })} placeholder="Challenges" />
-                <textarea className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2" rows={3} value={active.lessonsLearned || ""} onChange={(e) => updateActive({ lessonsLearned: e.target.value })} placeholder="Lessons learned" />
-                {renderListInput(active.futureImprovements, "futureImprovements", "Future improvements")}
-              </>
-            ) : null}
-            <div className="md:col-span-2 rounded-2xl border border-dashed border-admin-border p-4">
-              <p className="text-xs font-semibold uppercase tracking-[0.18em] text-admin-text-muted">Live Preview</p>
-              <h3 className="mt-2 text-lg font-semibold text-admin-text">{active.title || "Untitled Project"}</h3>
-              <p className="text-sm text-admin-text-muted">{active.subtitle || active.shortDescription || "Add a subtitle or short description to preview."}</p>
-              <div className="mt-3 flex flex-wrap gap-2">
-                {active.featuredBadge ? <span className="rounded-full bg-admin-primary/10 px-3 py-1 text-xs font-semibold text-admin-primary">{active.featuredBadge}</span> : null}
-                {active.status ? <span className="rounded-full border border-admin-border px-3 py-1 text-xs text-admin-text-muted">{active.status}</span> : null}
-                {active.projectType ? <span className="rounded-full border border-admin-border px-3 py-1 text-xs text-admin-text-muted">{active.projectType}</span> : null}
+            <div className="overflow-hidden rounded-[22px] border border-admin-border bg-admin-input">
+              <div className="grid grid-cols-[auto,1fr]">
+                <pre className="select-none overflow-hidden border-r border-admin-border bg-admin-bg px-3 py-4 text-right text-xs leading-6 text-admin-text-muted">
+                  {jsonDraft.split("\n").map((_, index) => <div key={index}>{index + 1}</div>)}
+                </pre>
+                <textarea
+                  value={jsonDraft}
+                  onChange={(event) => applyJsonDraft(event.target.value)}
+                  rows={24}
+                  className="min-h-[420px] w-full bg-transparent px-4 py-4 font-mono text-sm leading-6 text-admin-text outline-none"
+                  spellCheck={false}
+                  placeholder="Paste projects JSON here"
+                />
               </div>
             </div>
+
+            {jsonError ? <p className="rounded-2xl border border-rose-200 bg-rose-50 px-4 py-3 text-sm text-rose-700">{jsonError}</p> : null}
+
+            <div className="flex flex-wrap items-center gap-3">
+              <button
+                type="button"
+                onClick={() => setShowSaveConfirm(true)}
+                disabled={Boolean(jsonError)}
+                className="rounded-xl bg-admin-primary px-4 py-2 text-sm font-semibold text-white disabled:opacity-60"
+              >
+                Save JSON Changes
+              </button>
+              <button type="button" onClick={resetJson} className="rounded-xl border border-admin-border bg-admin-bg px-4 py-2 text-sm font-semibold text-admin-text">
+                Reset Changes
+              </button>
+            </div>
+
+            {showSaveConfirm ? (
+              <div className="rounded-2xl border border-amber-200 bg-amber-50 p-4">
+                <p className="text-sm font-semibold text-amber-900">Confirm JSON save</p>
+                <p className="mt-1 text-sm text-amber-800">This will replace the current project list. Title, slug, and existing IDs are preserved and invalid JSON is blocked.</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button type="button" onClick={commitJsonDraft} disabled={Boolean(jsonError)} className="rounded-lg bg-amber-600 px-4 py-2 text-sm font-semibold text-white disabled:opacity-60">Confirm Save</button>
+                  <button type="button" onClick={() => setShowSaveConfirm(false)} className="rounded-lg border border-amber-300 bg-white px-4 py-2 text-sm font-semibold text-amber-900">Cancel</button>
+                </div>
+              </div>
+            ) : null}
           </div>
         )}
       </section>

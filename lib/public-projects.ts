@@ -11,6 +11,8 @@ export type PublicProject = {
   fullDescription: string;
   status: string;
   projectType: string;
+  industry: string;
+  confidentialProject: boolean;
   category: string;
   image: string;
   thumbnail: string;
@@ -32,13 +34,17 @@ export type PublicProject = {
   tags: string[];
   client: string;
   company: string;
-  role: string;
+  myRole: string;
   teamSize: string;
   duration: string;
   startDate: string;
   endDate: string;
+  cloudHosting: string;
+  apisServicesUsed: string;
   features: string[];
   keyFeatures: string[];
+  keyResponsibilities: string[];
+  skillsApplied: string[];
   coreModules: string[];
   futureRoadmap: string[];
   responsibilities: string[];
@@ -65,6 +71,8 @@ export type PublicProject = {
   order: number;
   metaTitle: string;
   metaDescription: string;
+  keywords: string[];
+  openGraphImage: string;
   readingTimeMinutes: number;
 };
 
@@ -85,6 +93,8 @@ function normalizeProject(project: any, index: number): PublicProject {
     fullDescription: String(project?.fullDescription || project?.longDescription || project?.description || ""),
     status: String(project?.status || project?.category || "Project"),
     projectType: String(project?.projectType || ""),
+    industry: String(project?.industry || ""),
+    confidentialProject: Boolean(project?.confidentialProject),
     category: String(project?.category || project?.status || "Project"),
     image: String(project?.image || project?.thumbnail || ""),
     thumbnail: String(project?.thumbnail || project?.image || ""),
@@ -106,13 +116,17 @@ function normalizeProject(project: any, index: number): PublicProject {
     tags: asList(project?.tags),
     client: String(project?.client || ""),
     company: String(project?.company || ""),
-    role: String(project?.role || ""),
+    myRole: String(project?.myRole || project?.role || ""),
     teamSize: String(project?.teamSize || ""),
     duration: String(project?.duration || ""),
     startDate: String(project?.startDate || ""),
     endDate: String(project?.endDate || ""),
+    cloudHosting: String(project?.cloudHosting || project?.hosting || ""),
+    apisServicesUsed: String(project?.apisServicesUsed || project?.apisIntegrations || project?.apiFlow || ""),
     features: asList(project?.features),
     keyFeatures: asList(project?.keyFeatures || project?.features),
+    keyResponsibilities: asList(project?.keyResponsibilities || project?.responsibilities),
+    skillsApplied: asList(project?.skillsApplied),
     coreModules: asList(project?.coreModules),
     futureRoadmap: asList(project?.futureRoadmap || project?.futureImprovements),
     responsibilities: asList(project?.responsibilities),
@@ -139,6 +153,8 @@ function normalizeProject(project: any, index: number): PublicProject {
     order: Number(project?.order ?? index + 1),
     metaTitle: String(project?.metaTitle || ""),
     metaDescription: String(project?.metaDescription || ""),
+    keywords: asList(project?.keywords),
+    openGraphImage: String(project?.openGraphImage || project?.banner || project?.image || ""),
     readingTimeMinutes: Number(project?.readingTimeMinutes || 1),
   };
 }

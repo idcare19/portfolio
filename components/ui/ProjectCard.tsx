@@ -23,6 +23,8 @@ type ProjectCardProps = {
     description: string;
     image: string;
     status?: string;
+    industry?: string;
+    projectType?: string;
     tech: string[];
     liveUrl: string;
     githubUrl: string;
@@ -33,7 +35,7 @@ type ProjectCardProps = {
 
 export function ProjectCard({ project }: ProjectCardProps) {
   return (
-    <AnimatedCard className="p-4">
+    <AnimatedCard className="group p-4">
       <div className="relative overflow-hidden rounded-2xl border border-[rgb(var(--border))]">
         <Image
           src={getSafeImageSrc(project.image)}
@@ -51,6 +53,8 @@ export function ProjectCard({ project }: ProjectCardProps) {
         <h3 className="text-lg font-semibold text-text-main">{project.title}</h3>
         <div className="mt-2 flex flex-wrap gap-2 text-xs font-semibold">
           {project.status ? <span className="rounded-full border border-[rgb(var(--border))] bg-white px-2.5 py-1 text-text-muted">{project.status}</span> : null}
+          {project.projectType ? <span className="rounded-full border border-[rgb(var(--border))] bg-white px-2.5 py-1 text-text-muted">{project.projectType}</span> : null}
+          {project.industry ? <span className="rounded-full border border-[rgb(var(--border))] bg-white px-2.5 py-1 text-text-muted">{project.industry}</span> : null}
         </div>
         <p className="mt-2 text-sm leading-6 text-text-muted">{project.description}</p>
 
@@ -63,24 +67,16 @@ export function ProjectCard({ project }: ProjectCardProps) {
         </div>
 
         <div className="mt-5 flex flex-wrap gap-3">
-          {project.liveUrl !== "#" && (
-            <Link
-              href={project.liveUrl}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3.5 py-2 text-xs font-semibold text-[#1D4ED8] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#93C5FD] hover:bg-[#DBEAFE]"
-            >
+          {project.liveUrl && project.liveUrl !== "#" ? (
+            <Link href={project.liveUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3.5 py-2 text-xs font-semibold text-[#1D4ED8] transition-all duration-300 hover:-translate-y-0.5 hover:border-[#93C5FD] hover:bg-[#DBEAFE]">
               <ExternalLink className="h-3.5 w-3.5" /> Live
             </Link>
-          )}
-          <Link
-            href={project.githubUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-3.5 py-2 text-xs font-semibold text-text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary"
-          >
-            <Github className="h-3.5 w-3.5 transition group-hover:-rotate-6" /> Code
-          </Link>
+          ) : null}
+          {project.githubUrl && project.githubUrl !== "#" ? (
+            <Link href={project.githubUrl} target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-3.5 py-2 text-xs font-semibold text-text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary">
+              <Github className="h-3.5 w-3.5 transition group-hover:-rotate-6" /> Code
+            </Link>
+          ) : null}
           <Link href={`/projects/${project.slug}`} className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-3.5 py-2 text-xs font-semibold text-text-main transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 hover:text-primary">
             View Details
           </Link>

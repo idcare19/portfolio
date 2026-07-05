@@ -31,6 +31,9 @@ export type ProjectItem = {
   fullDescription?: string;
   status?: string;
   projectType?: string;
+  industry?: string;
+  featuredMirror?: boolean;
+  confidentialProject?: boolean;
   techStack: string[];
   category: string;
   tags?: string[];
@@ -49,12 +52,24 @@ export type ProjectItem = {
   documentationUrl?: string;
   figmaUrl?: string;
   caseStudyUrl?: string;
+  documentation?: string;
   problemStatement?: string;
   solution?: string;
   targetUsers?: string;
   businessValue?: string;
   impact?: string;
+  myRole?: string;
+  company?: string;
+  teamSize?: string;
+  duration?: string;
+  startDate?: string;
+  endDate?: string;
+  cloudHosting?: string;
+  apisServicesUsed?: string;
+  confidentialNote?: string;
   keyFeatures?: string[];
+  keyResponsibilities?: string[];
+  skillsApplied?: string[];
   coreModules?: string[];
   futureRoadmap?: string[];
   challengesFaced?: string;
@@ -68,18 +83,17 @@ export type ProjectItem = {
   aiMlUsed?: string;
   architectureNotes?: string;
   techBadges?: string[];
-  startDate?: string;
-  endDate?: string;
-  duration?: string;
-  teamSize?: string;
   currentProgress?: number;
   draft?: boolean;
   published?: boolean;
   featured: boolean;
   order: number;
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
+  openGraphImage?: string;
   overview?: string;
   problem?: string;
-  myRole?: string;
   responsibilities?: string[];
   features?: string[];
   screenshots?: string[];
@@ -394,6 +408,10 @@ export type SiteData = {
     animations?: "minimal" | "smooth" | "rich";
   };
   websiteControl: WebsiteControl;
+  homepageProjectSettings?: {
+    count: 3 | 4 | 6 | 8 | 10 | "all";
+    buttonText: string;
+  };
   shell: SiteShellConfig;
   aiConfig?: {
     enabled: boolean;

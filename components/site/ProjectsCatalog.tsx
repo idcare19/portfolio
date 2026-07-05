@@ -13,6 +13,8 @@ type Project = {
   status: string;
   category: string;
   techStack: string[];
+  industry?: string;
+  projectType?: string;
   liveDemoUrl: string;
   githubUrl: string;
   featured: boolean;
@@ -22,21 +24,31 @@ type Project = {
 const SORT_OPTIONS = [
   { value: "featured", label: "Featured first" },
   { value: "newest", label: "Newest" },
-  { value: "order", label: "Order" },
+  { value: "oldest", label: "Oldest" },
 ];
 
 export function ProjectsCatalog({ initialProjects }: { initialProjects: Project[] }) {
   const [query, setQuery] = useState("");
   const [filter, setFilter] = useState("all");
+  const [status, setStatus] = useState("all");
+  const [industry, setIndustry] = useState("all");
+  const [type, setType] = useState("all");
+  const [featured, setFeatured] = useState("all");
   const [sort, setSort] = useState("featured");
 
   const categories = useMemo(() => {
     const values = new Set<string>(["all"]);
+    const statuses = new Set<string>(["all"]);
+    const industries = new Set<string>(["all"]);
+    const types = new Set<string>(["all"]);
     initialProjects.forEach((project) => {
       if (project.category) values.add(project.category);
       if (project.status) values.add(project.status);
+      if (project.industry) industries.add(project.industry);
+      if (project.projectType) types.add(project.projectType);
+      if (project.status) statuses.add(project.status);
     });
-    return Array.from(values);
+    return { categories: Array.from(values), statuses: Array.from(statuses), industries: Array.from(industries), types: Array.from(types) };
   }, [initialProjects]);
 
   const projects = useMemo(() => {
@@ -49,15 +61,19 @@ export function ProjectsCatalog({ initialProjects }: { initialProjects: Project[
           .toLowerCase()
           .includes(normalizedQuery);
       const matchesFilter = filter === "all" || project.category === filter || project.status === filter;
-      return matchesQuery && matchesFilter;
+      const matchesStatus = status === "all" || project.status === status;
+      const matchesIndustry = industry === "all" || project.industry === industry;
+      const matchesType = type === "all" || project.projectType === type;
+      const matchesFeatured = featured === "all" || (featured === "yes" ? project.featured : !project.featured);
+      return matchesQuery && matchesFilter && matchesStatus && matchesIndustry && matchesType && matchesFeatured;
     });
 
     return filtered.sort((a, b) => {
       if (sort === "newest") return b.order - a.order;
-      if (sort === "order") return a.order - b.order;
+      if (sort === "oldest") return a.order - b.order;
       return Number(b.featured) - Number(a.featured) || a.order - b.order;
     });
-  }, [filter, initialProjects, query, sort]);
+  }, [featured, filter, industry, initialProjects, query, sort, status, type]);
 
   return (
     <main className="min-h-screen bg-page-bg py-24">
@@ -68,7 +84,7 @@ export function ProjectsCatalog({ initialProjects }: { initialProjects: Project[
           <p className="mt-4 text-base text-text-muted">All enabled projects are rendered from the CMS section data. Search, filter, and sort the live portfolio archive here.</p>
         </div>
 
-        <div className="grid gap-3 md:grid-cols-[1fr_auto_auto]">
+        <div className="grid gap-3 md:grid-cols-2 xl:grid-cols-6">
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -76,13 +92,27 @@ export function ProjectsCatalog({ initialProjects }: { initialProjects: Project[
             className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main"
           />
           <select value={filter} onChange={(e) => setFilter(e.target.value)} className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main">
-            {categories.map((category) => (
+            {categories.categories.map((category) => (
               <option key={category} value={category}>
                 {category === "all" ? "All categories" : category}
               </option>
             ))}
           </select>
-          <select value={sort} onChange={(e) => setSort(e.target.value)} className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main">
+          <select value={status} onChange={(e) => setStatus(e.target.value)} className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main">
+            {categories.statuses.map((item) => <option key={item} value={item}>{item === "all" ? "All statuses" : item}</option>)}
+          </select>
+          <select value={industry} onChange={(e) => setIndustry(e.target.value)} className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main">
+            {categories.industries.map((item) => <option key={item} value={item}>{item === "all" ? "All industries" : item}</option>)}
+          </select>
+          <select value={type} onChange={(e) => setType(e.target.value)} className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main">
+            {categories.types.map((item) => <option key={item} value={item}>{item === "all" ? "All project types" : item}</option>)}
+          </select>
+          <select value={featured} onChange={(e) => setFeatured(e.target.value)} className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main">
+            <option value="all">All featured states</option>
+            <option value="yes">Featured only</option>
+            <option value="no">Not featured</option>
+          </select>
+          <select value={sort} onChange={(e) => setSort(e.target.value)} className="rounded-2xl border border-[rgb(var(--border))] bg-white px-4 py-3 text-sm text-text-main md:col-span-2 xl:col-span-1">
             {SORT_OPTIONS.map((option) => (
               <option key={option.value} value={option.value}>
                 {option.label}
@@ -103,6 +133,8 @@ export function ProjectsCatalog({ initialProjects }: { initialProjects: Project[
                   image: project.image,
                   status: project.status,
                   tech: project.techStack,
+                  industry: project.industry,
+                  projectType: project.projectType,
                   liveUrl: project.liveDemoUrl,
                   githubUrl: project.githubUrl || "#",
                   backendRepo: undefined,
