@@ -2,15 +2,17 @@
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { FadeInUp } from "@/components/effects/FadeInUp";
-import { useSectionData } from "@/components/site/SiteDataProvider";
+import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ProjectCard } from "@/components/ui/ProjectCard";
 import Link from "next/link";
 
 export function ProjectsSection() {
+  const siteData = useSiteDataContext();
   const section = useSectionData("projects");
   const data = section.data as Record<string, any>;
-  const limitSetting = data.homepageLimit ?? data.homepageProjectsCount ?? data.homepageProjectCount ?? 6;
+  const homepageSettings = siteData.websiteControl?.homepageProjects || siteData.homepageProjectSettings || { count: 6, buttonText: "View More Projects" };
+  const limitSetting = homepageSettings.count;
   const displayLimit = limitSetting === "all" ? Number.MAX_SAFE_INTEGER : Number(limitSetting || 6);
   const projects = (Array.isArray(section.items) ? section.items : [])
     .filter((item: any) => item && item.isEnabled !== false && (item.featured || item.isFeatured))
@@ -47,7 +49,7 @@ export function ProjectsSection() {
         {showMore ? (
           <div className="mt-8 flex justify-center">
             <Link href="/projects" className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-[0_18px_38px_rgba(37,99,235,0.22)] transition hover:-translate-y-0.5 hover:bg-[#1D4ED8]">
-              {String(data.homepageButtonText || data.homepageMoreButtonText || "View More Projects")}
+              {String(homepageSettings.buttonText || "View More Projects")}
             </Link>
           </div>
         ) : null}

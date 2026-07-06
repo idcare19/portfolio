@@ -267,6 +267,10 @@ export type WebsiteControl = {
     lastMongoUpdate?: string;
     lastGitHubSync?: string;
   };
+  homepageProjects?: {
+    count: 3 | 4 | 6 | 8 | 10 | "all";
+    buttonText: string;
+  };
   popupAnnouncement: {
     enabled: boolean;
     title: string;

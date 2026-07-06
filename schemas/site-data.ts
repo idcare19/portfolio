@@ -86,6 +86,13 @@ export const websiteControlSchema = z.object({
       lastGitHubSync: z.string().optional(),
     })
     .default({}),
+  homepageProjects: z.object({
+    count: z.union([z.literal(3), z.literal(4), z.literal(6), z.literal(8), z.literal(10), z.literal("all")]).default(6),
+    buttonText: z.string().default("View More Projects"),
+  }).default({
+    count: 6,
+    buttonText: "View More Projects",
+  }),
   popupAnnouncement: z.object({
     enabled: z.boolean(),
     title: z.string(),

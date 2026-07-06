@@ -111,6 +111,19 @@ function makeBlock<K extends DynamicSectionId>(
   };
 }
 
+function resolveHomepageProjects(input: Partial<SiteData> & Record<string, any>) {
+  const nested = input.websiteControl?.homepageProjects;
+  const legacy = input.homepageProjectSettings;
+  const source = (nested || legacy || {}) as {
+    count?: 3 | 4 | 6 | 8 | 10 | "all";
+    buttonText?: string;
+  };
+  return {
+    count: source.count ?? 6,
+    buttonText: String(source.buttonText || "View More Projects"),
+  };
+}
+
 function normalizeProjectItem(project: any, index: number) {
   const title = String(project?.title || `Project ${index + 1}`);
   const techStack = Array.isArray(project?.techStack) ? project.techStack : Array.isArray(project?.tech) ? project.tech : [];
@@ -599,10 +612,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
       stats: sections.about.items as SiteData["about"]["stats"],
     },
     updatedAt: input.updatedAt || new Date().toISOString(),
-    homepageProjectSettings: input.homepageProjectSettings ?? {
-      count: 6,
-      buttonText: "View More Projects",
-    },
+    homepageProjectSettings: resolveHomepageProjects(input),
     githubConfig: {
       username: input.githubConfig?.username ?? "",
       enabled: input.githubConfig?.enabled ?? false,

@@ -30,6 +30,7 @@ function formatDateTime(value?: string | null) {
 
 export function WebsiteControlEditor({ data, onChange, status, actions }: Props) {
   const control = data.websiteControl;
+  const homepageProjects = control.homepageProjects || data.homepageProjectSettings || { count: 6, buttonText: "View More Projects" };
 
   const setControl = (patch: Partial<SiteData["websiteControl"]>) =>
     onChange({ ...data, websiteControl: { ...control, ...patch } });
@@ -141,13 +142,20 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <select
             className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2"
-            value={String((data.homepageProjectSettings?.count ?? 6) as string)}
+            value={String(homepageProjects.count)}
             onChange={(e) =>
               onChange({
                 ...data,
+                websiteControl: {
+                  ...control,
+                  homepageProjects: {
+                    count: e.target.value === "all" ? "all" : (Number(e.target.value) as 3 | 4 | 6 | 8 | 10),
+                    buttonText: homepageProjects.buttonText || "View More Projects",
+                  },
+                },
                 homepageProjectSettings: {
                   count: e.target.value === "all" ? "all" : Number(e.target.value) as 3 | 4 | 6 | 8 | 10,
-                  buttonText: data.homepageProjectSettings?.buttonText || "View More Projects",
+                  buttonText: homepageProjects.buttonText || "View More Projects",
                 },
               })
             }
@@ -161,12 +169,19 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
           </select>
           <input
             className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2"
-            value={data.homepageProjectSettings?.buttonText || "View More Projects"}
+            value={homepageProjects.buttonText || "View More Projects"}
             onChange={(e) =>
               onChange({
                 ...data,
+                websiteControl: {
+                  ...control,
+                  homepageProjects: {
+                    count: homepageProjects.count ?? 6,
+                    buttonText: e.target.value,
+                  },
+                },
                 homepageProjectSettings: {
-                  count: data.homepageProjectSettings?.count ?? 6,
+                  count: homepageProjects.count ?? 6,
                   buttonText: e.target.value,
                 },
               })
