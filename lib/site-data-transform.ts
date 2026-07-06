@@ -9,27 +9,6 @@ import type {
 
 import seedData from "@/src/data/siteData.json";
 
-const SECTION_ORDER = [
-  "hero",
-  "about",
-  "skills",
-  "projects",
-  "working",
-  "completed",
-  "reviews",
-  "journey",
-  "education",
-  "blogs",
-  "github",
-  "services",
-  "contact",
-  "faq",
-  "achievements",
-  "companies",
-  "certificates",
-  "open-source",
-] as const;
-
 const CORE_RENDERERS = new Set([
   "hero",
   "about",
@@ -97,9 +76,9 @@ function sectionSeed(
   return seedSections[sectionId];
 }
 
-function sectionOrder(sectionId: string, fallback = 0) {
-  const index = SECTION_ORDER.indexOf(sectionId as (typeof SECTION_ORDER)[number]);
-  return index >= 0 ? index + 1 : fallback;
+function controlOrder(sectionId: string, controls?: SiteData["sectionControls"]) {
+  const control = controls?.find((item) => item.id === sectionId);
+  return control?.order;
 }
 
 function makeBlock<K extends DynamicSectionId>(
@@ -511,8 +490,18 @@ export function normalizeSiteData(input: SiteData): SiteData {
   }
 
   for (const [sectionId, block] of Object.entries(sections)) {
-    block.order = sectionOrder(sectionId, block.order);
+    const preferredOrder = controlOrder(sectionId, input.sectionControls) ?? block.order ?? 0;
+    block.order = preferredOrder;
   }
+
+  const normalizedSectionControls = input.sectionControls?.length
+    ? input.sectionControls
+        .map((control, index) => ({
+          ...control,
+          order: control.order ?? index + 1,
+        }))
+        .sort((a, b) => a.order - b.order)
+    : [];
 
   const nav = input.nav?.length
     ? input.nav
@@ -568,6 +557,7 @@ export function normalizeSiteData(input: SiteData): SiteData {
       },
     },
     nav,
+    sectionControls: normalizedSectionControls.length ? normalizedSectionControls : input.sectionControls,
     sections,
     projectsDetailed: sections.projects.items as SiteData["projectsDetailed"],
     projects: (sections.projects.items as SiteData["projectsDetailed"]).map((project) => ({

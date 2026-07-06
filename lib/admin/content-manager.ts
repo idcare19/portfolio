@@ -1,4 +1,5 @@
 import type { SiteData, SiteSectionBlock, TextBlock } from "@/src/types/site-data";
+import { normalizeSectionControls } from "@/lib/section-controls";
 
 const CORE_SECTION_IDS = new Set([
   "hero",
@@ -62,6 +63,7 @@ export function ensureSectionTextBlocks(section: SiteSectionBlock) {
 }
 
 export function buildAdminSections(siteData: SiteData) {
+  const controlMap = new Map((siteData.sectionControls || []).map((control) => [control.id, control] as const));
   return Object.values(siteData.sections || {})
     .map((section) => ({
       ...section,
@@ -76,6 +78,7 @@ export function buildAdminSections(siteData: SiteData) {
       enabled: section.enabled ?? true,
       showOnHomepage: section.showOnHomepage ?? CORE_SECTION_IDS.has(section.id),
       textBlocks: ensureSectionTextBlocks(section),
+      order: controlMap.get(section.id as any)?.order ?? section.order,
     }))
     .sort((a, b) => a.order - b.order);
 }
@@ -138,9 +141,20 @@ export function updateTextBlockValue(siteData: SiteData, block: TextBlock & { se
 
 export function saveAdminSections(siteData: SiteData, sections: SiteSectionBlock[]) {
   const next = structuredClone(siteData) as SiteData;
+  const normalizedControls = normalizeSectionControls(
+    sections.map((section, index) => ({
+      id: section.id as any,
+      label: section.label,
+      order: section.order ?? index + 1,
+      visible: section.enabled ?? true,
+      showInNav: section.nav?.show ?? false,
+      showOnHomepage: section.showOnHomepage ?? true,
+      locked: (section as any).locked ?? false,
+      deleted: false,
+    }))
+  );
   const sectionMap = Object.fromEntries(
     sections.map((section) => {
-      const renderer = CORE_SECTION_IDS.has(section.id) ? section.id : CORE_RENDERERS.has(section.renderer) ? section.renderer : section.id;
       const safeRenderer = CORE_SECTION_IDS.has(section.id) ? section.id : CORE_RENDERERS.has(section.renderer) ? section.renderer : "generic";
       return [
         section.id,
@@ -154,6 +168,7 @@ export function saveAdminSections(siteData: SiteData, sections: SiteSectionBlock
             href: section.nav?.href || `#${section.id}`,
             label: section.nav?.label || section.label || section.id,
           },
+          locked: (section as any).locked ?? false,
           textBlocks: section.textBlocks || [],
           data: (section.textBlocks || []).reduce<Record<string, unknown>>(
             (acc, block) => {
@@ -167,6 +182,7 @@ export function saveAdminSections(siteData: SiteData, sections: SiteSectionBlock
     })
   );
   next.sections = sectionMap as SiteData["sections"];
+  next.sectionControls = normalizedControls;
   next.nav = sections
     .filter((section) => section.enabled && section.nav?.show)
     .sort((a, b) => a.order - b.order)

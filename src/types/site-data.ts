@@ -191,15 +191,18 @@ export type ArrayItem = {
   isEnabled: boolean;
 };
 
-export type SectionId = "about" | "skills" | "projects" | "working" | "completed" | "reviews" | "journey" | "education" | "services" | "contact" | "blogs" | "github" | "faq" | "achievements" | "companies" | "certificates" | "open-source" | "footer";
+export type SectionId = "hero" | "about" | "skills" | "projects" | "working" | "completed" | "reviews" | "journey" | "education" | "services" | "contact" | "blogs" | "github" | "faq" | "achievements" | "companies" | "certificates" | "open-source" | "footer";
 export type DynamicSectionId = string;
 export type SectionRendererId = string;
 
 export type SectionControlItem = {
   id: SectionId;
   label: string;
+  order: number;
   visible: boolean;
   showInNav: boolean;
+  showOnHomepage?: boolean;
+  locked?: boolean;
   deleted: boolean;
 };
 

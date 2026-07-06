@@ -37,10 +37,13 @@ export const navItemSchema = z.object({
 });
 
 export const sectionControlSchema = z.object({
-  id: z.enum(["about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github"]),
+  id: z.enum(["hero", "about", "skills", "projects", "working", "completed", "reviews", "journey", "education", "services", "contact", "blogs", "github", "faq", "achievements", "companies", "certificates", "open-source", "footer"]),
   label: z.string().min(1),
+  order: z.number(),
   visible: z.boolean(),
   showInNav: z.boolean(),
+  showOnHomepage: z.boolean().optional(),
+  locked: z.boolean().optional(),
   deleted: z.boolean(),
 });
 
