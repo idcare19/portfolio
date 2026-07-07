@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
-import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData } from "@/components/site/SiteDataProvider";
 import { trackClientEvent } from "@/components/site/AnalyticsTracker";
 import { Button } from "@/components/ui/Button";
@@ -70,7 +69,7 @@ export function ContactSection() {
         {hasHeader ? <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} /> : null}
 
         <div className="grid gap-6 lg:grid-cols-[1fr_1.1fr]">
-          <FadeInUp className="glass rounded-3xl p-6 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
+          <div className="glass rounded-3xl p-6 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
             <h3 className="text-xl font-semibold text-text-main">{String(data.cardTitle || "")}</h3>
             <p className="mt-3 text-sm text-text-muted">
               {String(data.cardDescription || "")}
@@ -95,9 +94,9 @@ export function ContactSection() {
                 </Button>
               </div>
             ) : null}
-          </FadeInUp>
+          </div>
 
-          <FadeInUp delay={0.08} className="glass rounded-3xl p-6 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
+          <div className="glass rounded-3xl p-6 shadow-[0_10px_26px_rgba(15,23,42,0.06)]">
             <form className="space-y-4" onSubmit={handleSubmit}>
               <div>
                 <label htmlFor="contact-name" className="mb-1.5 block text-sm font-medium text-text-main">
@@ -156,7 +155,7 @@ export function ContactSection() {
                 </p>
               ) : null}
             </form>
-          </FadeInUp>
+          </div>
         </div>
       </div>
     </AnimatedSection>

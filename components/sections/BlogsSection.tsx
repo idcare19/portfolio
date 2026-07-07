@@ -2,17 +2,20 @@
 
 import Link from "next/link";
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
-import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { normalizeSlug } from "@/lib/content-utils";
+import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
+import { usePathname } from "next/navigation";
 
 export function BlogsSection() {
   const section = useSectionData("blogs");
   const siteData = useSiteDataContext();
+  const pathname = usePathname();
   const data = section.data as Record<string, any>;
   const sectionBlogs = Array.isArray(section.items) ? section.items : [];
-  const blogs = [...(Array.isArray(siteData.blogs) ? siteData.blogs : []), ...sectionBlogs]
+  const homepageSettings = getHomepageDisplayConfig(siteData, "blogs");
+  const blogs = filterHomepageItems([...((Array.isArray(siteData.blogs) ? siteData.blogs : [])), ...sectionBlogs]
     .filter((blog, index, all) => {
       if (!blog || blog.status !== "published" || !blog.isEnabled) return false;
       const slug = normalizeSlug(String(blog.slug || blog.title || ""));
@@ -27,7 +30,9 @@ export function BlogsSection() {
       const orderScore = Number(left.order ?? 0) - Number(right.order ?? 0);
       if (orderScore) return orderScore;
       return String(normalizeSlug(String(left.slug || left.title || ""))).localeCompare(String(normalizeSlug(String(right.slug || right.title || ""))));
-    });
+    }), { ...homepageSettings, limit: homepageSettings.limit ?? homepageSettings.itemsLimit ?? 6 });
+  const showMore = shouldShowViewMore([...((Array.isArray(siteData.blogs) ? siteData.blogs : [])), ...sectionBlogs], blogs, homepageSettings);
+  debugHomepageDisplay("blogs", [...((Array.isArray(siteData.blogs) ? siteData.blogs : [])), ...sectionBlogs].length, blogs.length, homepageSettings);
   const title = data.title || "Blogs";
   const description = data.description || "Writing, notes, and build lessons from the portfolio.";
   const eyebrow = data.eyebrow || "Blogs";
@@ -39,14 +44,14 @@ export function BlogsSection() {
   return (
     <AnimatedSection id="blogs" className="bg-page-bg py-20">
       <div className="section-wrap">
-        <FadeInUp>
+        <div>
           <SectionHeader eyebrow={eyebrow} title={title} description={description} />
-        </FadeInUp>
+        </div>
 
         <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-3">
           {blogs.length ? (
             blogs.map((blog: any) => (
-              <FadeInUp key={blog.slug}>
+              <div key={blog.slug}>
                 <article className="group h-full overflow-hidden rounded-[30px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.92))] p-5 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(37,99,235,0.12)]">
                   {blog.coverImage || blog.thumbnail ? (
                     <img
@@ -72,7 +77,7 @@ export function BlogsSection() {
                     Read Article
                   </Link>
                 </article>
-              </FadeInUp>
+              </div>
             ))
           ) : (
             <div className="rounded-[30px] border border-dashed border-[rgb(var(--border))] bg-white/80 p-8 text-center text-text-muted md:col-span-2 xl:col-span-3">
@@ -81,6 +86,7 @@ export function BlogsSection() {
             </div>
           )}
         </div>
+        {pathname === "/" && showMore ? <div className="mt-8 flex justify-center"><Link href={homepageSettings.fullPageUrl || "/blogs"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{getHomepageButtonLabel(homepageSettings)}</Link></div> : null}
       </div>
     </AnimatedSection>
   );

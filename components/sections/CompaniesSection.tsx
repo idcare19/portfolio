@@ -1,6 +1,11 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import type { SiteSectionBlock } from "@/src/types/site-data";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay, normalizeHomepageDisplayConfig } from "@/lib/homepage-display-controls";
+import { useSiteDataContext } from "@/components/site/SiteDataProvider";
 
 function cleanText(value: unknown) {
   return String(value || "").trim();
@@ -28,14 +33,28 @@ function formatCompanyDate(value: unknown) {
 }
 
 export function CompaniesSection({ section }: { section: SiteSectionBlock }) {
-  const items = (section?.items || []).filter((item: any) => item.isEnabled !== false).sort((a: any, b: any) => Number(a.order || 0) - Number(b.order || 0));
+  const siteData = useSiteDataContext();
+  const pathname = usePathname();
+  const homepageSettings = getHomepageDisplayConfig(siteData, "companies");
+  const isHomepage = pathname === "/";
+  const normalized = normalizeHomepageDisplayConfig(homepageSettings);
+  const allItems = useMemo(() => filterHomepageItems(section?.items || [], { ...homepageSettings, limit: undefined, itemsLimit: undefined, showOnlyFeatured: false, manualItemOrder: undefined }), [section?.items]);
+  const [loadedCount, setLoadedCount] = useState(Number(normalized.initialItems || 3));
+  const homepageItems = isHomepage
+    ? filterHomepageItems(section?.items || [], {
+        ...homepageSettings,
+        limit: normalized.viewMoreMode === "load-more" ? loadedCount : Number(normalized.limit ?? normalized.itemsLimit ?? 6),
+      })
+    : allItems;
+  const showMore = isHomepage && shouldShowViewMore(allItems, homepageItems, homepageSettings);
+  debugHomepageDisplay("companies", (section?.items || []).length, homepageItems.length, homepageSettings);
   return (
     <section id="companies" className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="rounded-[32px] border border-[rgb(var(--border))] bg-white p-6 shadow-[0_18px_55px_rgba(15,23,42,0.06)] sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{String(section.data?.eyebrow || "Experience")}</p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-text-main">{String(section.data?.title || "Companies Worked With")}</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {items.map((item: any, index: number) => (
+          {homepageItems.map((item: any, index: number) => (
             <article key={item.companyName || item.title || index} className="overflow-hidden rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--surface))]">
               <div className="flex min-h-[9rem] items-center justify-center border-b border-[rgb(var(--border))] bg-gradient-to-br from-slate-50 to-white px-6 py-6">
                 {isTruthy(item.confidential) ? (
@@ -90,6 +109,21 @@ export function CompaniesSection({ section }: { section: SiteSectionBlock }) {
             </article>
           ))}
         </div>
+        {isHomepage && showMore ? (
+          <div className="mt-8 flex justify-center">
+            {normalized.viewMoreMode === "load-more" ? (
+              <button
+                type="button"
+                onClick={() => setLoadedCount((count) => count + Number(normalized.loadCount || 3))}
+                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white"
+              >
+                {homepageItems.length >= allItems.length ? "No More Items" : getHomepageButtonLabel(homepageSettings)}
+              </button>
+            ) : (
+              <Link href={homepageSettings.fullPageUrl || "/companies"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{getHomepageButtonLabel(homepageSettings)}</Link>
+            )}
+          </div>
+        ) : null}
       </div>
     </section>
   );

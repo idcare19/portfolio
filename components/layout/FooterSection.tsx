@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { trackClientEvent } from "@/components/site/AnalyticsTracker";
 import { useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { ChevronUp, Github, Linkedin, Mail } from "lucide-react";
@@ -15,7 +16,7 @@ export function FooterSection() {
   const emailHref = socials.find((item) => item.label.toLowerCase() === "email")?.href || "";
 
   return (
-    <footer className="border-t border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] py-10">
+    <AnimatedSection id="footer" className="border-t border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] py-10">
       <div className="section-wrap flex flex-col items-center justify-between gap-5 sm:flex-row">
         <p className="max-w-xl text-center text-sm text-text-muted sm:text-left">{footer?.copyrightText}</p>
         <div className="flex items-center gap-3">
@@ -39,6 +40,6 @@ export function FooterSection() {
           </a>
         </div>
       </div>
-    </footer>
+    </AnimatedSection>
   );
 }

@@ -2,6 +2,19 @@
 
 import type { SiteData } from "@/src/types/site-data";
 
+const HOMEPAGE_SECTION_DEFAULTS: Array<{ id: string; label: string; url: string }> = [
+  { id: "projects", label: "Projects", url: "/projects" },
+  { id: "completed", label: "Completed Projects", url: "/completed-projects" },
+  { id: "companies", label: "Companies", url: "/companies" },
+  { id: "achievements", label: "Achievements", url: "/achievements" },
+  { id: "certificates", label: "Certificates", url: "/certificates" },
+  { id: "open-source", label: "Open Source", url: "/open-source" },
+  { id: "faq", label: "FAQ", url: "/faq" },
+  { id: "blogs", label: "Blogs", url: "/blogs" },
+  { id: "reviews", label: "Reviews", url: "/reviews" },
+  { id: "services", label: "Services", url: "/services" },
+];
+
 type Props = {
   data: SiteData;
   onChange: (next: SiteData) => void;
@@ -31,9 +44,28 @@ function formatDateTime(value?: string | null) {
 export function WebsiteControlEditor({ data, onChange, status, actions }: Props) {
   const control = data.websiteControl;
   const homepageProjects = control.homepageProjects || data.homepageProjectSettings || { count: 6, buttonText: "View More Projects" };
+  const sectionHomepage = control.homepageDisplay || control.sectionHomepage || {};
 
   const setControl = (patch: Partial<SiteData["websiteControl"]>) =>
     onChange({ ...data, websiteControl: { ...control, ...patch } });
+
+  const updateSectionHomepage = (sectionId: string, patch: Record<string, unknown>) =>
+    setControl({
+      homepageDisplay: {
+        ...(control.homepageDisplay || {}),
+        [sectionId]: {
+          ...(sectionHomepage[sectionId] || {}),
+          ...patch,
+        },
+      },
+      sectionHomepage: {
+        ...(control.sectionHomepage || {}),
+        [sectionId]: {
+          ...(sectionHomepage[sectionId] || {}),
+          ...patch,
+        },
+      },
+    });
 
   return (
     <div className="space-y-4">
@@ -188,6 +220,93 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
             }
             placeholder="View More Projects"
           />
+        </div>
+      </section>
+
+      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+        <h2 className="text-lg font-semibold text-admin-text">Homepage Display Controls</h2>
+        <p className="mt-1 text-sm text-admin-text-muted">Configure cards shown on the homepage and the button that links to each full page.</p>
+        <div className="mt-4 space-y-4">
+          {HOMEPAGE_SECTION_DEFAULTS.map((section) => {
+            const value = sectionHomepage[section.id] || {};
+            return (
+              <div key={section.id} className="rounded-2xl border border-admin-border bg-admin-input p-4">
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <h3 className="font-semibold text-admin-text">{section.label}</h3>
+                  <span className="text-xs text-admin-text-muted">{section.url}</span>
+                </div>
+                <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
+                  <select
+                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    value={String(value.limit ?? value.itemsLimit ?? "all")}
+                    onChange={(e) => updateSectionHomepage(section.id, { limit: e.target.value === "all" ? "all" : Number(e.target.value), itemsLimit: e.target.value === "all" ? "all" : Number(e.target.value) })}
+                  >
+                    <option value="all">All items</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="6">6</option>
+                    <option value="8">8</option>
+                    <option value="10">10</option>
+                    <option value="12">12</option>
+                  </select>
+                  <select
+                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    value={String(value.viewMoreMode || "navigate")}
+                    onChange={(e) => updateSectionHomepage(section.id, { viewMoreMode: e.target.value as "navigate" | "load-more" })}
+                  >
+                    <option value="navigate">Navigate to Full Page</option>
+                    <option value="load-more">Load More on Homepage</option>
+                  </select>
+                  <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+                    <input type="checkbox" checked={Boolean(value.showOnlyFeatured)} onChange={(e) => updateSectionHomepage(section.id, { showOnlyFeatured: e.target.checked })} />
+                    Show only featured items
+                  </label>
+                  <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+                    <input type="checkbox" checked={value.showViewMoreButton !== false} onChange={(e) => updateSectionHomepage(section.id, { showViewMoreButton: e.target.checked })} />
+                    Show View More button
+                  </label>
+                  <input
+                    type="number"
+                    min={1}
+                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    value={String(value.initialItems ?? 3)}
+                    onChange={(e) => updateSectionHomepage(section.id, { initialItems: Number(e.target.value) || 3 })}
+                    placeholder="Initial items"
+                  />
+                  <input
+                    type="number"
+                    min={1}
+                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    value={String(value.loadCount ?? 3)}
+                    onChange={(e) => updateSectionHomepage(section.id, { loadCount: Number(e.target.value) || 3 })}
+                    placeholder="Load count"
+                  />
+                  <input
+                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    value={String(value.viewMoreButtonText || `View More ${section.label}`)}
+                    onChange={(e) => updateSectionHomepage(section.id, { viewMoreButtonText: e.target.value })}
+                    placeholder={`View More ${section.label}`}
+                  />
+                  <input
+                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text md:col-span-2"
+                    value={String(value.fullPageUrl || section.url)}
+                    onChange={(e) => updateSectionHomepage(section.id, { fullPageUrl: e.target.value })}
+                    placeholder={section.url}
+                  />
+                  <input
+                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text md:col-span-2"
+                    value={Array.isArray(value.manualItemOrder) ? value.manualItemOrder.join(", ") : ""}
+                    onChange={(e) =>
+                      updateSectionHomepage(section.id, {
+                        manualItemOrder: e.target.value.split(",").map((item) => item.trim()).filter(Boolean),
+                      })
+                    }
+                    placeholder="Manual item order by id, slug, or title, comma separated"
+                  />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </section>
     </div>

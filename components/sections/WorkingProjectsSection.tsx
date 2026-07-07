@@ -1,11 +1,12 @@
 "use client";
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
-import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowUpRight, Clock3 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore } from "@/lib/homepage-display-controls";
 
 function normalizeHref(value?: string) {
   const href = String(value || "").trim();
@@ -15,8 +16,12 @@ function normalizeHref(value?: string) {
 
 export function WorkingProjectsSection() {
   const section = useSectionData("working");
+  const siteData = useSiteDataContext();
+  const pathname = usePathname();
   const data = section.data as Record<string, any>;
-  const workingProjects = (Array.isArray(section.items) ? section.items : []).filter((project: any) => project && project.isEnabled !== false);
+  const homepageSettings = getHomepageDisplayConfig(siteData, "working");
+  const workingProjects = filterHomepageItems(Array.isArray(section.items) ? section.items : [], { ...homepageSettings, itemsLimit: homepageSettings.itemsLimit ?? 6 });
+  const showMore = shouldShowViewMore(Array.isArray(section.items) ? section.items : [], workingProjects, homepageSettings);
 
   if (workingProjects.length === 0) {
     return null;
@@ -33,7 +38,7 @@ export function WorkingProjectsSection() {
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {workingProjects.map((project, index) => (
-            <FadeInUp key={`${project.title}-${index}`} delay={index * 0.06}>
+            <div key={`${project.title}-${index}`}>
               <article className="glass h-full rounded-3xl p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#1D4ED8]">
@@ -61,9 +66,10 @@ export function WorkingProjectsSection() {
                   </Link>
                 ) : null}
               </article>
-            </FadeInUp>
+            </div>
           ))}
         </div>
+        {pathname === "/" && showMore ? <div className="mt-8 flex justify-center"><Link href={homepageSettings.fullPageUrl || "/completed-projects"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{getHomepageButtonLabel(homepageSettings)}</Link></div> : null}
       </div>
     </AnimatedSection>
   );

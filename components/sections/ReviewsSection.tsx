@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
-import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import {
@@ -18,6 +17,8 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
 import { useCallback, useEffect, useRef, useState, type PointerEvent, type WheelEvent } from "react";
 
 const reviewIconMap: Record<string, LucideIcon> = {
@@ -45,10 +46,17 @@ function normalizeHref(value?: string) {
 
 export function ReviewsSection() {
   const section = useSectionData("reviews");
+  const pathname = usePathname();
   const data = section.data as Record<string, any>;
   const reviewItems = Array.isArray(section.items) ? section.items : [];
+  const homepageSettings = getHomepageDisplayConfig(useSiteDataContext(), "reviews");
+  const isHomepage = pathname === "/";
+  const fullReviews = filterHomepageItems(reviewItems, { showOnlyFeatured: false, manualItemOrder: undefined, limit: undefined, itemsLimit: undefined });
+  const visibleReviews = isHomepage ? filterHomepageItems(reviewItems, { ...homepageSettings, limit: homepageSettings.limit ?? homepageSettings.itemsLimit ?? 6 }) : fullReviews;
+  const showMore = isHomepage && shouldShowViewMore(fullReviews, visibleReviews, homepageSettings);
+  debugHomepageDisplay("reviews", reviewItems.length, visibleReviews.length, homepageSettings);
   const reviews = reviewItems.length
-    ? reviewItems.map((item: any) => ({
+    ? visibleReviews.map((item: any) => ({
         clientName: item.clientName,
         roleCompany: item.roleCompany,
         website: item.website || item.websiteUrl || item.companyUrl || item.reviewerUrl,
@@ -184,7 +192,7 @@ export function ReviewsSection() {
           description={data.description}
         />
 
-        <FadeInUp>
+        <div>
           <div className="mb-3 hidden items-center justify-end gap-2 md:flex">
             <button
               type="button"
@@ -260,8 +268,9 @@ export function ReviewsSection() {
               })}
               <div aria-hidden className="w-[2rem] shrink-0" />
             </div>
+            {isHomepage && showMore ? <div className="mt-8 flex justify-center"><Link href={homepageSettings.fullPageUrl || "/reviews"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{getHomepageButtonLabel(homepageSettings)}</Link></div> : null}
           </div>
-        </FadeInUp>
+        </div>
       </div>
     </AnimatedSection>
   );

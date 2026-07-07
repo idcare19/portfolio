@@ -1,10 +1,8 @@
 "use client";
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
-import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { motion } from "framer-motion";
 
 export function JourneySection() {
   const section = useSectionData("journey");
@@ -27,13 +25,7 @@ export function JourneySection() {
             <span>{experience.length} role{experience.length > 1 ? "s" : ""}</span>
           </div>
           <div className="h-2 overflow-hidden rounded-full bg-card-hover">
-            <motion.div
-              className="h-full rounded-full bg-gradient-to-r from-primary via-[#3B82F6] to-[#93C5FD]"
-              initial={{ width: 0 }}
-              whileInView={{ width: "100%" }}
-              viewport={{ once: true, amount: 0.8 }}
-              transition={{ duration: 0.8, ease: "easeOut" }}
-            />
+            <div className="h-full rounded-full bg-gradient-to-r from-primary via-[#3B82F6] to-[#93C5FD] w-full" />
           </div>
         </div>
 
@@ -59,7 +51,7 @@ export function JourneySection() {
 
         <div className="relative mx-auto max-w-4xl border-l border-[#BFDBFE] pl-6">
           {experience.map((item: any, index: number) => (
-            <FadeInUp key={`${item.role}-${item.period}`} delay={index * 0.06} className="relative pb-7 last:pb-0">
+            <div key={`${item.role}-${item.period}`} className="relative pb-7 last:pb-0">
               <span className="absolute -left-[31px] top-1.5 inline-flex h-4 w-4 rounded-full border-2 border-primary bg-white" />
 
               <div className="group rounded-xl border border-[rgb(var(--border))] bg-white p-4 transition-all duration-200 ease-out hover:-translate-y-0.5 hover:border-[#BFDBFE]">
@@ -67,7 +59,7 @@ export function JourneySection() {
                 <p className="text-sm font-semibold text-text-main">{item.role}</p>
                 <p className="mt-2 text-sm text-text-muted">{item.summary}</p>
               </div>
-            </FadeInUp>
+            </div>
           ))}
         </div>
       </div>

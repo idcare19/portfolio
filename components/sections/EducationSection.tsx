@@ -1,7 +1,6 @@
 "use client";
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
-import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData } from "@/components/site/SiteDataProvider";
 import { AnimatedCard } from "@/components/ui/AnimatedCard";
 import { Badge } from "@/components/ui/Badge";
@@ -27,7 +26,7 @@ export function EducationSection() {
 
         <div className="grid gap-4 lg:grid-cols-2">
           {items.map((item, index) => (
-            <FadeInUp key={item.id || `${item.school}-${index}`} delay={index * 0.05}>
+            <div key={item.id || `${item.school}-${index}`}>
               <AnimatedCard>
                 <div className="flex flex-wrap items-start justify-between gap-3">
                   <div>
@@ -38,7 +37,7 @@ export function EducationSection() {
                 </div>
                 {item.description ? <p className="mt-4 text-sm leading-6 text-text-muted" style={{ opacity: 0.9 }}>{item.description}</p> : null}
               </AnimatedCard>
-            </FadeInUp>
+            </div>
           ))}
         </div>
       </div>

@@ -1,7 +1,12 @@
 "use client";
 
+import { useMemo, useState } from "react";
 import Image from "next/image";
 import type { SiteSectionBlock } from "@/src/types/site-data";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay, normalizeHomepageDisplayConfig } from "@/lib/homepage-display-controls";
+import { useSiteDataContext } from "@/components/site/SiteDataProvider";
 
 function cleanText(value: unknown) {
   return String(value || "").trim();
@@ -24,7 +29,17 @@ function formatCertificateDate(value: unknown) {
 }
 
 export function CertificatesSection({ section }: { section: SiteSectionBlock }) {
-  const items = (section?.items || []).filter((item: any) => item.isEnabled !== false).sort((a: any, b: any) => Number(a.order || 0) - Number(b.order || 0));
+  const siteData = useSiteDataContext();
+  const pathname = usePathname();
+  const homepageSettings = getHomepageDisplayConfig(siteData, "certificates");
+  const isHomepage = pathname === "/";
+  const normalized = normalizeHomepageDisplayConfig(homepageSettings);
+  const allItems = useMemo(() => filterHomepageItems(section?.items || [], { showOnlyFeatured: false, manualItemOrder: undefined, limit: undefined, itemsLimit: undefined }), [section?.items]);
+  const [loadedCount, setLoadedCount] = useState(Number(normalized.initialItems || 3));
+  const homepageItems = useMemo(() => filterHomepageItems(section?.items || [], { ...homepageSettings, limit: normalized.viewMoreMode === "load-more" ? loadedCount : Number(normalized.limit ?? normalized.itemsLimit ?? 6) }), [section?.items, homepageSettings.limit, homepageSettings.itemsLimit, homepageSettings.showOnlyFeatured, homepageSettings.manualItemOrder?.join("|"), loadedCount, normalized.viewMoreMode]);
+  const items = isHomepage ? homepageItems : allItems;
+  const showMore = isHomepage && shouldShowViewMore(allItems, items, homepageSettings);
+  debugHomepageDisplay("certificates", (section?.items || []).length, items.length, homepageSettings);
   return (
     <section id="certificates" className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="rounded-[32px] border border-[rgb(var(--border))] bg-white p-6 shadow-[0_18px_55px_rgba(15,23,42,0.06)] sm:p-8">
@@ -93,6 +108,7 @@ export function CertificatesSection({ section }: { section: SiteSectionBlock }) 
             </article>
           ))}
         </div>
+        {isHomepage && showMore ? <div className="mt-8 flex justify-center">{normalized.viewMoreMode === "load-more" ? <button type="button" onClick={() => setLoadedCount((count) => count + Number(normalized.loadCount || 3))} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{items.length >= allItems.length ? "No More Items" : getHomepageButtonLabel(homepageSettings)}</button> : <Link href={homepageSettings.fullPageUrl || "/certificates"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{getHomepageButtonLabel(homepageSettings)}</Link>}</div> : null}
       </div>
     </section>
   );

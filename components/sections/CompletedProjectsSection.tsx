@@ -1,11 +1,12 @@
 "use client";
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
-import { FadeInUp } from "@/components/effects/FadeInUp";
-import { useSectionData } from "@/components/site/SiteDataProvider";
+import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { ArrowUpRight, CalendarDays, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { filterHomepageItems, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
 
 function normalizeHref(value?: string) {
   const href = String(value || "").trim();
@@ -15,8 +16,16 @@ function normalizeHref(value?: string) {
 
 export function CompletedProjectsSection() {
   const section = useSectionData("completed");
+  const siteData = useSiteDataContext();
+  const pathname = usePathname();
   const data = section.data as Record<string, any>;
-  const completedProjects = section.items || [];
+  const homepageSettings = getHomepageDisplayConfig(siteData, "completed");
+  const isHomepage = pathname === "/";
+  const fullProjects = filterHomepageItems(section.items || [], { showOnlyFeatured: false, manualItemOrder: undefined, limit: undefined, itemsLimit: undefined });
+  const homepageProjects = filterHomepageItems(section.items || [], { ...homepageSettings, limit: homepageSettings.limit ?? homepageSettings.itemsLimit ?? 6, showOnlyFeatured: homepageSettings.showOnlyFeatured });
+  const completedProjects = isHomepage ? homepageProjects : fullProjects;
+  const showMore = isHomepage && shouldShowViewMore(fullProjects, completedProjects, homepageSettings);
+  debugHomepageDisplay("completed", (section.items || []).length, completedProjects.length, homepageSettings);
 
   if (completedProjects.length === 0) {
     return null;
@@ -33,7 +42,7 @@ export function CompletedProjectsSection() {
 
         <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
           {completedProjects.map((project, index) => (
-            <FadeInUp key={`${project.title}-${index}`} delay={index * 0.06}>
+            <div key={`${project.title}-${index}`}>
               <article className="glass h-full rounded-3xl p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
                 <div className="flex flex-wrap items-center justify-between gap-2">
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#1D4ED8]">
@@ -73,9 +82,10 @@ export function CompletedProjectsSection() {
                   ) : null}
                 </div>
               </article>
-            </FadeInUp>
+            </div>
           ))}
         </div>
+        {isHomepage && showMore ? <div className="mt-8 flex justify-center"><Link href={homepageSettings.fullPageUrl || "/completed-projects"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{homepageSettings.viewMoreButtonText || "View More"}</Link></div> : null}
       </div>
     </AnimatedSection>
   );

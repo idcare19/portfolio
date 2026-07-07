@@ -1,12 +1,10 @@
 "use client";
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
-import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import { renderSkillIcon } from "@/lib/skill-icons";
-import { motion, useReducedMotion } from "framer-motion";
 
 type SkillItem = {
   title?: string;
@@ -59,7 +57,6 @@ export function SkillsSection() {
     .filter((item, index, list) => list.findIndex((entry) => String(entry.name).trim().toLowerCase() === String(item.name).trim().toLowerCase()) === index)
     .sort((a: SkillItem, b: SkillItem) => Number(a.order ?? 0) - Number(b.order ?? 0));
   const learningItems = Array.isArray(data.learningItems) ? data.learningItems : [];
-  const shouldReduceMotion = useReducedMotion();
   const resumeUrl = String(siteData.owner?.resumeUrl || "").trim();
   const grouped = groupSkills(skills);
   const sections = Array.from(grouped.entries())
@@ -86,15 +83,7 @@ export function SkillsSection() {
 
         <div className="grid gap-4 lg:grid-cols-2">
           {sections.map((group, groupIndex) => (
-            <FadeInUp key={group.title} delay={groupIndex * 0.08}>
-              <motion.div
-                initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-                whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.55, ease: "easeOut", delay: groupIndex * 0.05 }}
-                whileHover={shouldReduceMotion ? undefined : { y: -4 }}
-                className="group h-full rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition-all duration-500 hover:shadow-[0_18px_40px_rgba(37,99,235,0.12)]"
-              >
+            <div key={group.title} className="group h-full rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition-all duration-500 hover:shadow-[0_18px_40px_rgba(37,99,235,0.12)]">
                 <div className="mb-5 flex items-center justify-between gap-3">
                   <h3 className="text-lg font-semibold text-text-main">{group.title}</h3>
                   <span className="rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1D4ED8]">
@@ -104,33 +93,20 @@ export function SkillsSection() {
 
                 <div className="flex flex-wrap gap-3">
                   {group.items.map((skill, index) => (
-                    <motion.span
+                    <span
                       key={`${group.title}-${skill.name}-${index}`}
-                      initial={shouldReduceMotion ? false : { opacity: 0, scale: 0.92, y: 8 }}
-                      whileInView={shouldReduceMotion ? undefined : { opacity: 1, scale: 1, y: 0 }}
-                      viewport={{ once: true, amount: 0.3 }}
-                      transition={{ duration: 0.35, delay: index * 0.03 }}
-                      whileHover={shouldReduceMotion ? undefined : { y: -3, scale: 1.03 }}
                       className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-3 py-2 text-sm font-medium text-text-main shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition-all duration-300 hover:border-primary/30 hover:shadow-[0_12px_24px_rgba(37,99,235,0.12)]"
                     >
                       {renderSkillIcon(skill.iconKey || skill.icon, skill.iconColor)}
                       {skill.title || skill.name}
-                    </motion.span>
+                    </span>
                   ))}
                 </div>
-              </motion.div>
-            </FadeInUp>
+            </div>
           ))}
         </div>
 
-        <FadeInUp delay={0.12}>
-          <motion.div
-            initial={shouldReduceMotion ? false : { opacity: 0, y: 16 }}
-            whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-            viewport={{ once: true, amount: 0.2 }}
-            transition={{ duration: 0.5, ease: "easeOut" }}
-            className="mt-6 rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)]"
-          >
+        <div className="mt-6 rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
             <div className="mb-5 flex items-center justify-between gap-3">
               <div>
                 <p className="text-xs font-semibold uppercase tracking-[0.24em] text-text-muted">Currently Learning</p>
@@ -140,21 +116,15 @@ export function SkillsSection() {
 
             <div className="flex flex-wrap gap-2">
               {learningItems.map((item: string, index: number) => (
-                <motion.span
+                <span
                   key={`${item}-${index}`}
-                  initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
-                  whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.3, delay: index * 0.03 }}
-                  whileHover={shouldReduceMotion ? undefined : { y: -2 }}
                   className="inline-flex items-center rounded-full border border-[#DBEAFE] bg-[#EFF6FF] px-3 py-1.5 text-sm font-medium text-[#1D4ED8] shadow-[0_8px_18px_rgba(37,99,235,0.08)]"
                 >
                   {item}
-                </motion.span>
+                </span>
               ))}
             </div>
-          </motion.div>
-        </FadeInUp>
+        </div>
 
         {buttonRow}
       </div>

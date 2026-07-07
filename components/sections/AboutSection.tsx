@@ -2,7 +2,6 @@
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { HoverCard } from "@/components/effects/HoverCard";
-import { FadeInUp } from "@/components/effects/FadeInUp";
 import { useSectionData } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 
@@ -18,18 +17,18 @@ export function AboutSection() {
       <div className="section-wrap">
         {hasHeader ? <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} /> : null}
 
-        <FadeInUp className="glass mb-6 rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.05)]">
+        <div className="glass mb-6 rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.05)]">
           <p className="text-text-muted" style={{ opacity: 0.9 }}>{intro}</p>
-        </FadeInUp>
+        </div>
 
         <div className="grid gap-4 md:grid-cols-3">
           {stats.map((item: any, index) => (
-            <FadeInUp key={item.label} delay={index * 0.08}>
+            <div key={item.label}>
               <HoverCard className="relative overflow-hidden p-6">
                 <p className="text-sm font-medium text-text-muted" style={{ opacity: 0.85 }}>{item.label}</p>
                 <p className="mt-2 text-3xl font-bold text-text-main">{item.value}</p>
               </HoverCard>
-            </FadeInUp>
+            </div>
           ))}
         </div>
       </div>

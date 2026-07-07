@@ -1,6 +1,6 @@
 "use client";
 
-import { FadeInUp } from "@/components/effects/FadeInUp";
+import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { TypewriterLines } from "@/components/effects/TypewriterLines";
 import { Button } from "@/components/ui/Button";
@@ -19,25 +19,17 @@ export function HeroSection() {
   const eyebrow = String(heroData.eyebrow || portfolioData.owner?.identityLine || "");
   const animatedRole = String(heroData.animatedRole || portfolioData.owner?.role || "");
   return (
-    <section id="home" className="relative overflow-hidden bg-section-bg pt-32 sm:pt-36 pb-24">
-      {/* Removed blobs that were causing washed out colors */}
-
+    <AnimatedSection id="hero" className="relative overflow-hidden bg-section-bg pt-32 sm:pt-36 pb-24">
       <div className="section-wrap">
         <div className="mx-auto max-w-5xl text-center">
-          <FadeInUp immediate>
-            {eyebrow ? <p className="mb-4 inline-flex rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">{eyebrow}</p> : null}
-          </FadeInUp>
-          <FadeInUp delay={0.06} immediate>
-            <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-text-main sm:text-6xl lg:text-7xl">
-              {title ? <span className="block">{title}</span> : null}
-              {animatedRole ? <TypewriterLines text={animatedRole} className="text-gradient-animated mt-4 inline-block align-top" typeSpeedMs={80} holdMs={1800} /> : null}
-            </h1>
-          </FadeInUp>
-          <FadeInUp delay={0.12} immediate>
-            {description ? <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-text-muted sm:text-lg md:text-xl">{description}</p> : null}
-          </FadeInUp>
+          {eyebrow ? <p className="mb-4 inline-flex rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-xs font-semibold uppercase tracking-[0.16em] text-[#1D4ED8]">{eyebrow}</p> : null}
+          <h1 className="text-4xl font-bold leading-[1.1] tracking-tight text-text-main sm:text-6xl lg:text-7xl">
+            {title ? <span className="block">{title}</span> : null}
+            {animatedRole ? <TypewriterLines text={animatedRole} className="text-gradient-animated mt-4 inline-block align-top" typeSpeedMs={80} holdMs={1800} /> : null}
+          </h1>
+          {description ? <p className="mx-auto mt-6 max-w-3xl text-sm leading-relaxed text-text-muted sm:text-lg md:text-xl">{description}</p> : null}
 
-          <FadeInUp delay={0.18}>
+          <div>
             <div className="mt-12 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
               <Button href={heroData.primaryCtaHref || "#projects"} className="w-full sm:w-auto">
                 View Projects
@@ -48,9 +40,9 @@ export function HeroSection() {
                 </Button>
               ) : null}
             </div>
-          </FadeInUp>
+          </div>
 
-          <FadeInUp delay={0.24}>
+          <div>
             <div className="mt-10 flex flex-wrap justify-center gap-3">
               {badges.map((badge: string) => (
                 <span
@@ -61,9 +53,9 @@ export function HeroSection() {
                 </span>
               ))}
             </div>
-          </FadeInUp>
+          </div>
 
-          <FadeInUp delay={0.28}>
+          <div>
             <div className="mx-auto mt-16 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3">
               {stats.map((stat: { label: string; value: string }) => (
                 <div key={stat.label} className="panel p-6 text-center">
@@ -72,19 +64,19 @@ export function HeroSection() {
                 </div>
               ))}
             </div>
-          </FadeInUp>
+          </div>
 
-          <FadeInUp delay={0.32} className="mt-10 hidden items-center justify-center gap-3 text-xs md:flex">
+          <div className="mt-10 hidden items-center justify-center gap-3 text-xs md:flex">
             <span className="text-text-muted">
               <span>Scroll</span>
               <span className="relative inline-flex h-6 w-4 items-start rounded-full border border-[rgb(var(--border))] p-1">
                 <span className="animate-scroll-dot h-1.5 w-1.5 rounded-full bg-primary" />
               </span>
             </span>
-          </FadeInUp>
+          </div>
         </div>
 
       </div>
-    </section>
+    </AnimatedSection>
   );
 }

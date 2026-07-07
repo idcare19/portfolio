@@ -3,10 +3,22 @@
 import { useMemo, useState } from "react";
 import { ChevronDown } from "lucide-react";
 import type { SiteSectionBlock } from "@/src/types/site-data";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { filterHomepageItems, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
+import { useSiteDataContext } from "@/components/site/SiteDataProvider";
 
 export function FaqSection({ section }: { section: SiteSectionBlock }) {
   const [open, setOpen] = useState<number>(0);
-  const items = useMemo(() => (section?.items || []).filter((item: any) => item.isEnabled !== false).sort((a: any, b: any) => Number(a.order || 0) - Number(b.order || 0)).filter((item: any) => item.featured || true), [section?.items]);
+  const siteData = useSiteDataContext();
+  const pathname = usePathname();
+  const homepageSettings = getHomepageDisplayConfig(siteData, "faq");
+  const isHomepage = pathname === "/";
+  const fullItems = useMemo(() => filterHomepageItems(section?.items || [], { ...homepageSettings, showOnlyFeatured: false, manualItemOrder: undefined, limit: undefined, itemsLimit: undefined }), [section?.items]);
+  const homepageItems = useMemo(() => filterHomepageItems(section?.items || [], { ...homepageSettings, limit: homepageSettings.limit ?? homepageSettings.itemsLimit ?? 6 }), [section?.items, homepageSettings.limit, homepageSettings.itemsLimit, homepageSettings.showOnlyFeatured, homepageSettings.manualItemOrder?.join("|"), homepageSettings.showViewMoreButton, homepageSettings.viewMoreButtonText, homepageSettings.fullPageUrl]);
+  const items = isHomepage ? homepageItems : fullItems;
+  const showMore = isHomepage && shouldShowViewMore(fullItems, items, homepageSettings);
+  debugHomepageDisplay("faq", (section?.items || []).length, items.length, homepageSettings);
   return (
     <section id="faq" className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
       <div className="rounded-[32px] border border-[rgb(var(--border))] bg-white p-6 shadow-[0_18px_55px_rgba(15,23,42,0.06)] sm:p-8">
@@ -24,6 +36,7 @@ export function FaqSection({ section }: { section: SiteSectionBlock }) {
             </button>
           ))}
         </div>
+        {isHomepage && showMore ? <div className="mt-8 flex justify-center"><Link href={homepageSettings.fullPageUrl || "/faq"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{homepageSettings.viewMoreButtonText || "View More"}</Link></div> : null}
       </div>
     </section>
   );

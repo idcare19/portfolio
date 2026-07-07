@@ -13,6 +13,23 @@ type GitHubConfig = {
   token: string;
   enabled: boolean;
   refreshInterval: number;
+  useLiveGitHubAPI: boolean;
+  showProfileHeader: boolean;
+  showAvatar: boolean;
+  showBio: boolean;
+  showStats: boolean;
+  showLanguageBreakdown: boolean;
+  showContributionCalendar: boolean;
+  showInsights: boolean;
+  showActivityTimeline: boolean;
+  showRepositoryCards: boolean;
+  showPrivateRepos: boolean;
+  showPrivateCommits: boolean;
+  showCacheDebugDetails: boolean;
+  showViewGitHubButton: boolean;
+  showViewMoreButton: boolean;
+  showLiveDemoButton: boolean;
+  showViewRepositoryButton: boolean;
   includePrivateRepos: boolean;
   includePrivateCommits: boolean;
   showLifetimeCommits: boolean;
@@ -47,6 +64,21 @@ type GitHubConfig = {
   repositoryCardsHidePrivate: boolean;
   repositoryCardsSort: "stars" | "updated" | "name" | "manual";
   repositoryCardsManualOrder: string[];
+  manualProfile: {
+    username: string;
+    avatarUrl: string;
+    bio: string;
+    profileUrl: string;
+    publicRepositories: number;
+    stars: number;
+    forks: number;
+    followers: number;
+    following: number;
+    totalCommits: number;
+    repositoryList: Array<{ name: string; description: string; url: string; homepage: string; language: string; stars: number; forks: number; topics: string[] }>;
+    pinnedRepositories: Array<{ name: string; description: string; url: string; homepage: string; language: string; stars: number; forks: number; topics: string[] }>;
+    buttons: { viewGitHub: string; viewMore: string };
+  };
   showTotalCommits: boolean;
   showStars: boolean;
   showFollowers: boolean;
@@ -95,6 +127,23 @@ const defaultConfig: GitHubConfig = {
   token: "",
   enabled: false,
   refreshInterval: 30,
+  useLiveGitHubAPI: true,
+  showProfileHeader: true,
+  showAvatar: true,
+  showBio: true,
+  showStats: true,
+  showLanguageBreakdown: false,
+  showContributionCalendar: false,
+  showInsights: false,
+  showActivityTimeline: false,
+  showRepositoryCards: true,
+  showPrivateRepos: false,
+  showPrivateCommits: false,
+  showCacheDebugDetails: false,
+  showViewGitHubButton: true,
+  showViewMoreButton: true,
+  showLiveDemoButton: true,
+  showViewRepositoryButton: true,
   includePrivateRepos: false,
   includePrivateCommits: false,
   showLifetimeCommits: true,
@@ -129,6 +178,21 @@ const defaultConfig: GitHubConfig = {
   repositoryCardsHidePrivate: true,
   repositoryCardsSort: "stars",
   repositoryCardsManualOrder: [],
+  manualProfile: {
+    username: "",
+    avatarUrl: "",
+    bio: "",
+    profileUrl: "",
+    publicRepositories: 0,
+    stars: 0,
+    forks: 0,
+    followers: 0,
+    following: 0,
+    totalCommits: 0,
+    repositoryList: [],
+    pinnedRepositories: [],
+    buttons: { viewGitHub: "", viewMore: "" },
+  },
   showTotalCommits: true,
   showStars: true,
   showFollowers: true,
@@ -155,6 +219,23 @@ function normalizeConfig(input?: Partial<GitHubConfig> | null): GitHubConfig {
     ...input,
     username: input?.username || "",
     token: input?.token || "",
+    useLiveGitHubAPI: input?.useLiveGitHubAPI ?? true,
+    showProfileHeader: input?.showProfileHeader ?? true,
+    showAvatar: input?.showAvatar ?? true,
+    showBio: input?.showBio ?? true,
+    showStats: input?.showStats ?? true,
+    showLanguageBreakdown: input?.showLanguageBreakdown ?? false,
+    showContributionCalendar: input?.showContributionCalendar ?? false,
+    showInsights: input?.showInsights ?? false,
+    showActivityTimeline: input?.showActivityTimeline ?? false,
+    showRepositoryCards: input?.showRepositoryCards ?? true,
+    showPrivateRepos: input?.showPrivateRepos ?? false,
+    showPrivateCommits: input?.showPrivateCommits ?? false,
+    showCacheDebugDetails: input?.showCacheDebugDetails ?? false,
+    showViewGitHubButton: input?.showViewGitHubButton ?? true,
+    showViewMoreButton: input?.showViewMoreButton ?? true,
+    showLiveDemoButton: input?.showLiveDemoButton ?? true,
+    showViewRepositoryButton: input?.showViewRepositoryButton ?? true,
     selectedRepositories: Array.isArray(input?.selectedRepositories) ? input.selectedRepositories : [],
     commitMessageIncludes: Array.isArray(input?.commitMessageIncludes) ? input.commitMessageIncludes : [],
     commitMessageExcludes: Array.isArray(input?.commitMessageExcludes) ? input.commitMessageExcludes : [],
@@ -181,6 +262,7 @@ function normalizeConfig(input?: Partial<GitHubConfig> | null): GitHubConfig {
     repositoryCardsHidePrivate: input?.repositoryCardsHidePrivate ?? true,
     repositoryCardsSort: input?.repositoryCardsSort ?? "stars",
     repositoryCardsManualOrder: Array.isArray(input?.repositoryCardsManualOrder) ? input.repositoryCardsManualOrder : [],
+    manualProfile: input?.manualProfile ?? defaultConfig.manualProfile,
     showTotalCommits: input?.showTotalCommits ?? true,
     showStars: input?.showStars ?? true,
     showFollowers: input?.showFollowers ?? true,
@@ -293,6 +375,7 @@ export default function GitHubAdminPage() {
   const recentCommitsSelectedSet = useMemo(() => new Set(recentCommitsSelectedRepositories), [recentCommitsSelectedRepositories]);
   const recentActivityHideRepoSet = useMemo(() => new Set(recentActivityHideRepositories), [recentActivityHideRepositories]);
   const recentActivityHiddenTypeSet = useMemo(() => new Set(recentActivityHiddenTypes), [recentActivityHiddenTypes]);
+  const manualRepoSet = useMemo(() => new Set((config.manualProfile?.repositoryList ?? []).map((repo) => String(repo.name || "").trim()).filter(Boolean)), [config.manualProfile?.repositoryList]);
   const visibleRepoCount = repoList.length;
   const selectedVisibleRepoCount = repoList.filter((repo) => selectedSet.has((repo as any).fullName || (repo as any).name) || Boolean((repo as any).selected)).length;
   const selectedRecentCommitRepoCount = repoList.filter((repo) => recentCommitsSelectedSet.has((repo as any).fullName || (repo as any).name) || Boolean((repo as any).selected)).length;
@@ -398,6 +481,30 @@ export default function GitHubAdminPage() {
     });
   }
 
+  function toggleManualRepository(repo: (typeof repoList)[number]) {
+    const key = String(repo.fullName || repo.name || "").trim();
+    setConfig((current) => {
+      const existing = Array.isArray(current.manualProfile?.repositoryList) ? current.manualProfile!.repositoryList : [];
+      const next = [...existing];
+      const index = next.findIndex((item) => String(item.name || "").trim() === key);
+      if (index >= 0) {
+        next.splice(index, 1);
+      } else {
+        next.push({
+          name: String(repo.fullName || repo.name || ""),
+          description: String((repo as any).description || ""),
+          url: String((repo as any).url || ""),
+          homepage: String((repo as any).homepage || ""),
+          language: String((repo as any).language || ""),
+          stars: Number((repo as any).stars || 0),
+          forks: Number((repo as any).forks || 0),
+          topics: Array.isArray((repo as any).topics) ? (repo as any).topics : [],
+        });
+      }
+      return { ...current, manualProfile: { ...(current.manualProfile || defaultConfig.manualProfile), repositoryList: next } };
+    });
+  }
+
   function toggleRecentActivityHiddenType(type: string) {
     setConfig((current) => {
       const next = new Set(current.recentActivityHiddenTypes ?? []);
@@ -469,6 +576,196 @@ export default function GitHubAdminPage() {
           <label className="inline-flex items-center gap-2 text-sm text-admin-text pt-7">
             <input type="checkbox" checked={config.recentActivityEnabled} onChange={(e) => updateConfig({ recentActivityEnabled: e.target.checked })} />
             Enable recent activity
+          </label>
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-admin-border bg-admin-card p-6 space-y-4">
+        <h3 className="text-lg font-semibold text-admin-text">Homepage Visibility</h3>
+        <p className="text-sm text-admin-text-muted">Choose whether the homepage reads from live GitHub or from manual CMS values.</p>
+        <div className="grid gap-3 md:grid-cols-2">
+          <label className="block text-sm text-admin-text md:col-span-2">
+            <span className="mb-1 block font-medium">GitHub content mode</span>
+            <select
+              className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+              value={config.useLiveGitHubAPI ? "live" : "manual"}
+              onChange={(e) => updateConfig({ useLiveGitHubAPI: e.target.value === "live" })}
+            >
+              <option value="live">Use Live GitHub API</option>
+              <option value="manual">Use Manual CMS Data</option>
+            </select>
+          </label>
+          {[
+            ["showProfileHeader", "Show profile header"],
+            ["showAvatar", "Show avatar"],
+            ["showBio", "Show bio"],
+            ["showStats", "Show stats"],
+            ["showLanguageBreakdown", "Show language breakdown"],
+            ["showContributionCalendar", "Show contribution calendar"],
+            ["showInsights", "Show insights"],
+            ["showActivityTimeline", "Show activity timeline"],
+            ["showRepositoryCards", "Show repository cards"],
+            ["showPrivateRepos", "Show private repos"],
+            ["showPrivateCommits", "Show private commits"],
+            ["showCacheDebugDetails", "Show cache/debug details"],
+            ["showViewGitHubButton", "Show View GitHub button"],
+            ["showViewMoreButton", "Show View More button"],
+            ["showLiveDemoButton", "Show Live Demo buttons"],
+            ["showViewRepositoryButton", "Show View Repository buttons"],
+          ].map(([key, label]) => (
+            <label key={key} className="inline-flex items-center gap-2 text-sm text-admin-text">
+              <input type="checkbox" checked={(config as any)[key]} onChange={(e) => updateConfig({ [key]: e.target.checked } as Partial<GitHubConfig>)} />
+              {label}
+            </label>
+          ))}
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-admin-border bg-admin-card p-6 space-y-4">
+        <h3 className="text-lg font-semibold text-admin-text">Manual CMS Data</h3>
+        <p className="text-sm text-admin-text-muted">These values are used only when GitHub content mode is set to Manual CMS Data.</p>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          {[
+            ["username", "GitHub Username", "text"],
+            ["avatarUrl", "Avatar URL", "text"],
+            ["profileUrl", "Profile URL", "text"],
+            ["publicRepositories", "Repositories Count", "number"],
+            ["stars", "Stars", "number"],
+            ["forks", "Forks", "number"],
+            ["followers", "Followers", "number"],
+            ["following", "Following", "number"],
+            ["totalCommits", "Total Commits", "number"],
+          ].map(([key, label, type]) => (
+            <label key={key} className="block text-sm text-admin-text">
+              <span className="mb-1 block font-medium">{label}</span>
+              <input
+                type={type}
+                value={String((config.manualProfile as any)?.[key] ?? "")}
+                onChange={(e) =>
+                  updateConfig({
+                    manualProfile: {
+                      ...(config.manualProfile || defaultConfig.manualProfile),
+                      [key]: type === "number" ? Number(e.target.value) || 0 : e.target.value,
+                    },
+                  })
+                }
+                className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+              />
+            </label>
+          ))}
+          <label className="block text-sm text-admin-text md:col-span-2">
+            <span className="mb-1 block font-medium">Bio</span>
+            <textarea
+              value={config.manualProfile?.bio || ""}
+              onChange={(e) => updateConfig({ manualProfile: { ...(config.manualProfile || defaultConfig.manualProfile), bio: e.target.value } })}
+              className="min-h-[96px] w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+            />
+          </label>
+          <div className="md:col-span-2 rounded-xl border border-admin-border bg-admin-input/40 p-4 space-y-3">
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <p className="font-medium text-admin-text">Repository List</p>
+                <p className="text-xs text-admin-text-muted">Select repositories for manual mode. You can keep all of them checked.</p>
+              </div>
+              <div className="flex flex-wrap gap-2">
+                <button
+                  type="button"
+                  className="rounded-full border border-admin-border px-3 py-1 text-sm"
+                  onClick={() =>
+                    updateConfig({
+                      manualProfile: {
+                        ...(config.manualProfile || defaultConfig.manualProfile),
+                        repositoryList: repoList.map((repo) => ({
+                          name: String(repo.fullName || repo.name || ""),
+                          description: String((repo as any).description || ""),
+                          url: String((repo as any).url || ""),
+                          homepage: String((repo as any).homepage || ""),
+                          language: String((repo as any).language || ""),
+                          stars: Number((repo as any).stars || 0),
+                          forks: Number((repo as any).forks || 0),
+                          topics: Array.isArray((repo as any).topics) ? (repo as any).topics : [],
+                        })),
+                      },
+                    })
+                  }
+                >
+                  Select all
+                </button>
+                <button
+                  type="button"
+                  className="rounded-full border border-admin-border px-3 py-1 text-sm"
+                  onClick={() => updateConfig({ manualProfile: { ...(config.manualProfile || defaultConfig.manualProfile), repositoryList: [] } })}
+                >
+                  Clear
+                </button>
+              </div>
+            </div>
+            <div className="grid gap-2 md:grid-cols-2">
+              {repoList.map((repo) => {
+                const key = repo.fullName || repo.name;
+                const checked = manualRepoSet.has(key) || Boolean((repo as any).selected);
+                return (
+                  <label key={`manual-${key}`} className="flex items-center gap-3 rounded-xl border border-admin-border bg-white px-3 py-2 text-sm text-admin-text">
+                    <input type="checkbox" checked={checked} onChange={() => toggleManualRepository(repo)} />
+                    <span className="flex-1 truncate">{repo.name}</span>
+                    <Badge>{repo.private ? "Private" : "Public"}</Badge>
+                  </label>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section className="rounded-2xl border border-admin-border bg-admin-card p-6 space-y-4">
+        <h3 className="text-lg font-semibold text-admin-text">Homepage Repository Controls</h3>
+        <div className="grid gap-4 md:grid-cols-2">
+          <label className="block text-sm">
+            <span className="mb-1 block font-medium">Homepage repo limit</span>
+            <input type="number" min={1} value={config.repositoryCardsLimit} onChange={(e) => updateConfig({ repositoryCardsLimit: Number(e.target.value) || 3 })} className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text" />
+          </label>
+          <label className="block text-sm">
+            <span className="mb-1 block font-medium">Repository sort</span>
+            <select value={config.repositoryCardsSort} onChange={(e) => updateConfig({ repositoryCardsSort: e.target.value as GitHubConfig["repositoryCardsSort"] })} className="w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text">
+              <option value="stars">Stars</option>
+              <option value="updated">Updated</option>
+              <option value="name">Name</option>
+              <option value="manual">Manual</option>
+            </select>
+          </label>
+          <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+            <input type="checkbox" checked={config.repositorySelectionMode === "selected"} onChange={(e) => updateConfig({ repositorySelectionMode: e.target.checked ? "selected" : "all" })} />
+            Show only selected repos
+          </label>
+          <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+            <input type="checkbox" checked={config.repositoryCardsHidePrivate} onChange={(e) => updateConfig({ repositoryCardsHidePrivate: e.target.checked })} />
+            Hide private repos
+          </label>
+          <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+            <input type="checkbox" checked={config.repositoryCardsHideArchived} onChange={(e) => updateConfig({ repositoryCardsHideArchived: e.target.checked })} />
+            Hide archived repos
+          </label>
+          <label className="inline-flex items-center gap-2 text-sm text-admin-text">
+            <input type="checkbox" checked={config.repositoryCardsHideForked} onChange={(e) => updateConfig({ repositoryCardsHideForked: e.target.checked })} />
+            Hide forked repos
+          </label>
+          <label className="block text-sm md:col-span-2">
+            <span className="mb-1 block font-medium">Manual selected repos</span>
+            <textarea
+              value={config.repositoryCardsSelectedRepositories.join("\n")}
+              onChange={(e) => updateConfig({ repositoryCardsSelectedRepositories: parseList(e.target.value) })}
+              className="min-h-[120px] w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+              placeholder="owner/repo"
+            />
+          </label>
+          <label className="block text-sm md:col-span-2">
+            <span className="mb-1 block font-medium">Manual repo order</span>
+            <textarea
+              value={config.repositoryCardsManualOrder.join("\n")}
+              onChange={(e) => updateConfig({ repositoryCardsManualOrder: parseList(e.target.value) })}
+              className="min-h-[120px] w-full rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
+              placeholder="owner/repo"
+            />
           </label>
         </div>
       </section>
