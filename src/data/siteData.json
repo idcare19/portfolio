@@ -269,7 +269,10 @@
     "Deployment",
     "Vercel",
     "Database",
-    "Render"
+    "Render",
+    "Flutter",
+    "Railway",
+    "Docker"
   ],
   "learningPhase": [
     "App Security",
@@ -542,7 +545,7 @@
       "level": 90,
       "order": 1,
       "title": "HTML",
-      "iconKey": "html",
+      "iconKey": "html5",
       "iconUrl": "",
       "featured": false
     },
@@ -553,9 +556,9 @@
       "icon": "css",
       "level": 88,
       "order": 2,
+      "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
       "title": "CSS",
       "iconKey": "css",
-      "iconUrl": "",
       "featured": false
     },
     {
@@ -589,8 +592,8 @@
       "icon": "tailwind",
       "level": 86,
       "order": 5,
-      "title": "Tailwind CSS",
       "iconKey": "tailwindcss",
+      "title": "Tailwind CSS",
       "iconUrl": "",
       "featured": false
     },
@@ -601,8 +604,8 @@
       "icon": "next",
       "level": 82,
       "order": 6,
-      "title": "Next.js",
       "iconKey": "nextjs",
+      "title": "Next.js",
       "iconUrl": "",
       "featured": false
     },
@@ -625,8 +628,8 @@
       "icon": "database",
       "level": 78,
       "order": 8,
-      "title": "MySQL",
       "iconKey": "mysql",
+      "title": "MySQL",
       "iconUrl": "",
       "featured": false
     },
@@ -663,8 +666,8 @@
       "icon": "server",
       "level": 76,
       "order": 9,
-      "title": "Laravel",
       "iconKey": "laravel",
+      "title": "Laravel",
       "iconUrl": "",
       "featured": false
     },
@@ -675,8 +678,8 @@
       "icon": "server",
       "level": 82,
       "order": 10,
-      "title": "PHP",
       "iconKey": "php",
+      "title": "PHP",
       "iconUrl": "",
       "featured": false
     },
@@ -700,8 +703,8 @@
       "icon": "database",
       "level": 75,
       "order": 12,
-      "title": "Appwrite",
       "iconKey": "appwrite",
+      "title": "Appwrite",
       "iconUrl": "",
       "featured": false
     },
@@ -712,9 +715,9 @@
       "icon": "layout",
       "level": 78,
       "order": 13,
+      "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg",
       "title": "WordPress",
       "iconKey": "wordpress",
-      "iconUrl": "",
       "featured": false
     },
     {
@@ -724,8 +727,8 @@
       "icon": "git-branch",
       "level": 84,
       "order": 14,
-      "title": "Git",
       "iconKey": "git",
+      "title": "Git",
       "iconUrl": "",
       "featured": false
     },
@@ -736,8 +739,8 @@
       "icon": "github",
       "level": 86,
       "order": 15,
-      "title": "GitHub",
       "iconKey": "github-tech",
+      "title": "GitHub",
       "iconUrl": "",
       "featured": false
     },
@@ -801,6 +804,48 @@
       "iconKey": "render",
       "iconUrl": "",
       "featured": false
+    },
+    {
+      "id": "skill-1783424734558",
+      "title": "Flutter",
+      "name": "Flutter",
+      "category": "App Development",
+      "icon": "",
+      "iconKey": "flutter",
+      "iconUrl": "",
+      "iconColor": "",
+      "featured": false,
+      "level": 0,
+      "isEnabled": true,
+      "order": 1
+    },
+    {
+      "id": "skill-1783424795392",
+      "title": "Railway",
+      "name": "Railway",
+      "category": "DevOps",
+      "icon": "",
+      "iconKey": "railway",
+      "iconUrl": "",
+      "iconColor": "",
+      "featured": false,
+      "level": 0,
+      "isEnabled": true,
+      "order": 1
+    },
+    {
+      "id": "skill-1783424795392-copy-1783424905709",
+      "title": "Docker",
+      "name": "Docker",
+      "category": "DevOps",
+      "icon": "",
+      "iconKey": "docker",
+      "iconUrl": "",
+      "iconColor": "",
+      "featured": false,
+      "level": 0,
+      "isEnabled": true,
+      "order": 1
     }
   ],
   "projectsDetailed": [
@@ -969,7 +1014,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6a4ce45fccacd56ea26d874c",
+      "id": "6a4ce587c16bf9a77bf73da6",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -988,17 +1033,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-07-07T11:34:47.238Z",
+      "publishedAt": "2026-07-07T11:39:42.875Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Jul 07 2026 11:34:55 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-07T11:34:47.238Z",
+      "createdAt": "Tue Jul 07 2026 11:39:51 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T11:39:42.875Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6a4ce45fccacd56ea26d874d",
+      "id": "6a4ce587c16bf9a77bf73da7",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1017,17 +1062,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-07-07T11:34:47.238Z",
+      "publishedAt": "2026-07-07T11:39:42.875Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Jul 07 2026 11:34:55 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-07T11:34:47.238Z",
+      "createdAt": "Tue Jul 07 2026 11:39:51 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T11:39:42.875Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6a4ce45fccacd56ea26d874e",
+      "id": "6a4ce587c16bf9a77bf73da8",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1046,12 +1091,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-07-07T11:34:47.238Z",
+      "publishedAt": "2026-07-07T11:39:42.875Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Jul 07 2026 11:34:55 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-07T11:34:47.238Z",
+      "createdAt": "Tue Jul 07 2026 11:39:51 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T11:39:42.875Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1097,8 +1142,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-07-07T11:39:42.875Z",
-      "lastGitHubSync": "2026-07-07T11:39:47.238Z"
+      "lastMongoUpdate": "2026-07-07T11:49:36.409Z",
+      "lastGitHubSync": "2026-07-07T11:49:40.798Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1580,7 +1625,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-07-07T11:39:42.875Z",
+  "updatedAt": "2026-07-07T11:49:36.409Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -1710,7 +1755,8 @@
           "icon": "html",
           "level": 90,
           "order": 1,
-          "title": "HTML"
+          "title": "HTML",
+          "iconKey": "html5"
         },
         {
           "id": "skill-2",
@@ -1718,7 +1764,8 @@
           "category": "Frontend",
           "icon": "css",
           "level": 88,
-          "order": 2
+          "order": 2,
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
         },
         {
           "id": "skill-3",
@@ -1742,7 +1789,8 @@
           "category": "Frontend",
           "icon": "tailwind",
           "level": 86,
-          "order": 5
+          "order": 5,
+          "iconKey": "tailwindcss"
         },
         {
           "id": "skill-6",
@@ -1750,7 +1798,8 @@
           "category": "Frontend",
           "icon": "next",
           "level": 82,
-          "order": 6
+          "order": 6,
+          "iconKey": "nextjs"
         },
         {
           "id": "skill-7",
@@ -1766,7 +1815,8 @@
           "category": "Database",
           "icon": "database",
           "level": 78,
-          "order": 8
+          "order": 8,
+          "iconKey": "mysql"
         },
         {
           "id": "skill-1783232589042",
@@ -1794,7 +1844,8 @@
           "category": "Backend",
           "icon": "server",
           "level": 76,
-          "order": 9
+          "order": 9,
+          "iconKey": "laravel"
         },
         {
           "id": "skill-10",
@@ -1802,7 +1853,8 @@
           "category": "Backend",
           "icon": "server",
           "level": 82,
-          "order": 10
+          "order": 10,
+          "iconKey": "php"
         },
         {
           "id": "skill-1783180751537-copy-1783182340105",
@@ -1821,7 +1873,8 @@
           "category": "Backend",
           "icon": "database",
           "level": 75,
-          "order": 12
+          "order": 12,
+          "iconKey": "appwrite"
         },
         {
           "id": "skill-12",
@@ -1829,7 +1882,8 @@
           "category": "CMS",
           "icon": "layout",
           "level": 78,
-          "order": 13
+          "order": 13,
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg"
         },
         {
           "id": "skill-13",
@@ -1837,7 +1891,8 @@
           "category": "Tools",
           "icon": "git-branch",
           "level": 84,
-          "order": 14
+          "order": 14,
+          "iconKey": "git"
         },
         {
           "id": "skill-14",
@@ -1845,7 +1900,8 @@
           "category": "Tools",
           "icon": "github",
           "level": 86,
-          "order": 15
+          "order": 15,
+          "iconKey": "github-tech"
         },
         {
           "id": "skill-15",
@@ -1885,6 +1941,48 @@
           "name": "",
           "category": "DevOps",
           "icon": "",
+          "level": 0,
+          "isEnabled": true,
+          "order": 1
+        },
+        {
+          "id": "skill-1783424734558",
+          "title": "Flutter",
+          "name": "",
+          "category": "App Development",
+          "icon": "",
+          "iconKey": "",
+          "iconUrl": "",
+          "iconColor": "",
+          "featured": false,
+          "level": 0,
+          "isEnabled": true,
+          "order": 1
+        },
+        {
+          "id": "skill-1783424795392",
+          "title": "Railway",
+          "name": "",
+          "category": "DevOps",
+          "icon": "",
+          "iconKey": "",
+          "iconUrl": "",
+          "iconColor": "",
+          "featured": false,
+          "level": 0,
+          "isEnabled": true,
+          "order": 1
+        },
+        {
+          "id": "skill-1783424795392-copy-1783424905709",
+          "title": "Docker",
+          "name": "",
+          "category": "DevOps",
+          "icon": "",
+          "iconKey": "",
+          "iconUrl": "",
+          "iconColor": "",
+          "featured": false,
           "level": 0,
           "isEnabled": true,
           "order": 1
