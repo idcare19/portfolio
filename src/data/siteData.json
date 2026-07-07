@@ -16,85 +16,209 @@
   },
   "nav": [
     {
-      "label": "Skills",
+      "label": "about",
+      "href": "#about"
+    },
+    {
+      "label": "skills",
       "href": "#skills"
     },
     {
-      "label": "Projects",
+      "label": "projects",
       "href": "#projects"
     },
     {
-      "label": "Blogs",
-      "href": "#blogs"
-    },
-    {
-      "label": "Reviews",
+      "label": "reviews",
       "href": "#reviews"
     },
     {
-      "label": "Github",
+      "label": "github",
       "href": "#github"
     },
     {
-      "label": "Contact",
+      "label": "contact",
       "href": "#contact"
     }
   ],
   "sectionControls": [
     {
+      "id": "hero",
+      "label": "hero",
+      "order": 1,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": true,
+      "locked": false,
+      "deleted": false
+    },
+    {
       "id": "about",
-      "label": "About",
+      "label": "about",
+      "order": 2,
       "visible": true,
       "showInNav": true,
+      "showOnHomepage": true,
+      "locked": false,
+      "deleted": false
+    },
+    {
+      "id": "achievements",
+      "label": "achievements",
+      "order": 3,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": true,
+      "locked": false,
       "deleted": false
     },
     {
       "id": "skills",
-      "label": "Skills",
+      "label": "skills",
+      "order": 4,
       "visible": true,
       "showInNav": true,
+      "showOnHomepage": true,
+      "locked": false,
+      "deleted": false
+    },
+    {
+      "id": "certificates",
+      "label": "certificates",
+      "order": 5,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": true,
+      "locked": false,
+      "deleted": false
+    },
+    {
+      "id": "services",
+      "label": "services",
+      "order": 6,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": true,
+      "locked": false,
       "deleted": false
     },
     {
       "id": "projects",
-      "label": "Projects",
+      "label": "projects",
+      "order": 7,
       "visible": true,
       "showInNav": true,
+      "showOnHomepage": true,
+      "locked": false,
       "deleted": false
     },
     {
       "id": "working",
-      "label": "Working",
+      "label": "working",
+      "order": 8,
       "visible": true,
       "showInNav": false,
+      "showOnHomepage": true,
+      "locked": false,
       "deleted": false
     },
     {
       "id": "completed",
-      "label": "Worked On",
+      "label": "completed",
+      "order": 9,
       "visible": true,
-      "showInNav": true,
+      "showInNav": false,
+      "showOnHomepage": true,
+      "locked": false,
+      "deleted": false
+    },
+    {
+      "id": "companies",
+      "label": "companies",
+      "order": 10,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": true,
+      "locked": false,
       "deleted": false
     },
     {
       "id": "reviews",
-      "label": "Reviews",
+      "label": "reviews",
+      "order": 11,
       "visible": true,
       "showInNav": true,
+      "showOnHomepage": true,
+      "locked": false,
       "deleted": false
     },
     {
       "id": "journey",
-      "label": "Experience",
+      "label": "journey",
+      "order": 12,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": false,
+      "locked": false,
+      "deleted": false
+    },
+    {
+      "id": "education",
+      "label": "education",
+      "order": 13,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": false,
+      "locked": false,
+      "deleted": false
+    },
+    {
+      "id": "faq",
+      "label": "faq",
+      "order": 15,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": true,
+      "locked": false,
+      "deleted": false
+    },
+    {
+      "id": "footer",
+      "label": "footer",
+      "order": 16,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": false,
+      "locked": false,
+      "deleted": false
+    },
+    {
+      "id": "github",
+      "label": "github",
+      "order": 17,
       "visible": true,
       "showInNav": true,
+      "showOnHomepage": true,
+      "locked": false,
+      "deleted": false
+    },
+    {
+      "id": "open-source",
+      "label": "open-source",
+      "order": 18,
+      "visible": true,
+      "showInNav": false,
+      "showOnHomepage": false,
+      "locked": false,
       "deleted": false
     },
     {
       "id": "contact",
-      "label": "Contact",
+      "label": "contact",
+      "order": 19,
       "visible": true,
       "showInNav": true,
+      "showOnHomepage": true,
+      "locked": false,
       "deleted": false
     }
   ],
@@ -111,15 +235,15 @@
     "stats": [
       {
         "label": "Projects Completed",
-        "value": "16+"
+        "value": "20+"
       },
       {
         "label": "Technologies Learned",
-        "value": "7+"
+        "value": "10+"
       },
       {
         "label": "Months of Learning",
-        "value": "8+"
+        "value": "12+"
       }
     ]
   },
@@ -132,8 +256,11 @@
     "Next.js",
     "React.js",
     "MySQL",
+    "PostgreSQL",
+    "Mongodb",
     "Laravel",
     "PHP",
+    "Django",
     "Appwrite",
     "WordPress",
     "Git",
@@ -142,7 +269,7 @@
     "Deployment",
     "Vercel",
     "Database",
-    ""
+    "Render"
   ],
   "learningPhase": [
     "App Security",
@@ -153,7 +280,7 @@
     {
       "title": "VisionSuite AI",
       "description": "AI-powered face recognition attendance and real-time object detection platform.",
-      "image": "",
+      "image": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783355742/portfolio/pvuwx7zadqkoxrwknqdh.png",
       "tech": [
         "Next.js",
         "FastApi",
@@ -171,7 +298,7 @@
     {
       "title": "SmartQueue AI",
       "description": "SmartQueue AI is a modern queue management platform that enables organizations to eliminate long waiting lines through QR check-ins, live token tracking, AI-powered wait-time prediction, real-time dashboards, and automated notifications.",
-      "image": "",
+      "image": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783356126/portfolio/bgozpteqqnnietfxwg5j.png",
       "tech": [
         "Next.js",
         "Django",
@@ -207,28 +334,102 @@
       "timeline": "21/04/2026",
       "role": "Frontend Developer (Performance Optimization)",
       "link": "Https://dhawantravel.com",
-      "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop."
+      "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
+      "id": "completed-1",
+      "shortDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
+      "longDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
+      "liveDemoUrl": "Https://dhawantravel.com",
+      "myRole": "Frontend Developer (Performance Optimization)",
+      "category": "Completed",
+      "status": "Completed",
+      "projectType": "Completed Project",
+      "isEnabled": true,
+      "confidentialProject": false,
+      "slug": "website-speed-optimization-performance-enhancement"
     },
     {
       "title": "Guruji Taxi – API Integration & Frontend Fixes (Internship",
       "timeline": "20/04/2026",
       "role": "Frontend Developer Intern",
       "link": "Https://gurujitaxi.com",
-      "workDone": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements."
+      "workDone": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
+      "id": "completed-2",
+      "shortDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
+      "longDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
+      "liveDemoUrl": "Https://gurujitaxi.com",
+      "myRole": "Frontend Developer Intern",
+      "category": "Completed",
+      "status": "Completed",
+      "projectType": "Completed Project",
+      "isEnabled": true
     },
     {
       "title": "Sania Enterprises – API Integration & Frontend Fixes (Internship)",
       "timeline": "19/04/2026",
       "role": "Frontend Developer Intern",
       "link": "Https://Saniaenterprises.in",
-      "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering."
+      "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
+      "id": "completed-3",
+      "shortDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
+      "longDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
+      "liveDemoUrl": "Https://Saniaenterprises.in",
+      "myRole": "Frontend Developer Intern",
+      "category": "Completed",
+      "status": "Completed",
+      "projectType": "Completed Project",
+      "isEnabled": true
     },
     {
       "title": "Medical Seva – Static Website Development (Internship)",
       "timeline": "23/04/2026",
       "role": "Frontend Developer Intern",
       "link": "https://medicalseva.in/",
-      "workDone": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation."
+      "workDone": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+      "id": "completed-4",
+      "shortDescription": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+      "longDescription": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+      "liveDemoUrl": "https://medicalseva.in/",
+      "myRole": "Frontend Developer Intern",
+      "category": "Completed",
+      "status": "Completed",
+      "projectType": "Completed Project",
+      "isEnabled": true
+    },
+    {
+      "title": "Prodonto – AI Dental Healthcare Platform",
+      "timeline": "Internship Project",
+      "role": "Frontend Developer • API Integration • Dashboard Development",
+      "link": "",
+      "workDone": "Contributed to a production-grade dental healthcare platform during my internship by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
+      "isEnabled": true,
+      "order": 5,
+      "status": "Completed",
+      "category": "Healthcare SaaS",
+      "featured": true,
+      "id": "completed-5",
+      "shortDescription": "Contributed to a production-grade dental healthcare platform during my internship by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
+      "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows. During my internship, I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
+      "liveDemoUrl": "",
+      "myRole": "Frontend Developer • API Integration • Dashboard Development",
+      "projectType": "Internship",
+      "slug": "prodonto-ai-dental-healthcare-platform",
+      "confidentialProject": true,
+      "subtitle": "Production healthcare platform built during internship",
+      "featuredBadge": "Internship Project",
+      "tags": [
+        "Healthcare",
+        "SaaS",
+        "Internship",
+        "Frontend",
+        "API Integration"
+      ],
+      "fullDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows. During my internship, I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
+      "company": "Parvati and Sons",
+      "teamSize": "Collaborative team",
+      "duration": "Internship Project",
+      "startDate": "May 2026",
+      "endDate": "July 2026",
+      "techStack": []
     }
   ],
   "reviews": [
@@ -338,136 +539,267 @@
       "name": "HTML",
       "category": "Frontend",
       "icon": "html",
-      "level": 90
+      "level": 90,
+      "order": 1,
+      "title": "HTML",
+      "iconKey": "html",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-2",
       "name": "CSS",
       "category": "Frontend",
       "icon": "css",
-      "level": 88
+      "level": 88,
+      "order": 2,
+      "title": "CSS",
+      "iconKey": "css",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-3",
       "name": "JavaScript",
       "category": "Frontend",
       "icon": "javascript",
-      "level": 84
+      "level": 84,
+      "order": 3,
+      "title": "JavaScript",
+      "iconKey": "javascript",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-4",
       "name": "Bootstrap",
       "category": "Frontend",
       "icon": "bootstrap",
-      "level": 85
+      "level": 85,
+      "order": 4,
+      "title": "Bootstrap",
+      "iconKey": "bootstrap",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-5",
       "name": "Tailwind CSS",
       "category": "Frontend",
       "icon": "tailwind",
-      "level": 86
+      "level": 86,
+      "order": 5,
+      "title": "Tailwind CSS",
+      "iconKey": "tailwindcss",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-6",
       "name": "Next.js",
       "category": "Frontend",
       "icon": "next",
-      "level": 82
+      "level": 82,
+      "order": 6,
+      "title": "Next.js",
+      "iconKey": "nextjs",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-7",
       "name": "React.js",
       "category": "Frontend",
       "icon": "react",
-      "level": 80
+      "level": 80,
+      "order": 7,
+      "title": "React.js",
+      "iconKey": "reactjs",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-8",
       "name": "MySQL",
       "category": "Database",
       "icon": "database",
-      "level": 78
+      "level": 78,
+      "order": 8,
+      "title": "MySQL",
+      "iconKey": "mysql",
+      "iconUrl": "",
+      "featured": false
+    },
+    {
+      "id": "skill-1783232589042",
+      "title": "PostgreSQL",
+      "name": "PostgreSQL",
+      "category": "Database",
+      "icon": "",
+      "level": 0,
+      "isEnabled": true,
+      "order": 21,
+      "iconKey": "postgresql",
+      "iconUrl": "",
+      "featured": false
+    },
+    {
+      "id": "skill-1783232589547",
+      "title": "Mongodb",
+      "name": "Mongodb",
+      "category": "Database",
+      "icon": "",
+      "level": 0,
+      "isEnabled": true,
+      "order": 19,
+      "iconKey": "mongodb",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-9",
       "name": "Laravel",
       "category": "Backend",
       "icon": "server",
-      "level": 76
+      "level": 76,
+      "order": 9,
+      "title": "Laravel",
+      "iconKey": "laravel",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-10",
       "name": "PHP",
       "category": "Backend",
       "icon": "server",
-      "level": 82
+      "level": 82,
+      "order": 10,
+      "title": "PHP",
+      "iconKey": "php",
+      "iconUrl": "",
+      "featured": false
+    },
+    {
+      "id": "skill-1783180751537-copy-1783182340105",
+      "name": "Django",
+      "category": "Backend",
+      "icon": "",
+      "level": 0,
+      "isEnabled": true,
+      "order": 11,
+      "title": "Django",
+      "featured": false,
+      "iconKey": "django",
+      "iconUrl": ""
     },
     {
       "id": "skill-11",
       "name": "Appwrite",
       "category": "Backend",
       "icon": "database",
-      "level": 75
+      "level": 75,
+      "order": 12,
+      "title": "Appwrite",
+      "iconKey": "appwrite",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-12",
       "name": "WordPress",
       "category": "CMS",
       "icon": "layout",
-      "level": 78
+      "level": 78,
+      "order": 13,
+      "title": "WordPress",
+      "iconKey": "wordpress",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-13",
       "name": "Git",
       "category": "Tools",
       "icon": "git-branch",
-      "level": 84
+      "level": 84,
+      "order": 14,
+      "title": "Git",
+      "iconKey": "git",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-14",
       "name": "GitHub",
       "category": "Tools",
       "icon": "github",
-      "level": 86
+      "level": 86,
+      "order": 15,
+      "title": "GitHub",
+      "iconKey": "github-tech",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-15",
       "name": "Testing",
       "category": "Quality",
       "icon": "check-circle",
-      "level": 72
+      "level": 72,
+      "order": 16,
+      "title": "Testing",
+      "iconKey": "testing",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-16",
       "name": "Deployment",
       "category": "DevOps",
       "icon": "rocket",
-      "level": 80
+      "level": 80,
+      "order": 17,
+      "title": "Deployment",
+      "iconKey": "deployment",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-17",
       "name": "Vercel",
       "category": "DevOps",
       "icon": "vercel",
-      "level": 78
+      "level": 78,
+      "order": 18,
+      "title": "Vercel",
+      "iconKey": "vercel",
+      "iconUrl": "",
+      "featured": false
     },
     {
       "id": "skill-18",
       "name": "Database",
       "category": "Database",
       "icon": "database",
-      "level": 76
+      "level": 76,
+      "order": 20,
+      "title": "Database",
+      "iconKey": "database",
+      "iconUrl": "",
+      "featured": false
     },
     {
-      "id": "skill-1782843349605",
-      "name": "",
-      "category": "Backend",
+      "id": "skill-1783232662510",
+      "title": "Render",
+      "name": "Render",
+      "category": "DevOps",
       "icon": "",
       "level": 0,
       "isEnabled": true,
       "order": 1,
-      "title": "Django",
+      "iconKey": "render",
+      "iconUrl": "",
       "featured": false
     }
   ],
@@ -490,9 +822,9 @@
       ],
       "category": "Ai SaaS",
       "status": "Live",
-      "image": "",
-      "thumbnail": "",
-      "banner": "",
+      "image": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783355742/portfolio/pvuwx7zadqkoxrwknqdh.png",
+      "thumbnail": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783355742/portfolio/pvuwx7zadqkoxrwknqdh.png",
+      "banner": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783355742/portfolio/pvuwx7zadqkoxrwknqdh.png",
       "galleryImages": [],
       "liveDemoUrl": "",
       "githubUrl": "https://github.com/idcare19/VisionSuite-AI",
@@ -559,10 +891,10 @@
       "category": "SaaS",
       "status": "In progress",
       "projectType": "Personal",
-      "image": "",
-      "thumbnail": "",
+      "image": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783356126/portfolio/bgozpteqqnnietfxwg5j.png",
+      "thumbnail": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783356126/portfolio/bgozpteqqnnietfxwg5j.png",
       "coverImage": "",
-      "banner": "",
+      "banner": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783356126/portfolio/bgozpteqqnnietfxwg5j.png",
       "galleryImages": [],
       "uiScreenshots": [],
       "demoVideoUrl": "",
@@ -637,12 +969,13 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "how-to-build-a-portfolio-that-converts",
+      "id": "6a4cbaaff70d32e11a5615ec",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
       "content": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients...",
       "coverImage": "",
+      "author": "",
       "tags": [
         "portfolio",
         "web development",
@@ -651,19 +984,27 @@
       "category": "General",
       "status": "published",
       "isFeatured": false,
+      "published": true,
+      "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-07-04T12:50:11.139Z",
+      "publishedAt": "2026-07-07T08:36:57.265Z",
       "order": 1,
-      "isEnabled": true
+      "readingTimeMinutes": 1,
+      "relatedSlugs": [],
+      "createdAt": "Tue Jul 07 2026 08:37:03 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T08:36:57.265Z",
+      "scheduledFor": "",
+      "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "10-tips-for-frontend-developers",
+      "id": "6a4cbaaff70d32e11a5615ed",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
       "content": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code...",
       "coverImage": "",
+      "author": "",
       "tags": [
         "frontend",
         "tips",
@@ -672,19 +1013,27 @@
       "category": "General",
       "status": "published",
       "isFeatured": false,
+      "published": true,
+      "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-07-04T12:50:11.139Z",
+      "publishedAt": "2026-07-07T08:36:57.265Z",
       "order": 2,
-      "isEnabled": true
+      "readingTimeMinutes": 1,
+      "relatedSlugs": [],
+      "createdAt": "Tue Jul 07 2026 08:37:03 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T08:36:57.265Z",
+      "scheduledFor": "",
+      "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "mongodb-best-practices",
+      "id": "6a4cbaaff70d32e11a5615ee",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
       "content": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices...",
       "coverImage": "",
+      "author": "",
       "tags": [
         "mongodb",
         "database",
@@ -693,20 +1042,41 @@
       "category": "General",
       "status": "published",
       "isFeatured": false,
+      "published": true,
+      "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-07-04T12:50:11.139Z",
+      "publishedAt": "2026-07-07T08:36:57.265Z",
       "order": 3,
-      "isEnabled": true
+      "readingTimeMinutes": 1,
+      "relatedSlugs": [],
+      "createdAt": "Tue Jul 07 2026 08:37:03 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T08:36:57.265Z",
+      "scheduledFor": "",
+      "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
   ],
   "mediaLibrary": [
     {
-      "id": "media-1782844460159",
-      "name": "8704",
-      "url": "https://res.cloudinary.com/dxkmhw778/image/upload/v1782844459/portfolio/uwejjqranmpfvh5tzoya.jpg",
-      "type": "jpg",
-      "size": 595522
+      "id": "media-1783356126968",
+      "name": "Smartqueue",
+      "url": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783356126/portfolio/bgozpteqqnnietfxwg5j.png",
+      "type": "png",
+      "size": 1578929
+    },
+    {
+      "id": "media-1783355742572",
+      "name": "Vision ",
+      "url": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783355742/portfolio/pvuwx7zadqkoxrwknqdh.png",
+      "type": "png",
+      "size": 1556285
+    },
+    {
+      "id": "media-1783352766065",
+      "name": "certificate",
+      "url": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
+      "type": "png",
+      "size": 1835021
     }
   ],
   "websiteSettings": {
@@ -720,11 +1090,11 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-07-04T12:53:47.214Z",
-      "lastGitHubSync": "2026-07-04T12:53:50.931Z"
+      "lastMongoUpdate": "2026-07-07T11:30:45.264Z",
+      "lastGitHubSync": "2026-07-07T11:30:49.639Z"
     },
     "popupAnnouncement": {
-      "enabled": true,
+      "enabled": false,
       "title": "Updates ",
       "message": "Due to new updates you can see some blank data just ignore that for some time , But you can contact me.",
       "buttonText": "Contact",
@@ -773,6 +1143,282 @@
       "updateMessage": "New update available",
       "changelogShort": "Admin panel + Git-based CMS added",
       "showBadge": false
+    },
+    "homepageProjects": {
+      "count": 3,
+      "buttonText": "View More Projects"
+    },
+    "homepageDisplay": {
+      "services": {
+        "showOnlyFeatured": true
+      },
+      "companies": {
+        "itemsLimit": 3,
+        "showOnlyFeatured": false
+      }
+    },
+    "sectionHomepage": {
+      "services": {
+        "showOnlyFeatured": true
+      },
+      "companies": {
+        "itemsLimit": 3,
+        "showOnlyFeatured": false
+      }
+    },
+    "animations": {
+      "hero": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "On Load",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "about": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "achievements": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "skills": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "certificates": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "services": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "projects": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "working": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "completed": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "companies": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "experience": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "reviews": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "faq": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "open-source": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "blogs": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "github": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "contact": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      },
+      "footer": {
+        "enabled": true,
+        "preset": "Scale",
+        "direction": "up",
+        "duration": 0.6,
+        "delay": 0,
+        "stagger": 0.08,
+        "trigger": "While In View",
+        "once": true,
+        "mobile": true,
+        "tablet": true,
+        "desktop": true,
+        "intensity": 0.7
+      }
     }
   },
   "shell": {
@@ -808,22 +1454,88 @@
     "username": "idcare19",
     "enabled": true,
     "refreshInterval": 30,
-    "includePrivateRepos": false,
-    "includePrivateCommits": true,
+    "useLiveGitHubAPI": true,
+    "showProfileHeader": true,
+    "showAvatar": true,
+    "showBio": true,
+    "showStats": true,
+    "showLanguageBreakdown": false,
+    "showContributionCalendar": false,
+    "showInsights": false,
+    "showActivityTimeline": true,
+    "showRepositoryCards": true,
+    "showPrivateRepos": false,
+    "showPrivateCommits": false,
+    "showCacheDebugDetails": false,
+    "showViewGitHubButton": true,
+    "showViewMoreButton": true,
+    "showLiveDemoButton": true,
+    "showViewRepositoryButton": true,
+    "includePrivateRepos": true,
+    "includePrivateCommits": false,
     "showLifetimeCommits": true,
     "showPrivateReposPublicly": false,
-    "showPrivateCommitsPublicly": false,
+    "showPrivateCommitsPublicly": true,
     "publicDisplayMode": "publicOnly",
-    "commitCountMode": "selectedRepositoriesOnly",
+    "commitCountMode": "publicCommitsOnly",
     "repositorySelectionMode": "all",
-    "selectedRepositories": [
-      "linkpilot",
-      "smartqueue-ai",
-      "VisionSuite-MVP",
-      "devvault",
-      "ReqFlow-AI",
-      "vainsh"
-    ],
+    "selectedRepositories": [],
+    "repositoryCardsLimit": 3,
+    "repositoryCardsSelectedRepositories": [],
+    "repositoryCardsHideArchived": true,
+    "repositoryCardsHideForked": true,
+    "repositoryCardsHidePrivate": true,
+    "repositoryCardsSort": "updated",
+    "repositoryCardsManualOrder": [],
+    "manualProfile": {
+      "username": "",
+      "avatarUrl": "",
+      "bio": "",
+      "profileUrl": "",
+      "publicRepositories": 0,
+      "stars": 0,
+      "forks": 0,
+      "followers": 0,
+      "following": 0,
+      "totalCommits": 0,
+      "repositoryList": [
+        {
+          "name": "smartqueue-ai",
+          "description": "",
+          "url": "",
+          "homepage": "",
+          "language": "",
+          "stars": 0,
+          "forks": 0,
+          "topics": []
+        },
+        {
+          "name": "devvault",
+          "description": "",
+          "url": "",
+          "homepage": "",
+          "language": "",
+          "stars": 0,
+          "forks": 0,
+          "topics": []
+        },
+        {
+          "name": "VisionSuite-MVP",
+          "description": "",
+          "url": "",
+          "homepage": "",
+          "language": "",
+          "stars": 0,
+          "forks": 0,
+          "topics": []
+        }
+      ],
+      "pinnedRepositories": [],
+      "buttons": {
+        "viewGitHub": "",
+        "viewMore": ""
+      }
+    },
     "commitMessageIncludes": [],
     "commitMessageExcludes": [],
     "recentCommitsEnabled": true,
@@ -842,13 +1554,6 @@
     "recentActivityHiddenTypes": [],
     "recentActivityHideRepositories": [],
     "recentActivityHideKeywords": [],
-    "repositoryCardsLimit": 12,
-    "repositoryCardsSelectedRepositories": [],
-    "repositoryCardsHideArchived": false,
-    "repositoryCardsHideForked": false,
-    "repositoryCardsHidePrivate": true,
-    "repositoryCardsSort": "stars",
-    "repositoryCardsManualOrder": [],
     "showTotalCommits": true,
     "showStars": true,
     "showFollowers": true,
@@ -868,7 +1573,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-07-04T12:53:47.214Z",
+  "updatedAt": "2026-07-07T11:30:45.264Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -902,15 +1607,15 @@
         "stats": [
           {
             "label": "Projects Completed",
-            "value": "16+"
+            "value": "20+"
           },
           {
             "label": "Technologies Learned",
-            "value": "7+"
+            "value": "10+"
           },
           {
             "label": "Months of Learning",
-            "value": "8+"
+            "value": "12+"
           }
         ],
         "techStack": [
@@ -934,7 +1639,7 @@
       "layout": "default",
       "status": "published",
       "nav": {
-        "show": false,
+        "show": true,
         "href": "#about",
         "label": "about"
       },
@@ -950,15 +1655,15 @@
       "items": [
         {
           "label": "Projects Completed",
-          "value": "16+"
+          "value": "20+"
         },
         {
           "label": "Technologies Learned",
-          "value": "7+"
+          "value": "10+"
         },
         {
           "label": "Months of Learning",
-          "value": "8+"
+          "value": "12+"
         }
       ],
       "showOnHomepage": true
@@ -968,7 +1673,7 @@
       "label": "skills",
       "renderer": "skills",
       "enabled": true,
-      "order": 3,
+      "order": 4,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -996,137 +1701,186 @@
           "name": "HTML",
           "category": "Frontend",
           "icon": "html",
-          "level": 90
+          "level": 90,
+          "order": 1,
+          "title": "HTML"
         },
         {
           "id": "skill-2",
           "name": "CSS",
           "category": "Frontend",
           "icon": "css",
-          "level": 88
+          "level": 88,
+          "order": 2
         },
         {
           "id": "skill-3",
           "name": "JavaScript",
           "category": "Frontend",
           "icon": "javascript",
-          "level": 84
+          "level": 84,
+          "order": 3
         },
         {
           "id": "skill-4",
           "name": "Bootstrap",
           "category": "Frontend",
           "icon": "bootstrap",
-          "level": 85
+          "level": 85,
+          "order": 4
         },
         {
           "id": "skill-5",
           "name": "Tailwind CSS",
           "category": "Frontend",
           "icon": "tailwind",
-          "level": 86
+          "level": 86,
+          "order": 5
         },
         {
           "id": "skill-6",
           "name": "Next.js",
           "category": "Frontend",
           "icon": "next",
-          "level": 82
+          "level": 82,
+          "order": 6
         },
         {
           "id": "skill-7",
           "name": "React.js",
           "category": "Frontend",
           "icon": "react",
-          "level": 80
+          "level": 80,
+          "order": 7
         },
         {
           "id": "skill-8",
           "name": "MySQL",
           "category": "Database",
           "icon": "database",
-          "level": 78
+          "level": 78,
+          "order": 8
+        },
+        {
+          "id": "skill-1783232589042",
+          "title": "PostgreSQL",
+          "name": "",
+          "category": "Database",
+          "icon": "",
+          "level": 0,
+          "isEnabled": true,
+          "order": 21
+        },
+        {
+          "id": "skill-1783232589547",
+          "title": "Mongodb",
+          "name": "",
+          "category": "Database",
+          "icon": "",
+          "level": 0,
+          "isEnabled": true,
+          "order": 19
         },
         {
           "id": "skill-9",
           "name": "Laravel",
           "category": "Backend",
           "icon": "server",
-          "level": 76
+          "level": 76,
+          "order": 9
         },
         {
           "id": "skill-10",
           "name": "PHP",
           "category": "Backend",
           "icon": "server",
-          "level": 82
+          "level": 82,
+          "order": 10
+        },
+        {
+          "id": "skill-1783180751537-copy-1783182340105",
+          "name": "",
+          "category": "Backend",
+          "icon": "",
+          "level": 0,
+          "isEnabled": true,
+          "order": 11,
+          "title": "Django",
+          "featured": false
         },
         {
           "id": "skill-11",
           "name": "Appwrite",
           "category": "Backend",
           "icon": "database",
-          "level": 75
+          "level": 75,
+          "order": 12
         },
         {
           "id": "skill-12",
           "name": "WordPress",
           "category": "CMS",
           "icon": "layout",
-          "level": 78
+          "level": 78,
+          "order": 13
         },
         {
           "id": "skill-13",
           "name": "Git",
           "category": "Tools",
           "icon": "git-branch",
-          "level": 84
+          "level": 84,
+          "order": 14
         },
         {
           "id": "skill-14",
           "name": "GitHub",
           "category": "Tools",
           "icon": "github",
-          "level": 86
+          "level": 86,
+          "order": 15
         },
         {
           "id": "skill-15",
           "name": "Testing",
           "category": "Quality",
           "icon": "check-circle",
-          "level": 72
+          "level": 72,
+          "order": 16
         },
         {
           "id": "skill-16",
           "name": "Deployment",
           "category": "DevOps",
           "icon": "rocket",
-          "level": 80
+          "level": 80,
+          "order": 17
         },
         {
           "id": "skill-17",
           "name": "Vercel",
           "category": "DevOps",
           "icon": "vercel",
-          "level": 78
+          "level": 78,
+          "order": 18
         },
         {
           "id": "skill-18",
           "name": "Database",
           "category": "Database",
           "icon": "database",
-          "level": 76
+          "level": 76,
+          "order": 20
         },
         {
-          "id": "skill-1782843349605",
+          "id": "skill-1783232662510",
+          "title": "Render",
           "name": "",
-          "category": "Backend",
+          "category": "DevOps",
           "icon": "",
           "level": 0,
           "isEnabled": true,
-          "order": 1,
-          "title": "Django",
-          "featured": false
+          "order": 1
         }
       ],
       "showOnHomepage": true
@@ -1136,7 +1890,7 @@
       "label": "projects",
       "renderer": "projects",
       "enabled": true,
-      "order": 4,
+      "order": 7,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1150,7 +1904,9 @@
       "data": {
         "eyebrow": "Projects",
         "title": "Featured work",
-        "description": "Selected projects, client work, and production-ready builds."
+        "description": "Selected projects, client work, and production-ready builds.",
+        "homepageLimit": "6",
+        "homepageButtonText": "View More Projects"
       },
       "items": [
         {
@@ -1171,9 +1927,9 @@
           ],
           "category": "Ai SaaS",
           "status": "Live",
-          "image": "",
-          "thumbnail": "",
-          "banner": "",
+          "image": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783355742/portfolio/pvuwx7zadqkoxrwknqdh.png",
+          "thumbnail": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783355742/portfolio/pvuwx7zadqkoxrwknqdh.png",
+          "banner": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783355742/portfolio/pvuwx7zadqkoxrwknqdh.png",
           "galleryImages": [],
           "liveDemoUrl": "",
           "githubUrl": "https://github.com/idcare19/VisionSuite-AI",
@@ -1240,10 +1996,10 @@
           "category": "SaaS",
           "status": "In progress",
           "projectType": "Personal",
-          "image": "",
-          "thumbnail": "",
+          "image": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783356126/portfolio/bgozpteqqnnietfxwg5j.png",
+          "thumbnail": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783356126/portfolio/bgozpteqqnnietfxwg5j.png",
           "coverImage": "",
-          "banner": "",
+          "banner": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783356126/portfolio/bgozpteqqnnietfxwg5j.png",
           "galleryImages": [],
           "uiScreenshots": [],
           "demoVideoUrl": "",
@@ -1313,7 +2069,7 @@
       "label": "working",
       "renderer": "working",
       "enabled": true,
-      "order": 5,
+      "order": 8,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1349,7 +2105,7 @@
       "label": "completed",
       "renderer": "completed",
       "enabled": true,
-      "order": 6,
+      "order": 9,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1371,28 +2127,102 @@
           "timeline": "21/04/2026",
           "role": "Frontend Developer (Performance Optimization)",
           "link": "Https://dhawantravel.com",
-          "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop."
+          "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
+          "id": "completed-1",
+          "shortDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
+          "longDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
+          "liveDemoUrl": "Https://dhawantravel.com",
+          "myRole": "Frontend Developer (Performance Optimization)",
+          "category": "Completed",
+          "status": "Completed",
+          "projectType": "Completed Project",
+          "isEnabled": true,
+          "confidentialProject": false,
+          "slug": "website-speed-optimization-performance-enhancement"
         },
         {
           "title": "Guruji Taxi – API Integration & Frontend Fixes (Internship",
           "timeline": "20/04/2026",
           "role": "Frontend Developer Intern",
           "link": "Https://gurujitaxi.com",
-          "workDone": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements."
+          "workDone": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
+          "id": "completed-2",
+          "shortDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
+          "longDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
+          "liveDemoUrl": "Https://gurujitaxi.com",
+          "myRole": "Frontend Developer Intern",
+          "category": "Completed",
+          "status": "Completed",
+          "projectType": "Completed Project",
+          "isEnabled": true
         },
         {
           "title": "Sania Enterprises – API Integration & Frontend Fixes (Internship)",
           "timeline": "19/04/2026",
           "role": "Frontend Developer Intern",
           "link": "Https://Saniaenterprises.in",
-          "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering."
+          "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
+          "id": "completed-3",
+          "shortDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
+          "longDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
+          "liveDemoUrl": "Https://Saniaenterprises.in",
+          "myRole": "Frontend Developer Intern",
+          "category": "Completed",
+          "status": "Completed",
+          "projectType": "Completed Project",
+          "isEnabled": true
         },
         {
           "title": "Medical Seva – Static Website Development (Internship)",
           "timeline": "23/04/2026",
           "role": "Frontend Developer Intern",
           "link": "https://medicalseva.in/",
-          "workDone": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation."
+          "workDone": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+          "id": "completed-4",
+          "shortDescription": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+          "longDescription": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+          "liveDemoUrl": "https://medicalseva.in/",
+          "myRole": "Frontend Developer Intern",
+          "category": "Completed",
+          "status": "Completed",
+          "projectType": "Completed Project",
+          "isEnabled": true
+        },
+        {
+          "title": "Prodonto – AI Dental Healthcare Platform",
+          "timeline": "Internship Project",
+          "role": "Frontend Developer • API Integration • Dashboard Development",
+          "link": "",
+          "workDone": "Contributed to a production-grade dental healthcare platform during my internship by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
+          "isEnabled": true,
+          "order": 5,
+          "status": "Completed",
+          "category": "Healthcare SaaS",
+          "featured": true,
+          "id": "completed-5",
+          "shortDescription": "Contributed to a production-grade dental healthcare platform during my internship by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
+          "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows. During my internship, I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
+          "liveDemoUrl": "",
+          "myRole": "Frontend Developer • API Integration • Dashboard Development",
+          "projectType": "Internship",
+          "slug": "prodonto-ai-dental-healthcare-platform",
+          "confidentialProject": true,
+          "subtitle": "Production healthcare platform built during internship",
+          "featuredBadge": "Internship Project",
+          "tags": [
+            "Healthcare",
+            "SaaS",
+            "Internship",
+            "Frontend",
+            "API Integration"
+          ],
+          "fullDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows. During my internship, I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
+          "company": "Parvati and Sons",
+          "teamSize": "Collaborative team",
+          "duration": "Internship Project",
+          "startDate": "May 2026",
+          "endDate": "July 2026",
+          "techStack": []
         }
       ],
       "showOnHomepage": true
@@ -1402,7 +2232,7 @@
       "label": "reviews",
       "renderer": "reviews",
       "enabled": true,
-      "order": 7,
+      "order": 11,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1434,7 +2264,7 @@
       "label": "journey",
       "renderer": "journey",
       "enabled": true,
-      "order": 8,
+      "order": 12,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1475,7 +2305,7 @@
       "label": "education",
       "renderer": "education",
       "enabled": true,
-      "order": 9,
+      "order": 13,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1499,7 +2329,7 @@
       "label": "services",
       "renderer": "services",
       "enabled": true,
-      "order": 11,
+      "order": 6,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1542,7 +2372,7 @@
       "label": "contact",
       "renderer": "contact",
       "enabled": true,
-      "order": 12,
+      "order": 19,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1585,26 +2415,31 @@
       "label": "blogs",
       "renderer": "blogs",
       "enabled": true,
-      "order": 4,
+      "order": 14,
       "layout": "default",
       "status": "published",
       "nav": {
-        "show": true,
+        "show": false,
         "href": "#blogs",
         "label": "blogs"
       },
       "emptyMessage": "",
       "textBlocks": [],
       "settings": {},
-      "data": {},
+      "data": {
+        "eyebrow": "GitHub Live",
+        "title": "Live developer activity",
+        "description": "Latest repositories, commits, languages, and GitHub stats."
+      },
       "items": [
         {
-          "id": "how-to-build-a-portfolio-that-converts",
-          "title": "How to build a portfolio that converts",
+          "id": "6a4c8d3fe832477884b1e28e",
           "slug": "how-to-build-a-portfolio-that-converts",
+          "title": "How to build a portfolio that converts",
           "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
           "content": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients...",
           "coverImage": "",
+          "author": "",
           "tags": [
             "portfolio",
             "web development",
@@ -1613,19 +2448,27 @@
           "category": "General",
           "status": "published",
           "isFeatured": false,
+          "published": true,
+          "isEnabled": true,
           "seoTitle": "How to Build a Portfolio That Converts",
           "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-          "publishedAt": "2026-06-28T15:12:11.048Z",
+          "publishedAt": "2026-07-07T05:23:04.828Z",
           "order": 1,
-          "isEnabled": true
+          "readingTimeMinutes": 1,
+          "relatedSlugs": [],
+          "createdAt": "Tue Jul 07 2026 10:53:11 GMT+0530 (India Standard Time)",
+          "updatedAt": "2026-07-07T05:23:04.828Z",
+          "scheduledFor": "",
+          "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
         },
         {
-          "id": "10-tips-for-frontend-developers",
-          "title": "10 tips for frontend developers",
+          "id": "6a4c8d3fe832477884b1e28f",
           "slug": "10-tips-for-frontend-developers",
+          "title": "10 tips for frontend developers",
           "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
           "content": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code...",
           "coverImage": "",
+          "author": "",
           "tags": [
             "frontend",
             "tips",
@@ -1634,19 +2477,27 @@
           "category": "General",
           "status": "published",
           "isFeatured": false,
+          "published": true,
+          "isEnabled": true,
           "seoTitle": "10 Tips for Frontend Developers",
           "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-          "publishedAt": "2026-06-28T15:12:11.048Z",
+          "publishedAt": "2026-07-07T05:23:04.828Z",
           "order": 2,
-          "isEnabled": true
+          "readingTimeMinutes": 1,
+          "relatedSlugs": [],
+          "createdAt": "Tue Jul 07 2026 10:53:11 GMT+0530 (India Standard Time)",
+          "updatedAt": "2026-07-07T05:23:04.828Z",
+          "scheduledFor": "",
+          "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
         },
         {
-          "id": "mongodb-best-practices",
-          "title": "MongoDB best practices",
+          "id": "6a4c8d3fe832477884b1e290",
           "slug": "mongodb-best-practices",
+          "title": "MongoDB best practices",
           "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
           "content": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices...",
           "coverImage": "",
+          "author": "",
           "tags": [
             "mongodb",
             "database",
@@ -1655,21 +2506,511 @@
           "category": "General",
           "status": "published",
           "isFeatured": false,
+          "published": true,
+          "isEnabled": true,
           "seoTitle": "MongoDB Best Practices",
           "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-          "publishedAt": "2026-06-28T15:12:11.048Z",
+          "publishedAt": "2026-07-07T05:23:04.828Z",
           "order": 3,
-          "isEnabled": true
+          "readingTimeMinutes": 1,
+          "relatedSlugs": [],
+          "createdAt": "Tue Jul 07 2026 10:53:11 GMT+0530 (India Standard Time)",
+          "updatedAt": "2026-07-07T05:23:04.828Z",
+          "scheduledFor": "",
+          "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
+        }
+      ],
+      "showOnHomepage": false
+    },
+    "faq": {
+      "id": "faq",
+      "label": "faq",
+      "renderer": "faq",
+      "enabled": true,
+      "order": 15,
+      "layout": "default",
+      "status": "published",
+      "nav": {
+        "show": false,
+        "href": "#faq",
+        "label": "FAQ"
+      },
+      "emptyMessage": "",
+      "textBlocks": [],
+      "settings": {},
+      "data": {
+        "eyebrow": "FAQ",
+        "title": "Frequently Asked Questions",
+        "description": "Find answers to the most common questions about my experience, projects, services, technologies, and how we can work together."
+      },
+      "items": [
+        {
+          "question": "Are you available for freelance projects?",
+          "answer": "Yes. I am available for freelance opportunities involving full-stack web development, SaaS platforms, dashboards, API integrations, AI-powered applications, and custom business software. Feel free to reach out through the contact section to discuss your project.",
+          "category": "Availability",
+          "icon": "briefcase",
+          "tags": [
+            "freelance",
+            "hire",
+            "availability",
+            "full-stack"
+          ],
+          "order": 1,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "question": "Are you open to internships or full-time opportunities?",
+          "answer": "Yes. I am open to internships, freelance work, and full-time software engineering opportunities where I can contribute to building high-quality products while continuously learning and growing.",
+          "category": "Career",
+          "icon": "user-check",
+          "tags": [
+            "internship",
+            "career",
+            "full-time"
+          ],
+          "order": 2,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "question": "What technologies do you work with?",
+          "answer": "My primary stack includes Next.js, React, Django, Python, PostgreSQL, Tailwind CSS, JavaScript, REST APIs, Git, GitHub, Vercel, and Render.",
+          "category": "Technology",
+          "icon": "code",
+          "tags": [
+            "nextjs",
+            "react",
+            "django",
+            "python"
+          ],
+          "order": 3,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "question": "Have you worked on real client projects?",
+          "answer": "Yes. During my internship at Parvati and Sons, I contributed to multiple production-ready client projects. Some implementation details cannot be shared due to confidentiality agreements.",
+          "category": "Experience",
+          "icon": "building",
+          "tags": [
+            "client",
+            "production",
+            "internship"
+          ],
+          "order": 4,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "question": "Can I view the source code of your projects?",
+          "answer": "Personal and open-source projects are available on my GitHub profile. Client projects covered by confidentiality agreements cannot have their source code shared publicly.",
+          "category": "Projects",
+          "icon": "github",
+          "tags": [
+            "github",
+            "source-code",
+            "opensource"
+          ],
+          "order": 5,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "question": "What type of projects do you enjoy building?",
+          "answer": "I enjoy building SaaS platforms, AI-powered applications, healthcare systems, enterprise dashboards, workflow automation software, and scalable full-stack web applications.",
+          "category": "Projects",
+          "icon": "rocket",
+          "tags": [
+            "saas",
+            "ai",
+            "dashboard"
+          ],
+          "order": 6,
+          "isEnabled": true,
+          "featured": false,
+          "showOnHomepage": false,
+          "customFields": []
+        },
+        {
+          "question": "Do you build complete full-stack applications?",
+          "answer": "Yes. I build complete applications including frontend, backend APIs, authentication, databases, admin dashboards, deployment, and ongoing maintenance.",
+          "category": "Services",
+          "icon": "layers",
+          "tags": [
+            "full-stack",
+            "frontend",
+            "backend"
+          ],
+          "order": 7,
+          "isEnabled": true,
+          "featured": false,
+          "showOnHomepage": false,
+          "customFields": []
+        },
+        {
+          "question": "Can you work remotely with international clients?",
+          "answer": "Yes. I am comfortable collaborating remotely with clients and distributed teams using GitHub and modern development workflows.",
+          "category": "Availability",
+          "icon": "globe",
+          "tags": [
+            "remote",
+            "international"
+          ],
+          "order": 8,
+          "isEnabled": true,
+          "featured": false,
+          "showOnHomepage": false,
+          "customFields": []
+        },
+        {
+          "question": "How do you approach a new project?",
+          "answer": "I begin with requirement analysis, followed by architecture planning, UI implementation, backend development, testing, deployment, and long-term maintenance.",
+          "category": "Workflow",
+          "icon": "workflow",
+          "tags": [
+            "workflow",
+            "planning"
+          ],
+          "order": 9,
+          "isEnabled": true,
+          "featured": false,
+          "showOnHomepage": false,
+          "customFields": []
+        },
+        {
+          "question": "How can I contact you?",
+          "answer": "You can contact me through the contact form on this portfolio, LinkedIn, or email. I usually respond within 24 hours.",
+          "category": "Contact",
+          "icon": "mail",
+          "tags": [
+            "contact",
+            "email",
+            "linkedin"
+          ],
+          "order": 10,
+          "isEnabled": true,
+          "featured": false,
+          "showOnHomepage": false,
+          "customFields": []
         }
       ],
       "showOnHomepage": true
+    },
+    "achievements": {
+      "id": "achievements",
+      "label": "achievements",
+      "renderer": "achievements",
+      "enabled": true,
+      "order": 3,
+      "layout": "default",
+      "status": "published",
+      "nav": {
+        "show": false,
+        "href": "#achievements",
+        "label": "achievements"
+      },
+      "emptyMessage": "",
+      "textBlocks": [],
+      "settings": {},
+      "data": {
+        "eyebrow": "Highlights",
+        "title": "Achievements",
+        "description": "A collection of key milestones, production projects, technologies, and professional accomplishments that reflect my growth as a full-stack developer."
+      },
+      "items": [
+        {
+          "title": "Production Client Projects",
+          "description": "Worked on multiple production client projects through Parvati and Sons, contributing to frontend improvements, API integration, responsiveness, and performance optimization.",
+          "metric": "5+",
+          "icon": "briefcase",
+          "category": "Client Work",
+          "date": "2026",
+          "order": 1,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "title": "Projects Completed",
+          "description": "Built and contributed to full-stack, SaaS, AI, business websites, dashboards, and production-ready web applications.",
+          "metric": "20+",
+          "icon": "rocket",
+          "category": "Projects",
+          "date": "2026",
+          "order": 2,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": [],
+          "id": "item-copy-1783351698733"
+        },
+        {
+          "title": "Technologies Used",
+          "description": "Worked with modern technologies including Next.js, React, Django, PostgreSQL, Tailwind CSS, REST APIs, Vercel, Render, and GitHub.",
+          "metric": "15+",
+          "icon": "code",
+          "category": "Technology",
+          "date": "2026",
+          "order": 3,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": [],
+          "id": "item-copy-1783351698733-copy-1783351734043"
+        },
+        {
+          "title": "Internship Experience",
+          "description": "Gained real-world internship experience by working on live client projects, collaborating with teams, and handling frontend development responsibilities.",
+          "metric": "2026",
+          "icon": "user-check",
+          "category": "Experience",
+          "date": "2026",
+          "order": 4,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": [],
+          "id": "item-copy-1783351698733-copy-1783351734043-copy-1783351772623"
+        },
+        {
+          "title": "Live Deployments",
+          "description": "Deployed and maintained projects using platforms like Vercel, Render, custom domains, and cloud-hosted databases.",
+          "metric": "10+",
+          "icon": "upload-cloud",
+          "category": "Deployment",
+          "date": "2026",
+          "order": 5,
+          "isEnabled": true,
+          "featured": false,
+          "showOnHomepage": true,
+          "customFields": [],
+          "id": "item-copy-1783351698733-copy-1783351734043-copy-1783351772623-copy-1783351828512"
+        }
+      ],
+      "showOnHomepage": true
+    },
+    "companies": {
+      "id": "companies",
+      "label": "companies",
+      "renderer": "companies",
+      "enabled": true,
+      "order": 10,
+      "layout": "default",
+      "status": "published",
+      "nav": {
+        "show": false,
+        "href": "#companies",
+        "label": "companies"
+      },
+      "emptyMessage": "",
+      "textBlocks": [],
+      "settings": {},
+      "data": {
+        "eyebrow": "Experience",
+        "title": "Companies Worked With",
+        "description": ""
+      },
+      "items": [
+        {
+          "companyName": "Parvati and Sons",
+          "logo": "https://www.parvatiandsons.in/logo-light.svg",
+          "websiteUrl": "https://www.parvatiandsons.in/",
+          "relationshipType": "Employer",
+          "industry": "Software Development & Digital Solutions",
+          "description": "Currently working as Project Manager & Full Stack Developer. Managing interns, developing scalable web applications, and handling client projects.",
+          "startDate": "April 2026",
+          "endDate": "Current",
+          "confidential": false,
+          "order": 1,
+          "isEnabled": true,
+          "featured": false,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "companyName": "Prodonto",
+          "logo": "https://prodonto.in/_next/image?url=%2Flogo.png&w=384&q=75",
+          "websiteUrl": "https://prodonto.in",
+          "relationshipType": "Client Project (via Parvati and Sons)",
+          "industry": "Healthcare SaaS",
+          "description": "Contributed to frontend development, API integration, dashboards, and responsive UI through Parvati and Sons.",
+          "startDate": "May 2026",
+          "endDate": "July 2026",
+          "confidential": false,
+          "order": 2,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "companyName": "Digital Sphere",
+          "logo": "",
+          "websiteUrl": "",
+          "relationshipType": "Freelance Client",
+          "industry": "Digital Marketing & Web Development",
+          "description": "Worked with Digital Sphere as a freelance developer on 1–2 project-based assignments. Contributed to responsive website development, frontend improvements, bug fixing, API integration support, and deployment-related updates for client work.",
+          "startDate": "2026",
+          "endDate": "Project-based",
+          "confidential": false,
+          "order": 1,
+          "isEnabled": true,
+          "featured": false,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "companyName": "Dhawan Travel",
+          "logo": "https://dhawantravel.com/wp-content/uploads/2024/11/logo-dhawan.png",
+          "websiteUrl": "https://dhawantravel.com",
+          "relationshipType": "Client Project (via Parvati and Sons)",
+          "industry": "Travel & Tourism",
+          "description": "Optimized website speed, improved Core Web Vitals, image optimization, lazy loading, and frontend performance.",
+          "startDate": "May 2026",
+          "endDate": "May 2026",
+          "confidential": false,
+          "order": 3,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "companyName": "Guruji Taxi",
+          "logo": "https://gurujitaxi.com/images/gurujilogo.png",
+          "websiteUrl": "https://gurujitaxi.com",
+          "relationshipType": "Client Project (via Parvati and Sons)",
+          "industry": "Transportation",
+          "description": "Description: Worked on frontend improvements, API integration, responsive UI, and performance optimization while contributing to a client project delivered through Parvati and Sons.",
+          "startDate": "May 2026",
+          "endDate": "May 2026",
+          "confidential": false,
+          "order": 4,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        },
+        {
+          "companyName": "Sania Enterprises",
+          "logo": "https://sania-sap3.vercel.app/sania.jpeg",
+          "websiteUrl": "https://saniaenterprises.in",
+          "relationshipType": "Client Project (via Parvati and Sons)",
+          "industry": "Business Services",
+          "description": "Enhanced frontend functionality, integrated APIs, improved responsiveness, and optimized the user experience as part of a client engagement managed by Parvati and Sons.",
+          "startDate": "April 2026",
+          "endDate": "April 2026",
+          "confidential": false,
+          "order": 5,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": [],
+          "id": "item-copy-1783350969930"
+        },
+        {
+          "companyName": "Medical Seva",
+          "logo": "https://web.medicalseva.in/media/logo.png",
+          "websiteUrl": "https://medicalseva.in",
+          "relationshipType": "Client Project (via Parvati and Sons)",
+          "industry": "Healthcare",
+          "description": "Developed responsive frontend pages, improved UI consistency, and optimized website performance while contributing to a client project through Parvati and Sons.",
+          "startDate": "April 2026",
+          "endDate": "April 2026",
+          "confidential": false,
+          "order": 6,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": [],
+          "id": "item-copy-1783350969930-copy-1783351041145"
+        }
+      ],
+      "showOnHomepage": true
+    },
+    "certificates": {
+      "id": "certificates",
+      "label": "certificates",
+      "renderer": "certificates",
+      "enabled": true,
+      "order": 5,
+      "layout": "default",
+      "status": "published",
+      "nav": {
+        "show": false,
+        "href": "#certificates",
+        "label": "certificates"
+      },
+      "emptyMessage": "",
+      "textBlocks": [],
+      "settings": {},
+      "data": {
+        "eyebrow": "Credentials",
+        "title": "Certificates",
+        "description": "Certifications, courses, and learning milestones that support my full-stack development journey."
+      },
+      "items": [
+        {
+          "certificateTitle": "Full Stack Web Development",
+          "issuer": "Sithub",
+          "certificateImage": " https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
+          "credentialUrl": " https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
+          "credentialId": "SIT320736",
+          "issueDate": "15 March 2026",
+          "expiryDate": "No Expiry",
+          "skills": "HTML, CSS, JavaScript, Bootstrap, PHP, MySQL, Git, GitHub, WordPress , Photoshop",
+          "category": "Full Stack Development",
+          "order": 1,
+          "isEnabled": true,
+          "featured": true,
+          "showOnHomepage": true,
+          "customFields": []
+        }
+      ],
+      "showOnHomepage": true
+    },
+    "open-source": {
+      "id": "open-source",
+      "label": "open-source",
+      "renderer": "open-source",
+      "enabled": true,
+      "order": 18,
+      "layout": "default",
+      "status": "published",
+      "nav": {
+        "show": false,
+        "href": "#open-source",
+        "label": "open-source"
+      },
+      "emptyMessage": "",
+      "textBlocks": [],
+      "settings": {},
+      "data": {
+        "eyebrow": "Open Source",
+        "title": "Open Source",
+        "description": ""
+      },
+      "items": [],
+      "showOnHomepage": false
     },
     "github": {
       "id": "github",
       "label": "github",
       "renderer": "github",
       "enabled": true,
-      "order": 10,
+      "order": 17,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1680,11 +3021,7 @@
       "emptyMessage": "",
       "textBlocks": [],
       "settings": {},
-      "data": {
-        "eyebrow": "",
-        "title": "",
-        "description": ""
-      },
+      "data": {},
       "items": [],
       "showOnHomepage": true
     },
@@ -1693,7 +3030,7 @@
       "label": "footer",
       "renderer": "footer",
       "enabled": true,
-      "order": 8,
+      "order": 16,
       "layout": "default",
       "status": "published",
       "nav": {
@@ -1720,5 +3057,9 @@
     "maxTokens": 700,
     "maxContextChunks": 6,
     "confidenceThreshold": 0.2
+  },
+  "homepageProjectSettings": {
+    "count": 3,
+    "buttonText": "View More Projects"
   }
 }
