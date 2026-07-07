@@ -969,7 +969,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6a4ce3ab3c58319769ebb713",
+      "id": "6a4ce3ddfaac88018a8e15e8",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -988,17 +988,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-07-07T11:31:46.937Z",
+      "publishedAt": "2026-07-07T11:32:37.343Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Jul 07 2026 11:31:55 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-07T11:31:46.937Z",
+      "createdAt": "Tue Jul 07 2026 11:32:45 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T11:32:37.343Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6a4ce3ab3c58319769ebb714",
+      "id": "6a4ce3ddfaac88018a8e15e9",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1017,17 +1017,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-07-07T11:31:46.937Z",
+      "publishedAt": "2026-07-07T11:32:37.343Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Jul 07 2026 11:31:55 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-07T11:31:46.937Z",
+      "createdAt": "Tue Jul 07 2026 11:32:45 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T11:32:37.343Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6a4ce3ab3c58319769ebb715",
+      "id": "6a4ce3ddfaac88018a8e15ea",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1046,12 +1046,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-07-07T11:31:46.937Z",
+      "publishedAt": "2026-07-07T11:32:37.343Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Jul 07 2026 11:31:55 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-07T11:31:46.937Z",
+      "createdAt": "Tue Jul 07 2026 11:32:45 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T11:32:37.343Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1097,8 +1097,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-07-07T11:32:37.343Z",
-      "lastGitHubSync": "2026-07-07T11:32:41.635Z"
+      "lastMongoUpdate": "2026-07-07T11:34:47.238Z",
+      "lastGitHubSync": "2026-07-07T11:34:51.674Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1580,7 +1580,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-07-07T11:32:37.343Z",
+  "updatedAt": "2026-07-07T11:34:47.238Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -2864,8 +2864,8 @@
         },
         {
           "companyName": "Digital Sphere",
-          "logo": "",
-          "websiteUrl": "",
+          "logo": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783423904/portfolio/uwvrdvn2rpulytnyyy0p.png",
+          "websiteUrl": "https://digitalsphereseo.my.canva.site/digital-sphere-digital-marketing-agency-digital-marketing-service-in-india-uttarakhand-rudrapur-",
           "relationshipType": "Freelance Client",
           "industry": "Digital Marketing & Web Development",
           "description": "Worked with Digital Sphere as a freelance developer on 1–2 project-based assignments. Contributed to responsive website development, frontend improvements, bug fixing, API integration support, and deployment-related updates for client work.",
