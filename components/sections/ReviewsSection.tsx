@@ -184,7 +184,7 @@ export function ReviewsSection() {
   }
 
   return (
-    <AnimatedSection id="reviews" className="py-20">
+    <AnimatedSection id="reviews" className="bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,252,1))] py-24">
       <div className="section-wrap">
         <SectionHeader
           eyebrow={data.eyebrow}
@@ -238,7 +238,7 @@ export function ReviewsSection() {
                 return (
                   <article
                     key={`${review.clientName}-${index}`}
-                    className="glass flex-shrink-0 snap-start rounded-3xl p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition-transform duration-200 hover:-translate-y-0.5 w-[calc(100%-1rem)] sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)]"
+                    className="glass flex-shrink-0 snap-start rounded-[30px] p-6 shadow-[0_18px_42px_rgba(15,23,42,0.06)] transition-transform duration-200 hover:-translate-y-0.5 w-[calc(100%-1rem)] sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)]"
                   >
                     <Quote className="h-5 w-5 text-[#1D4ED8]" />
                     <p className="mt-3 text-sm leading-relaxed text-text-muted">&quot;{review.quote}&quot;</p>

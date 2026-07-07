@@ -7,6 +7,7 @@
   --section: 255 255 255;
   --card: 255 255 255;
   --cardHover: 241 245 249;
+  --surface: 255 255 255;
   --textMain: 15 23 42;
   --textMuted: 71 85 105;
   --border: 226 232 240;
@@ -65,10 +66,11 @@ body {
   border-color: rgb(var(--border));
   background-color: rgb(var(--card-bg));
   box-shadow: 0 16px 36px rgba(15, 23, 42, 0.05);
+  backdrop-filter: blur(18px);
 }
 
 .panel {
-  @apply rounded-3xl border transition-all duration-300 hover:-translate-y-1;
+  @apply rounded-[28px] border transition-all duration-300 hover:-translate-y-1;
   border-color: rgb(var(--border));
   background-color: rgb(var(--card-bg));
   box-shadow: 0 18px 40px rgba(15, 23, 42, 0.06);
@@ -80,6 +82,10 @@ body {
 
 .section-wrap {
   @apply mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8;
+}
+
+.section-shell {
+  @apply py-16 sm:py-20 lg:py-24;
 }
 
 .hero-blob {

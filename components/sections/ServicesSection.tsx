@@ -9,6 +9,7 @@ import { Wrench, Sparkles, Code2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
+import { renderIcon } from "@/lib/skill-icons";
 
 const iconMap: Record<string, ReactNode> = {
   code: <Code2 className="h-5 w-5 text-primary" />,
@@ -43,8 +44,8 @@ export function ServicesSection() {
           {items.map((item, index) => (
             <div key={item.id || `${item.title}-${index}`}>
               <AnimatedCard className="h-full">
-                <div className="inline-flex rounded-2xl border border-primary/15 bg-primary/10 p-3">
-                  {iconMap[item.icon || ""] || <Sparkles className="h-5 w-5 text-primary" />}
+                <div className="inline-flex rounded-2xl border border-primary/15 bg-primary/10 p-3 shadow-[0_10px_24px_rgba(37,99,235,0.08)]">
+                  {item.iconUrl ? <img src={item.iconUrl} alt="" className="h-5 w-5 object-contain" /> : iconMap[item.icon || ""] || renderIcon(item.icon, item.iconColor, "h-5 w-5")}
                 </div>
                 <h3 className="mt-5 text-xl font-semibold text-text-main">{item.title}</h3>
                 <p className="mt-3 text-sm leading-6 text-text-muted">{item.description}</p>

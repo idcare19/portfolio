@@ -5,8 +5,10 @@ import type { KeyboardEvent } from "react";
 import { ChevronDown, ChevronUp, GripVertical, ImagePlus, Plus, Trash2 } from "lucide-react";
 import { ConfirmDialog } from "@/components/admin/ConfirmDialog";
 import { CustomFieldsEditor } from "@/components/admin/CustomFieldsEditor";
+import { IconPicker } from "@/components/admin/SkillIconPicker";
 import { SectionCard } from "@/components/admin/SectionCard";
 import type { SectionItemCrudConfig } from "@/lib/admin/section-content-fields";
+import { suggestSkillIconKey } from "@/lib/skill-icons";
 
 type Props = {
   config: SectionItemCrudConfig;
@@ -250,6 +252,11 @@ function fieldValue(item: any, key: string) {
   return String(value ?? "");
 }
 
+function ensureSkillSuggestion(item: any) {
+  const suggested = suggestSkillIconKey(item?.name || item?.title, item?.category);
+  return suggested || "";
+}
+
 function setListField(item: any, key: string, value: string[]) {
   return { ...item, [key]: value };
 }
@@ -375,6 +382,23 @@ export function SectionItemsCrudEditor({ config, items, onChange }: Props) {
                   <div className="grid gap-3 md:grid-cols-2">
                     {config.fields.map((field) => {
                       if (field.key === "customFields") return null;
+                      if (field.key === "iconKey" || field.key === "icon") {
+                        return (
+                          <div key={field.key} className="md:col-span-2">
+                            <IconPicker
+                              title={field.label}
+                              value={String(item.iconKey || item.icon || ensureSkillSuggestion(item))}
+                              iconUrl={String(item.iconUrl || "")}
+                              color={String(item.iconColor || "")}
+                              onChange={(next) => update(index, field.key, next)}
+                              onIconUrlChange={(next) => update(index, "iconUrl", next)}
+                              onColorChange={(next) => update(index, "iconColor", next)}
+                              onUpload={(dataUrl) => update(index, "iconUrl", dataUrl)}
+                            />
+                          </div>
+                        );
+                      }
+                      if (field.key === "iconUrl" || field.key === "iconColor") return null;
                       const commonClass = field.type === "textarea" ? "md:col-span-2" : "";
                       if (field.type === "checkbox") {
                         return (

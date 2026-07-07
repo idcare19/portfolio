@@ -49,17 +49,17 @@ export function CompaniesSection({ section }: { section: SiteSectionBlock }) {
   const showMore = isHomepage && shouldShowViewMore(allItems, homepageItems, homepageSettings);
   debugHomepageDisplay("companies", (section?.items || []).length, homepageItems.length, homepageSettings);
   return (
-    <section id="companies" className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="rounded-[32px] border border-[rgb(var(--border))] bg-white p-6 shadow-[0_18px_55px_rgba(15,23,42,0.06)] sm:p-8">
+    <section id="companies" className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 sm:py-20">
+      <div className="rounded-[28px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,252,1))] p-5 shadow-[0_22px_55px_rgba(15,23,42,0.07)] sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{String(section.data?.eyebrow || "Experience")}</p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-text-main">{String(section.data?.title || "Companies Worked With")}</h2>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {homepageItems.map((item: any, index: number) => (
-            <article key={item.companyName || item.title || index} className="overflow-hidden rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--surface))]">
-              <div className="flex min-h-[9rem] items-center justify-center border-b border-[rgb(var(--border))] bg-gradient-to-br from-slate-50 to-white px-6 py-6">
+            <article key={item.companyName || item.title || index} className="overflow-hidden rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] shadow-[0_18px_42px_rgba(15,23,42,0.06)]">
+              <div className="flex min-h-[7.5rem] items-center justify-center border-b border-[rgb(var(--border))] bg-[radial-gradient(circle_at_top,rgba(37,99,235,0.08),transparent_35%),linear-gradient(135deg,rgba(248,250,252,1),rgba(255,255,255,1))] px-4 py-4">
                 {isTruthy(item.confidential) ? (
                   <div className="text-center">
-                    <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white text-sm font-semibold text-slate-500">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white text-sm font-semibold text-slate-500">
                       CF
                     </div>
                     <p className="mt-3 text-sm font-medium text-slate-500">Confidential Client</p>
@@ -68,22 +68,22 @@ export function CompaniesSection({ section }: { section: SiteSectionBlock }) {
                   <img
                     src={resolveCompanyLogo(item)}
                     alt={cleanText(item.companyName || item.title || "Company")}
-                    className="max-h-20 w-auto max-w-[70%] object-contain"
+                    className="max-h-16 w-auto max-w-[68%] object-contain"
                     loading="lazy"
                   />
                 ) : (
-                  <div className="flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-900 text-lg font-semibold text-white">
+                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-base font-semibold text-white">
                     {(cleanText(item.companyName || item.title) || "Company").slice(0, 2).toUpperCase()}
                   </div>
                 )}
               </div>
-              <div className="space-y-4 p-5">
+              <div className="space-y-3 p-4">
                 <div>
-                  <div className="text-sm font-semibold uppercase tracking-[0.18em] text-primary">{cleanText(item.relationshipType) || "Collaboration"}</div>
-                  <h3 className="mt-2 text-xl font-semibold text-text-main">{cleanText(item.companyName || item.title) || "Company"}</h3>
+                  <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">{cleanText(item.relationshipType) || "Collaboration"}</div>
+                  <h3 className="mt-2 text-lg font-semibold text-text-main">{cleanText(item.companyName || item.title) || "Company"}</h3>
                   {cleanText(item.industry) ? <p className="mt-1 text-sm text-text-muted">{cleanText(item.industry)}</p> : null}
                 </div>
-                {cleanText(item.description) ? <p className="text-sm leading-7 text-text-muted">{cleanText(item.description)}</p> : null}
+                {cleanText(item.description) ? <p className="text-sm leading-6 text-text-muted">{cleanText(item.description)}</p> : null}
                 {(formatCompanyDate(item.startDate) || formatCompanyDate(item.endDate)) ? (
                   <p className="text-sm text-text-muted">
                     <span className="font-medium text-text-main">Duration:</span>{" "}
@@ -97,7 +97,7 @@ export function CompaniesSection({ section }: { section: SiteSectionBlock }) {
                     rel="noreferrer"
                     className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
                   >
-                    Visit Website
+                    Visit
                   </a>
                 ) : null}
                 {isTruthy(item.confidential) ? (

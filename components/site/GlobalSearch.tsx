@@ -77,7 +77,7 @@ export function GlobalSearch() {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="fixed bottom-5 left-5 z-[90] inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-2 text-sm font-medium text-text-main shadow-lg"
+        className="fixed bottom-[calc(1rem+env(safe-area-inset-bottom))] left-4 z-[90] inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-2 text-sm font-medium text-text-main shadow-lg sm:left-5"
       >
         <Search className="h-4 w-4" />
         {shell.buttonLabel}

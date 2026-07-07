@@ -2,6 +2,7 @@ import "server-only";
 
 import siteDataSeed from "@/src/data/siteData.json";
 import { calculateReadingTimeMinutes, normalizeSlug, slugify } from "@/lib/content-utils";
+import { suggestSkillIconKey } from "@/lib/skill-icons";
 import { connectToDatabase } from "@/lib/mongodb";
 import { normalizeSiteData, summarizeSectionCounts } from "@/lib/site-data-transform";
 import { Blog } from "@/models/Blog";
@@ -443,8 +444,10 @@ function normalizeSkillRecord(skill: any, index: number) {
     name: String(skill?.name || title),
     category: String(skill?.category || "Tools"),
     icon: String(skill?.icon || ""),
-    iconKey: String(skill?.iconKey || ""),
+    iconKey: String(skill?.iconKey || suggestSkillIconKey(skill?.name || skill?.title, skill?.category) || ""),
     iconColor: String(skill?.iconColor || ""),
+    iconUrl: String(skill?.iconUrl || ""),
+    featured: Boolean(skill?.featured),
     level: Number(skill?.level ?? 0),
     summary: String(skill?.summary || ""),
     order: Number(skill?.order ?? index + 1),
@@ -863,8 +866,10 @@ export async function savePortfolioSiteData(nextData: SiteData): Promise<SiteDat
     name: skill.name || skill.title || "",
     category: skill.category,
     icon: skill.icon || "",
-    iconKey: skill.iconKey || "",
+    iconKey: skill.iconKey || suggestSkillIconKey(skill.name || skill.title, skill.category) || "",
     iconColor: skill.iconColor || "",
+    iconUrl: skill.iconUrl || "",
+    featured: Boolean(skill.featured),
     level: Number(skill.level ?? 0),
     summary: String(skill.summary || ""),
     order: Number(skill.order ?? index + 1),

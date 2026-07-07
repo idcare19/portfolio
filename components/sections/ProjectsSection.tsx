@@ -56,15 +56,13 @@ export function ProjectsSection() {
   debugHomepageDisplay("projects", Array.isArray(section.items) ? section.items.length : 0, projects.length, homepageSettings);
 
   return (
-    <AnimatedSection id="projects" className="bg-section-bg py-20">
+    <AnimatedSection id="projects" className="bg-[radial-gradient(circle_at_top_left,rgba(37,99,235,0.08),transparent_30%),linear-gradient(180deg,rgba(248,250,252,1),rgba(255,255,255,1))] py-16 sm:py-20">
       <div className="section-wrap">
         {hasHeader ? <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} /> : null}
 
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project, index) => (
-            <div key={project.title}>
-              <ProjectCard project={project} />
-            </div>
+            <ProjectCard key={project.title} project={project} featured={index === 0} />
           ))}
         </div>
 

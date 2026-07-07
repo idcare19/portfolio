@@ -8,6 +8,7 @@ import type {
 } from "@/src/types/site-data";
 
 import seedData from "@/src/data/siteData.json";
+import { suggestSkillIconKey } from "@/lib/skill-icons";
 
 const CORE_RENDERERS = new Set([
   "hero",
@@ -585,6 +586,9 @@ export function normalizeSiteData(input: SiteData): SiteData {
       ...skill,
       name: String(skill.name || skill.title || ""),
       title: String(skill.title || skill.name || ""),
+      iconKey: String(skill.iconKey || suggestSkillIconKey(skill.name || skill.title, skill.category) || ""),
+      iconUrl: String(skill.iconUrl || ""),
+      featured: Boolean(skill.featured),
     })),
     skills: (sections.skills.items as SiteData["skillsDetailed"]).map((skill: any) => String(skill.name || skill.title || "")).filter(Boolean),
     learningPhase: ((sections.skills.data as Record<string, unknown>).learningItems as string[] | undefined) ?? [],

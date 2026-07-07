@@ -6,6 +6,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay, normalizeHomepageDisplayConfig } from "@/lib/homepage-display-controls";
 import { useSiteDataContext } from "@/components/site/SiteDataProvider";
+import { renderIcon } from "@/lib/skill-icons";
 
 export function AchievementsSection({ section }: { section: SiteSectionBlock }) {
   const siteData = useSiteDataContext();
@@ -26,8 +27,11 @@ export function AchievementsSection({ section }: { section: SiteSectionBlock }) 
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-text-main">{String(section.data?.title || "Achievements")}</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
           {items.map((item: any, index: number) => (
-            <div key={item.title || index} className="rounded-3xl border border-[rgb(var(--border))] p-5">
-              <div className="text-3xl font-semibold text-primary">{item.metric || "0"}</div>
+            <div key={item.title || index} className="rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 shadow-[0_14px_30px_rgba(15,23,42,0.05)]">
+              <div className="inline-flex h-11 w-11 items-center justify-center rounded-2xl bg-[#EFF6FF] text-[#1D4ED8]">
+                {item.iconUrl ? <img src={item.iconUrl} alt="" className="h-5 w-5 object-contain" /> : renderIcon(item.icon, item.iconColor, "h-5 w-5")}
+              </div>
+              <div className="mt-4 text-3xl font-semibold text-primary">{item.metric || "0"}</div>
               <h3 className="mt-3 text-lg font-semibold text-text-main">{item.title || "Achievement"}</h3>
               <p className="mt-2 text-sm leading-7 text-text-muted">{item.description || ""}</p>
             </div>

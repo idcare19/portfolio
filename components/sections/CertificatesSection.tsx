@@ -41,13 +41,13 @@ export function CertificatesSection({ section }: { section: SiteSectionBlock }) 
   const showMore = isHomepage && shouldShowViewMore(allItems, items, homepageSettings);
   debugHomepageDisplay("certificates", (section?.items || []).length, items.length, homepageSettings);
   return (
-    <section id="certificates" className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 lg:px-8">
-      <div className="rounded-[32px] border border-[rgb(var(--border))] bg-white p-6 shadow-[0_18px_55px_rgba(15,23,42,0.06)] sm:p-8">
+    <section id="certificates" className="mx-auto w-full max-w-6xl px-4 py-24 sm:px-6 lg:px-8">
+      <div className="rounded-[32px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,252,1))] p-6 shadow-[0_22px_55px_rgba(15,23,42,0.07)] sm:p-8">
         <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{String(section.data?.eyebrow || "Credentials")}</p>
         <h2 className="mt-3 text-3xl font-semibold tracking-tight text-text-main">{String(section.data?.title || "Certificates")}</h2>
-        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
           {items.map((item: any, index: number) => (
-            <article key={item.certificateTitle || item.title || index} className="overflow-hidden rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--surface))]">
+            <article key={item.certificateTitle || item.title || index} className="overflow-hidden rounded-[30px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] shadow-[0_18px_42px_rgba(15,23,42,0.06)]">
               <div className="relative aspect-[16/10] bg-slate-100">
                 {resolveCertificateImage(item) ? (
                   <Image
@@ -88,7 +88,7 @@ export function CertificatesSection({ section }: { section: SiteSectionBlock }) 
                       .map((skill: string) => skill.trim())
                       .filter(Boolean)
                       .map((skill: string) => (
-                        <span key={skill} className="rounded-full border border-[rgb(var(--border))] bg-white px-3 py-1 text-xs font-medium text-text-muted">
+                        <span key={skill} className="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-hover))] px-3 py-1 text-xs font-medium text-text-muted">
                           {skill}
                         </span>
                       ))}

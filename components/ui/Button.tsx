@@ -18,13 +18,13 @@ type ButtonProps = {
 };
 
 const base =
-  "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-500 ease-out hover:scale-105";
+  "inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ease-out hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40";
 
 const variants = {
   primary:
     "bg-primary text-white shadow-[0_14px_30px_rgba(37,99,235,0.22)] hover:bg-[#1D4ED8] hover:shadow-[0_20px_40px_rgba(37,99,235,0.28)]",
   secondary:
-    "border border-[rgb(var(--border))] bg-white text-text-main shadow-[0_10px_24px_rgba(15,23,42,0.06)] hover:bg-[rgb(var(--card-hover))] hover:shadow-[0_16px_30px_rgba(15,23,42,0.10)]",
+    "border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main shadow-[0_10px_24px_rgba(15,23,42,0.06)] hover:bg-[rgb(var(--card-hover))] hover:shadow-[0_16px_30px_rgba(15,23,42,0.10)]",
 };
 
 function MagneticInner({

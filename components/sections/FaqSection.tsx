@@ -7,6 +7,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { filterHomepageItems, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
 import { useSiteDataContext } from "@/components/site/SiteDataProvider";
+import { renderIcon } from "@/lib/skill-icons";
 
 export function FaqSection({ section }: { section: SiteSectionBlock }) {
   const [open, setOpen] = useState<number>(0);
@@ -27,12 +28,17 @@ export function FaqSection({ section }: { section: SiteSectionBlock }) {
         {section.data?.description ? <p className="mt-3 max-w-3xl text-sm leading-7 text-text-muted">{String(section.data.description)}</p> : null}
         <div className="mt-8 space-y-3">
           {items.map((item: any, index: number) => (
-            <button key={item.question || index} type="button" onClick={() => setOpen(open === index ? -1 : index)} className="w-full rounded-2xl border border-[rgb(var(--border))] px-4 py-4 text-left">
+            <button key={item.question || index} type="button" onClick={() => setOpen(open === index ? -1 : index)} className={`w-full rounded-2xl border px-4 py-4 text-left transition-all duration-300 ${open === index ? "border-primary/25 bg-[#EFF6FF]/70 shadow-[0_12px_28px_rgba(37,99,235,0.08)]" : "border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] hover:border-primary/20 hover:bg-[rgb(var(--card-hover))]"}`}>
               <div className="flex items-center justify-between gap-3">
-                <span className="font-medium text-text-main">{item.question || "Question"}</span>
-                <ChevronDown className={`h-4 w-4 transition-transform ${open === index ? "rotate-180" : ""}`} />
+                <span className="flex items-center gap-2 font-medium text-text-main">
+                  {item.icon ? <span className="text-primary">{renderIcon(item.icon, item.iconColor, "h-4 w-4")}</span> : null}
+                  {item.question || "Question"}
+                </span>
+                <ChevronDown className={`h-4 w-4 transition-transform duration-300 ${open === index ? "rotate-180" : ""}`} />
               </div>
-              {open === index ? <p className="mt-3 text-sm leading-7 text-text-muted">{item.answer || ""}</p> : null}
+              <div className={`grid transition-all duration-300 ease-out ${open === index ? "grid-rows-[1fr] pt-3" : "grid-rows-[0fr]"}`}>
+                <p className="overflow-hidden text-sm leading-7 text-text-muted">{open === index ? item.answer || "" : ""}</p>
+              </div>
             </button>
           ))}
         </div>

@@ -275,6 +275,8 @@ export const siteDataSchema = z.object({
     icon: z.string(),
     iconKey: z.string().optional(),
     iconColor: z.string().optional(),
+    iconUrl: z.string().optional(),
+    featured: z.boolean().optional(),
     level: z.number(),
     isEnabled: z.boolean().optional(),
     order: z.number().optional(),

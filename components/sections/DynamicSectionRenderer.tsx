@@ -12,7 +12,7 @@ import { WorkingProjectsSection } from "@/components/sections/WorkingProjectsSec
 import { EducationSection } from "@/components/sections/EducationSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { BlogsSection } from "@/components/sections/BlogsSection";
-import { GitHubDeveloperSection } from "@/components/sections/GitHubDeveloperSection";
+import { GitHubDeveloperSection } from "./GitHubDeveloperSection";
 import { FaqSection } from "@/components/sections/FaqSection";
 import { AchievementsSection } from "@/components/sections/AchievementsSection";
 import { CompaniesSection } from "@/components/sections/CompaniesSection";

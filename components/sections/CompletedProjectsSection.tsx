@@ -7,6 +7,7 @@ import { ArrowUpRight, CalendarDays, CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { filterHomepageItems, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
+import { renderIcon } from "@/lib/skill-icons";
 
 function normalizeHref(value?: string) {
   const href = String(value || "").trim();
@@ -32,7 +33,7 @@ export function CompletedProjectsSection() {
   }
 
   return (
-    <AnimatedSection id="completed" className="py-20">
+    <AnimatedSection id="completed" className="bg-[linear-gradient(180deg,rgba(248,250,252,1),rgba(255,255,255,1))] py-24">
       <div className="section-wrap">
         <SectionHeader
           eyebrow={data.eyebrow}
@@ -40,11 +41,14 @@ export function CompletedProjectsSection() {
           description={data.description}
         />
 
-        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {completedProjects.map((project, index) => (
             <div key={`${project.title}-${index}`}>
-              <article className="glass h-full rounded-3xl p-5 shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
+              <article className="glass h-full rounded-[30px] p-5 shadow-[0_18px_42px_rgba(15,23,42,0.06)]">
                 <div className="flex flex-wrap items-center justify-between gap-2">
+                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-primary">
+                      {project.iconUrl ? <img src={project.iconUrl} alt="" className="h-5 w-5 object-contain" /> : renderIcon(project.icon, project.iconColor, "h-5 w-5")}
+                    </span>
                     <span className="inline-flex items-center gap-1.5 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#1D4ED8]">
                     <CheckCircle2 className="h-3.5 w-3.5" />
                     Completed
@@ -57,9 +61,9 @@ export function CompletedProjectsSection() {
                   ) : null}
                 </div>
 
-                <h3 className="mt-3 text-lg font-semibold text-text-main">{project.title}</h3>
+                <h3 className="mt-3 text-xl font-semibold tracking-tight text-text-main">{project.title}</h3>
                 {project.role ? <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-[#1D4ED8]">{project.role}</p> : null}
-                <p className="mt-3 text-sm leading-relaxed text-text-muted">{project.workDone}</p>
+                <p className="mt-3 text-sm leading-7 text-text-muted">{project.workDone}</p>
 
                 <div className="mt-4 flex flex-wrap gap-3">
                   {project.slug ? (

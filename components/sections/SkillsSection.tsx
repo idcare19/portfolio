@@ -2,9 +2,10 @@
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
+import { Badge } from "@/components/ui/Badge";
 import { Button } from "@/components/ui/Button";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { renderSkillIcon } from "@/lib/skill-icons";
+import { renderIcon, suggestSkillIconKey } from "@/lib/skill-icons";
 
 type SkillItem = {
   title?: string;
@@ -13,6 +14,7 @@ type SkillItem = {
   icon?: string;
   iconKey?: string;
   iconColor?: string;
+  iconUrl?: string;
   order?: number;
   summary?: string;
 };
@@ -63,70 +65,77 @@ export function SkillsSection() {
     .map(([title, items]) => ({ title, items }))
     .sort((a, b) => a.title.localeCompare(b.title));
 
-  const buttonRow = (
-    <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center">
-      <Button href="#projects" className="w-full sm:w-auto">
-        View Projects
-      </Button>
-      {resumeUrl ? (
-        <Button href={resumeUrl} variant="secondary" target="_blank" download className="w-full sm:w-auto">
-          Download Resume
-        </Button>
-      ) : null}
-    </div>
-  );
-
   return (
-    <AnimatedSection id="skills" className="bg-page-bg py-20">
+    <AnimatedSection id="skills" className="bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.08),transparent_32%),linear-gradient(180deg,rgba(248,250,252,1),rgba(255,255,255,1))] py-24">
       <div className="section-wrap">
         <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} />
 
-        <div className="grid gap-4 lg:grid-cols-2">
-          {sections.map((group, groupIndex) => (
-            <div key={group.title} className="group h-full rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)] transition-all duration-500 hover:shadow-[0_18px_40px_rgba(37,99,235,0.12)]">
-                <div className="mb-5 flex items-center justify-between gap-3">
-                  <h3 className="text-lg font-semibold text-text-main">{group.title}</h3>
-                  <span className="rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.2em] text-[#1D4ED8]">
-                    {group.items.length}
-                  </span>
+        <div className="grid gap-5 lg:grid-cols-2">
+          {sections.map((group) => (
+            <div key={group.title} className="group h-full rounded-[30px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,0.96),rgba(239,246,255,0.76))] p-6 shadow-[0_18px_42px_rgba(15,23,42,0.07)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_50px_rgba(37,99,235,0.12)]">
+              <div className="mb-5 flex items-center justify-between gap-3">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.22em] text-text-muted">Skill group</p>
+                  <h3 className="mt-2 text-lg font-semibold text-text-main">{group.title}</h3>
                 </div>
+                <Badge>{group.items.length}</Badge>
+              </div>
 
-                <div className="flex flex-wrap gap-3">
-                  {group.items.map((skill, index) => (
-                    <span
-                      key={`${group.title}-${skill.name}-${index}`}
-                      className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-3 py-2 text-sm font-medium text-text-main shadow-[0_8px_18px_rgba(15,23,42,0.04)] transition-all duration-300 hover:border-primary/30 hover:shadow-[0_12px_24px_rgba(37,99,235,0.12)]"
-                    >
-                      {renderSkillIcon(skill.iconKey || skill.icon, skill.iconColor)}
-                      {skill.title || skill.name}
-                    </span>
-                  ))}
-                </div>
+              <div className="grid gap-3 sm:grid-cols-2">
+                {group.items.map((skill, index) => (
+                  <div
+                    key={`${group.title}-${skill.name}-${index}`}
+                    className="flex items-center gap-3 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-3 shadow-[0_10px_22px_rgba(15,23,42,0.04)]"
+                  >
+                    <span className="inline-flex h-11 w-11 items-center justify-center overflow-hidden rounded-xl bg-[#EFF6FF] text-[#1D4ED8]">
+                        {skill.iconUrl ? (
+                          <img src={skill.iconUrl} alt={skill.title || skill.name} className="h-full w-full object-contain p-2" loading="lazy" />
+                        ) : (
+                          renderIcon(skill.iconKey || suggestSkillIconKey(skill.title || skill.name, skill.category), skill.iconColor, "h-4 w-4")
+                        )}
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate text-sm font-semibold text-text-main">{skill.title || skill.name}</p>
+                        {skill.summary ? <p className="truncate text-xs text-text-muted">{skill.summary}</p> : null}
+                      </div>
+                  </div>
+                ))}
+              </div>
             </div>
           ))}
         </div>
 
-        <div className="mt-6 rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 shadow-[0_10px_24px_rgba(15,23,42,0.06)]">
-            <div className="mb-5 flex items-center justify-between gap-3">
-              <div>
-                <p className="text-xs font-semibold uppercase tracking-[0.24em] text-text-muted">Currently Learning</p>
-                {data.learningTitle ? <h3 className="mt-2 text-lg font-semibold text-text-main">{data.learningTitle}</h3> : null}
-              </div>
+        <div className="mt-6 rounded-[30px] border border-[rgb(var(--border))] bg-[linear-gradient(135deg,rgba(239,246,255,0.9),rgba(255,255,255,0.95))] p-6 shadow-[0_18px_42px_rgba(15,23,42,0.06)]">
+          <div className="mb-5 flex items-center justify-between gap-3">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.24em] text-text-muted">Currently Learning</p>
+              {data.learningTitle ? <h3 className="mt-2 text-lg font-semibold text-text-main">{data.learningTitle}</h3> : null}
             </div>
+          </div>
 
-            <div className="flex flex-wrap gap-2">
-              {learningItems.map((item: string, index: number) => (
-                <span
-                  key={`${item}-${index}`}
-                  className="inline-flex items-center rounded-full border border-[#DBEAFE] bg-[#EFF6FF] px-3 py-1.5 text-sm font-medium text-[#1D4ED8] shadow-[0_8px_18px_rgba(37,99,235,0.08)]"
-                >
-                  {item}
-                </span>
-              ))}
+          <div className="flex flex-wrap gap-2">
+            {learningItems.map((item: string, index: number) => (
+              <span
+                key={`${item}-${index}`}
+                className="inline-flex items-center rounded-full border border-[#DBEAFE] bg-[#EFF6FF] px-3 py-1.5 text-sm font-medium text-[#1D4ED8] shadow-[0_8px_18px_rgba(37,99,235,0.08)]"
+              >
+                {item}
+              </span>
+            ))}
+          </div>
+
+          {resumeUrl ? (
+            <div className="mt-6">
+              <Button href={resumeUrl} variant="secondary" target="_blank" download>
+                Download Resume
+              </Button>
             </div>
+          ) : null}
         </div>
 
-        {buttonRow}
+        <div className="mt-10 flex justify-center">
+          <Button href="#projects">View Projects</Button>
+        </div>
       </div>
     </AnimatedSection>
   );

@@ -213,6 +213,8 @@ export type SkillItem = {
   icon: string;
   iconKey?: string;
   iconColor?: string;
+  iconUrl?: string;
+  featured?: boolean;
   level: number;
   isEnabled?: boolean;
   order?: number;
