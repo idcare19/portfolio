@@ -320,10 +320,10 @@
   ],
   "workingProjects": [
     {
-      "title": "SmartQueue AI",
-      "description": "",
+      "title": "RepoMind AI",
+      "description": "An AI-powered repository intelligence platform that analyzes public GitHub repositories using the GitHub REST API. It detects the tech stack, important files, folder structure, languages, frameworks, and project metadata without downloading ZIP files.\n\nThe platform helps developers quickly understand any codebase, generate documentation, identify setup requirements, and prepare for future AI-powered repo explanations.",
       "status": "In Progress",
-      "timeline": "None",
+      "timeline": "70",
       "link": "None",
       "category": "SaaS • AI • Real-Time Queue Management",
       "isEnabled": true,
@@ -1014,7 +1014,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6a4ce587c16bf9a77bf73da6",
+      "id": "6a4ce7d91a13b28790b71c19",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1033,17 +1033,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-07-07T11:39:42.875Z",
+      "publishedAt": "2026-07-07T11:49:36.409Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Jul 07 2026 11:39:51 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-07T11:39:42.875Z",
+      "createdAt": "Tue Jul 07 2026 11:49:45 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T11:49:36.409Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6a4ce587c16bf9a77bf73da7",
+      "id": "6a4ce7d91a13b28790b71c1a",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1062,17 +1062,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-07-07T11:39:42.875Z",
+      "publishedAt": "2026-07-07T11:49:36.409Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Jul 07 2026 11:39:51 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-07T11:39:42.875Z",
+      "createdAt": "Tue Jul 07 2026 11:49:45 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T11:49:36.409Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6a4ce587c16bf9a77bf73da8",
+      "id": "6a4ce7d91a13b28790b71c1b",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1091,12 +1091,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-07-07T11:39:42.875Z",
+      "publishedAt": "2026-07-07T11:49:36.409Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Jul 07 2026 11:39:51 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-07T11:39:42.875Z",
+      "createdAt": "Tue Jul 07 2026 11:49:45 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-07T11:49:36.409Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1142,8 +1142,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-07-07T11:49:36.409Z",
-      "lastGitHubSync": "2026-07-07T11:49:40.798Z"
+      "lastMongoUpdate": "2026-07-08T06:33:44.309Z",
+      "lastGitHubSync": "2026-07-08T06:33:48.682Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1625,7 +1625,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-07-07T11:49:36.409Z",
+  "updatedAt": "2026-07-08T06:33:44.309Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -2192,10 +2192,10 @@
       },
       "items": [
         {
-          "title": "SmartQueue AI",
-          "description": "",
+          "title": "RepoMind AI",
+          "description": "An AI-powered repository intelligence platform that analyzes public GitHub repositories using the GitHub REST API. It detects the tech stack, important files, folder structure, languages, frameworks, and project metadata without downloading ZIP files.\n\nThe platform helps developers quickly understand any codebase, generate documentation, identify setup requirements, and prepare for future AI-powered repo explanations.",
           "status": "In Progress",
-          "timeline": "None",
+          "timeline": "70",
           "link": "None",
           "category": "SaaS • AI • Real-Time Queue Management",
           "isEnabled": true,
