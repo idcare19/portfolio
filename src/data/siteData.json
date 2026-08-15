@@ -991,7 +991,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6a8056716c1fd0cccb8482f8",
+      "id": "6a8056fe54d7b1d0945c4c2f",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1010,17 +1010,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-08-15T12:07:05.234Z",
+      "publishedAt": "2026-08-15T12:09:26.458Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Sat Aug 15 2026 12:07:13 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-15T12:07:05.234Z",
+      "createdAt": "Sat Aug 15 2026 12:09:34 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-15T12:09:26.458Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6a8056716c1fd0cccb8482f9",
+      "id": "6a8056fe54d7b1d0945c4c30",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1039,17 +1039,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-08-15T12:07:05.234Z",
+      "publishedAt": "2026-08-15T12:09:26.458Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Sat Aug 15 2026 12:07:13 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-15T12:07:05.234Z",
+      "createdAt": "Sat Aug 15 2026 12:09:34 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-15T12:09:26.458Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6a8056716c1fd0cccb8482fa",
+      "id": "6a8056fe54d7b1d0945c4c31",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1068,12 +1068,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-08-15T12:07:05.234Z",
+      "publishedAt": "2026-08-15T12:09:26.458Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Sat Aug 15 2026 12:07:13 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-15T12:07:05.234Z",
+      "createdAt": "Sat Aug 15 2026 12:09:34 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-15T12:09:26.458Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1119,8 +1119,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-08-15T12:09:26.458Z",
-      "lastGitHubSync": "2026-08-15T12:09:30.320Z"
+      "lastMongoUpdate": "2026-08-15T12:09:49.986Z",
+      "lastGitHubSync": "2026-08-15T12:09:53.601Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1501,12 +1501,12 @@
     "showLiveDemoButton": true,
     "showViewRepositoryButton": true,
     "includePrivateRepos": true,
-    "includePrivateCommits": false,
+    "includePrivateCommits": true,
     "showLifetimeCommits": true,
     "showPrivateReposPublicly": false,
     "showPrivateCommitsPublicly": true,
     "publicDisplayMode": "publicOnly",
-    "commitCountMode": "publicCommitsOnly",
+    "commitCountMode": "publicAndPrivateCommits",
     "repositorySelectionMode": "selected",
     "selectedRepositories": [
       "linkpilot",
@@ -1610,7 +1610,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-08-15T12:09:26.458Z",
+  "updatedAt": "2026-08-15T12:09:49.986Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -2511,7 +2511,7 @@
       },
       "items": [
         {
-          "id": "6a8056716c1fd0cccb8482f8",
+          "id": "6a8056fe54d7b1d0945c4c2f",
           "slug": "how-to-build-a-portfolio-that-converts",
           "title": "How to build a portfolio that converts",
           "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -2530,17 +2530,17 @@
           "isEnabled": true,
           "seoTitle": "How to Build a Portfolio That Converts",
           "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-          "publishedAt": "2026-08-15T12:07:05.234Z",
+          "publishedAt": "2026-08-15T12:09:26.458Z",
           "order": 1,
           "readingTimeMinutes": 1,
           "relatedSlugs": [],
-          "createdAt": "Sat Aug 15 2026 12:07:13 GMT+0000 (Coordinated Universal Time)",
-          "updatedAt": "2026-08-15T12:07:05.234Z",
+          "createdAt": "Sat Aug 15 2026 12:09:34 GMT+0000 (Coordinated Universal Time)",
+          "updatedAt": "2026-08-15T12:09:26.458Z",
           "scheduledFor": "",
           "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
         },
         {
-          "id": "6a8056716c1fd0cccb8482f9",
+          "id": "6a8056fe54d7b1d0945c4c30",
           "slug": "10-tips-for-frontend-developers",
           "title": "10 tips for frontend developers",
           "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -2559,17 +2559,17 @@
           "isEnabled": true,
           "seoTitle": "10 Tips for Frontend Developers",
           "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-          "publishedAt": "2026-08-15T12:07:05.234Z",
+          "publishedAt": "2026-08-15T12:09:26.458Z",
           "order": 2,
           "readingTimeMinutes": 1,
           "relatedSlugs": [],
-          "createdAt": "Sat Aug 15 2026 12:07:13 GMT+0000 (Coordinated Universal Time)",
-          "updatedAt": "2026-08-15T12:07:05.234Z",
+          "createdAt": "Sat Aug 15 2026 12:09:34 GMT+0000 (Coordinated Universal Time)",
+          "updatedAt": "2026-08-15T12:09:26.458Z",
           "scheduledFor": "",
           "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
         },
         {
-          "id": "6a8056716c1fd0cccb8482fa",
+          "id": "6a8056fe54d7b1d0945c4c31",
           "slug": "mongodb-best-practices",
           "title": "MongoDB best practices",
           "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -2588,12 +2588,12 @@
           "isEnabled": true,
           "seoTitle": "MongoDB Best Practices",
           "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-          "publishedAt": "2026-08-15T12:07:05.234Z",
+          "publishedAt": "2026-08-15T12:09:26.458Z",
           "order": 3,
           "readingTimeMinutes": 1,
           "relatedSlugs": [],
-          "createdAt": "Sat Aug 15 2026 12:07:13 GMT+0000 (Coordinated Universal Time)",
-          "updatedAt": "2026-08-15T12:07:05.234Z",
+          "createdAt": "Sat Aug 15 2026 12:09:34 GMT+0000 (Coordinated Universal Time)",
+          "updatedAt": "2026-08-15T12:09:26.458Z",
           "scheduledFor": "",
           "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
         }
