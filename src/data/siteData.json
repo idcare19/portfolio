@@ -318,19 +318,7 @@
       "githubUrl": "https://github.com/idcare19/smartqueue-ai"
     }
   ],
-  "workingProjects": [
-    {
-      "title": "RepoMind AI",
-      "description": "An AI-powered repository intelligence platform that analyzes public GitHub repositories using the GitHub REST API. It detects the tech stack, important files, folder structure, languages, frameworks, and project metadata without downloading ZIP files.\n\nThe platform helps developers quickly understand any codebase, generate documentation, identify setup requirements, and prepare for future AI-powered repo explanations.",
-      "status": "In Progress",
-      "timeline": "70",
-      "link": "None",
-      "category": "SaaS • AI • Real-Time Queue Management",
-      "isEnabled": true,
-      "featured": true,
-      "order": 1
-    }
-  ],
+  "workingProjects": [],
   "completedProjects": [
     {
       "title": "Website Speed Optimization & Performance Enhancement",
@@ -1022,7 +1010,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6a4def51bc761347f3f84b3c",
+      "id": "6a4e1214f695fc4cc6dfb2c6",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1041,17 +1029,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-07-08T06:33:44.309Z",
+      "publishedAt": "2026-07-08T09:02:03.487Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Wed Jul 08 2026 06:33:53 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-08T06:33:44.309Z",
+      "createdAt": "Wed Jul 08 2026 09:02:12 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-08T09:02:03.487Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6a4def51bc761347f3f84b3d",
+      "id": "6a4e1214f695fc4cc6dfb2c7",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1070,17 +1058,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-07-08T06:33:44.309Z",
+      "publishedAt": "2026-07-08T09:02:03.487Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Wed Jul 08 2026 06:33:53 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-08T06:33:44.309Z",
+      "createdAt": "Wed Jul 08 2026 09:02:12 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-08T09:02:03.487Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6a4def51bc761347f3f84b3e",
+      "id": "6a4e1214f695fc4cc6dfb2c8",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1099,12 +1087,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-07-08T06:33:44.309Z",
+      "publishedAt": "2026-07-08T09:02:03.487Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Wed Jul 08 2026 06:33:53 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-07-08T06:33:44.309Z",
+      "createdAt": "Wed Jul 08 2026 09:02:12 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-07-08T09:02:03.487Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1150,8 +1138,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-07-08T09:02:03.487Z",
-      "lastGitHubSync": "2026-07-08T09:02:07.886Z"
+      "lastMongoUpdate": "2026-08-15T11:58:06.316Z",
+      "lastGitHubSync": "2026-08-15T11:58:10.170Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1633,7 +1621,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-07-08T09:02:03.487Z",
+  "updatedAt": "2026-08-15T11:58:06.316Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -2198,19 +2186,7 @@
         "title": "Live work in progress",
         "description": "Projects I am actively building or improving right now."
       },
-      "items": [
-        {
-          "title": "RepoMind AI",
-          "description": "An AI-powered repository intelligence platform that analyzes public GitHub repositories using the GitHub REST API. It detects the tech stack, important files, folder structure, languages, frameworks, and project metadata without downloading ZIP files.\n\nThe platform helps developers quickly understand any codebase, generate documentation, identify setup requirements, and prepare for future AI-powered repo explanations.",
-          "status": "In Progress",
-          "timeline": "70",
-          "link": "None",
-          "category": "SaaS • AI • Real-Time Queue Management",
-          "isEnabled": true,
-          "featured": true,
-          "order": 1
-        }
-      ],
+      "items": [],
       "showOnHomepage": true
     },
     "completed": {
