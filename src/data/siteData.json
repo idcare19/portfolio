@@ -298,7 +298,12 @@
       "title": "Prodonto Care Platform",
       "description": "Healthcare workflows for patient access, appointments, doctor-facing interfaces, payments, and video-consultation journeys.",
       "image": "",
-      "tech": [],
+      "tech": [
+        "React",
+        "REST APIs",
+        "Razorpay",
+        "GitHub"
+      ],
       "liveUrl": "",
       "githubUrl": ""
     },
@@ -1074,13 +1079,18 @@
       "shortDescription": "Healthcare workflows for patient access, appointments, doctor-facing interfaces, payments, and video-consultation journeys.",
       "longDescription": "",
       "fullDescription": "Healthcare workflows for patient access, appointments, doctor-facing interfaces, payments, and video-consultation journeys. Contribution involved frontend implementation, technical coordination, and delivery support; this entry does not claim sole ownership.",
-      "techStack": [],
+      "techStack": [
+        "React",
+        "REST APIs",
+        "Razorpay",
+        "GitHub"
+      ],
       "category": "Product System",
       "status": "Active build",
       "projectType": "Product System",
       "industry": "Healthcare",
       "featuredMirror": false,
-      "confidentialProject": false,
+      "confidentialProject": true,
       "image": "",
       "thumbnail": "",
       "coverImage": "",
@@ -1107,7 +1117,7 @@
       "endDate": "Jul 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1130,7 +1140,7 @@
       "impact": "",
       "challengesFaced": "",
       "learnings": "",
-      "frontend": "React, responsive UI, REST API integration",
+      "frontend": "React",
       "backend": "",
       "database": "",
       "authentication": "",
@@ -1142,7 +1152,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "2dd789f9-4d3d-4cab-9786-f1c76e8604a9",
@@ -1276,7 +1288,7 @@
       "endDate": "Aug 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1311,7 +1323,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "dfd54561-32f3-413d-9a4f-f41a3b305dfa",
@@ -1358,7 +1372,7 @@
       "endDate": "Aug 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1393,7 +1407,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "2c52acd2-fef7-4f86-b00b-c6c8e3f8ecc8",
@@ -1440,7 +1456,7 @@
       "endDate": "Jun 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1475,7 +1491,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "763ec5a1-a567-4392-b5cb-1df448ccb914",
@@ -1522,7 +1540,7 @@
       "endDate": "May 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1557,7 +1575,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "27c4620a-d925-46ae-be76-ddf41eb6da8c",
@@ -1603,7 +1623,7 @@
       "endDate": "May 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1638,7 +1658,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "995164ea-6cb6-404d-a3ed-4e482f779603",
@@ -1684,7 +1706,7 @@
       "endDate": "Apr 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1719,7 +1741,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "83c1ebca-6f96-49e4-8e46-4b99ec928446",
@@ -1765,7 +1789,7 @@
       "endDate": "Apr 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1800,7 +1824,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "9d383005-d812-410c-9bc8-79a07da29702",
@@ -1847,7 +1873,7 @@
       "endDate": "Aug 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1882,7 +1908,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "91b6b2eb-bca4-4aab-a99b-702bd7aac8b7",
@@ -1928,7 +1956,7 @@
       "endDate": "Jun 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -1963,7 +1991,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "6d8bcabf-f3be-4b6d-af45-ee6c677aa236",
@@ -2009,7 +2039,7 @@
       "endDate": "May 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -2044,7 +2074,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "9a710449-a63b-4ed4-992f-fd076b4743bb",
@@ -2090,7 +2122,7 @@
       "endDate": "May 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -2125,7 +2157,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "0c76041c-f4af-48eb-aa28-24bb72fff306",
@@ -2171,7 +2205,7 @@
       "endDate": "Aug 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -2206,7 +2240,9 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     },
     {
       "id": "e6a2453a-34f9-4e68-ae33-bbebc1dddd60",
@@ -2253,7 +2289,7 @@
       "endDate": "Apr 2026",
       "cloudHosting": "",
       "apisServicesUsed": "",
-      "confidentialNote": "",
+      "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
       "isFeatured": false,
       "featured": false,
       "draft": true,
@@ -2288,14 +2324,16 @@
       "metaTitle": "",
       "metaDescription": "",
       "keywords": [],
-      "openGraphImage": ""
+      "openGraphImage": "",
+      "codeVisibility": "Private",
+      "sourceCodePrivate": true
     }
   ],
   "testimonialsDetailed": [],
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6a905dc12560b7a55828d22b",
+      "id": "6a905f9d0a813d7b976d952c",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -2314,17 +2352,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-08-27T15:54:32.354Z",
+      "publishedAt": "2026-08-27T16:02:28.039Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Aug 27 2026 15:54:41 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-27T15:54:32.354Z",
+      "createdAt": "Thu Aug 27 2026 16:02:37 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-27T16:02:28.039Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6a905dc12560b7a55828d22c",
+      "id": "6a905f9d0a813d7b976d952d",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -2343,17 +2381,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-08-27T15:54:32.354Z",
+      "publishedAt": "2026-08-27T16:02:28.039Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Aug 27 2026 15:54:41 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-27T15:54:32.354Z",
+      "createdAt": "Thu Aug 27 2026 16:02:37 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-27T16:02:28.039Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6a905dc12560b7a55828d22d",
+      "id": "6a905f9d0a813d7b976d952e",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -2372,12 +2410,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-08-27T15:54:32.354Z",
+      "publishedAt": "2026-08-27T16:02:28.039Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Aug 27 2026 15:54:41 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-27T15:54:32.354Z",
+      "createdAt": "Thu Aug 27 2026 16:02:37 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-27T16:02:28.039Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -2423,8 +2461,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-08-27T16:02:28.039Z",
-      "lastGitHubSync": "2026-08-27T16:02:32.171Z"
+      "lastMongoUpdate": "2026-08-27T16:04:21.972Z",
+      "lastGitHubSync": "2026-08-27T16:04:26.847Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -2914,7 +2952,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-08-27T16:02:28.039Z",
+  "updatedAt": "2026-08-27T16:04:21.972Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -3375,13 +3413,18 @@
           "shortDescription": "Healthcare workflows for patient access, appointments, doctor-facing interfaces, payments, and video-consultation journeys.",
           "longDescription": "",
           "fullDescription": "Healthcare workflows for patient access, appointments, doctor-facing interfaces, payments, and video-consultation journeys. Contribution involved frontend implementation, technical coordination, and delivery support; this entry does not claim sole ownership.",
-          "techStack": [],
+          "techStack": [
+            "React",
+            "REST APIs",
+            "Razorpay",
+            "GitHub"
+          ],
           "category": "Product System",
           "status": "Active build",
           "projectType": "Product System",
           "industry": "Healthcare",
           "featuredMirror": false,
-          "confidentialProject": false,
+          "confidentialProject": true,
           "image": "",
           "thumbnail": "",
           "coverImage": "",
@@ -3408,7 +3451,7 @@
           "endDate": "Jul 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -3431,7 +3474,7 @@
           "impact": "",
           "challengesFaced": "",
           "learnings": "",
-          "frontend": "React, responsive UI, REST API integration",
+          "frontend": "React",
           "backend": "",
           "database": "",
           "authentication": "",
@@ -3443,7 +3486,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "2dd789f9-4d3d-4cab-9786-f1c76e8604a9",
@@ -3577,7 +3622,7 @@
           "endDate": "Aug 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -3612,7 +3657,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "dfd54561-32f3-413d-9a4f-f41a3b305dfa",
@@ -3659,7 +3706,7 @@
           "endDate": "Aug 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -3694,7 +3741,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "2c52acd2-fef7-4f86-b00b-c6c8e3f8ecc8",
@@ -3741,7 +3790,7 @@
           "endDate": "Jun 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -3776,7 +3825,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "763ec5a1-a567-4392-b5cb-1df448ccb914",
@@ -3823,7 +3874,7 @@
           "endDate": "May 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -3858,7 +3909,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "27c4620a-d925-46ae-be76-ddf41eb6da8c",
@@ -3904,7 +3957,7 @@
           "endDate": "May 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -3939,7 +3992,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "995164ea-6cb6-404d-a3ed-4e482f779603",
@@ -3985,7 +4040,7 @@
           "endDate": "Apr 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -4020,7 +4075,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "83c1ebca-6f96-49e4-8e46-4b99ec928446",
@@ -4066,7 +4123,7 @@
           "endDate": "Apr 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -4101,7 +4158,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "9d383005-d812-410c-9bc8-79a07da29702",
@@ -4148,7 +4207,7 @@
           "endDate": "Aug 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -4183,7 +4242,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "91b6b2eb-bca4-4aab-a99b-702bd7aac8b7",
@@ -4229,7 +4290,7 @@
           "endDate": "Jun 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -4264,7 +4325,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "6d8bcabf-f3be-4b6d-af45-ee6c677aa236",
@@ -4310,7 +4373,7 @@
           "endDate": "May 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -4345,7 +4408,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "9a710449-a63b-4ed4-992f-fd076b4743bb",
@@ -4391,7 +4456,7 @@
           "endDate": "May 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -4426,7 +4491,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "0c76041c-f4af-48eb-aa28-24bb72fff306",
@@ -4472,7 +4539,7 @@
           "endDate": "Aug 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -4507,7 +4574,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         },
         {
           "id": "e6a2453a-34f9-4e68-ae33-bbebc1dddd60",
@@ -4554,7 +4623,7 @@
           "endDate": "Apr 2026",
           "cloudHosting": "",
           "apisServicesUsed": "",
-          "confidentialNote": "",
+          "confidentialNote": "Confidential project — source code and private implementation details are not publicly shared.",
           "isFeatured": false,
           "featured": false,
           "draft": true,
@@ -4589,7 +4658,9 @@
           "metaTitle": "",
           "metaDescription": "",
           "keywords": [],
-          "openGraphImage": ""
+          "openGraphImage": "",
+          "codeVisibility": "Private",
+          "sourceCodePrivate": true
         }
       ],
       "showOnHomepage": true
