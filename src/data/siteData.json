@@ -2333,7 +2333,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6a905f9d0a813d7b976d952c",
+      "id": "6a90600fcab09cdf10cdf726",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -2352,17 +2352,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-08-27T16:02:28.039Z",
+      "publishedAt": "2026-08-27T16:04:21.972Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Aug 27 2026 16:02:37 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-27T16:02:28.039Z",
+      "createdAt": "Thu Aug 27 2026 16:04:31 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-27T16:04:21.972Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6a905f9d0a813d7b976d952d",
+      "id": "6a90600fcab09cdf10cdf727",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -2381,17 +2381,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-08-27T16:02:28.039Z",
+      "publishedAt": "2026-08-27T16:04:21.972Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Aug 27 2026 16:02:37 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-27T16:02:28.039Z",
+      "createdAt": "Thu Aug 27 2026 16:04:31 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-27T16:04:21.972Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6a905f9d0a813d7b976d952e",
+      "id": "6a90600fcab09cdf10cdf728",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -2410,12 +2410,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-08-27T16:02:28.039Z",
+      "publishedAt": "2026-08-27T16:04:21.972Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Aug 27 2026 16:02:37 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-27T16:02:28.039Z",
+      "createdAt": "Thu Aug 27 2026 16:04:31 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-27T16:04:21.972Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -2461,8 +2461,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-08-27T16:04:21.972Z",
-      "lastGitHubSync": "2026-08-27T16:04:26.847Z"
+      "lastMongoUpdate": "2026-08-27T16:11:36.408Z",
+      "lastGitHubSync": "2026-08-27T16:11:41.107Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -2478,7 +2478,7 @@
       "endDate": ""
     },
     "maintenanceMode": {
-      "enabled": false,
+      "enabled": true,
       "title": "Website Under Maintenance",
       "subtitle": "We are performing a quick upgrade. Please check back soon.",
       "estimatedReturn": "Expected back in 2 hours",
@@ -2952,7 +2952,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-08-27T16:04:21.972Z",
+  "updatedAt": "2026-08-27T16:11:36.408Z",
   "sections": {
     "hero": {
       "id": "hero",
