@@ -2,14 +2,14 @@
   "owner": {
     "name": "Abhishek",
     "username": "idcare19.me",
-    "identityLine": "Remote & Freelance Ready",
-    "introLine": "Hi, I'm Abhishek",
-    "role": "Building fast, scalable and premium full-stack web applications",
-    "tagline": "I build modern full-stack applications with scalable architecture, clean UI systems, and performance-focused user experiences using technologies like Next.js, Appwrite, and modern frontend frameworks.",
+    "identityLine": "Frontend Developer · Project Contributor",
+    "introLine": "Hi, I’m Abhishek",
+    "role": "Building responsive websites and practical operational tools",
+    "tagline": "I work across frontend delivery, API-connected interfaces, responsive improvement, deployment support, and the workflows that help teams move a project toward launch.",
     "location": "India",
     "badges": [
-      "Open for Freelance & Internship Opportunities Available for Projects and Collaborations Currently Available for Freelance Work Open to Internships",
-      "Freelance & Tech Collaborations"
+      "Available for freelance project work",
+      "Open to frontend and product collaboration"
     ],
     "profileImage": "/projects/logo.png",
     "resumeUrl": "https://drive.google.com/file/d/1ahGcTHEjC_ufmtYjXMkdtDM3BzeMDbUb/view?usp=drivesdk"
@@ -219,15 +219,15 @@
     }
   ],
   "heroTech": [
-    "HTML",
-    "CSS",
-    "JavaScript",
     "React",
     "Next.js",
-    "Node.js"
+    "REST APIs",
+    "Appwrite",
+    "Vercel",
+    "GitHub"
   ],
   "about": {
-    "intro": "I turn ideas into premium web products with clear structure, thoughtful interactions, and strong performance. My focus is responsive UI, smooth motion, and production-ready front-end quality.",
+    "intro": "I turn evolving requirements into usable interfaces, from public-facing client sites to dashboards, onboarding workflows, ticketing systems, and project tools. My focus is clear frontend delivery, practical systems thinking, and reliable handoff.",
     "stats": [
       {
         "label": "Projects Completed",
@@ -473,15 +473,13 @@
   ],
   "education": [],
   "journeyNow": {
-    "currentWork": "Parvati & Sons — Project Manager & Full Stack Developer",
+    "currentWork": "Frontend Developer & Project Contributor — client delivery and systems work",
     "ongoingMilestones": [
-      "Managing website development tasks and project workflow",
-      "Coordinating frontend improvements and feature implementation",
-      "Improving UI/UX and responsive layouts across devices",
-      "Optimizing website performance and loading speed",
-      "Handling deployment updates and live website maintenance",
-      "Working with scalable full-stack architecture and integrations",
-      "Testing, debugging, and ensuring production stability"
+      "Delivering responsive frontend experiences for client websites",
+      "Connecting API-aware user interfaces and investigating integration issues",
+      "Supporting live deployment, SEO basics, and technical handoffs",
+      "Contributing to healthcare, onboarding, ticketing, and project-management workflows",
+      "Turning project requirements into concrete UI tasks and team-ready documentation"
     ]
   },
   "socials": [
@@ -991,7 +989,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6a805775be85817accb6a1be",
+      "id": "6a805968e10a01f67c191369",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1010,17 +1008,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-08-15T12:11:25.170Z",
+      "publishedAt": "2026-08-15T12:19:44.515Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Sat Aug 15 2026 12:11:33 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-15T12:11:25.170Z",
+      "createdAt": "Sat Aug 15 2026 12:19:52 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-15T12:19:44.515Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6a805775be85817accb6a1bf",
+      "id": "6a805968e10a01f67c19136a",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1039,17 +1037,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-08-15T12:11:25.170Z",
+      "publishedAt": "2026-08-15T12:19:44.515Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Sat Aug 15 2026 12:11:33 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-15T12:11:25.170Z",
+      "createdAt": "Sat Aug 15 2026 12:19:52 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-15T12:19:44.515Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6a805775be85817accb6a1c0",
+      "id": "6a805968e10a01f67c19136b",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1068,12 +1066,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-08-15T12:11:25.170Z",
+      "publishedAt": "2026-08-15T12:19:44.515Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Sat Aug 15 2026 12:11:33 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-15T12:11:25.170Z",
+      "createdAt": "Sat Aug 15 2026 12:19:52 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-15T12:19:44.515Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1119,8 +1117,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-08-15T12:19:44.515Z",
-      "lastGitHubSync": "2026-08-15T12:19:48.544Z"
+      "lastMongoUpdate": "2026-08-27T15:41:06.919Z",
+      "lastGitHubSync": "2026-08-27T15:41:10.607Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1610,7 +1608,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-08-15T12:19:44.515Z",
+  "updatedAt": "2026-08-27T15:41:06.919Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -1629,17 +1627,17 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "Remote & Freelance Ready",
-        "title": "Hi, I'm Abhishek",
-        "animatedRole": "Building fast, scalable and premium full-stack web applications",
-        "description": "I build modern full-stack applications with scalable architecture, clean UI systems, and performance-focused user experiences using technologies like Next.js, Appwrite, and modern frontend frameworks.",
+        "eyebrow": "Frontend Developer · Project Contributor",
+        "title": "Hi, I’m Abhishek",
+        "animatedRole": "Building responsive websites and practical operational tools",
+        "description": "I work across frontend delivery, API-connected interfaces, responsive improvement, deployment support, and the workflows that help teams move a project toward launch.",
         "primaryCtaLabel": "",
         "primaryCtaHref": "",
         "secondaryCtaLabel": "",
         "secondaryCtaHref": "",
         "badges": [
-          "Open for Freelance & Internship Opportunities Available for Projects and Collaborations Currently Available for Freelance Work Open to Internships",
-          "Freelance & Tech Collaborations"
+          "Available for freelance project work",
+          "Open to frontend and product collaboration"
         ],
         "stats": [
           {
@@ -1656,12 +1654,12 @@
           }
         ],
         "techStack": [
-          "HTML",
-          "CSS",
-          "JavaScript",
           "React",
           "Next.js",
-          "Node.js"
+          "REST APIs",
+          "Appwrite",
+          "Vercel",
+          "GitHub"
         ]
       },
       "items": [],
@@ -1684,10 +1682,10 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "About",
-        "title": "Building modern products with clean execution",
-        "description": "A quick overview of who I am and how I build.",
-        "intro": "I turn ideas into premium web products with clear structure, thoughtful interactions, and strong performance. My focus is responsive UI, smooth motion, and production-ready front-end quality."
+        "eyebrow": "About the work",
+        "title": "Building clearer interfaces for work that needs to move",
+        "description": "A practical record of frontend delivery, system work, and project collaboration.",
+        "intro": "I turn evolving requirements into usable interfaces, from public-facing client sites to dashboards, onboarding workflows, ticketing systems, and project tools. My focus is clear frontend delivery, practical systems thinking, and reliable handoff."
       },
       "items": [
         {
@@ -1992,11 +1990,11 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "Projects",
-        "title": "Featured work",
-        "description": "Selected projects, client work, and production-ready builds.",
+        "eyebrow": "Verified project archive",
+        "title": "14+ project workstreams",
+        "description": "Client websites, product systems, and operational tools — documented to show direct contribution, not inflated ownership.",
         "homepageLimit": "6",
-        "homepageButtonText": "View More Projects"
+        "homepageButtonText": "Open project archive"
       },
       "items": [
         {
@@ -2171,9 +2169,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "Currently Working",
-        "title": "Live work in progress",
-        "description": "Projects I am actively building or improving right now."
+        "eyebrow": "System work",
+        "title": "Product and workflow builds",
+        "description": "Current or system-focused contributions where the work evolved through interface design, team coordination, and technical handoffs."
       },
       "items": [],
       "showOnHomepage": true
@@ -2195,9 +2193,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "Completed Projects",
-        "title": "Projects I worked on",
-        "description": "A clear record of completed work and what I delivered."
+        "eyebrow": "Delivered work",
+        "title": "Client websites and completed deliveries",
+        "description": "A record of client-facing projects that received direct frontend, deployment, debugging, or delivery support."
       },
       "items": [
         {
@@ -2358,15 +2356,13 @@
         "title": "Experience",
         "description": "",
         "currentWorkTitle": "",
-        "currentWork": "Parvati & Sons — Project Manager & Full Stack Developer",
+        "currentWork": "Frontend Developer & Project Contributor — client delivery and systems work",
         "milestones": [
-          "Managing website development tasks and project workflow",
-          "Coordinating frontend improvements and feature implementation",
-          "Improving UI/UX and responsive layouts across devices",
-          "Optimizing website performance and loading speed",
-          "Handling deployment updates and live website maintenance",
-          "Working with scalable full-stack architecture and integrations",
-          "Testing, debugging, and ensuring production stability"
+          "Delivering responsive frontend experiences for client websites",
+          "Connecting API-aware user interfaces and investigating integration issues",
+          "Supporting live deployment, SEO basics, and technical handoffs",
+          "Contributing to healthcare, onboarding, ticketing, and project-management workflows",
+          "Turning project requirements into concrete UI tasks and team-ready documentation"
         ]
       },
       "items": [
@@ -2802,9 +2798,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "Highlights",
-        "title": "Achievements",
-        "description": "A collection of key milestones, production projects, technologies, and professional accomplishments that reflect my growth as a full-stack developer."
+        "eyebrow": "Project record",
+        "title": "Evidence-led highlights",
+        "description": "14+ identifiable workstreams across client websites, healthcare workflows, workforce tooling, ticketing, project management, and product-system documentation."
       },
       "items": [
         {
