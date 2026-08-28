@@ -425,6 +425,82 @@
       "endDate": "July 2026",
       "techStack": [],
       "customFields": []
+    },
+    {
+      "id": "project-1787905712409",
+      "slug": "item-1787905712410",
+      "title": "Ekam-OS",
+      "shortDescription": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
+      "longDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface. \n\nThe system leverages a powerful microservices-inspired approach utilizing Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for lightning-fast navigation and state management.\n",
+      "techStack": [
+        "Nest.js",
+        "Django",
+        "Python",
+        "SMTP",
+        "PostgreSQL"
+      ],
+      "category": "Completed",
+      "image": "https://ekamos.prsn.in/logo2.png",
+      "liveDemoUrl": "Ekamos.prsn.in",
+      "githubUrl": "",
+      "featured": true,
+      "order": 6,
+      "isEnabled": true,
+      "overview": "",
+      "problem": "",
+      "solution": "",
+      "myRole": "Full stack developer, Project management",
+      "responsibilities": [],
+      "features": [],
+      "screenshots": [],
+      "architectureDiagram": "",
+      "databaseSchema": "PostgreSQL",
+      "apiFlow": "",
+      "folderStructure": "",
+      "challenges": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, utilized asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insights into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
+      "lessonsLearned": "",
+      "futureImprovements": [],
+      "timeline": "3",
+      "tags": [
+        "Company-Os"
+      ],
+      "readingTimeMinutes": 1,
+      "status": "Completed",
+      "projectType": "Client",
+      "published": false,
+      "customFields": [],
+      "role": "Full stack developer, Project management",
+      "link": "Ekamos.prsn.in",
+      "workDone": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
+      "draft": true,
+      "confidentialProject": true,
+      "company": "Parvati and Sons",
+      "teamSize": "3",
+      "duration": "3 months (under working)",
+      "startDate": "2026-6-21",
+      "endDate": "Still working",
+      "frontend": "Next.js",
+      "backend": "Django",
+      "hosting": "",
+      "database": "PostgreSQL",
+      "fullDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface. \n\nThe system leverages a powerful microservices-inspired approach utilizing Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for lightning-fast navigation and state management.\n",
+      "keyFeatures": [
+        "Modular Dashboard Architecture: Centralized control panel for managing core system components and user workflows.\nSecure Authentication & Role-Based Access: Multi-tier authorization backed by robust backend validation.\nAutomated Email & Notification System: Integrated SMTP pipelines for real-time user alerts and automated reporting.\nHigh-Performance Data Handling: Optimized PostgreSQL database queries ensuring minimal latency during heavy loads.\nResponsive & Modern UI: Built with Next.js for server-side rendering and instantaneous client-side transitions."
+      ],
+      "keyResponsibilities": [
+        "Architected and developed end-to-end full-stack features using Next.js",
+        "Nest.js",
+        "and Django.\nDesigned and optimized PostgreSQL database schemas and managed API integrations.\nHandled project management",
+        "task distribution",
+        "and version control workflows within a 3-member team.\nImplemented secure communication channels and automated backend notification triggers via SMTP."
+      ],
+      "skillsApplied": [
+        "Full-Stack Web Development\nSystem Architecture & API Design\nDatabase Management (PostgreSQL)\nProject Management & Team Coordination\nPerformance Optimization & Debugging"
+      ],
+      "challengesFaced": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, utilized asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insights into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
+      "futureRoadmap": [
+        "Implementing real-time WebSocket communication for live system updates.\nIntegrating advanced AI-driven analytics for automated workflow insights.\nAdding new portals that are left to complete.\nExpanding third-party API integrations and plugin architecture."
+      ]
     }
   ],
   "reviews": [],
@@ -991,7 +1067,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6a805775be85817accb6a1be",
+      "id": "6a910ac9cb3af36b1dc8c4af",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1010,17 +1086,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-08-15T12:11:25.170Z",
+      "publishedAt": "2026-08-28T04:12:54.437Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Sat Aug 15 2026 12:11:33 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-15T12:11:25.170Z",
+      "createdAt": "Fri Aug 28 2026 04:12:57 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-28T04:12:54.437Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6a805775be85817accb6a1bf",
+      "id": "6a910ac9cb3af36b1dc8c4b0",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1039,17 +1115,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-08-15T12:11:25.170Z",
+      "publishedAt": "2026-08-28T04:12:54.437Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Sat Aug 15 2026 12:11:33 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-15T12:11:25.170Z",
+      "createdAt": "Fri Aug 28 2026 04:12:57 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-28T04:12:54.437Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6a805775be85817accb6a1c0",
+      "id": "6a910ac9cb3af36b1dc8c4b1",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1068,12 +1144,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-08-15T12:11:25.170Z",
+      "publishedAt": "2026-08-28T04:12:54.437Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Sat Aug 15 2026 12:11:33 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-08-15T12:11:25.170Z",
+      "createdAt": "Fri Aug 28 2026 04:12:57 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-08-28T04:12:54.437Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1119,8 +1195,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-08-15T12:19:44.515Z",
-      "lastGitHubSync": "2026-08-15T12:19:48.544Z"
+      "lastMongoUpdate": "2026-08-28T08:41:33.569Z",
+      "lastGitHubSync": "2026-08-28T08:41:37.406Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1610,7 +1686,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-08-15T12:19:44.515Z",
+  "updatedAt": "2026-08-28T08:41:33.569Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -2309,6 +2385,82 @@
           "endDate": "July 2026",
           "techStack": [],
           "customFields": []
+        },
+        {
+          "id": "project-1787905712409",
+          "slug": "item-1787905712410",
+          "title": "Ekam-OS",
+          "shortDescription": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
+          "longDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface. \n\nThe system leverages a powerful microservices-inspired approach utilizing Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for lightning-fast navigation and state management.\n",
+          "techStack": [
+            "Nest.js",
+            "Django",
+            "Python",
+            "SMTP",
+            "PostgreSQL"
+          ],
+          "category": "Completed",
+          "image": "https://ekamos.prsn.in/logo2.png",
+          "liveDemoUrl": "Ekamos.prsn.in",
+          "githubUrl": "",
+          "featured": true,
+          "order": 6,
+          "isEnabled": true,
+          "overview": "",
+          "problem": "",
+          "solution": "",
+          "myRole": "Full stack developer, Project management",
+          "responsibilities": [],
+          "features": [],
+          "screenshots": [],
+          "architectureDiagram": "",
+          "databaseSchema": "PostgreSQL",
+          "apiFlow": "",
+          "folderStructure": "",
+          "challenges": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, utilized asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insights into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
+          "lessonsLearned": "",
+          "futureImprovements": [],
+          "timeline": "3",
+          "tags": [
+            "Company-Os"
+          ],
+          "readingTimeMinutes": 1,
+          "status": "Completed",
+          "projectType": "Client",
+          "published": false,
+          "customFields": [],
+          "role": "Full stack developer, Project management",
+          "link": "Ekamos.prsn.in",
+          "workDone": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
+          "draft": true,
+          "confidentialProject": true,
+          "company": "Parvati and Sons",
+          "teamSize": "3",
+          "duration": "3 months (under working)",
+          "startDate": "2026-6-21",
+          "endDate": "Still working",
+          "frontend": "Next.js",
+          "backend": "Django",
+          "hosting": "",
+          "database": "PostgreSQL",
+          "fullDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface. \n\nThe system leverages a powerful microservices-inspired approach utilizing Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for lightning-fast navigation and state management.\n",
+          "keyFeatures": [
+            "Modular Dashboard Architecture: Centralized control panel for managing core system components and user workflows.\nSecure Authentication & Role-Based Access: Multi-tier authorization backed by robust backend validation.\nAutomated Email & Notification System: Integrated SMTP pipelines for real-time user alerts and automated reporting.\nHigh-Performance Data Handling: Optimized PostgreSQL database queries ensuring minimal latency during heavy loads.\nResponsive & Modern UI: Built with Next.js for server-side rendering and instantaneous client-side transitions."
+          ],
+          "keyResponsibilities": [
+            "Architected and developed end-to-end full-stack features using Next.js",
+            "Nest.js",
+            "and Django.\nDesigned and optimized PostgreSQL database schemas and managed API integrations.\nHandled project management",
+            "task distribution",
+            "and version control workflows within a 3-member team.\nImplemented secure communication channels and automated backend notification triggers via SMTP."
+          ],
+          "skillsApplied": [
+            "Full-Stack Web Development\nSystem Architecture & API Design\nDatabase Management (PostgreSQL)\nProject Management & Team Coordination\nPerformance Optimization & Debugging"
+          ],
+          "challengesFaced": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, utilized asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insights into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
+          "futureRoadmap": [
+            "Implementing real-time WebSocket communication for live system updates.\nIntegrating advanced AI-driven analytics for automated workflow insights.\nAdding new portals that are left to complete.\nExpanding third-party API integrations and plugin architecture."
+          ]
         }
       ],
       "showOnHomepage": true
