@@ -24,14 +24,6 @@
       "href": "#skills"
     },
     {
-      "label": "projects",
-      "href": "#projects"
-    },
-    {
-      "label": "github",
-      "href": "/github"
-    },
-    {
       "label": "contact",
       "href": "#contact"
     }
@@ -102,8 +94,8 @@
       "label": "projects",
       "order": 7,
       "visible": true,
-      "showInNav": true,
-      "showOnHomepage": true,
+      "showInNav": false,
+      "showOnHomepage": false,
       "locked": false,
       "deleted": false
     },
@@ -141,7 +133,7 @@
       "id": "reviews",
       "label": "reviews",
       "order": 11,
-      "visible": true,
+      "visible": false,
       "showInNav": true,
       "showOnHomepage": true,
       "locked": false,
@@ -191,7 +183,7 @@
       "id": "github",
       "label": "github",
       "order": 17,
-      "visible": true,
+      "visible": false,
       "showInNav": true,
       "showOnHomepage": true,
       "locked": false,
@@ -1071,7 +1063,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6ab202900ea87a6eb0fd5ca5",
+      "id": "6ab202d30ea87a6eb0fd5feb",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1090,17 +1082,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-09-22T04:22:31.829Z",
+      "publishedAt": "2026-09-22T04:23:39.417Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Sep 22 2026 04:22:40 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-09-22T04:22:31.829Z",
+      "createdAt": "Tue Sep 22 2026 04:23:47 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-09-22T04:23:39.417Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6ab202900ea87a6eb0fd5ca6",
+      "id": "6ab202d30ea87a6eb0fd5fec",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1119,17 +1111,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-09-22T04:22:31.829Z",
+      "publishedAt": "2026-09-22T04:23:39.417Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Sep 22 2026 04:22:40 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-09-22T04:22:31.829Z",
+      "createdAt": "Tue Sep 22 2026 04:23:47 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-09-22T04:23:39.417Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6ab202900ea87a6eb0fd5ca7",
+      "id": "6ab202d30ea87a6eb0fd5fed",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1148,12 +1140,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-09-22T04:22:31.829Z",
+      "publishedAt": "2026-09-22T04:23:39.417Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Sep 22 2026 04:22:40 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-09-22T04:22:31.829Z",
+      "createdAt": "Tue Sep 22 2026 04:23:47 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-09-22T04:23:39.417Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1199,8 +1191,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-09-22T04:23:39.417Z",
-      "lastGitHubSync": "2026-09-22T04:23:43.503Z"
+      "lastMongoUpdate": "2026-11-03T09:30:01.015Z",
+      "lastGitHubSync": "2026-11-03T09:30:05.771Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1690,7 +1682,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-09-22T04:23:39.417Z",
+  "updatedAt": "2026-11-03T09:30:01.015Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -2064,7 +2056,7 @@
       "layout": "default",
       "status": "published",
       "nav": {
-        "show": true,
+        "show": false,
         "href": "#projects",
         "label": "projects"
       },
@@ -2232,7 +2224,7 @@
           "solution": "SmartQueue AI provides a fully digital queue management platform where customers join queues using QR codes, receive live updates, AI-generated wait-time predictions, and notifications while staff manage operations through real-time dashboards."
         }
       ],
-      "showOnHomepage": true
+      "showOnHomepage": false
     },
     "working": {
       "id": "working",
