@@ -65,7 +65,7 @@
     },
     {
       "id": "skills",
-      "label": "skills",
+      "label": "Skills",
       "order": 4,
       "visible": true,
       "showInNav": true,
@@ -75,7 +75,7 @@
     },
     {
       "id": "certificates",
-      "label": "certificates",
+      "label": "Certificates",
       "order": 5,
       "visible": true,
       "showInNav": false,
@@ -85,7 +85,7 @@
     },
     {
       "id": "services",
-      "label": "services",
+      "label": "Services",
       "order": 6,
       "visible": true,
       "showInNav": false,
@@ -95,7 +95,7 @@
     },
     {
       "id": "projects",
-      "label": "projects",
+      "label": "Projects",
       "order": 7,
       "visible": true,
       "showInNav": false,
@@ -115,7 +115,7 @@
     },
     {
       "id": "completed",
-      "label": "completed",
+      "label": "Completed",
       "order": 9,
       "visible": true,
       "showInNav": false,
@@ -135,7 +135,7 @@
     },
     {
       "id": "reviews",
-      "label": "reviews",
+      "label": "Reviews",
       "order": 11,
       "visible": false,
       "showInNav": true,
@@ -1067,7 +1067,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6ae9aa199597802955b8b4e2",
+      "id": "6ae9aa3e8f546c6ff146fcd8",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1086,17 +1086,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-11-03T09:31:58.793Z",
+      "publishedAt": "2026-11-03T09:32:38.372Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 09:32:09 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-03T09:31:58.793Z",
+      "createdAt": "Tue Nov 03 2026 09:32:46 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-03T09:32:38.372Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6ae9aa199597802955b8b4e3",
+      "id": "6ae9aa3e8f546c6ff146fcd9",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1115,17 +1115,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-11-03T09:31:58.793Z",
+      "publishedAt": "2026-11-03T09:32:38.372Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 09:32:09 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-03T09:31:58.793Z",
+      "createdAt": "Tue Nov 03 2026 09:32:46 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-03T09:32:38.372Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6ae9aa199597802955b8b4e4",
+      "id": "6ae9aa3e8f546c6ff146fcda",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1144,12 +1144,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-11-03T09:31:58.793Z",
+      "publishedAt": "2026-11-03T09:32:38.372Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 09:32:09 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-03T09:31:58.793Z",
+      "createdAt": "Tue Nov 03 2026 09:32:46 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-03T09:32:38.372Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1195,8 +1195,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-03T09:32:38.372Z",
-      "lastGitHubSync": "2026-11-03T09:32:42.038Z"
+      "lastMongoUpdate": "2026-11-03T09:35:21.761Z",
+      "lastGitHubSync": "2026-11-03T09:35:25.853Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1686,7 +1686,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-03T09:32:38.372Z",
+  "updatedAt": "2026-11-03T09:35:21.761Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -1783,7 +1783,7 @@
     },
     "skills": {
       "id": "skills",
-      "label": "skills",
+      "label": "Skills",
       "renderer": "skills",
       "enabled": true,
       "order": 4,
@@ -2053,7 +2053,7 @@
     },
     "projects": {
       "id": "projects",
-      "label": "projects",
+      "label": "Projects",
       "renderer": "projects",
       "enabled": true,
       "order": 7,
@@ -2256,7 +2256,7 @@
     },
     "completed": {
       "id": "completed",
-      "label": "completed",
+      "label": "Completed",
       "renderer": "completed",
       "enabled": true,
       "order": 9,
@@ -2471,7 +2471,7 @@
     },
     "reviews": {
       "id": "reviews",
-      "label": "reviews",
+      "label": "Reviews",
       "renderer": "reviews",
       "enabled": false,
       "order": 11,
@@ -2560,7 +2560,7 @@
     },
     "services": {
       "id": "services",
-      "label": "services",
+      "label": "Services",
       "renderer": "services",
       "enabled": true,
       "order": 6,
@@ -3192,7 +3192,7 @@
     },
     "certificates": {
       "id": "certificates",
-      "label": "certificates",
+      "label": "Certificates",
       "renderer": "certificates",
       "enabled": true,
       "order": 5,
