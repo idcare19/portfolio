@@ -20,6 +20,10 @@
       "href": "#about"
     },
     {
+      "label": "achievements",
+      "href": "#achievements"
+    },
+    {
       "label": "skills",
       "href": "#skills"
     },
@@ -31,7 +35,7 @@
   "sectionControls": [
     {
       "id": "hero",
-      "label": "hero",
+      "label": "Hero",
       "order": 1,
       "visible": true,
       "showInNav": false,
@@ -41,7 +45,7 @@
     },
     {
       "id": "about",
-      "label": "about",
+      "label": "About",
       "order": 2,
       "visible": true,
       "showInNav": true,
@@ -51,10 +55,10 @@
     },
     {
       "id": "achievements",
-      "label": "achievements",
+      "label": "Achievements",
       "order": 3,
       "visible": true,
-      "showInNav": false,
+      "showInNav": true,
       "showOnHomepage": true,
       "locked": false,
       "deleted": false
@@ -1063,7 +1067,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6ab202d30ea87a6eb0fd5feb",
+      "id": "6ae9a9a39a2a45b7ff53a89a",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1082,17 +1086,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-09-22T04:23:39.417Z",
+      "publishedAt": "2026-11-03T09:30:01.015Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Sep 22 2026 04:23:47 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-09-22T04:23:39.417Z",
+      "createdAt": "Tue Nov 03 2026 09:30:11 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-03T09:30:01.015Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6ab202d30ea87a6eb0fd5fec",
+      "id": "6ae9a9a39a2a45b7ff53a89b",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1111,17 +1115,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-09-22T04:23:39.417Z",
+      "publishedAt": "2026-11-03T09:30:01.015Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Sep 22 2026 04:23:47 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-09-22T04:23:39.417Z",
+      "createdAt": "Tue Nov 03 2026 09:30:11 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-03T09:30:01.015Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6ab202d30ea87a6eb0fd5fed",
+      "id": "6ae9a9a39a2a45b7ff53a89c",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1140,12 +1144,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-09-22T04:23:39.417Z",
+      "publishedAt": "2026-11-03T09:30:01.015Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Sep 22 2026 04:23:47 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-09-22T04:23:39.417Z",
+      "createdAt": "Tue Nov 03 2026 09:30:11 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-03T09:30:01.015Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1191,8 +1195,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-03T09:30:01.015Z",
-      "lastGitHubSync": "2026-11-03T09:30:05.771Z"
+      "lastMongoUpdate": "2026-11-03T09:31:58.793Z",
+      "lastGitHubSync": "2026-11-03T09:32:03.738Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1682,11 +1686,11 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-03T09:30:01.015Z",
+  "updatedAt": "2026-11-03T09:31:58.793Z",
   "sections": {
     "hero": {
       "id": "hero",
-      "label": "hero",
+      "label": "Hero",
       "renderer": "hero",
       "enabled": true,
       "order": 1,
@@ -1741,7 +1745,7 @@
     },
     "about": {
       "id": "about",
-      "label": "about",
+      "label": "About",
       "renderer": "about",
       "enabled": true,
       "order": 2,
@@ -2939,14 +2943,14 @@
     },
     "achievements": {
       "id": "achievements",
-      "label": "achievements",
+      "label": "Achievements",
       "renderer": "achievements",
       "enabled": true,
       "order": 3,
       "layout": "default",
       "status": "published",
       "nav": {
-        "show": false,
+        "show": true,
         "href": "#achievements",
         "label": "achievements"
       },
