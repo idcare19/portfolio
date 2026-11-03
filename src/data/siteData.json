@@ -205,7 +205,7 @@
     },
     {
       "id": "contact",
-      "label": "contact",
+      "label": "Contact",
       "order": 19,
       "visible": true,
       "showInNav": true,
@@ -1067,7 +1067,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6ae9a9a39a2a45b7ff53a89a",
+      "id": "6ae9aa199597802955b8b4e2",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1086,17 +1086,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-11-03T09:30:01.015Z",
+      "publishedAt": "2026-11-03T09:31:58.793Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 09:30:11 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-03T09:30:01.015Z",
+      "createdAt": "Tue Nov 03 2026 09:32:09 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-03T09:31:58.793Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6ae9a9a39a2a45b7ff53a89b",
+      "id": "6ae9aa199597802955b8b4e3",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1115,17 +1115,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-11-03T09:30:01.015Z",
+      "publishedAt": "2026-11-03T09:31:58.793Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 09:30:11 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-03T09:30:01.015Z",
+      "createdAt": "Tue Nov 03 2026 09:32:09 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-03T09:31:58.793Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6ae9a9a39a2a45b7ff53a89c",
+      "id": "6ae9aa199597802955b8b4e4",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1144,12 +1144,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-11-03T09:30:01.015Z",
+      "publishedAt": "2026-11-03T09:31:58.793Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 09:30:11 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-03T09:30:01.015Z",
+      "createdAt": "Tue Nov 03 2026 09:32:09 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-03T09:31:58.793Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1195,8 +1195,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-03T09:31:58.793Z",
-      "lastGitHubSync": "2026-11-03T09:32:03.738Z"
+      "lastMongoUpdate": "2026-11-03T09:32:38.372Z",
+      "lastGitHubSync": "2026-11-03T09:32:42.038Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1686,7 +1686,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-03T09:31:58.793Z",
+  "updatedAt": "2026-11-03T09:32:38.372Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -2603,7 +2603,7 @@
     },
     "contact": {
       "id": "contact",
-      "label": "contact",
+      "label": "Contact",
       "renderer": "contact",
       "enabled": true,
       "order": 19,
