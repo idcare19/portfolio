@@ -1,95 +1,253 @@
+
 "use client";
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
-import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
+import {
+  useSectionData,
+  useSiteDataContext,
+} from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
-import { ArrowUpRight, CalendarDays, CheckCircle2 } from "lucide-react";
+
+import {
+  ArrowUpRight,
+  CalendarDays,
+  CheckCircle2,
+  FolderKanban,
+} from "lucide-react";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { filterHomepageItems, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
+
+import {
+  filterHomepageItems,
+  getHomepageDisplayConfig,
+  shouldShowViewMore,
+  debugHomepageDisplay,
+} from "@/lib/homepage-display-controls";
+
 import { renderIcon } from "@/lib/skill-icons";
 
 function normalizeHref(value?: string) {
   const href = String(value || "").trim();
+
   if (!href || href.toLowerCase() === "none") return "";
+
   return href;
+}
+
+function isExternalLink(href: string) {
+  return /^https?:\/\//i.test(href);
 }
 
 export function CompletedProjectsSection() {
   const section = useSectionData("completed");
   const siteData = useSiteDataContext();
   const pathname = usePathname();
+
   const data = section.data as Record<string, any>;
-  const homepageSettings = getHomepageDisplayConfig(siteData, "completed");
+
+  const homepageSettings = getHomepageDisplayConfig(
+    siteData,
+    "completed"
+  );
+
   const isHomepage = pathname === "/";
-  const fullProjects = filterHomepageItems(section.items || [], { showOnlyFeatured: false, manualItemOrder: undefined, limit: undefined, itemsLimit: undefined });
-  const homepageProjects = filterHomepageItems(section.items || [], { ...homepageSettings, limit: homepageSettings.limit ?? homepageSettings.itemsLimit ?? 6, showOnlyFeatured: homepageSettings.showOnlyFeatured });
-  const completedProjects = isHomepage ? homepageProjects : fullProjects;
-  const showMore = isHomepage && shouldShowViewMore(fullProjects, completedProjects, homepageSettings);
-  debugHomepageDisplay("completed", (section.items || []).length, completedProjects.length, homepageSettings);
+
+  const fullProjects = filterHomepageItems(section.items || [], {
+    showOnlyFeatured: false,
+    manualItemOrder: undefined,
+    limit: undefined,
+    itemsLimit: undefined,
+  });
+
+  const homepageProjects = filterHomepageItems(section.items || [], {
+    ...homepageSettings,
+    limit: homepageSettings.limit ?? homepageSettings.itemsLimit ?? 6,
+    showOnlyFeatured: homepageSettings.showOnlyFeatured,
+  });
+
+  const completedProjects = isHomepage
+    ? homepageProjects
+    : fullProjects;
+
+  const showMore =
+    isHomepage &&
+    shouldShowViewMore(
+      fullProjects,
+      completedProjects,
+      homepageSettings
+    );
+
+  debugHomepageDisplay(
+    "completed",
+    (section.items || []).length,
+    completedProjects.length,
+    homepageSettings
+  );
 
   if (completedProjects.length === 0) {
     return null;
   }
 
   return (
-    <AnimatedSection id="completed" className="bg-[linear-gradient(180deg,rgba(248,250,252,1),rgba(255,255,255,1))] py-24">
-      <div className="section-wrap">
+    <AnimatedSection
+      id="completed"
+      className="relative overflow-hidden bg-[rgb(var(--background))] py-16 transition-colors duration-300 sm:py-20"
+    >
+      <div className="section-wrap relative">
+
+        {/* Header */}
         <SectionHeader
-          eyebrow={data.eyebrow}
-          title={data.title}
+          eyebrow={data.eyebrow || "Portfolio"}
+          title={data.title || "Completed Projects"}
           description={data.description}
         />
 
+        {/* Project count */}
+        <div className="mb-7 flex items-center justify-between gap-3">
+          <div className="inline-flex items-center gap-2 text-xs font-medium text-text-muted">
+            <FolderKanban className="h-4 w-4" />
+            <span>Selected work</span>
+          </div>
+
+          <span className="rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--surface))] px-3 py-1.5 text-xs font-semibold text-text-muted">
+            {completedProjects.length} Projects
+          </span>
+        </div>
+
+        {/* Project cards */}
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {completedProjects.map((project, index) => (
-            <div key={`${project.title}-${index}`}>
-              <article className="glass h-full rounded-[30px] p-5 shadow-[0_18px_42px_rgba(15,23,42,0.06)]">
-                <div className="flex flex-wrap items-center justify-between gap-2">
-                    <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-primary">
-                      {project.iconUrl ? <img src={project.iconUrl} alt="" className="h-5 w-5 object-contain" /> : renderIcon(project.icon, project.iconColor, "h-5 w-5")}
-                    </span>
-                    <span className="inline-flex items-center gap-1.5 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wide text-[#1D4ED8]">
-                    <CheckCircle2 className="h-3.5 w-3.5" />
+          {completedProjects.map((project: any, index: number) => {
+            const externalHref = normalizeHref(project.link);
+            const external = isExternalLink(externalHref);
+
+            return (
+              <article
+                key={
+                  project.id ??
+                  project.slug ??
+                  `${project.title}-${index}`
+                }
+                className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 shadow-[0_8px_28px_rgba(15,23,42,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[rgb(var(--primary))] hover:shadow-[0_20px_45px_rgba(15,23,42,0.10)] sm:p-6"
+              >
+                {/* Top accent */}
+                <div
+                  aria-hidden="true"
+                  className="absolute left-0 top-0 h-[2px] w-0 transition-all duration-500 group-hover:w-full"
+                  style={{ background: "rgb(var(--primary))" }}
+                />
+
+                {/* Card top */}
+                <div className="flex flex-wrap items-center justify-between gap-3">
+                  <div
+                    className="flex h-12 w-12 items-center justify-center overflow-hidden rounded-2xl border border-[rgb(var(--border))] transition-transform duration-300 group-hover:scale-105"
+                    style={{
+                      background:
+                        "color-mix(in srgb, rgb(var(--primary)) 9%, rgb(var(--card-bg)))",
+                      color: project.iconColor || "rgb(var(--primary))",
+                    }}
+                  >
+                    {project.iconUrl ? (
+                      <img
+                        src={project.iconUrl}
+                        alt=""
+                        loading="lazy"
+                        className="h-6 w-6 object-contain"
+                      />
+                    ) : (
+                      renderIcon(
+                        project.icon,
+                        project.iconColor,
+                        "h-5 w-5"
+                      )
+                    )}
+                  </div>
+
+                  <span className="inline-flex items-center gap-1.5 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--surface))] px-3 py-1.5 text-[10px] font-bold uppercase tracking-wider text-text-muted">
+                    <CheckCircle2
+                      className="h-3.5 w-3.5"
+                      style={{ color: "rgb(var(--primary))" }}
+                    />
                     Completed
                   </span>
-                  {project.timeline ? (
-                    <span className="inline-flex items-center gap-1 text-xs text-text-muted">
-                      <CalendarDays className="h-3.5 w-3.5" />
-                      {project.timeline}
-                    </span>
-                  ) : null}
                 </div>
 
-                <h3 className="mt-3 text-xl font-semibold tracking-tight text-text-main">{project.title}</h3>
-                {project.role ? <p className="mt-1 text-xs font-semibold uppercase tracking-wide text-[#1D4ED8]">{project.role}</p> : null}
-                <p className="mt-3 text-sm leading-7 text-text-muted">{project.workDone}</p>
+                {/* Project details */}
+                <div className="mt-6">
+                  <h3 className="text-xl font-bold tracking-tight text-text-main transition-colors duration-200 group-hover:text-[rgb(var(--primary))]">
+                    {project.title || "Untitled Project"}
+                  </h3>
 
-                <div className="mt-4 flex flex-wrap gap-3">
-                  {project.slug ? (
+                  {project.role && (
+                    <p
+                      className="mt-2 text-[10px] font-bold uppercase tracking-[0.16em]"
+                      style={{ color: "rgb(var(--primary))" }}
+                    >
+                      {project.role}
+                    </p>
+                  )}
+
+                  {project.timeline && (
+                    <div className="mt-3 inline-flex items-center gap-2 text-xs text-text-muted">
+                      <CalendarDays className="h-3.5 w-3.5" />
+                      <span>{project.timeline}</span>
+                    </div>
+                  )}
+
+                  <p className="mt-4 text-sm leading-7 text-text-muted">
+                    {project.workDone || "Project details coming soon."}
+                  </p>
+                </div>
+
+                {/* Actions */}
+                <div className="mt-auto flex flex-wrap gap-x-5 gap-y-3 border-t border-[rgb(var(--border))] pt-5 mt-6">
+                  {project.slug && (
                     <Link
                       href={`/completed-projects/${project.slug}`}
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#1D4ED8] hover:text-[#1E40AF]"
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold transition-all duration-200 hover:gap-2.5"
+                      style={{ color: "rgb(var(--primary))" }}
                     >
-                      View project <ArrowUpRight className="h-3.5 w-3.5" />
+                      View project
+                      <ArrowUpRight className="h-4 w-4" />
                     </Link>
-                  ) : null}
-                  {normalizeHref(project.link) ? (
+                  )}
+
+                  {externalHref && (
                     <Link
-                      href={normalizeHref(project.link)}
-                      target={normalizeHref(project.link).startsWith("http") ? "_blank" : undefined}
-                      rel={normalizeHref(project.link).startsWith("http") ? "noreferrer" : undefined}
-                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-muted hover:text-text-main"
+                      href={externalHref}
+                      target={external ? "_blank" : undefined}
+                      rel={external ? "noopener noreferrer" : undefined}
+                      className="inline-flex items-center gap-1.5 text-sm font-semibold text-text-muted transition-colors duration-200 hover:text-text-main"
                     >
-                      Open external link <ArrowUpRight className="h-3.5 w-3.5" />
+                      External link
+                      <ArrowUpRight className="h-4 w-4" />
                     </Link>
-                  ) : null}
+                  )}
+
+                  {!project.slug && !externalHref && (
+                    <span className="text-xs font-medium text-text-muted">
+                      Project details
+                    </span>
+                  )}
                 </div>
               </article>
-            </div>
-          ))}
+            );
+          })}
         </div>
-        {isHomepage && showMore ? <div className="mt-8 flex justify-center"><Link href={homepageSettings.fullPageUrl || "/completed-projects"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{homepageSettings.viewMoreButtonText || "View More"}</Link></div> : null}
+
+        {/* View more */}
+        {showMore && (
+          <div className="mt-10 flex justify-center">
+            <Link
+              href={homepageSettings.fullPageUrl || "/completed-projects"}
+              className="inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
+              style={{ background: "rgb(var(--primary))" }}
+            >
+              {homepageSettings.viewMoreButtonText || "View More"}
+              <ArrowUpRight className="h-4 w-4" />
+            </Link>
+          </div>
+        )}
       </div>
     </AnimatedSection>
   );

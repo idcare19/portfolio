@@ -1,52 +1,163 @@
-"use client";
 
-import { createContext, useContext, useEffect, useState } from "react";
-import { useSiteDataContext } from "./SiteDataProvider";
+// "use client";
 
-type ThemeMode = "dark" | "light" | "system";
+// import {
+//   createContext,
+//   useCallback,
+//   useContext,
+//   useEffect,
+//   useState,
+// } from "react";
 
-type ThemeContextValue = {
-  themeMode: ThemeMode;
-  isDark: boolean;
-  setThemeMode: (theme: ThemeMode) => void;
-};
+// import { useSiteDataContext } from "./SiteDataProvider";
 
-const ThemeContext = createContext<ThemeContextValue | null>(null);
+// type ThemeMode = "dark" | "light" | "system";
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const portfolioData = useSiteDataContext();
-  const [isDark, setIsDark] = useState(false);
-  const siteTheme =
-    (portfolioData.websiteSettings?.themeMode as ThemeMode | undefined) || "dark";
-  const [themeMode, setThemeMode] = useState<ThemeMode>("dark");
+// type ThemeContextValue = {
+//   themeMode: ThemeMode;
+//   isDark: boolean;
+//   setThemeMode: (theme: ThemeMode) => void;
+// };
 
-  useEffect(() => {
-    setThemeMode(siteTheme);
-  }, [siteTheme]);
+// const STORAGE_KEY = "portfolio-theme-mode";
 
-  useEffect(() => {
-    const root = document.documentElement;
-    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    const nextIsDark = themeMode === "system" ? prefersDark : themeMode === "dark";
-    setIsDark(nextIsDark);
-    root.classList.toggle("dark", nextIsDark);
-    root.style.setProperty("--theme-primary", portfolioData.websiteSettings?.primaryColor || "#2563eb");
-    root.style.setProperty("--theme-accent", portfolioData.websiteSettings?.accentColor || "#14b8a6");
-    root.style.setProperty("--theme-radius", portfolioData.websiteSettings?.radius || "1.5rem");
-    root.style.setProperty("--theme-font", portfolioData.websiteSettings?.fontFamily || "Inter");
-  }, [portfolioData.websiteSettings?.accentColor, portfolioData.websiteSettings?.fontFamily, portfolioData.websiteSettings?.primaryColor, portfolioData.websiteSettings?.radius, themeMode]);
+// const ThemeContext = createContext<ThemeContextValue | null>(null);
 
-  return (
-    <ThemeContext.Provider value={{ themeMode, isDark, setThemeMode }}>
-      {children}
-    </ThemeContext.Provider>
-  );
-}
+// export function ThemeProvider({
+//   children,
+// }: {
+//   children: React.ReactNode;
+// }) {
+//   const portfolioData = useSiteDataContext();
 
-export function useTheme() {
-  const context = useContext(ThemeContext);
-  if (!context) {
-    throw new Error("useTheme must be used within a ThemeProvider");
-  }
-  return context;
-}
+//   const siteTheme =
+//     (portfolioData.websiteSettings?.themeMode as ThemeMode | undefined) ||
+//     "dark";
+
+//   const [themeMode, setThemeModeState] =
+//     useState<ThemeMode>("dark");
+
+//   const [isDark, setIsDark] = useState(false);
+//   const [mounted, setMounted] = useState(false);
+
+//   // Load saved theme preference
+//   useEffect(() => {
+//     try {
+//       const savedTheme = localStorage.getItem(STORAGE_KEY);
+
+//       if (
+//         savedTheme === "dark" ||
+//         savedTheme === "light" ||
+//         savedTheme === "system"
+//       ) {
+//         setThemeModeState(savedTheme);
+//       } else {
+//         setThemeModeState(siteTheme);
+//       }
+//     } catch {
+//       setThemeModeState(siteTheme);
+//     }
+
+//     setMounted(true);
+//   }, [siteTheme]);
+
+//   // Update theme and persist manual selection
+//   const setThemeMode = useCallback((theme: ThemeMode) => {
+//     setThemeModeState(theme);
+
+//     try {
+//       localStorage.setItem(STORAGE_KEY, theme);
+//     } catch {
+//       // Theme still works if storage is unavailable.
+//     }
+//   }, []);
+
+//   // Apply theme to document
+//   useEffect(() => {
+//     if (!mounted) return;
+
+//     const root = document.documentElement;
+//     const mediaQuery = window.matchMedia(
+//       "(prefers-color-scheme: dark)"
+//     );
+
+//     const applyTheme = () => {
+//       const nextIsDark =
+//         themeMode === "system"
+//           ? mediaQuery.matches
+//           : themeMode === "dark";
+
+//       setIsDark(nextIsDark);
+
+//       root.classList.toggle("dark", nextIsDark);
+//       root.dataset.theme = nextIsDark ? "dark" : "light";
+
+//       root.style.colorScheme = nextIsDark ? "dark" : "light";
+//     };
+
+//     applyTheme();
+
+//     if (themeMode === "system") {
+//       mediaQuery.addEventListener("change", applyTheme);
+
+//       return () => {
+//         mediaQuery.removeEventListener("change", applyTheme);
+//       };
+//     }
+//   }, [themeMode, mounted]);
+
+//   // Preserve CMS visual settings
+//   useEffect(() => {
+//     const root = document.documentElement;
+//     const settings = portfolioData.websiteSettings;
+
+//     root.style.setProperty(
+//       "--theme-primary",
+//       settings?.primaryColor || "#2563eb"
+//     );
+
+//     root.style.setProperty(
+//       "--theme-accent",
+//       settings?.accentColor || "#14b8a6"
+//     );
+
+//     root.style.setProperty(
+//       "--theme-radius",
+//       settings?.radius || "1.5rem"
+//     );
+
+//     root.style.setProperty(
+//       "--theme-font",
+//       settings?.fontFamily || "Inter"
+//     );
+//   }, [
+//     portfolioData.websiteSettings?.primaryColor,
+//     portfolioData.websiteSettings?.accentColor,
+//     portfolioData.websiteSettings?.radius,
+//     portfolioData.websiteSettings?.fontFamily,
+//   ]);
+
+//   return (
+//     <ThemeContext.Provider
+//       value={{
+//         themeMode,
+//         isDark,
+//         setThemeMode,
+//       }}
+//     >
+//       {children}
+//     </ThemeContext.Provider>
+//   );
+// }
+
+// export function useTheme() {
+//   const context = useContext(ThemeContext);
+
+//   if (!context) {
+//     throw new Error(
+//       "useTheme must be used within a ThemeProvider"
+//     );
+//   }
+
+//   return context;
+// }

@@ -9,10 +9,10 @@ import { AiAssistant } from "@/components/site/AiAssistant";
 import { AnalyticsTracker } from "@/components/site/AnalyticsTracker";
 import { GlobalSearch } from "@/components/site/GlobalSearch";
 import { SiteDataProvider } from "@/components/site/SiteDataProvider";
-import { ThemeProvider } from "@/components/site/ThemeProvider";
+// import { ThemeProvider } from "@/components/site/ThemeProvider";
 import { getSiteData } from "@/src/lib/site-data";
 import "./globals.css";
-
+import { WebsiteLoader } from "@/components/site/WebsiteLoader";
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -114,8 +114,10 @@ export default async function RootLayout({
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
       <body className="font-sans">
+          <WebsiteLoader />
+
         <SiteDataProvider data={siteData}>
-          <ThemeProvider>
+          {/* <ThemeProvider> */}
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
               strategy="lazyOnload"
@@ -137,7 +139,7 @@ export default async function RootLayout({
             <AiAssistant />
             <Analytics />
             <SpeedInsights />
-          </ThemeProvider>
+          {/* </ThemeProvider> */}
         </SiteDataProvider>
       </body>
     </html>

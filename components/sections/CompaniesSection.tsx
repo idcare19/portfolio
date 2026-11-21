@@ -1,20 +1,39 @@
+
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { SiteSectionBlock } from "@/src/types/site-data";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay, normalizeHomepageDisplayConfig } from "@/lib/homepage-display-controls";
+
+import {
+  ArrowUpRight,
+  Building2,
+  CalendarDays,
+  LockKeyhole,
+} from "lucide-react";
+
+import {
+  filterHomepageItems,
+  getHomepageButtonLabel,
+  getHomepageDisplayConfig,
+  shouldShowViewMore,
+  debugHomepageDisplay,
+  normalizeHomepageDisplayConfig,
+} from "@/lib/homepage-display-controls";
+
 import { useSiteDataContext } from "@/components/site/SiteDataProvider";
 
 function cleanText(value: unknown) {
-  return String(value || "").trim();
+  return String(value ?? "").trim();
 }
 
 function isTruthy(value: unknown) {
   if (typeof value === "boolean") return value;
+
   const raw = cleanText(value).toLowerCase();
-  return raw === "true" || raw === "1" || raw === "yes";
+
+  return ["true", "1", "yes"].includes(raw);
 }
 
 function resolveCompanyLogo(item: any) {
@@ -23,107 +42,350 @@ function resolveCompanyLogo(item: any) {
 
 function formatCompanyDate(value: unknown) {
   const raw = cleanText(value);
+
   if (!raw) return "";
+
   const parsed = new Date(raw);
+
   if (Number.isNaN(parsed.getTime())) return raw;
+
   return new Intl.DateTimeFormat("en-GB", {
     month: "long",
     year: "numeric",
   }).format(parsed);
 }
 
-export function CompaniesSection({ section }: { section: SiteSectionBlock }) {
+export function CompaniesSection({
+  section,
+}: {
+  section: SiteSectionBlock;
+}) {
   const siteData = useSiteDataContext();
   const pathname = usePathname();
-  const homepageSettings = getHomepageDisplayConfig(siteData, "companies");
+
   const isHomepage = pathname === "/";
+
+  const homepageSettings = getHomepageDisplayConfig(
+    siteData,
+    "companies"
+  );
+
   const normalized = normalizeHomepageDisplayConfig(homepageSettings);
-  const allItems = useMemo(() => filterHomepageItems(section?.items || [], { ...homepageSettings, limit: undefined, itemsLimit: undefined, showOnlyFeatured: false, manualItemOrder: undefined }), [section?.items]);
-  const [loadedCount, setLoadedCount] = useState(Number(normalized.initialItems || 3));
-  const homepageItems = isHomepage
-    ? filterHomepageItems(section?.items || [], {
+
+  const initialItems = Math.max(1, Number(normalized.initialItems || 3));
+  const loadCount = Math.max(1, Number(normalized.loadCount || 3));
+
+  const [loadedCount, setLoadedCount] = useState(initialItems);
+
+  useEffect(() => {
+    setLoadedCount(initialItems);
+  }, [initialItems]);
+
+  const sourceItems = section?.items || [];
+
+  const allItems = useMemo(
+    () =>
+      filterHomepageItems(sourceItems, {
         ...homepageSettings,
-        limit: normalized.viewMoreMode === "load-more" ? loadedCount : Number(normalized.limit ?? normalized.itemsLimit ?? 6),
-      })
-    : allItems;
-  const showMore = isHomepage && shouldShowViewMore(allItems, homepageItems, homepageSettings);
-  debugHomepageDisplay("companies", (section?.items || []).length, homepageItems.length, homepageSettings);
+        limit: undefined,
+        itemsLimit: undefined,
+        showOnlyFeatured: false,
+        manualItemOrder: undefined,
+      }),
+    [sourceItems]
+  );
+
+  const homepageItems = useMemo(
+    () =>
+      filterHomepageItems(sourceItems, {
+        ...homepageSettings,
+        limit:
+          normalized.viewMoreMode === "load-more"
+            ? loadedCount
+            : Number(normalized.limit ?? normalized.itemsLimit ?? 6),
+      }),
+    [
+      sourceItems,
+      homepageSettings.limit,
+      homepageSettings.itemsLimit,
+      homepageSettings.showOnlyFeatured,
+      homepageSettings.manualItemOrder?.join("|"),
+      loadedCount,
+      normalized.viewMoreMode,
+      normalized.limit,
+      normalized.itemsLimit,
+    ]
+  );
+
+  const items = isHomepage ? homepageItems : allItems;
+
+  const showMore =
+    isHomepage && shouldShowViewMore(allItems, items, homepageSettings);
+
+  const hasMoreItems = items.length < allItems.length;
+
+  debugHomepageDisplay(
+    "companies",
+    sourceItems.length,
+    items.length,
+    homepageSettings
+  );
+
   return (
-    <section id="companies" className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:px-8 sm:py-20">
-      <div className="rounded-[28px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,252,1))] p-5 shadow-[0_22px_55px_rgba(15,23,42,0.07)] sm:p-8">
-        <p className="text-xs font-semibold uppercase tracking-[0.22em] text-primary">{String(section.data?.eyebrow || "Experience")}</p>
-        <h2 className="mt-3 text-3xl font-semibold tracking-tight text-text-main">{String(section.data?.title || "Companies Worked With")}</h2>
-        <div className="mt-6 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {homepageItems.map((item: any, index: number) => (
-            <article key={item.companyName || item.title || index} className="overflow-hidden rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] shadow-[0_18px_42px_rgba(15,23,42,0.06)]">
-              <div className="flex min-h-[7.5rem] items-center justify-center border-b border-[rgb(var(--border))] bg-[radial-gradient(circle_at_top,rgba(37,99,235,0.08),transparent_35%),linear-gradient(135deg,rgba(248,250,252,1),rgba(255,255,255,1))] px-4 py-4">
-                {isTruthy(item.confidential) ? (
-                  <div className="text-center">
-                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl border border-dashed border-slate-300 bg-white text-sm font-semibold text-slate-500">
-                      CF
-                    </div>
-                    <p className="mt-3 text-sm font-medium text-slate-500">Confidential Client</p>
-                  </div>
-                ) : resolveCompanyLogo(item) ? (
-                  <img
-                    src={resolveCompanyLogo(item)}
-                    alt={cleanText(item.companyName || item.title || "Company")}
-                    className="max-h-16 w-auto max-w-[68%] object-contain"
-                    loading="lazy"
-                  />
-                ) : (
-                  <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-slate-900 text-base font-semibold text-white">
-                    {(cleanText(item.companyName || item.title) || "Company").slice(0, 2).toUpperCase()}
-                  </div>
+    <section
+      id="companies"
+      aria-labelledby="companies-heading"
+      className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
+    >
+      <div className="relative overflow-hidden rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--section))] p-5 shadow-[0_18px_55px_rgba(15,23,42,0.06)] transition-colors duration-300 sm:rounded-[32px] sm:p-8 lg:p-10">
+
+        {/* Decorative accent */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full opacity-[0.07] blur-3xl"
+          style={{ background: "rgb(var(--primary))" }}
+        />
+
+        {/* Header */}
+        <div className="relative">
+          <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--surface))] px-3.5 py-1.5">
+            <span
+              className="h-1.5 w-1.5 rounded-full"
+              style={{ background: "rgb(var(--primary))" }}
+            />
+
+            <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-muted">
+              {String(section.data?.eyebrow || "Experience")}
+            </p>
+          </div>
+
+          <div className="flex flex-col justify-between gap-3 sm:flex-row sm:items-end">
+            <div>
+              <h2
+                id="companies-heading"
+                className="text-3xl font-bold tracking-tight text-text-main sm:text-4xl"
+              >
+                {String(
+                  section.data?.title || "Companies Worked With"
                 )}
-              </div>
-              <div className="space-y-3 p-4">
-                <div>
-                  <div className="text-[11px] font-semibold uppercase tracking-[0.18em] text-primary">{cleanText(item.relationshipType) || "Collaboration"}</div>
-                  <h3 className="mt-2 text-lg font-semibold text-text-main">{cleanText(item.companyName || item.title) || "Company"}</h3>
-                  {cleanText(item.industry) ? <p className="mt-1 text-sm text-text-muted">{cleanText(item.industry)}</p> : null}
-                </div>
-                {cleanText(item.description) ? <p className="text-sm leading-6 text-text-muted">{cleanText(item.description)}</p> : null}
-                {(formatCompanyDate(item.startDate) || formatCompanyDate(item.endDate)) ? (
-                  <p className="text-sm text-text-muted">
-                    <span className="font-medium text-text-main">Duration:</span>{" "}
-                    {formatCompanyDate(item.startDate) || "Unknown"}{" — "}{formatCompanyDate(item.endDate) || "Current"}
-                  </p>
-                ) : null}
-                {!isTruthy(item.confidential) && cleanText(item.websiteUrl) ? (
-                  <a
-                    href={cleanText(item.websiteUrl)}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center justify-center rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:opacity-90"
-                  >
-                    Visit
-                  </a>
-                ) : null}
-                {isTruthy(item.confidential) ? (
-                  <div className="inline-flex rounded-full border border-amber-200 bg-amber-50 px-3 py-1 text-xs font-semibold text-amber-700">
-                    Confidential Client
-                  </div>
-                ) : null}
-              </div>
-            </article>
-          ))}
+                <span style={{ color: "rgb(var(--primary))" }}>.</span>
+              </h2>
+
+              <p className="mt-2 max-w-xl text-sm leading-7 text-text-muted sm:text-base">
+                Organizations, collaborations and professional
+                relationships.
+              </p>
+            </div>
+
+            <span className="text-xs font-medium text-text-muted">
+              {items.length} of {allItems.length} companies
+            </span>
+          </div>
         </div>
-        {isHomepage && showMore ? (
-          <div className="mt-8 flex justify-center">
+
+        {/* Company cards */}
+        <div className="relative mt-9 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
+          {items.map((item: any, index: number) => {
+            const confidential = isTruthy(item.confidential);
+
+            const companyName = cleanText(
+              item.companyName || item.title || "Company"
+            );
+
+            const logo = resolveCompanyLogo(item);
+
+            const startDate = formatCompanyDate(item.startDate);
+            const endDate = formatCompanyDate(item.endDate);
+
+            const websiteUrl = cleanText(item.websiteUrl);
+
+            const initials = companyName
+              .split(/\s+/)
+              .filter(Boolean)
+              .slice(0, 2)
+              .map((word: string) => word[0])
+              .join("")
+              .toUpperCase();
+
+            return (
+              <article
+                key={
+                  item.id ??
+                  item.slug ??
+                  `${companyName}-${index}`
+                }
+                className="group relative flex h-full flex-col overflow-hidden rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] shadow-[0_8px_28px_rgba(15,23,42,0.04)] transition-all duration-300 hover:-translate-y-1 hover:border-[rgb(var(--primary))] hover:shadow-[0_20px_45px_rgba(15,23,42,0.10)]"
+              >
+                {/* Top accent */}
+                <div
+                  aria-hidden="true"
+                  className="absolute left-0 top-0 z-10 h-[2px] w-0 transition-all duration-500 group-hover:w-full"
+                  style={{ background: "rgb(var(--primary))" }}
+                />
+
+                {/* Logo area */}
+                <div className="relative flex min-h-[150px] items-center justify-center overflow-hidden border-b border-[rgb(var(--border))] bg-[rgb(var(--surface))] px-6 py-7">
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-0 opacity-[0.045]"
+                    style={{
+                      backgroundImage:
+                        "radial-gradient(rgb(var(--text-muted)) 0.7px, transparent 0.7px)",
+                      backgroundSize: "12px 12px",
+                    }}
+                  />
+
+                  {confidential ? (
+                    <div className="relative flex flex-col items-center text-center">
+                      <div className="flex h-14 w-14 items-center justify-center rounded-2xl border border-dashed border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-muted">
+                        <LockKeyhole className="h-6 w-6" />
+                      </div>
+
+                      <p className="mt-3 text-xs font-semibold text-text-muted">
+                        Confidential Client
+                      </p>
+                    </div>
+                  ) : logo ? (
+                    <img
+                      src={logo}
+                      alt={`${companyName} logo`}
+                      loading="lazy"
+                      className="relative max-h-16 max-w-[72%] object-contain transition-transform duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div
+                      className="relative flex h-16 w-16 items-center justify-center rounded-2xl border border-[rgb(var(--border))] text-lg font-bold"
+                      style={{
+                        background:
+                          "color-mix(in srgb, rgb(var(--primary)) 10%, rgb(var(--card-bg)))",
+                        color: "rgb(var(--primary))",
+                      }}
+                    >
+                      {initials || <Building2 className="h-7 w-7" />}
+                    </div>
+                  )}
+                </div>
+
+                {/* Company details */}
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <div>
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <span
+                        className="text-[10px] font-bold uppercase tracking-[0.17em]"
+                        style={{ color: "rgb(var(--primary))" }}
+                      >
+                        {cleanText(item.relationshipType) ||
+                          "Collaboration"}
+                      </span>
+
+                      {confidential && (
+                        <span className="inline-flex items-center gap-1 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--surface))] px-2.5 py-1 text-[10px] font-semibold text-text-muted">
+                          <LockKeyhole className="h-3 w-3" />
+                          Private
+                        </span>
+                      )}
+                    </div>
+
+                    <h3 className="mt-3 text-lg font-bold tracking-tight text-text-main">
+                      {confidential ? "Confidential Client" : companyName}
+                    </h3>
+
+                    {cleanText(item.industry) && (
+                      <p className="mt-1 text-sm text-text-muted">
+                        {cleanText(item.industry)}
+                      </p>
+                    )}
+                  </div>
+
+                  {cleanText(item.description) && (
+                    <p className="mt-4 text-sm leading-7 text-text-muted">
+                      {cleanText(item.description)}
+                    </p>
+                  )}
+
+                  {/* Duration */}
+                  {(startDate || endDate) && (
+                    <div className="mt-5 flex items-start gap-3 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--surface))] p-3.5">
+                      <CalendarDays className="mt-0.5 h-4 w-4 shrink-0 text-text-muted" />
+
+                      <div>
+                        <p className="text-[10px] font-bold uppercase tracking-wider text-text-muted">
+                          Duration
+                        </p>
+
+                        <p className="mt-1 text-xs font-medium text-text-main">
+                          {startDate || "Unknown"} — {endDate || "Current"}
+                        </p>
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Action */}
+                  <div className="mt-auto pt-6">
+                    {!confidential && websiteUrl ? (
+                      <a
+                        href={websiteUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        aria-label={`Visit ${companyName} website`}
+                        className="inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold text-white shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg"
+                        style={{ background: "rgb(var(--primary))" }}
+                      >
+                        Visit Website
+                        <ArrowUpRight className="h-4 w-4" />
+                      </a>
+                    ) : confidential ? (
+                      <div className="flex items-center justify-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--surface))] px-5 py-3 text-xs font-medium text-text-muted">
+                        <LockKeyhole className="h-3.5 w-3.5" />
+                        Client details protected
+                      </div>
+                    ) : (
+                      <div className="flex items-center justify-center rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--surface))] px-5 py-3 text-xs font-medium text-text-muted">
+                        Company profile
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+
+        {/* View more */}
+        {showMore && (
+          <div className="relative mt-9 flex justify-center">
             {normalized.viewMoreMode === "load-more" ? (
               <button
                 type="button"
-                onClick={() => setLoadedCount((count) => count + Number(normalized.loadCount || 3))}
-                className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white"
+                disabled={!hasMoreItems}
+                onClick={() =>
+                  setLoadedCount((count) =>
+                    Math.min(count + loadCount, allItems.length)
+                  )
+                }
+                className="inline-flex items-center gap-3 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-7 py-3.5 text-sm font-semibold text-text-main shadow-sm transition-all duration-300 hover:-translate-y-0.5 hover:border-[rgb(var(--primary))] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
               >
-                {homepageItems.length >= allItems.length ? "No More Items" : getHomepageButtonLabel(homepageSettings)}
+                {hasMoreItems ? (
+                  <>
+                    {getHomepageButtonLabel(homepageSettings)}
+                    <span aria-hidden="true">↓</span>
+                  </>
+                ) : (
+                  "All Companies Loaded"
+                )}
               </button>
             ) : (
-              <Link href={homepageSettings.fullPageUrl || "/companies"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{getHomepageButtonLabel(homepageSettings)}</Link>
+              <Link
+                href={homepageSettings.fullPageUrl || "/companies"}
+                className="inline-flex items-center gap-3 rounded-full px-7 py-3.5 text-sm font-semibold text-white shadow-lg transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl"
+                style={{ background: "rgb(var(--primary))" }}
+              >
+                {getHomepageButtonLabel(homepageSettings)}
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
             )}
           </div>
-        ) : null}
+        )}
       </div>
     </section>
   );
