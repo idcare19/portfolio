@@ -1,18 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
-  ArrowUpRight,
-  Code2,
-  Database,
-  Layers3,
-  Terminal,
-  Wrench,
-  Sparkles,
-  BrainCircuit,
-  GraduationCap,
-} from "lucide-react";
+  animate,
+  motion,
+  useMotionTemplate,
+  useMotionValue,
+  useReducedMotion,
+} from "framer-motion";
+import { ArrowUpRight, GraduationCap } from "lucide-react";
 
 import {
   useSectionData,
@@ -54,18 +50,198 @@ function normalizeCategory(category?: string) {
   return category?.trim() || "Other Skills";
 }
 
-const categoryIcons: Record<string, typeof Code2> = {
-  Frontend: Code2,
-  Backend: Terminal,
-  Database,
-  Tools: Wrench,
-  "Frameworks & Workflow": Layers3,
-  "Core Skills": BrainCircuit,
-  "Other Skills": Sparkles,
-};
-
 const FOCUS_RING =
   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--page-bg))]";
+
+
+function Sticker({
+  skill,
+  index,
+  boardRef,
+  active,
+  onActivate,
+  reduceMotion,
+  canDrag,
+}: {
+  skill: SkillItem;
+  index: number;
+  boardRef: React.RefObject<HTMLDivElement | null>;
+  active: boolean;
+  onActivate: () => void;
+  reduceMotion: boolean;
+  canDrag: boolean;
+}) {
+  const peel = useMotionValue(0);
+  const bodyClip = useMotionTemplate`polygon(0 0, 100% 0, 100% calc(100% - ${peel}px), calc(100% - ${peel}px) 100%, 0 100%)`;
+  const dragging = useRef(false);
+  const elRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  // After a drop, push this sticker away from any sticker it overlaps
+  // (and keep it inside the board) so they never sit on top of each other.
+  const resolveOverlap = () => {
+    const el = elRef.current;
+    const board = boardRef.current;
+    if (!el || !board) return;
+
+    const GAP = 8;
+    const others = Array.from(
+      board.querySelectorAll<HTMLElement>("[data-sticker]")
+    ).filter((node) => node !== el);
+
+    const rect = el.getBoundingClientRect();
+    const a = {
+      l: rect.left,
+      r: rect.right,
+      t: rect.top,
+      b: rect.bottom,
+    };
+    let dx = 0;
+    let dy = 0;
+
+    for (let i = 0; i < 12; i++) {
+      let moved = false;
+
+      for (const other of others) {
+        const q = other.getBoundingClientRect();
+        const overlapX = Math.min(a.r + GAP, q.right) - Math.max(a.l - GAP, q.left);
+        const overlapY = Math.min(a.b + GAP, q.bottom) - Math.max(a.t - GAP, q.top);
+
+        if (overlapX > 0 && overlapY > 0) {
+          const acx = (a.l + a.r) / 2;
+          const acy = (a.t + a.b) / 2;
+          const qcx = (q.left + q.right) / 2;
+          const qcy = (q.top + q.bottom) / 2;
+
+          if (overlapX < overlapY) {
+            const d = overlapX * (acx >= qcx ? 1 : -1);
+            dx += d;
+            a.l += d;
+            a.r += d;
+          } else {
+            const d = overlapY * (acy >= qcy ? 1 : -1);
+            dy += d;
+            a.t += d;
+            a.b += d;
+          }
+          moved = true;
+        }
+      }
+
+      if (!moved) break;
+    }
+
+    // keep inside the board
+    const bounds = board.getBoundingClientRect();
+    if (a.l < bounds.left) dx += bounds.left - a.l;
+    if (a.r > bounds.right) dx -= a.r - bounds.right;
+    if (a.t < bounds.top) dy += bounds.top - a.t;
+    if (a.b > bounds.bottom) dy -= a.b - bounds.bottom;
+
+    if (dx === 0 && dy === 0) return;
+
+    const transition = reduceMotion
+      ? { duration: 0 }
+      : { type: "spring" as const, stiffness: 300, damping: 26 };
+    animate(x, x.get() + dx, transition);
+    animate(y, y.get() + dy, transition);
+  };
+
+  const setPeel = (to: number) =>
+    animate(
+      peel,
+      to,
+      reduceMotion
+        ? { duration: 0 }
+        : { type: "spring", stiffness: 420, damping: 26 }
+    );
+
+  const rotate = ((index * 37) % 7) - 3;
+  const label = skill.title || skill.name;
+
+  return (
+    <motion.div
+      ref={elRef}
+      data-sticker=""
+      drag={canDrag}
+      dragConstraints={boardRef}
+      dragElastic={0.12}
+      dragMomentum={false}
+      whileDrag={{ scale: 1.06 }}
+      onHoverStart={() => setPeel(20)}
+      onHoverEnd={() => {
+        if (!dragging.current) setPeel(0);
+      }}
+      onTapStart={() => {
+        onActivate();
+        setPeel(28);
+      }}
+      onDragStart={() => {
+        dragging.current = true;
+        setPeel(34);
+      }}
+      onDragEnd={() => {
+        dragging.current = false;
+        setPeel(0);
+        resolveOverlap();
+      }}
+      onTap={() => setPeel(0)}
+      style={{
+        x,
+        y,
+        rotate,
+        zIndex: active ? 30 : 1,
+        touchAction: canDrag ? "none" : "auto",
+      }}
+      className={`relative h-[76px] w-[76px] select-none drop-shadow-[0_3px_5px_rgba(0,0,0,0.16)] sm:h-[96px] sm:w-[96px] ${
+        canDrag ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"
+      }`}
+    >
+      <motion.div
+        style={{ clipPath: bodyClip, WebkitClipPath: bodyClip }}
+        className="absolute inset-0 rounded-[22px] bg-white p-1.5"
+      >
+        <div
+          className="flex h-full w-full flex-col items-center justify-center gap-1.5 rounded-[16px] bg-slate-100 px-1.5"
+          style={{ color: skill.iconColor || "rgb(var(--primary))" }}
+        >
+          {skill.iconUrl ? (
+            <img
+              src={skill.iconUrl}
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              loading="lazy"
+              className="h-6 w-6 object-contain sm:h-7 sm:w-7"
+            />
+          ) : (
+            renderIcon(
+              skill.iconKey ||
+                suggestSkillIconKey(label, skill.category),
+              skill.iconColor,
+              "h-6 w-6 sm:h-7 sm:w-7"
+            )
+          )}
+          <span className="w-full truncate text-center text-[11px] font-semibold text-slate-900">
+            {label}
+          </span>
+        </div>
+      </motion.div>
+
+      <motion.span
+        aria-hidden="true"
+        style={{
+          width: peel,
+          height: peel,
+          clipPath: "polygon(0 0, 100% 0, 0 100%)",
+          WebkitClipPath: "polygon(0 0, 100% 0, 0 100%)",
+        }}
+        className="pointer-events-none absolute bottom-0 right-0 bg-gradient-to-br from-white to-slate-300"
+      />
+    </motion.div>
+  );
+}
 
 export function SkillsSection() {
   const section = useSectionData("skills");
@@ -75,6 +251,24 @@ export function SkillsSection() {
   const reduceMotion = useReducedMotion();
 
   const [activeCategory, setActiveCategory] = useState("All");
+  const [activeSticker, setActiveSticker] = useState<string | null>(null);
+  const boardRef = useRef<HTMLDivElement>(null);
+
+  // On touch screens dragging a sticker would block page scrolling,
+  // so dragging is opt-in there via the "Move stickers" button.
+  const [coarsePointer, setCoarsePointer] = useState(false);
+  const [moveMode, setMoveMode] = useState(false);
+  const [showAll, setShowAll] = useState(false);
+
+  useEffect(() => {
+    const query = window.matchMedia("(pointer: coarse)");
+    const update = () => setCoarsePointer(query.matches);
+    update();
+    query.addEventListener("change", update);
+    return () => query.removeEventListener("change", update);
+  }, []);
+
+  const canDrag = !coarsePointer || moveMode;
 
   const skills = useMemo(() => {
     const rawSkills = [
@@ -135,6 +329,13 @@ export function SkillsSection() {
       ? groups
       : groups.filter((group) => group.title === activeCategory);
 
+  const allStickers = visibleGroups.flatMap((group) => group.items);
+  const STICKER_LIMIT = coarsePointer ? 12 : 18;
+  const stickerSkills = showAll
+    ? allStickers
+    : allStickers.slice(0, STICKER_LIMIT);
+  const hasMoreStickers = allStickers.length > STICKER_LIMIT;
+
   const learningItems = Array.isArray(data.learningItems)
     ? data.learningItems
     : [];
@@ -154,45 +355,11 @@ export function SkillsSection() {
           description={data.description}
         />
 
-        {/* OVERVIEW */}
-        <div className="mb-6 flex flex-col justify-between gap-5 rounded-[26px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 sm:flex-row sm:items-center sm:p-6">
-          <div className="flex items-center gap-4">
-            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
-              <Code2 size={23} />
-            </span>
-
-            <div>
-              <p className="text-base font-semibold text-text-main">
-                Technology ecosystem
-              </p>
-              <p className="mt-0.5 text-sm text-text-muted">
-                Technologies and tools I work with
-              </p>
-            </div>
-          </div>
-
-          <div className="flex gap-3">
-            <div className="min-w-[96px] rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3">
-              <p className="text-2xl font-bold tabular-nums text-text-main">
-                {totalSkills}
-              </p>
-              <p className="text-xs text-text-muted">Technologies</p>
-            </div>
-
-            <div className="min-w-[96px] rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3">
-              <p className="text-2xl font-bold tabular-nums text-text-main">
-                {groups.length}
-              </p>
-              <p className="text-xs text-text-muted">Categories</p>
-            </div>
-          </div>
-        </div>
-
         {/* CATEGORY FILTERS */}
         <div
           role="group"
           aria-label="Filter skills by category"
-          className="-mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+          className="-mx-4 mb-4 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
         >
           {categories.map((category) => {
             const selected = activeCategory === category;
@@ -201,7 +368,10 @@ export function SkillsSection() {
               <button
                 key={category}
                 type="button"
-                onClick={() => setActiveCategory(category)}
+                onClick={() => {
+                  setActiveCategory(category);
+                  setShowAll(false);
+                }}
                 aria-pressed={selected}
                 className={`shrink-0 whitespace-nowrap rounded-xl border px-4 py-2.5 text-sm font-semibold transition-colors duration-200 ${FOCUS_RING} ${
                   selected
@@ -215,99 +385,75 @@ export function SkillsSection() {
           })}
         </div>
 
-        {/* SKILL GROUPS */}
-        <div className="grid items-start gap-5 lg:grid-cols-2">
-          {visibleGroups.map((group) => {
-            const Icon = categoryIcons[group.title] || Layers3;
+        <p className="mb-6 text-sm text-text-muted">
+          {totalSkills} technologies across {groups.length} categories
+        </p>
 
-            return (
-              <motion.div
-                key={group.title}
-                initial={reduceMotion ? false : { opacity: 0, y: 12 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3 }}
-                className="rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 shadow-[0_18px_45px_rgba(15,23,42,0.05)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.35)] sm:p-6"
-              >
-                {/* GROUP HEADER */}
-                <div className="mb-5 flex items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] text-primary">
-                      <Icon size={19} />
-                    </span>
-                    <h3 className="text-lg font-semibold text-text-main">
-                      {group.title}
-                    </h3>
-                  </div>
+        {/* STICKER BOARD */}
+        {stickerSkills.length > 0 ? (
+          <div
+            ref={boardRef}
+            className="relative overflow-hidden rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 sm:p-10"
+          >
+            <div className="mb-8 flex items-start justify-between gap-3">
+              <div>
+                <p className="text-sm text-text-muted">
+                  {coarsePointer
+                    ? moveMode
+                      ? "Drag stickers around. Tap Done to scroll again."
+                      : "Tap a sticker to peel it."
+                    : "Drag them around and peel a corner."}
+                </p>
+              </div>
 
-                  <span
-                    className="rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-2.5 py-1 text-sm font-semibold tabular-nums text-text-muted"
-                    aria-label={`${group.items.length} skills`}
-                  >
-                    {group.items.length}
-                  </span>
-                </div>
+              {coarsePointer ? (
+                <button
+                  type="button"
+                  onClick={() => setMoveMode((value) => !value)}
+                  aria-pressed={moveMode}
+                  className={`min-h-11 shrink-0 rounded-xl border px-4 text-sm font-semibold transition-colors duration-200 ${FOCUS_RING} ${
+                    moveMode
+                      ? "border-primary bg-primary text-white"
+                      : "border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] text-text-main"
+                  }`}
+                >
+                  {moveMode ? "Done" : "Move stickers"}
+                </button>
+              ) : null}
+            </div>
 
-                {/* SKILL ITEMS */}
-                <div className="grid gap-2.5 sm:grid-cols-2">
-                  {group.items.map((skill) => (
-                    <div
-                      key={`${group.title}-${skill.name}`}
-                      className="group/skill flex min-w-0 items-center gap-3 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-3 transition-colors duration-200 hover:border-primary/40 hover:bg-primary/5"
-                    >
-                      <span
-                        className={`flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[rgb(var(--border))] ${
-                          skill.iconUrl
-                            ? "bg-white"
-                            : "bg-[rgb(var(--card-bg))]"
-                        }`}
-                        style={{
-                          color: skill.iconColor || "rgb(var(--primary))",
-                        }}
-                      >
-                        {skill.iconUrl ? (
-                          <img
-                            src={skill.iconUrl}
-                            alt=""
-                            aria-hidden="true"
-                            loading="lazy"
-                            className="h-full w-full object-contain p-2"
-                          />
-                        ) : (
-                          renderIcon(
-                            skill.iconKey ||
-                              suggestSkillIconKey(
-                                skill.title || skill.name,
-                                skill.category
-                              ),
-                            skill.iconColor,
-                            "h-5 w-5"
-                          )
-                        )}
-                      </span>
+            <div
+              aria-label="Skill stickers"
+              className="flex flex-wrap justify-center gap-5 pb-2 sm:gap-8"
+            >
+              {stickerSkills.map((skill, index) => (
+                <Sticker
+                  key={`sticker-${skill.name}`}
+                  skill={skill}
+                  index={index}
+                  boardRef={boardRef}
+                  active={activeSticker === skill.name}
+                  onActivate={() => setActiveSticker(skill.name)}
+                  reduceMotion={Boolean(reduceMotion)}
+                  canDrag={canDrag}
+                />
+              ))}
+            </div>
 
-                      <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-semibold text-text-main">
-                          {skill.title || skill.name}
-                        </p>
-                        {skill.summary ? (
-                          <p className="mt-0.5 truncate text-xs text-text-muted">
-                            {skill.summary}
-                          </p>
-                        ) : null}
-                      </div>
-
-                      <ArrowUpRight
-                        size={14}
-                        aria-hidden="true"
-                        className="shrink-0 text-text-muted opacity-0 transition-opacity duration-200 group-hover/skill:opacity-100"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            );
-          })}
-        </div>
+            {hasMoreStickers ? (
+              <div className="mt-8 flex justify-center">
+                <button
+                  type="button"
+                  onClick={() => setShowAll((value) => !value)}
+                  aria-expanded={showAll}
+                  className={`min-h-11 rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-5 text-sm font-semibold text-text-main transition-colors duration-200 hover:border-primary/40 ${FOCUS_RING}`}
+                >
+                  {showAll ? "Show less" : `Show all ${allStickers.length}`}
+                </button>
+              </div>
+            ) : null}
+          </div>
+        ) : null}
 
         {/* LEARNING */}
         {learningItems.length > 0 ? (
