@@ -2,14 +2,15 @@
   "owner": {
     "name": "Abhishek",
     "username": "idcare19.me",
-    "identityLine": "Remote & Freelance Ready",
+    "identityLine": "Available for Freelance & Internships",
     "introLine": "Hi, I'm Abhishek",
-    "role": "Building fast, scalable and premium full-stack web applications",
-    "tagline": "I build modern full-stack applications with scalable architecture, clean UI systems, and performance-focused user experiences using technologies like Next.js, Appwrite, and modern frontend frameworks.",
+    "role": "Full-stack developer building fast, scalable web products",
+    "tagline": "I build full-stack web apps with clean architecture, polished UI, and strong performance, using Next.js, React, Django, PostgreSQL and more.",
     "location": "India",
     "badges": [
-      "Open for Freelance & Internship Opportunities Available for Projects and Collaborations Currently Available for Freelance Work Open to Internships",
-      "Freelance & Tech Collaborations"
+      "Open for Freelance Projects",
+      "Open for Internships",
+      "Remote & Collaboration Friendly"
     ],
     "profileImage": "/projects/logo.png",
     "resumeUrl": "https://drive.google.com/file/d/1ahGcTHEjC_ufmtYjXMkdtDM3BzeMDbUb/view?usp=drivesdk"
@@ -138,7 +139,7 @@
       "label": "Reviews",
       "order": 11,
       "visible": false,
-      "showInNav": true,
+      "showInNav": false,
       "showOnHomepage": true,
       "locked": false,
       "deleted": false
@@ -188,7 +189,7 @@
       "label": "github",
       "order": 17,
       "visible": false,
-      "showInNav": true,
+      "showInNav": false,
       "showOnHomepage": true,
       "locked": false,
       "deleted": false
@@ -223,19 +224,19 @@
     "Node.js"
   ],
   "about": {
-    "intro": "I turn ideas into premium web products with clear structure, thoughtful interactions, and strong performance. My focus is responsive UI, smooth motion, and production-ready front-end quality.",
+    "intro": "I turn ideas into reliable web products. I work across the stack, from responsive interfaces and smooth interactions to REST APIs, databases and deployment, with a focus on production-ready quality.",
     "stats": [
       {
         "label": "Projects Completed",
         "value": "20+"
       },
       {
-        "label": "Technologies Learned",
-        "value": "10+"
+        "label": "Technologies Used",
+        "value": "15+"
       },
       {
-        "label": "Months of Learning",
-        "value": "12+"
+        "label": "Months of Experience",
+        "value": "8+"
       }
     ]
   },
@@ -260,11 +261,11 @@
     "Testing",
     "Deployment",
     "Vercel",
-    "Database",
     "Render",
-    "Flutter",
     "Railway",
-    "Docker"
+    "Docker",
+    "Database",
+    "Flutter"
   ],
   "learningPhase": [
     "App Security",
@@ -310,24 +311,24 @@
       "githubUrl": "https://github.com/idcare19/smartqueue-ai"
     }
   ],
-  "workingProjects": [],
-  "completedProjects": [
+  "workingProjects": [
     {
       "id": "project-1787905712409",
       "slug": "item-1787905712410",
       "title": "Ekam-OS",
       "shortDescription": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
-      "longDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface. \n\nThe system leverages a powerful microservices-inspired approach utilizing Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for lightning-fast navigation and state management.\n",
+      "longDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface.\n\nThe system leverages a microservices-inspired approach using Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for fast navigation and state management.",
       "techStack": [
+        "Next.js",
         "Nest.js",
         "Django",
         "Python",
         "SMTP",
         "PostgreSQL"
       ],
-      "category": "Completed",
+      "category": "Working",
       "image": "https://ekamos.prsn.in/logo2.png",
-      "liveDemoUrl": "Https://Ekamos.prsn.in",
+      "liveDemoUrl": "https://ekamos.prsn.in",
       "githubUrl": "",
       "featured": true,
       "order": 1,
@@ -335,7 +336,7 @@
       "overview": "",
       "problem": "",
       "solution": "",
-      "myRole": "Full stack developer, Project management",
+      "myRole": "Full Stack Developer, Project Management",
       "responsibilities": [],
       "features": [],
       "screenshots": [],
@@ -343,71 +344,85 @@
       "databaseSchema": "PostgreSQL",
       "apiFlow": "",
       "folderStructure": "",
-      "challenges": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, utilized asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insights into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
+      "challenges": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, used asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insight into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
       "lessonsLearned": "",
       "futureImprovements": [],
-      "timeline": "3",
+      "timeline": "3 months",
       "tags": [
-        "Company-Os"
+        "Company-Os",
+        "Enterprise",
+        "Dashboard"
       ],
       "readingTimeMinutes": 1,
-      "status": "Completed",
+      "status": "In Progress",
       "projectType": "Client",
-      "published": false,
+      "published": true,
       "customFields": [],
-      "role": "Full stack developer, Project management",
-      "link": "Https://Ekamos.prsn.in",
+      "role": "Full Stack Developer, Project Management",
+      "link": "https://ekamos.prsn.in",
       "workDone": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
-      "draft": true,
+      "draft": false,
       "confidentialProject": true,
       "company": "Parvati and Sons",
       "teamSize": "3",
-      "duration": "3 months (under working)",
-      "startDate": "2026-6-21",
-      "endDate": "Still working",
+      "duration": "3 months (ongoing)",
+      "startDate": "June 2026",
+      "endDate": "Ongoing",
       "frontend": "Next.js",
-      "backend": "Django",
+      "backend": "Nest.js, Django",
       "hosting": "",
       "database": "PostgreSQL",
-      "fullDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface. \n\nThe system leverages a powerful microservices-inspired approach utilizing Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for lightning-fast navigation and state management.\n",
+      "fullDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface.\n\nThe system leverages a microservices-inspired approach using Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for fast navigation and state management.",
       "keyFeatures": [
-        "Modular Dashboard Architecture: Centralized control panel for managing core system components and user workflows.\nSecure Authentication & Role-Based Access: Multi-tier authorization backed by robust backend validation.\nAutomated Email & Notification System: Integrated SMTP pipelines for real-time user alerts and automated reporting.\nHigh-Performance Data Handling: Optimized PostgreSQL database queries ensuring minimal latency during heavy loads.\nResponsive & Modern UI: Built with Next.js for server-side rendering and instantaneous client-side transitions."
+        "Modular dashboard for managing core system components and user workflows",
+        "Secure authentication with role-based access control",
+        "Automated email and notification system via SMTP",
+        "Optimized PostgreSQL queries for low latency under heavy load",
+        "Responsive Next.js UI with server-side rendering"
       ],
       "keyResponsibilities": [
-        "Architected and developed end-to-end full-stack features using Next.js",
-        "Nest.js",
-        "and Django.\nDesigned and optimized PostgreSQL database schemas and managed API integrations.\nHandled project management",
-        "task distribution",
-        "and version control workflows within a 3-member team.\nImplemented secure communication channels and automated backend notification triggers via SMTP."
+        "Built end-to-end full-stack features using Next.js, Nest.js and Django",
+        "Designed and optimized PostgreSQL schemas and managed API integrations",
+        "Handled project management, task distribution and version control for a 3-member team",
+        "Implemented secure communication and automated SMTP notification triggers"
       ],
       "skillsApplied": [
-        "Full-Stack Web Development\nSystem Architecture & API Design\nDatabase Management (PostgreSQL)\nProject Management & Team Coordination\nPerformance Optimization & Debugging"
+        "Full-Stack Web Development",
+        "System Architecture & API Design",
+        "Database Management (PostgreSQL)",
+        "Project Management & Team Coordination",
+        "Performance Optimization & Debugging"
       ],
-      "challengesFaced": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, utilized asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insights into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
+      "challengesFaced": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, used asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insight into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
       "futureRoadmap": [
-        "Implementing real-time WebSocket communication for live system updates.\nIntegrating advanced AI-driven analytics for automated workflow insights.\nAdding new portals that are left to complete.\nExpanding third-party API integrations and plugin architecture."
+        "Real-time WebSocket updates",
+        "AI-driven workflow analytics",
+        "Remaining portals",
+        "Third-party API integrations and plugin architecture"
       ]
-    },
+    }
+  ],
+  "completedProjects": [
     {
       "title": "Prodonto – AI Dental Healthcare Platform",
       "timeline": "Internship Project",
       "role": "Frontend Developer • API Integration • Dashboard Development",
       "link": "",
-      "workDone": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
+      "workDone": "Contributed to a production-grade dental healthcare platform by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
       "isEnabled": true,
-      "order": 2,
+      "order": 1,
       "status": "Completed",
       "category": "Healthcare SaaS",
       "featured": true,
       "id": "completed-5",
-      "shortDescription": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
-      "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows.  I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
+      "shortDescription": "Contributed to a production-grade dental healthcare platform by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
+      "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows. I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
       "liveDemoUrl": "",
       "myRole": "Frontend Developer • API Integration • Dashboard Development",
       "projectType": "Client",
       "slug": "prodonto-ai-dental-healthcare-platform",
       "confidentialProject": false,
-      "subtitle": "Production healthcare platform ",
+      "subtitle": "Production healthcare platform",
       "featuredBadge": "Client",
       "tags": [
         "Healthcare",
@@ -416,7 +431,7 @@
         "Frontend",
         "API Integration"
       ],
-      "fullDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows.  I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
+      "fullDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows. I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
       "company": "Parvati and Sons",
       "teamSize": "Collaborative team",
       "duration": "Internship Project",
@@ -428,51 +443,51 @@
     {
       "title": "Sania Enterprises – API Integration & Frontend Fixes",
       "timeline": "19/04/2026",
-      "role": "Frontend Developer ",
-      "link": "Https://Saniaenterprises.in",
-      "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
+      "role": "Frontend Developer",
+      "link": "https://saniaenterprises.in",
+      "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster, smoother user experience. Reduced dependency on static content with API-driven dynamic rendering.",
       "id": "completed-3",
-      "shortDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
-      "longDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
-      "liveDemoUrl": "Https://Saniaenterprises.in",
-      "myRole": "Frontend Developer ",
+      "shortDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster, smoother user experience. Reduced dependency on static content with API-driven dynamic rendering.",
+      "longDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster, smoother user experience. Reduced dependency on static content with API-driven dynamic rendering.",
+      "liveDemoUrl": "https://saniaenterprises.in",
+      "myRole": "Frontend Developer",
       "category": "Completed",
       "status": "Completed",
       "projectType": "Completed Project",
       "isEnabled": true,
       "slug": "sania-enterprises-api-integration-frontend-fixes",
       "customFields": [],
-      "order": 3
+      "order": 2
     },
     {
       "title": "Guruji Taxi – API Integration & Frontend Fixes",
       "timeline": "20/04/2026",
-      "role": "Frontend Developer ",
-      "link": "Https://gurujitaxi.com",
-      "workDone": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
+      "role": "Frontend Developer",
+      "link": "https://gurujitaxi.com",
+      "workDone": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance the overall user experience. Contributed to real-world production improvements with a focus on performance and UI/UX.",
       "id": "completed-2",
-      "shortDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
-      "longDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
-      "liveDemoUrl": "Https://gurujitaxi.com",
-      "myRole": "Frontend Developer ",
+      "shortDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance the overall user experience. Contributed to real-world production improvements with a focus on performance and UI/UX.",
+      "longDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance the overall user experience. Contributed to real-world production improvements with a focus on performance and UI/UX.",
+      "liveDemoUrl": "https://gurujitaxi.com",
+      "myRole": "Frontend Developer",
       "category": "Completed",
       "status": "Completed",
       "projectType": "Completed Project",
       "isEnabled": true,
       "slug": "guruji-taxi-api-integration-frontend-fixes",
       "customFields": [],
-      "order": 4
+      "order": 3
     },
     {
       "title": "Website Speed Optimization & Performance Enhancement",
       "timeline": "21/04/2026",
       "role": "Frontend Developer (Performance Optimization)",
-      "link": "Https://dhawantravel.com",
-      "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
+      "link": "https://dhawantravel.com",
+      "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness for a smooth user experience. Achieved higher PageSpeed Insights scores on both mobile and desktop.",
       "id": "completed-1",
-      "shortDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
-      "longDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
-      "liveDemoUrl": "Https://dhawantravel.com",
+      "shortDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness for a smooth user experience. Achieved higher PageSpeed Insights scores on both mobile and desktop.",
+      "longDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness for a smooth user experience. Achieved higher PageSpeed Insights scores on both mobile and desktop.",
+      "liveDemoUrl": "https://dhawantravel.com",
       "myRole": "Frontend Developer (Performance Optimization)",
       "category": "Completed",
       "status": "Completed",
@@ -481,17 +496,17 @@
       "confidentialProject": false,
       "slug": "website-speed-optimization-performance-enhancement",
       "customFields": [],
-      "order": 5
+      "order": 4
     },
     {
       "title": "Medical Seva – Static Website Development",
       "timeline": "23/04/2026",
       "role": "Frontend Developer",
       "link": "https://medicalseva.in/",
-      "workDone": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+      "workDone": "Developed a clean, responsive static website for Medical Seva during my internship. Built the layout with modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Added structured sections for services, information and contact to improve usability and accessibility. Delivered a lightweight, fast-loading site with simple navigation.",
       "id": "completed-4",
-      "shortDescription": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
-      "longDescription": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+      "shortDescription": "Developed a clean, responsive static website for Medical Seva during my internship. Built the layout with modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Added structured sections for services, information and contact to improve usability and accessibility. Delivered a lightweight, fast-loading site with simple navigation.",
+      "longDescription": "Developed a clean, responsive static website for Medical Seva during my internship. Built the layout with modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Added structured sections for services, information and contact to improve usability and accessibility. Delivered a lightweight, fast-loading site with simple navigation.",
       "liveDemoUrl": "https://medicalseva.in/",
       "myRole": "Frontend Developer",
       "category": "Completed",
@@ -500,7 +515,7 @@
       "isEnabled": true,
       "slug": "medical-seva-static-website-development",
       "customFields": [],
-      "order": 6
+      "order": 5
     }
   ],
   "reviews": [],
@@ -544,7 +559,7 @@
     {
       "role": "Project Manager & Full Stack Developer",
       "period": "2026 - Present",
-      "summary": "Leading web development projects at Parvati & Sons, managing frontend improvements, performance optimization, feature updates, deployment workflows, and overall website maintenance while contributing to full-stack development and UI/UX enhancements."
+      "summary": "Project Manager & Full Stack Developer at Parvati & Sons. I lead web projects, manage interns, ship features, optimize performance, handle deployments, and contribute to full-stack development and UI/UX."
     }
   ],
   "education": [],
@@ -581,19 +596,19 @@
     {
       "id": "service-1",
       "title": "Full Stack Development",
-      "description": "End-to-end product engineering.",
+      "description": "End-to-end product engineering, from UI and APIs to databases and deployment.",
       "icon": "code"
     },
     {
       "id": "service-2",
       "title": "UI/UX Implementation",
-      "description": "Fast, responsive, premium interfaces.",
+      "description": "Fast, responsive, premium interfaces that work on every device.",
       "icon": "layout"
     },
     {
       "id": "service-1776865311808",
-      "title": "Fixing Website ",
-      "description": "Fixing website bugs, layout issues, responsiveness problems, broken sections, and improving overall performance for a smoother user experience.",
+      "title": "Website Fixing & Optimization",
+      "description": "Fixing bugs, layout issues, responsiveness problems and broken sections, and improving performance for a smoother user experience.",
       "icon": "wrench"
     }
   ],
@@ -601,312 +616,309 @@
     {
       "id": "skill-1",
       "name": "HTML",
+      "title": "HTML",
       "category": "Frontend",
       "icon": "html",
+      "iconKey": "html5",
       "level": 90,
       "order": 1,
-      "title": "HTML",
-      "iconKey": "html5",
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-2",
       "name": "CSS",
+      "title": "CSS",
       "category": "Frontend",
       "icon": "css",
+      "iconKey": "css",
+      "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
       "level": 88,
       "order": 2,
-      "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
-      "title": "CSS",
-      "iconKey": "css",
       "featured": false
     },
     {
       "id": "skill-3",
       "name": "JavaScript",
+      "title": "JavaScript",
       "category": "Frontend",
       "icon": "javascript",
+      "iconKey": "javascript",
       "level": 84,
       "order": 3,
-      "title": "JavaScript",
-      "iconKey": "javascript",
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-4",
       "name": "Bootstrap",
+      "title": "Bootstrap",
       "category": "Frontend",
       "icon": "bootstrap",
+      "iconKey": "bootstrap",
       "level": 85,
       "order": 4,
-      "title": "Bootstrap",
-      "iconKey": "bootstrap",
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-5",
       "name": "Tailwind CSS",
+      "title": "Tailwind CSS",
       "category": "Frontend",
       "icon": "tailwind",
+      "iconKey": "tailwindcss",
       "level": 86,
       "order": 5,
-      "iconKey": "tailwindcss",
-      "title": "Tailwind CSS",
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-6",
       "name": "Next.js",
+      "title": "Next.js",
       "category": "Frontend",
       "icon": "next",
+      "iconKey": "nextjs",
       "level": 82,
       "order": 6,
-      "iconKey": "nextjs",
-      "title": "Next.js",
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-7",
       "name": "React.js",
+      "title": "React.js",
       "category": "Frontend",
       "icon": "react",
+      "iconKey": "reactjs",
       "level": 80,
       "order": 7,
-      "title": "React.js",
-      "iconKey": "reactjs",
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-8",
       "name": "MySQL",
+      "title": "MySQL",
       "category": "Database",
       "icon": "database",
+      "iconKey": "mysql",
       "level": 78,
       "order": 8,
-      "iconKey": "mysql",
-      "title": "MySQL",
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-1783232589042",
-      "title": "PostgreSQL",
       "name": "PostgreSQL",
+      "title": "PostgreSQL",
       "category": "Database",
       "icon": "",
-      "level": 0,
-      "isEnabled": true,
-      "order": 21,
       "iconKey": "postgresql",
+      "level": 78,
+      "isEnabled": true,
+      "order": 9,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-1783232589547",
-      "title": "Mongodb",
       "name": "Mongodb",
+      "title": "Mongodb",
       "category": "Database",
       "icon": "",
-      "level": 0,
-      "isEnabled": true,
-      "order": 19,
       "iconKey": "mongodb",
+      "level": 72,
+      "isEnabled": true,
+      "order": 10,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-9",
       "name": "Laravel",
+      "title": "Laravel",
       "category": "Backend",
       "icon": "server",
-      "level": 76,
-      "order": 9,
       "iconKey": "laravel",
-      "title": "Laravel",
+      "level": 76,
+      "order": 11,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-10",
       "name": "PHP",
+      "title": "PHP",
       "category": "Backend",
       "icon": "server",
-      "level": 82,
-      "order": 10,
       "iconKey": "php",
-      "title": "PHP",
+      "level": 82,
+      "order": 12,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-1783180751537-copy-1783182340105",
       "name": "Django",
+      "title": "Django",
       "category": "Backend",
       "icon": "",
-      "level": 0,
-      "isEnabled": true,
-      "order": 11,
-      "title": "Django",
-      "featured": false,
       "iconKey": "django",
+      "level": 78,
+      "isEnabled": true,
+      "order": 13,
+      "featured": false,
       "iconUrl": ""
     },
     {
       "id": "skill-11",
       "name": "Appwrite",
+      "title": "Appwrite",
       "category": "Backend",
       "icon": "database",
-      "level": 75,
-      "order": 12,
       "iconKey": "appwrite",
-      "title": "Appwrite",
+      "level": 75,
+      "order": 14,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-12",
       "name": "WordPress",
+      "title": "WordPress",
       "category": "CMS",
       "icon": "layout",
-      "level": 78,
-      "order": 13,
-      "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg",
-      "title": "WordPress",
       "iconKey": "wordpress",
+      "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg",
+      "level": 78,
+      "order": 15,
       "featured": false
     },
     {
       "id": "skill-13",
       "name": "Git",
+      "title": "Git",
       "category": "Tools",
       "icon": "git-branch",
-      "level": 84,
-      "order": 14,
       "iconKey": "git",
-      "title": "Git",
+      "level": 84,
+      "order": 16,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-14",
       "name": "GitHub",
+      "title": "GitHub",
       "category": "Tools",
       "icon": "github",
-      "level": 86,
-      "order": 15,
       "iconKey": "github-tech",
-      "title": "GitHub",
+      "level": 86,
+      "order": 17,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-15",
       "name": "Testing",
+      "title": "Testing",
       "category": "Quality",
       "icon": "check-circle",
-      "level": 72,
-      "order": 16,
-      "title": "Testing",
       "iconKey": "testing",
+      "level": 72,
+      "order": 18,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-16",
       "name": "Deployment",
+      "title": "Deployment",
       "category": "DevOps",
       "icon": "rocket",
-      "level": 80,
-      "order": 17,
-      "title": "Deployment",
       "iconKey": "deployment",
+      "level": 80,
+      "order": 19,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-17",
       "name": "Vercel",
+      "title": "Vercel",
       "category": "DevOps",
       "icon": "vercel",
-      "level": 78,
-      "order": 18,
-      "title": "Vercel",
       "iconKey": "vercel",
-      "iconUrl": "",
-      "featured": false
-    },
-    {
-      "id": "skill-18",
-      "name": "Database",
-      "category": "Database",
-      "icon": "database",
-      "level": 76,
+      "level": 78,
       "order": 20,
-      "title": "Database",
-      "iconKey": "database",
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-1783232662510",
-      "title": "Render",
       "name": "Render",
+      "title": "Render",
       "category": "DevOps",
       "icon": "",
-      "level": 0,
-      "isEnabled": true,
-      "order": 1,
       "iconKey": "render",
+      "level": 75,
+      "isEnabled": true,
+      "order": 21,
+      "iconUrl": "",
+      "featured": false
+    },
+    {
+      "id": "skill-1783424795392",
+      "name": "Railway",
+      "title": "Railway",
+      "category": "DevOps",
+      "icon": "",
+      "iconKey": "railway",
+      "level": 72,
+      "isEnabled": true,
+      "order": 22,
+      "featured": false,
+      "iconUrl": ""
+    },
+    {
+      "id": "skill-1783424795392-copy-1783424905709",
+      "name": "Docker",
+      "title": "Docker",
+      "category": "DevOps",
+      "icon": "",
+      "iconKey": "docker",
+      "level": 70,
+      "isEnabled": true,
+      "order": 23,
+      "featured": false,
+      "iconUrl": ""
+    },
+    {
+      "id": "skill-18",
+      "name": "Database",
+      "title": "Database",
+      "category": "Database",
+      "icon": "database",
+      "iconKey": "database",
+      "level": 76,
+      "order": 24,
       "iconUrl": "",
       "featured": false
     },
     {
       "id": "skill-1783424734558",
-      "title": "Flutter",
       "name": "Flutter",
+      "title": "Flutter",
       "category": "App Development",
       "icon": "",
       "iconKey": "flutter",
-      "iconUrl": "",
-      "iconColor": "",
-      "featured": false,
-      "level": 0,
+      "level": 40,
       "isEnabled": true,
-      "order": 1
-    },
-    {
-      "id": "skill-1783424795392",
-      "title": "Railway",
-      "name": "Railway",
-      "category": "DevOps",
-      "icon": "",
-      "iconKey": "railway",
-      "iconUrl": "",
-      "iconColor": "",
+      "order": 25,
       "featured": false,
-      "level": 0,
-      "isEnabled": true,
-      "order": 1
-    },
-    {
-      "id": "skill-1783424795392-copy-1783424905709",
-      "title": "Docker",
-      "name": "Docker",
-      "category": "DevOps",
-      "icon": "",
-      "iconKey": "docker",
-      "iconUrl": "",
-      "iconColor": "",
-      "featured": false,
-      "level": 0,
-      "isEnabled": true,
-      "order": 1
+      "iconUrl": ""
     }
   ],
   "projectsDetailed": [
@@ -940,7 +952,7 @@
       "company": "Idcare19",
       "role": "Full Stack Developer",
       "teamSize": "1",
-      "duration": "1 Months",
+      "duration": "1 Month",
       "startDate": "May 2026",
       "endDate": "June 2026",
       "isFeatured": false,
@@ -1011,10 +1023,10 @@
       "apiDocumentationUrl": "",
       "figmaUrl": "",
       "caseStudyUrl": "",
-      "documentationUrl": "https://github.com/idcare19/smartqueue-ai/readme.md",
+      "documentationUrl": "https://github.com/idcare19/smartqueue-ai/blob/main/README.md",
       "client": "Personal Project",
       "company": "Independent",
-      "role": "Full Stack ",
+      "role": "Full Stack Developer",
       "teamSize": "1",
       "duration": "Ongoing",
       "startDate": "July 2026",
@@ -1067,13 +1079,13 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6ae9aae27495579615a87f53",
+      "id": "6b006c116f91e0f7ae99e689",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "content": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients...",
+      "content": "A portfolio that stands out does more than list your work. Lead with a clear headline, show 3 to 5 strong projects with real outcomes, make your contact options obvious, and keep the site fast and mobile-friendly. Every section should answer one question for the visitor: why should I hire this person?",
       "coverImage": "",
-      "author": "",
+      "author": "Abhishek",
       "tags": [
         "portfolio",
         "web development",
@@ -1086,23 +1098,23 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-11-03T09:35:21.761Z",
+      "publishedAt": "2026-11-20T15:49:31.273Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 15:05:30 GMT+0530 (India Standard Time)",
-      "updatedAt": "2026-11-03T09:35:21.761Z",
+      "createdAt": "2026-11-20T15:49:37.000Z",
+      "updatedAt": "2026-11-20T15:49:31.273Z",
       "scheduledFor": "",
-      "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
+      "markdown": "A portfolio that stands out does more than list your work. Lead with a clear headline, show 3 to 5 strong projects with real outcomes, make your contact options obvious, and keep the site fast and mobile-friendly. Every section should answer one question for the visitor: why should I hire this person?"
     },
     {
-      "id": "6ae9aae27495579615a87f54",
+      "id": "6b006c116f91e0f7ae99e68a",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "content": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code...",
+      "content": "Frontend development keeps evolving. Learn the fundamentals deeply, build mobile-first, keep components small and reusable, measure performance with real tools, and review your own code before anyone else does. Consistency beats cleverness every time.",
       "coverImage": "",
-      "author": "",
+      "author": "Abhishek",
       "tags": [
         "frontend",
         "tips",
@@ -1115,23 +1127,23 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-11-03T09:35:21.761Z",
+      "publishedAt": "2026-11-20T15:49:31.273Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 15:05:30 GMT+0530 (India Standard Time)",
-      "updatedAt": "2026-11-03T09:35:21.761Z",
+      "createdAt": "2026-11-20T15:49:37.000Z",
+      "updatedAt": "2026-11-20T15:49:31.273Z",
       "scheduledFor": "",
-      "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
+      "markdown": "Frontend development keeps evolving. Learn the fundamentals deeply, build mobile-first, keep components small and reusable, measure performance with real tools, and review your own code before anyone else does. Consistency beats cleverness every time."
     },
     {
-      "id": "6ae9aae27495579615a87f55",
+      "id": "6b006c116f91e0f7ae99e68b",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
-      "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "content": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices...",
+      "excerpt": "A practical guide to MongoDB best practices for performance, scalability, and maintainability.",
+      "content": "MongoDB is a powerful NoSQL database, but it rewards good design. Model data around how it is queried, add indexes for your frequent filters, avoid unbounded arrays, validate your schemas, and monitor slow queries as your data grows.",
       "coverImage": "",
-      "author": "",
+      "author": "Abhishek",
       "tags": [
         "mongodb",
         "database",
@@ -1143,15 +1155,15 @@
       "published": true,
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
-      "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-11-03T09:35:21.761Z",
+      "seoDescription": "A practical guide to MongoDB best practices for performance, scalability, and maintainability.",
+      "publishedAt": "2026-11-20T15:49:31.273Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 15:05:30 GMT+0530 (India Standard Time)",
-      "updatedAt": "2026-11-03T09:35:21.761Z",
+      "createdAt": "2026-11-20T15:49:37.000Z",
+      "updatedAt": "2026-11-20T15:49:31.273Z",
       "scheduledFor": "",
-      "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
+      "markdown": "MongoDB is a powerful NoSQL database, but it rewards good design. Model data around how it is queried, add indexes for your frequent filters, avoid unbounded arrays, validate your schemas, and monitor slow queries as your data grows."
     }
   ],
   "mediaLibrary": [
@@ -1171,7 +1183,7 @@
     },
     {
       "id": "media-1783355742572",
-      "name": "Vision ",
+      "name": "Vision",
       "url": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783355742/portfolio/pvuwx7zadqkoxrwknqdh.png",
       "type": "png",
       "size": 1556285
@@ -1186,7 +1198,7 @@
   ],
   "websiteSettings": {
     "seoTitle": "Abhishek | Full Stack Developer",
-    "metaDescription": "Portfolio of Abhishek with modern full-stack projects and services.",
+    "metaDescription": "Portfolio of Abhishek, a full-stack developer building modern web apps, SaaS platforms and AI-powered products with Next.js, React, Django and PostgreSQL.",
     "favicon": "/projects/logo.png",
     "logo": "/projects/logo.png",
     "footerText": "© 2026 Abhishek. All rights reserved.",
@@ -1195,13 +1207,13 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-20T15:49:31.273Z",
-      "lastGitHubSync": "2026-11-20T15:49:32.932Z"
+      "lastMongoUpdate": "2026-11-23T06:26:20.255Z",
+      "lastGitHubSync": "2026-11-23T06:26:24.642Z"
     },
     "popupAnnouncement": {
       "enabled": false,
-      "title": "Updates ",
-      "message": "Due to new updates you can see some blank data just ignore that for some time , But you can contact me.",
+      "title": "Updates",
+      "message": "I'm rolling out new updates, so some sections may look empty for a short time. Feel free to contact me anytime.",
       "buttonText": "Contact",
       "buttonLink": "#contact",
       "image": "",
@@ -1217,7 +1229,7 @@
       "subtitle": "We are performing a quick upgrade. Please check back soon.",
       "estimatedReturn": "Expected back in 2 hours",
       "contactButtonText": "Contact Support",
-      "contactButtonLink": "Personal@idcare19.me",
+      "contactButtonLink": "mailto:personal@idcare19.me",
       "whatsappLink": "https://wa.me/918929261986",
       "socialLinks": [
         {
@@ -1226,7 +1238,7 @@
         },
         {
           "label": "LinkedIn",
-          "href": "https://www.linkedin.com/in/abhishekidcare19/"
+          "href": "https://www.linkedin.com/in/abhishek2103"
         }
       ],
       "allowedRoutes": [
@@ -1544,7 +1556,7 @@
       "buttonLabel": "Search",
       "shortcutLabel": "Ctrl K",
       "inputPlaceholder": "Search projects, blogs, skills, technologies...",
-      "emptyPrompt": "Start typing to search across your portfolio."
+      "emptyPrompt": "Start typing to search across the portfolio."
     },
     "assistant": {
       "buttonLabel": "Ask Portfolio AI",
@@ -1686,7 +1698,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-20T15:49:31.273Z",
+  "updatedAt": "2026-11-23T06:26:20.255Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -1705,17 +1717,18 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "Remote & Freelance Ready",
+        "eyebrow": "Available for Freelance & Internships",
         "title": "Hi, I'm Abhishek",
-        "animatedRole": "Building fast, scalable and premium full-stack web applications",
-        "description": "I build modern full-stack applications with scalable architecture, clean UI systems, and performance-focused user experiences using technologies like Next.js, Appwrite, and modern frontend frameworks.",
-        "primaryCtaLabel": "",
-        "primaryCtaHref": "",
-        "secondaryCtaLabel": "",
-        "secondaryCtaHref": "",
+        "animatedRole": "Full-stack developer building fast, scalable web products",
+        "description": "I build full-stack web apps with clean architecture, polished UI, and strong performance, using Next.js, React, Django, PostgreSQL and more.",
+        "primaryCtaLabel": "View Projects",
+        "primaryCtaHref": "#projects",
+        "secondaryCtaLabel": "Contact Me",
+        "secondaryCtaHref": "#contact",
         "badges": [
-          "Open for Freelance & Internship Opportunities Available for Projects and Collaborations Currently Available for Freelance Work Open to Internships",
-          "Freelance & Tech Collaborations"
+          "Open for Freelance Projects",
+          "Open for Internships",
+          "Remote & Collaboration Friendly"
         ],
         "stats": [
           {
@@ -1723,12 +1736,12 @@
             "value": "20+"
           },
           {
-            "label": "Technologies Learned",
-            "value": "10+"
+            "label": "Technologies Used",
+            "value": "15+"
           },
           {
-            "label": "Months of Learning",
-            "value": "12+"
+            "label": "Months of Experience",
+            "value": "8+"
           }
         ],
         "techStack": [
@@ -1763,7 +1776,7 @@
         "eyebrow": "About",
         "title": "Building modern products with clean execution",
         "description": "A quick overview of who I am and how I build.",
-        "intro": "I turn ideas into premium web products with clear structure, thoughtful interactions, and strong performance. My focus is responsive UI, smooth motion, and production-ready front-end quality."
+        "intro": "I turn ideas into reliable web products. I work across the stack, from responsive interfaces and smooth interactions to REST APIs, databases and deployment, with a focus on production-ready quality."
       },
       "items": [
         {
@@ -1771,12 +1784,12 @@
           "value": "20+"
         },
         {
-          "label": "Technologies Learned",
-          "value": "10+"
+          "label": "Technologies Used",
+          "value": "15+"
         },
         {
-          "label": "Months of Learning",
-          "value": "12+"
+          "label": "Months of Experience",
+          "value": "8+"
         }
       ],
       "showOnHomepage": true
@@ -1812,241 +1825,265 @@
         {
           "id": "skill-1",
           "name": "HTML",
+          "title": "HTML",
           "category": "Frontend",
           "icon": "html",
+          "iconKey": "html5",
           "level": 90,
-          "order": 1,
-          "title": "HTML",
-          "iconKey": "html5"
+          "order": 1
         },
         {
           "id": "skill-2",
           "name": "CSS",
+          "title": "CSS",
           "category": "Frontend",
           "icon": "css",
+          "iconKey": "css",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",
           "level": 88,
-          "order": 2,
-          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg"
+          "order": 2
         },
         {
           "id": "skill-3",
           "name": "JavaScript",
+          "title": "JavaScript",
           "category": "Frontend",
           "icon": "javascript",
+          "iconKey": "javascript",
           "level": 84,
           "order": 3
         },
         {
           "id": "skill-4",
           "name": "Bootstrap",
+          "title": "Bootstrap",
           "category": "Frontend",
           "icon": "bootstrap",
+          "iconKey": "bootstrap",
           "level": 85,
           "order": 4
         },
         {
           "id": "skill-5",
           "name": "Tailwind CSS",
+          "title": "Tailwind CSS",
           "category": "Frontend",
           "icon": "tailwind",
+          "iconKey": "tailwindcss",
           "level": 86,
-          "order": 5,
-          "iconKey": "tailwindcss"
+          "order": 5
         },
         {
           "id": "skill-6",
           "name": "Next.js",
+          "title": "Next.js",
           "category": "Frontend",
           "icon": "next",
+          "iconKey": "nextjs",
           "level": 82,
-          "order": 6,
-          "iconKey": "nextjs"
+          "order": 6
         },
         {
           "id": "skill-7",
           "name": "React.js",
+          "title": "React.js",
           "category": "Frontend",
           "icon": "react",
+          "iconKey": "reactjs",
           "level": 80,
           "order": 7
         },
         {
           "id": "skill-8",
           "name": "MySQL",
+          "title": "MySQL",
           "category": "Database",
           "icon": "database",
+          "iconKey": "mysql",
           "level": 78,
-          "order": 8,
-          "iconKey": "mysql"
+          "order": 8
         },
         {
           "id": "skill-1783232589042",
+          "name": "PostgreSQL",
           "title": "PostgreSQL",
-          "name": "",
           "category": "Database",
           "icon": "",
-          "level": 0,
+          "iconKey": "postgresql",
+          "level": 78,
           "isEnabled": true,
-          "order": 21
+          "order": 9
         },
         {
           "id": "skill-1783232589547",
+          "name": "Mongodb",
           "title": "Mongodb",
-          "name": "",
           "category": "Database",
           "icon": "",
-          "level": 0,
+          "iconKey": "mongodb",
+          "level": 72,
           "isEnabled": true,
-          "order": 19
+          "order": 10
         },
         {
           "id": "skill-9",
           "name": "Laravel",
+          "title": "Laravel",
           "category": "Backend",
           "icon": "server",
+          "iconKey": "laravel",
           "level": 76,
-          "order": 9,
-          "iconKey": "laravel"
+          "order": 11
         },
         {
           "id": "skill-10",
           "name": "PHP",
+          "title": "PHP",
           "category": "Backend",
           "icon": "server",
+          "iconKey": "php",
           "level": 82,
-          "order": 10,
-          "iconKey": "php"
+          "order": 12
         },
         {
           "id": "skill-1783180751537-copy-1783182340105",
-          "name": "",
+          "name": "Django",
+          "title": "Django",
           "category": "Backend",
           "icon": "",
-          "level": 0,
+          "iconKey": "django",
+          "level": 78,
           "isEnabled": true,
-          "order": 11,
-          "title": "Django",
+          "order": 13,
           "featured": false
         },
         {
           "id": "skill-11",
           "name": "Appwrite",
+          "title": "Appwrite",
           "category": "Backend",
           "icon": "database",
+          "iconKey": "appwrite",
           "level": 75,
-          "order": 12,
-          "iconKey": "appwrite"
+          "order": 14
         },
         {
           "id": "skill-12",
           "name": "WordPress",
+          "title": "WordPress",
           "category": "CMS",
           "icon": "layout",
+          "iconKey": "wordpress",
+          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg",
           "level": 78,
-          "order": 13,
-          "iconUrl": "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/wordpress/wordpress-plain.svg"
+          "order": 15
         },
         {
           "id": "skill-13",
           "name": "Git",
+          "title": "Git",
           "category": "Tools",
           "icon": "git-branch",
+          "iconKey": "git",
           "level": 84,
-          "order": 14,
-          "iconKey": "git"
+          "order": 16
         },
         {
           "id": "skill-14",
           "name": "GitHub",
+          "title": "GitHub",
           "category": "Tools",
           "icon": "github",
+          "iconKey": "github-tech",
           "level": 86,
-          "order": 15,
-          "iconKey": "github-tech"
+          "order": 17
         },
         {
           "id": "skill-15",
           "name": "Testing",
+          "title": "Testing",
           "category": "Quality",
           "icon": "check-circle",
+          "iconKey": "testing",
           "level": 72,
-          "order": 16
+          "order": 18
         },
         {
           "id": "skill-16",
           "name": "Deployment",
+          "title": "Deployment",
           "category": "DevOps",
           "icon": "rocket",
+          "iconKey": "deployment",
           "level": 80,
-          "order": 17
+          "order": 19
         },
         {
           "id": "skill-17",
           "name": "Vercel",
+          "title": "Vercel",
           "category": "DevOps",
           "icon": "vercel",
+          "iconKey": "vercel",
           "level": 78,
-          "order": 18
-        },
-        {
-          "id": "skill-18",
-          "name": "Database",
-          "category": "Database",
-          "icon": "database",
-          "level": 76,
           "order": 20
         },
         {
           "id": "skill-1783232662510",
+          "name": "Render",
           "title": "Render",
-          "name": "",
           "category": "DevOps",
           "icon": "",
-          "level": 0,
+          "iconKey": "render",
+          "level": 75,
           "isEnabled": true,
-          "order": 1
-        },
-        {
-          "id": "skill-1783424734558",
-          "title": "Flutter",
-          "name": "",
-          "category": "App Development",
-          "icon": "",
-          "iconKey": "",
-          "iconUrl": "",
-          "iconColor": "",
-          "featured": false,
-          "level": 0,
-          "isEnabled": true,
-          "order": 1
+          "order": 21
         },
         {
           "id": "skill-1783424795392",
+          "name": "Railway",
           "title": "Railway",
-          "name": "",
           "category": "DevOps",
           "icon": "",
-          "iconKey": "",
-          "iconUrl": "",
-          "iconColor": "",
-          "featured": false,
-          "level": 0,
+          "iconKey": "railway",
+          "level": 72,
           "isEnabled": true,
-          "order": 1
+          "order": 22,
+          "featured": false
         },
         {
           "id": "skill-1783424795392-copy-1783424905709",
+          "name": "Docker",
           "title": "Docker",
-          "name": "",
           "category": "DevOps",
           "icon": "",
-          "iconKey": "",
-          "iconUrl": "",
-          "iconColor": "",
-          "featured": false,
-          "level": 0,
+          "iconKey": "docker",
+          "level": 70,
           "isEnabled": true,
-          "order": 1
+          "order": 23,
+          "featured": false
+        },
+        {
+          "id": "skill-18",
+          "name": "Database",
+          "title": "Database",
+          "category": "Database",
+          "icon": "database",
+          "iconKey": "database",
+          "level": 76,
+          "order": 24
+        },
+        {
+          "id": "skill-1783424734558",
+          "name": "Flutter",
+          "title": "Flutter",
+          "category": "App Development",
+          "icon": "",
+          "iconKey": "flutter",
+          "level": 40,
+          "isEnabled": true,
+          "order": 25,
+          "featured": false
         }
       ],
       "showOnHomepage": true
@@ -2071,7 +2108,7 @@
         "eyebrow": "Projects",
         "title": "Featured work",
         "description": "Selected projects, client work, and production-ready builds.",
-        "homepageLimit": "6",
+        "homepageLimit": "3",
         "homepageButtonText": "View More Projects"
       },
       "items": [
@@ -2105,7 +2142,7 @@
           "company": "Idcare19",
           "role": "Full Stack Developer",
           "teamSize": "1",
-          "duration": "1 Months",
+          "duration": "1 Month",
           "startDate": "May 2026",
           "endDate": "June 2026",
           "isFeatured": false,
@@ -2176,10 +2213,10 @@
           "apiDocumentationUrl": "",
           "figmaUrl": "",
           "caseStudyUrl": "",
-          "documentationUrl": "https://github.com/idcare19/smartqueue-ai/readme.md",
+          "documentationUrl": "https://github.com/idcare19/smartqueue-ai/blob/main/README.md",
           "client": "Personal Project",
           "company": "Independent",
-          "role": "Full Stack ",
+          "role": "Full Stack Developer",
           "teamSize": "1",
           "duration": "Ongoing",
           "startDate": "July 2026",
@@ -2251,7 +2288,97 @@
         "title": "Live work in progress",
         "description": "Projects I am actively building or improving right now."
       },
-      "items": [],
+      "items": [
+        {
+          "id": "project-1787905712409",
+          "slug": "item-1787905712410",
+          "title": "Ekam-OS",
+          "shortDescription": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
+          "longDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface.\n\nThe system leverages a microservices-inspired approach using Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for fast navigation and state management.",
+          "techStack": [
+            "Next.js",
+            "Nest.js",
+            "Django",
+            "Python",
+            "SMTP",
+            "PostgreSQL"
+          ],
+          "category": "Working",
+          "image": "https://ekamos.prsn.in/logo2.png",
+          "liveDemoUrl": "https://ekamos.prsn.in",
+          "githubUrl": "",
+          "featured": true,
+          "order": 1,
+          "isEnabled": true,
+          "overview": "",
+          "problem": "",
+          "solution": "",
+          "myRole": "Full Stack Developer, Project Management",
+          "responsibilities": [],
+          "features": [],
+          "screenshots": [],
+          "architectureDiagram": "",
+          "databaseSchema": "PostgreSQL",
+          "apiFlow": "",
+          "folderStructure": "",
+          "challenges": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, used asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insight into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
+          "lessonsLearned": "",
+          "futureImprovements": [],
+          "timeline": "3 months",
+          "tags": [
+            "Company-Os",
+            "Enterprise",
+            "Dashboard"
+          ],
+          "readingTimeMinutes": 1,
+          "status": "In Progress",
+          "projectType": "Client",
+          "published": true,
+          "customFields": [],
+          "role": "Full Stack Developer, Project Management",
+          "link": "https://ekamos.prsn.in",
+          "workDone": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
+          "draft": false,
+          "confidentialProject": true,
+          "company": "Parvati and Sons",
+          "teamSize": "3",
+          "duration": "3 months (ongoing)",
+          "startDate": "June 2026",
+          "endDate": "Ongoing",
+          "frontend": "Next.js",
+          "backend": "Nest.js, Django",
+          "hosting": "",
+          "database": "PostgreSQL",
+          "fullDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface.\n\nThe system leverages a microservices-inspired approach using Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for fast navigation and state management.",
+          "keyFeatures": [
+            "Modular dashboard for managing core system components and user workflows",
+            "Secure authentication with role-based access control",
+            "Automated email and notification system via SMTP",
+            "Optimized PostgreSQL queries for low latency under heavy load",
+            "Responsive Next.js UI with server-side rendering"
+          ],
+          "keyResponsibilities": [
+            "Built end-to-end full-stack features using Next.js, Nest.js and Django",
+            "Designed and optimized PostgreSQL schemas and managed API integrations",
+            "Handled project management, task distribution and version control for a 3-member team",
+            "Implemented secure communication and automated SMTP notification triggers"
+          ],
+          "skillsApplied": [
+            "Full-Stack Web Development",
+            "System Architecture & API Design",
+            "Database Management (PostgreSQL)",
+            "Project Management & Team Coordination",
+            "Performance Optimization & Debugging"
+          ],
+          "challengesFaced": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, used asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insight into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
+          "futureRoadmap": [
+            "Real-time WebSocket updates",
+            "AI-driven workflow analytics",
+            "Remaining portals",
+            "Third-party API integrations and plugin architecture"
+          ]
+        }
+      ],
       "showOnHomepage": true
     },
     "completed": {
@@ -2277,101 +2404,25 @@
       },
       "items": [
         {
-          "id": "project-1787905712409",
-          "slug": "item-1787905712410",
-          "title": "Ekam-OS",
-          "shortDescription": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
-          "longDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface. \n\nThe system leverages a powerful microservices-inspired approach utilizing Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for lightning-fast navigation and state management.\n",
-          "techStack": [
-            "Nest.js",
-            "Django",
-            "Python",
-            "SMTP",
-            "PostgreSQL"
-          ],
-          "category": "Completed",
-          "image": "https://ekamos.prsn.in/logo2.png",
-          "liveDemoUrl": "Https://Ekamos.prsn.in",
-          "githubUrl": "",
-          "featured": true,
-          "order": 1,
-          "isEnabled": true,
-          "overview": "",
-          "problem": "",
-          "solution": "",
-          "myRole": "Full stack developer, Project management",
-          "responsibilities": [],
-          "features": [],
-          "screenshots": [],
-          "architectureDiagram": "",
-          "databaseSchema": "PostgreSQL",
-          "apiFlow": "",
-          "folderStructure": "",
-          "challenges": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, utilized asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insights into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
-          "lessonsLearned": "",
-          "futureImprovements": [],
-          "timeline": "3",
-          "tags": [
-            "Company-Os"
-          ],
-          "readingTimeMinutes": 1,
-          "status": "Completed",
-          "projectType": "Client",
-          "published": false,
-          "customFields": [],
-          "role": "Full stack developer, Project management",
-          "link": "Https://Ekamos.prsn.in",
-          "workDone": "A high-performance, modular operating system interface and enterprise-grade dashboard built for modern workflow management and seamless scalability.",
-          "draft": true,
-          "confidentialProject": true,
-          "company": "Parvati and Sons",
-          "teamSize": "3",
-          "duration": "3 months (under working)",
-          "startDate": "2026-6-21",
-          "endDate": "Still working",
-          "frontend": "Next.js",
-          "backend": "Django",
-          "hosting": "",
-          "database": "PostgreSQL",
-          "fullDescription": "Ekam-OS is a comprehensive, full-stack enterprise platform engineered to streamline complex workflows, optimize data management, and deliver a seamless user experience. Developed in a collaborative environment with a core team of 3 engineers, this project focuses on high performance, robust backend architecture, and a clean, responsive user interface. \n\nThe system leverages a powerful microservices-inspired approach utilizing Nest.js and Django to handle heavy data processing and secure communications, paired with a dynamic Next.js frontend for lightning-fast navigation and state management.\n",
-          "keyFeatures": [
-            "Modular Dashboard Architecture: Centralized control panel for managing core system components and user workflows.\nSecure Authentication & Role-Based Access: Multi-tier authorization backed by robust backend validation.\nAutomated Email & Notification System: Integrated SMTP pipelines for real-time user alerts and automated reporting.\nHigh-Performance Data Handling: Optimized PostgreSQL database queries ensuring minimal latency during heavy loads.\nResponsive & Modern UI: Built with Next.js for server-side rendering and instantaneous client-side transitions."
-          ],
-          "keyResponsibilities": [
-            "Architected and developed end-to-end full-stack features using Next.js",
-            "Nest.js",
-            "and Django.\nDesigned and optimized PostgreSQL database schemas and managed API integrations.\nHandled project management",
-            "task distribution",
-            "and version control workflows within a 3-member team.\nImplemented secure communication channels and automated backend notification triggers via SMTP."
-          ],
-          "skillsApplied": [
-            "Full-Stack Web Development\nSystem Architecture & API Design\nDatabase Management (PostgreSQL)\nProject Management & Team Coordination\nPerformance Optimization & Debugging"
-          ],
-          "challengesFaced": "Challenge: Managing multi-framework synchronization between Nest.js and Django services without introducing communication bottlenecks.\nSolution: Defined strict API contracts, utilized asynchronous data handling, and optimized payload sizes.\nChallenge: Maintaining high database query performance under heavy concurrent usage.\nSolution: Implemented proper indexing strategies and query optimizations in PostgreSQL.\nLearning: Gained deep insights into cross-framework microservice communication, advanced state management in Next.js, and managing collaborative enterprise software lifecycles.",
-          "futureRoadmap": [
-            "Implementing real-time WebSocket communication for live system updates.\nIntegrating advanced AI-driven analytics for automated workflow insights.\nAdding new portals that are left to complete.\nExpanding third-party API integrations and plugin architecture."
-          ]
-        },
-        {
           "title": "Prodonto – AI Dental Healthcare Platform",
           "timeline": "Internship Project",
           "role": "Frontend Developer • API Integration • Dashboard Development",
           "link": "",
-          "workDone": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
+          "workDone": "Contributed to a production-grade dental healthcare platform by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
           "isEnabled": true,
-          "order": 2,
+          "order": 1,
           "status": "Completed",
           "category": "Healthcare SaaS",
           "featured": true,
           "id": "completed-5",
-          "shortDescription": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
-          "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows.  I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
+          "shortDescription": "Contributed to a production-grade dental healthcare platform by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
+          "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows. I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
           "liveDemoUrl": "",
           "myRole": "Frontend Developer • API Integration • Dashboard Development",
           "projectType": "Client",
           "slug": "prodonto-ai-dental-healthcare-platform",
           "confidentialProject": false,
-          "subtitle": "Production healthcare platform ",
+          "subtitle": "Production healthcare platform",
           "featuredBadge": "Client",
           "tags": [
             "Healthcare",
@@ -2380,7 +2431,7 @@
             "Frontend",
             "API Integration"
           ],
-          "fullDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows.  I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
+          "fullDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows. I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
           "company": "Parvati and Sons",
           "teamSize": "Collaborative team",
           "duration": "Internship Project",
@@ -2392,51 +2443,51 @@
         {
           "title": "Sania Enterprises – API Integration & Frontend Fixes",
           "timeline": "19/04/2026",
-          "role": "Frontend Developer ",
-          "link": "Https://Saniaenterprises.in",
-          "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
+          "role": "Frontend Developer",
+          "link": "https://saniaenterprises.in",
+          "workDone": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster, smoother user experience. Reduced dependency on static content with API-driven dynamic rendering.",
           "id": "completed-3",
-          "shortDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
-          "longDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster and smoother user experience.\nReduced dependency on static content by implementing API-driven dynamic rendering.",
-          "liveDemoUrl": "Https://Saniaenterprises.in",
-          "myRole": "Frontend Developer ",
+          "shortDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster, smoother user experience. Reduced dependency on static content with API-driven dynamic rendering.",
+          "longDescription": "Worked as a Frontend Developer Intern to enhance and maintain the Sania Enterprises website. Integrated dynamic content and images using external APIs to replace static data, improving scalability and content management. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized frontend performance and image loading for a faster, smoother user experience. Reduced dependency on static content with API-driven dynamic rendering.",
+          "liveDemoUrl": "https://saniaenterprises.in",
+          "myRole": "Frontend Developer",
           "category": "Completed",
           "status": "Completed",
           "projectType": "Completed Project",
           "isEnabled": true,
           "slug": "sania-enterprises-api-integration-frontend-fixes",
           "customFields": [],
-          "order": 3
+          "order": 2
         },
         {
           "title": "Guruji Taxi – API Integration & Frontend Fixes",
           "timeline": "20/04/2026",
-          "role": "Frontend Developer ",
-          "link": "Https://gurujitaxi.com",
-          "workDone": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
+          "role": "Frontend Developer",
+          "link": "https://gurujitaxi.com",
+          "workDone": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance the overall user experience. Contributed to real-world production improvements with a focus on performance and UI/UX.",
           "id": "completed-2",
-          "shortDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
-          "longDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance overall user experience. \nContributed to real-world production website improvements during internship, focusing on performance and UI/UX enhancements.",
-          "liveDemoUrl": "Https://gurujitaxi.com",
-          "myRole": "Frontend Developer ",
+          "shortDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance the overall user experience. Contributed to real-world production improvements with a focus on performance and UI/UX.",
+          "longDescription": "Worked as a Frontend Developer Intern to improve and maintain the Guruji Taxi website. Integrated dynamic images using external APIs to replace static content, making the system more scalable and easier to manage. Fixed UI issues, improved responsiveness across devices, and ensured consistent layout and design. Optimized image loading and frontend performance to enhance the overall user experience. Contributed to real-world production improvements with a focus on performance and UI/UX.",
+          "liveDemoUrl": "https://gurujitaxi.com",
+          "myRole": "Frontend Developer",
           "category": "Completed",
           "status": "Completed",
           "projectType": "Completed Project",
           "isEnabled": true,
           "slug": "guruji-taxi-api-integration-frontend-fixes",
           "customFields": [],
-          "order": 4
+          "order": 3
         },
         {
           "title": "Website Speed Optimization & Performance Enhancement",
           "timeline": "21/04/2026",
           "role": "Frontend Developer (Performance Optimization)",
-          "link": "Https://dhawantravel.com",
-          "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
+          "link": "https://dhawantravel.com",
+          "workDone": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness for a smooth user experience. Achieved higher PageSpeed Insights scores on both mobile and desktop.",
           "id": "completed-1",
-          "shortDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
-          "longDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness to ensure a smooth user experience. Improved overall performance and achieved higher PageSpeed Insights scores on both mobile and desktop.",
-          "liveDemoUrl": "Https://dhawantravel.com",
+          "shortDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness for a smooth user experience. Achieved higher PageSpeed Insights scores on both mobile and desktop.",
+          "longDescription": "Optimized website performance by reducing load time and improving Core Web Vitals. Minimized CSS and JavaScript, optimized images, and implemented lazy loading for faster rendering. Fixed layout shifts and enhanced mobile responsiveness for a smooth user experience. Achieved higher PageSpeed Insights scores on both mobile and desktop.",
+          "liveDemoUrl": "https://dhawantravel.com",
           "myRole": "Frontend Developer (Performance Optimization)",
           "category": "Completed",
           "status": "Completed",
@@ -2445,17 +2496,17 @@
           "confidentialProject": false,
           "slug": "website-speed-optimization-performance-enhancement",
           "customFields": [],
-          "order": 5
+          "order": 4
         },
         {
           "title": "Medical Seva – Static Website Development",
           "timeline": "23/04/2026",
           "role": "Frontend Developer",
           "link": "https://medicalseva.in/",
-          "workDone": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+          "workDone": "Developed a clean, responsive static website for Medical Seva during my internship. Built the layout with modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Added structured sections for services, information and contact to improve usability and accessibility. Delivered a lightweight, fast-loading site with simple navigation.",
           "id": "completed-4",
-          "shortDescription": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
-          "longDescription": "Developed a clean and responsive static webpage for Medical Seva during internship. Built the layout using modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Focused on clear UI structure, fast loading performance, and smooth user experience. Implemented structured sections for services, information, and contact to improve usability and accessibility. Delivered a lightweight, fast-loading static page optimized for performance and simple user navigation.",
+          "shortDescription": "Developed a clean, responsive static website for Medical Seva during my internship. Built the layout with modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Added structured sections for services, information and contact to improve usability and accessibility. Delivered a lightweight, fast-loading site with simple navigation.",
+          "longDescription": "Developed a clean, responsive static website for Medical Seva during my internship. Built the layout with modern frontend practices, ensuring mobile responsiveness and cross-browser compatibility. Added structured sections for services, information and contact to improve usability and accessibility. Delivered a lightweight, fast-loading site with simple navigation.",
           "liveDemoUrl": "https://medicalseva.in/",
           "myRole": "Frontend Developer",
           "category": "Completed",
@@ -2464,7 +2515,7 @@
           "isEnabled": true,
           "slug": "medical-seva-static-website-development",
           "customFields": [],
-          "order": 6
+          "order": 5
         }
       ],
       "showOnHomepage": true
@@ -2478,7 +2529,7 @@
       "layout": "default",
       "status": "published",
       "nav": {
-        "show": true,
+        "show": false,
         "href": "#reviews",
         "label": "reviews"
       },
@@ -2510,7 +2561,7 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "",
+        "eyebrow": "Journey",
         "title": "Experience",
         "description": "",
         "currentWorkTitle": "",
@@ -2529,7 +2580,7 @@
         {
           "role": "Project Manager & Full Stack Developer",
           "period": "2026 - Present",
-          "summary": "Leading web development projects at Parvati & Sons, managing frontend improvements, performance optimization, feature updates, deployment workflows, and overall website maintenance while contributing to full-stack development and UI/UX enhancements."
+          "summary": "Project Manager & Full Stack Developer at Parvati & Sons. I lead web projects, manage interns, ship features, optimize performance, handle deployments, and contribute to full-stack development and UI/UX."
         }
       ],
       "showOnHomepage": false
@@ -2551,9 +2602,9 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "Services",
-        "title": "How I can help",
-        "description": "Flexible development support for websites, SaaS, and product ideas."
+        "eyebrow": "Education",
+        "title": "My Education",
+        "description": "Academic background and learning path."
       },
       "items": [],
       "showOnHomepage": false
@@ -2583,19 +2634,19 @@
         {
           "id": "service-1",
           "title": "Full Stack Development",
-          "description": "End-to-end product engineering.",
+          "description": "End-to-end product engineering, from UI and APIs to databases and deployment.",
           "icon": "code"
         },
         {
           "id": "service-2",
           "title": "UI/UX Implementation",
-          "description": "Fast, responsive, premium interfaces.",
+          "description": "Fast, responsive, premium interfaces that work on every device.",
           "icon": "layout"
         },
         {
           "id": "service-1776865311808",
-          "title": "Fixing Website ",
-          "description": "Fixing website bugs, layout issues, responsiveness problems, broken sections, and improving overall performance for a smoother user experience.",
+          "title": "Website Fixing & Optimization",
+          "description": "Fixing bugs, layout issues, responsiveness problems and broken sections, and improving performance for a smoother user experience.",
           "icon": "wrench"
         }
       ],
@@ -2661,19 +2712,19 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "GitHub Live",
-        "title": "Live developer activity",
-        "description": "Latest repositories, commits, languages, and GitHub stats."
+        "eyebrow": "Blog",
+        "title": "Latest articles",
+        "description": "Notes and tips on web development, databases and building products."
       },
       "items": [
         {
-          "id": "6a8056fe54d7b1d0945c4c2f",
+          "id": "6b006c116f91e0f7ae99e689",
           "slug": "how-to-build-a-portfolio-that-converts",
           "title": "How to build a portfolio that converts",
           "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-          "content": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients...",
+          "content": "A portfolio that stands out does more than list your work. Lead with a clear headline, show 3 to 5 strong projects with real outcomes, make your contact options obvious, and keep the site fast and mobile-friendly. Every section should answer one question for the visitor: why should I hire this person?",
           "coverImage": "",
-          "author": "",
+          "author": "Abhishek",
           "tags": [
             "portfolio",
             "web development",
@@ -2686,23 +2737,23 @@
           "isEnabled": true,
           "seoTitle": "How to Build a Portfolio That Converts",
           "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-          "publishedAt": "2026-08-15T12:09:26.458Z",
+          "publishedAt": "2026-11-20T15:49:31.273Z",
           "order": 1,
           "readingTimeMinutes": 1,
           "relatedSlugs": [],
-          "createdAt": "Sat Aug 15 2026 12:09:34 GMT+0000 (Coordinated Universal Time)",
-          "updatedAt": "2026-08-15T12:09:26.458Z",
+          "createdAt": "2026-11-20T15:49:37.000Z",
+          "updatedAt": "2026-11-20T15:49:31.273Z",
           "scheduledFor": "",
-          "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
+          "markdown": "A portfolio that stands out does more than list your work. Lead with a clear headline, show 3 to 5 strong projects with real outcomes, make your contact options obvious, and keep the site fast and mobile-friendly. Every section should answer one question for the visitor: why should I hire this person?"
         },
         {
-          "id": "6a8056fe54d7b1d0945c4c30",
+          "id": "6b006c116f91e0f7ae99e68a",
           "slug": "10-tips-for-frontend-developers",
           "title": "10 tips for frontend developers",
           "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-          "content": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code...",
+          "content": "Frontend development keeps evolving. Learn the fundamentals deeply, build mobile-first, keep components small and reusable, measure performance with real tools, and review your own code before anyone else does. Consistency beats cleverness every time.",
           "coverImage": "",
-          "author": "",
+          "author": "Abhishek",
           "tags": [
             "frontend",
             "tips",
@@ -2715,23 +2766,23 @@
           "isEnabled": true,
           "seoTitle": "10 Tips for Frontend Developers",
           "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-          "publishedAt": "2026-08-15T12:09:26.458Z",
+          "publishedAt": "2026-11-20T15:49:31.273Z",
           "order": 2,
           "readingTimeMinutes": 1,
           "relatedSlugs": [],
-          "createdAt": "Sat Aug 15 2026 12:09:34 GMT+0000 (Coordinated Universal Time)",
-          "updatedAt": "2026-08-15T12:09:26.458Z",
+          "createdAt": "2026-11-20T15:49:37.000Z",
+          "updatedAt": "2026-11-20T15:49:31.273Z",
           "scheduledFor": "",
-          "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
+          "markdown": "Frontend development keeps evolving. Learn the fundamentals deeply, build mobile-first, keep components small and reusable, measure performance with real tools, and review your own code before anyone else does. Consistency beats cleverness every time."
         },
         {
-          "id": "6a8056fe54d7b1d0945c4c31",
+          "id": "6b006c116f91e0f7ae99e68b",
           "slug": "mongodb-best-practices",
           "title": "MongoDB best practices",
-          "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-          "content": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices...",
+          "excerpt": "A practical guide to MongoDB best practices for performance, scalability, and maintainability.",
+          "content": "MongoDB is a powerful NoSQL database, but it rewards good design. Model data around how it is queried, add indexes for your frequent filters, avoid unbounded arrays, validate your schemas, and monitor slow queries as your data grows.",
           "coverImage": "",
-          "author": "",
+          "author": "Abhishek",
           "tags": [
             "mongodb",
             "database",
@@ -2743,15 +2794,15 @@
           "published": true,
           "isEnabled": true,
           "seoTitle": "MongoDB Best Practices",
-          "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-          "publishedAt": "2026-08-15T12:09:26.458Z",
+          "seoDescription": "A practical guide to MongoDB best practices for performance, scalability, and maintainability.",
+          "publishedAt": "2026-11-20T15:49:31.273Z",
           "order": 3,
           "readingTimeMinutes": 1,
           "relatedSlugs": [],
-          "createdAt": "Sat Aug 15 2026 12:09:34 GMT+0000 (Coordinated Universal Time)",
-          "updatedAt": "2026-08-15T12:09:26.458Z",
+          "createdAt": "2026-11-20T15:49:37.000Z",
+          "updatedAt": "2026-11-20T15:49:31.273Z",
           "scheduledFor": "",
-          "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
+          "markdown": "MongoDB is a powerful NoSQL database, but it rewards good design. Model data around how it is queried, add indexes for your frequent filters, avoid unbounded arrays, validate your schemas, and monitor slow queries as your data grows."
         }
       ],
       "showOnHomepage": false
@@ -2775,12 +2826,12 @@
       "data": {
         "eyebrow": "FAQ",
         "title": "Frequently Asked Questions",
-        "description": "Find answers to the most common questions about my experience, projects, services, technologies, and how we can work together."
+        "description": "Answers to common questions about my experience, projects, services, technologies, and how we can work together."
       },
       "items": [
         {
           "question": "Are you available for freelance projects?",
-          "answer": "Yes. I am available for freelance opportunities involving full-stack web development, SaaS platforms, dashboards, API integrations, AI-powered applications, and custom business software. Feel free to reach out through the contact section to discuss your project.",
+          "answer": "Yes. I am available for freelance work including full-stack web development, SaaS platforms, dashboards, API integrations, AI-powered applications, and custom business software. Reach out through the contact section to discuss your project.",
           "category": "Availability",
           "icon": "briefcase",
           "tags": [
@@ -2797,7 +2848,7 @@
         },
         {
           "question": "Are you open to internships or full-time opportunities?",
-          "answer": "Yes. I am open to internships, freelance work, and full-time software engineering opportunities where I can contribute to building high-quality products while continuously learning and growing.",
+          "answer": "Yes. I am open to internships, freelance work, and full-time software engineering roles where I can help build high-quality products while continuing to learn and grow.",
           "category": "Career",
           "icon": "user-check",
           "tags": [
@@ -2813,7 +2864,7 @@
         },
         {
           "question": "What technologies do you work with?",
-          "answer": "My primary stack includes Next.js, React, Django, Python, PostgreSQL, Tailwind CSS, JavaScript, REST APIs, Git, GitHub, Vercel, and Render.",
+          "answer": "My primary stack includes Next.js, React, Django, Python, PostgreSQL, Tailwind CSS, JavaScript, REST APIs, Git, GitHub, Docker, Vercel, and Render.",
           "category": "Technology",
           "icon": "code",
           "tags": [
@@ -2830,7 +2881,7 @@
         },
         {
           "question": "Have you worked on real client projects?",
-          "answer": "Yes. During my internship at Parvati and Sons, I contributed to multiple production-ready client projects. Some implementation details cannot be shared due to confidentiality agreements.",
+          "answer": "Yes. At Parvati and Sons, I have worked on multiple production client projects. Some implementation details cannot be shared due to confidentiality agreements.",
           "category": "Experience",
           "icon": "building",
           "tags": [
@@ -2878,7 +2929,7 @@
         },
         {
           "question": "Do you build complete full-stack applications?",
-          "answer": "Yes. I build complete applications including frontend, backend APIs, authentication, databases, admin dashboards, deployment, and ongoing maintenance.",
+          "answer": "Yes. I build complete applications including the frontend, backend APIs, authentication, databases, admin dashboards, deployment, and ongoing maintenance.",
           "category": "Services",
           "icon": "layers",
           "tags": [
@@ -2909,7 +2960,7 @@
         },
         {
           "question": "How do you approach a new project?",
-          "answer": "I begin with requirement analysis, followed by architecture planning, UI implementation, backend development, testing, deployment, and long-term maintenance.",
+          "answer": "I start with requirement analysis, then move through architecture planning, UI implementation, backend development, testing, deployment, and long-term maintenance.",
           "category": "Workflow",
           "icon": "workflow",
           "tags": [
@@ -2924,7 +2975,7 @@
         },
         {
           "question": "How can I contact you?",
-          "answer": "You can contact me through the contact form on this portfolio, LinkedIn, or email. I usually respond within 24 hours.",
+          "answer": "Use the contact form, email, or LinkedIn on this portfolio. I usually reply within 24 hours.",
           "category": "Contact",
           "icon": "mail",
           "tags": [
@@ -2960,10 +3011,11 @@
       "data": {
         "eyebrow": "Highlights",
         "title": "Achievements",
-        "description": "A collection of key milestones, production projects, technologies, and professional accomplishments that reflect my growth as a full-stack developer."
+        "description": "Key milestones, production projects, technologies, and professional accomplishments from my growth as a full-stack developer."
       },
       "items": [
         {
+          "id": "item-1",
           "title": "Production Client Projects",
           "description": "Worked on multiple production client projects through Parvati and Sons, contributing to frontend improvements, API integration, responsiveness, and performance optimization.",
           "metric": "5+",
@@ -2977,6 +3029,7 @@
           "customFields": []
         },
         {
+          "id": "item-copy-1783351698733",
           "title": "Projects Completed",
           "description": "Built and contributed to full-stack, SaaS, AI, business websites, dashboards, and production-ready web applications.",
           "metric": "20+",
@@ -2987,12 +3040,12 @@
           "isEnabled": true,
           "featured": true,
           "showOnHomepage": true,
-          "customFields": [],
-          "id": "item-copy-1783351698733"
+          "customFields": []
         },
         {
+          "id": "item-copy-1783351698733-copy-1783351734043",
           "title": "Technologies Used",
-          "description": "Worked with modern technologies including Next.js, React, Django, PostgreSQL, Tailwind CSS, REST APIs, Vercel, Render, and GitHub.",
+          "description": "Worked with modern technologies including Next.js, React, Django, PostgreSQL, Tailwind CSS, REST APIs, Docker, Vercel, Render, and GitHub.",
           "metric": "15+",
           "icon": "code",
           "category": "Technology",
@@ -3001,13 +3054,13 @@
           "isEnabled": true,
           "featured": true,
           "showOnHomepage": true,
-          "customFields": [],
-          "id": "item-copy-1783351698733-copy-1783351734043"
+          "customFields": []
         },
         {
+          "id": "item-copy-1783351698733-copy-1783351734043-copy-1783351772623",
           "title": "Internship Experience",
-          "description": "Gained real-world internship experience by working on live client projects, collaborating with teams, and handling frontend development responsibilities.",
-          "metric": "1 Year",
+          "description": "Gained real-world experience on live client projects, collaborating with teams and handling frontend development responsibilities.",
+          "metric": "8+ Months",
           "icon": "user-check",
           "category": "Experience",
           "date": "2026",
@@ -3015,12 +3068,12 @@
           "isEnabled": true,
           "featured": true,
           "showOnHomepage": true,
-          "customFields": [],
-          "id": "item-copy-1783351698733-copy-1783351734043-copy-1783351772623"
+          "customFields": []
         },
         {
+          "id": "item-copy-1783351698733-copy-1783351734043-copy-1783351772623-copy-1783351828512",
           "title": "Live Deployments",
-          "description": "Deployed and maintained projects using platforms like Vercel, Render, custom domains, and cloud-hosted databases.",
+          "description": "Deployed and maintained projects using Vercel, Render, custom domains, and cloud-hosted databases.",
           "metric": "10+",
           "icon": "upload-cloud",
           "category": "Deployment",
@@ -3029,8 +3082,7 @@
           "isEnabled": true,
           "featured": false,
           "showOnHomepage": true,
-          "customFields": [],
-          "id": "item-copy-1783351698733-copy-1783351734043-copy-1783351772623-copy-1783351828512"
+          "customFields": []
         }
       ],
       "showOnHomepage": true
@@ -3054,7 +3106,7 @@
       "data": {
         "eyebrow": "Experience",
         "title": "Companies Worked With",
-        "description": ""
+        "description": "Teams and clients I have built and shipped work for."
       },
       "items": [
         {
@@ -3063,7 +3115,7 @@
           "websiteUrl": "https://www.parvatiandsons.in/",
           "relationshipType": "Employer",
           "industry": "Software Development & Digital Solutions",
-          "description": "Currently working as Project Manager & Full Stack Developer. Managing interns, developing scalable web applications, and handling client projects.",
+          "description": "Currently working as Project Manager & Full Stack Developer. Managing interns, building scalable web applications, and handling client projects.",
           "startDate": "April 2026",
           "endDate": "Current",
           "confidential": false,
@@ -3094,12 +3146,12 @@
           "logo": "https://www.tsssoftware.com/public/assets/img/logo.png",
           "websiteUrl": "https://www.tsssoftware.com/",
           "relationshipType": "Client",
-          "industry": "Softwares",
-          "description": "Leading cloud-based ERP and enterprise software development company delivering scalable solutions like HRMS, POS, IMS, and custom business automation tools for 200+ clients across 20+ industries.",
-          "startDate": "24/7/2026",
+          "industry": "Software",
+          "description": "Cloud-based ERP and enterprise software company delivering scalable solutions like HRMS, POS, IMS, and custom business automation tools for 200+ clients across 20+ industries.",
+          "startDate": "July 2026",
           "endDate": "",
           "confidential": false,
-          "order": 2,
+          "order": 3,
           "isEnabled": true,
           "featured": true,
           "showOnHomepage": true,
@@ -3111,11 +3163,11 @@
           "websiteUrl": "https://digitalsphereseo.my.canva.site/digital-sphere-digital-marketing-agency-digital-marketing-service-in-india-uttarakhand-rudrapur-",
           "relationshipType": "Freelance Client",
           "industry": "Digital Marketing & Web Development",
-          "description": "Worked with Digital Sphere as a freelance developer on 1–2 project-based assignments. Contributed to responsive website development, frontend improvements, bug fixing, API integration support, and deployment-related updates for client work.",
+          "description": "Freelance developer on 1–2 project-based assignments, contributing responsive website development, frontend improvements, bug fixing, API integration support, and deployment updates.",
           "startDate": "2026",
           "endDate": "Project-based",
           "confidential": false,
-          "order": 1,
+          "order": 4,
           "isEnabled": true,
           "featured": false,
           "showOnHomepage": true,
@@ -3131,7 +3183,7 @@
           "startDate": "May 2026",
           "endDate": "May 2026",
           "confidential": false,
-          "order": 3,
+          "order": 5,
           "isEnabled": true,
           "featured": true,
           "showOnHomepage": true,
@@ -3143,11 +3195,11 @@
           "websiteUrl": "https://gurujitaxi.com",
           "relationshipType": "Client Project (via Parvati and Sons)",
           "industry": "Transportation",
-          "description": "Description: Worked on frontend improvements, API integration, responsive UI, and performance optimization while contributing to a client project delivered through Parvati and Sons.",
+          "description": "Worked on frontend improvements, API integration, responsive UI, and performance optimization for a client project delivered through Parvati and Sons.",
           "startDate": "May 2026",
           "endDate": "May 2026",
           "confidential": false,
-          "order": 4,
+          "order": 6,
           "isEnabled": true,
           "featured": true,
           "showOnHomepage": true,
@@ -3163,7 +3215,7 @@
           "startDate": "April 2026",
           "endDate": "April 2026",
           "confidential": false,
-          "order": 5,
+          "order": 7,
           "isEnabled": true,
           "featured": true,
           "showOnHomepage": true,
@@ -3176,11 +3228,11 @@
           "websiteUrl": "https://medicalseva.in",
           "relationshipType": "Client Project (via Parvati and Sons)",
           "industry": "Healthcare",
-          "description": "Developed responsive frontend pages, improved UI consistency, and optimized website performance while contributing to a client project through Parvati and Sons.",
+          "description": "Developed responsive frontend pages, improved UI consistency, and optimized website performance for a client project through Parvati and Sons.",
           "startDate": "April 2026",
           "endDate": "April 2026",
           "confidential": false,
-          "order": 6,
+          "order": 8,
           "isEnabled": true,
           "featured": true,
           "showOnHomepage": true,
@@ -3215,12 +3267,12 @@
         {
           "certificateTitle": "Full Stack Web Development",
           "issuer": "Sithub",
-          "certificateImage": " https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
-          "credentialUrl": " https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
+          "certificateImage": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
+          "credentialUrl": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
           "credentialId": "SIT320736",
           "issueDate": "15 March 2026",
           "expiryDate": "No Expiry",
-          "skills": "HTML, CSS, JavaScript, Bootstrap, PHP, MySQL, Git, GitHub, WordPress , Photoshop",
+          "skills": "HTML, CSS, JavaScript, Bootstrap, PHP, MySQL, Git, GitHub, WordPress, Photoshop",
           "category": "Full Stack Development",
           "order": 1,
           "isEnabled": true,
@@ -3264,7 +3316,7 @@
       "layout": "default",
       "status": "published",
       "nav": {
-        "show": true,
+        "show": false,
         "href": "#github",
         "label": "github"
       },
