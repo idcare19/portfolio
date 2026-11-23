@@ -253,7 +253,7 @@ export function Navbar() {
               <Github size={17} />
             </a>
 
-            <a
+            {/* <a
               href={contactHref}
               onClick={() => handleNavClick(contactHref)}
               className="group inline-flex items-center gap-2 rounded-xl bg-primary px-4 py-3 text-xs font-bold text-white shadow-lg shadow-blue-500/20 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-xl hover:shadow-blue-500/30"
@@ -263,7 +263,7 @@ export function Navbar() {
                 size={15}
                 className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
-            </a>
+            </a> */}
           </div>
 
           {/* MOBILE CONTROLS */}
@@ -333,14 +333,14 @@ export function Navbar() {
             </nav>
 
             <div className="mt-4 grid grid-cols-2 gap-2 border-t border-[rgb(var(--border))] pt-4">
-              <a
+              {/* <a
                 href={contactHref}
                 onClick={() => handleNavClick(contactHref)}
                 className="flex min-h-11 items-center justify-center gap-2 rounded-xl bg-primary px-3 text-xs font-bold text-white"
               >
                 {shell.navbar.desktopCtaLabel}
                 <ArrowUpRight size={14} />
-              </a>
+              </a> */}
 
               <a
                 href={githubHref}
