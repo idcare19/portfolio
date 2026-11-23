@@ -140,21 +140,6 @@ export function ProjectsSection() {
       id="projects"
       className="relative overflow-hidden bg-[rgb(var(--page-bg))] py-20 sm:py-28"
     >
-      {/* BACKGROUND */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-40 top-20 h-[400px] w-[400px] rounded-full bg-blue-500/[0.06] blur-[120px]" />
-        <div className="absolute -right-40 bottom-0 h-[400px] w-[400px] rounded-full bg-violet-500/[0.05] blur-[120px]" />
-
-        <div
-          className="absolute inset-0 opacity-[0.025]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgb(100 116 139) 1px, transparent 1px), linear-gradient(90deg, rgb(100 116 139) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
-      </div>
-
       <div className="section-wrap relative z-10">
         {/* SECTION HEADER */}
         {hasHeader ? (

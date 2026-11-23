@@ -52,7 +52,7 @@ export function BlogsSection() {
           {blogs.length ? (
             blogs.map((blog: any) => (
               <div key={blog.slug}>
-                <article className="group h-full overflow-hidden rounded-[30px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(248,250,252,0.92))] p-5 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:shadow-[0_24px_55px_rgba(37,99,235,0.12)]">
+                <article className="group h-full overflow-hidden rounded-[30px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 shadow-[0_18px_45px_rgba(15,23,42,0.06)] transition hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_24px_55px_rgba(37,99,235,0.12)]">
                   {blog.coverImage || blog.thumbnail ? (
                     <img
                       src={blog.coverImage || blog.thumbnail}
@@ -62,7 +62,7 @@ export function BlogsSection() {
                   ) : null}
                   <div className="mt-4 flex flex-wrap gap-2">
                     {(blog.tags || []).slice(0, 3).map((tag: string) => (
-                      <span key={tag} className="rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1 text-xs font-medium text-[#1D4ED8]">
+                      <span key={tag} className="rounded-full border border-primary/20 bg-primary/10 px-3 py-1 text-xs font-medium text-primary">
                         {tag}
                       </span>
                     ))}
@@ -73,14 +73,14 @@ export function BlogsSection() {
                     {blog.readingTimeMinutes ? <span>{blog.readingTimeMinutes} min read</span> : null}
                     {blog.featured || blog.isFeatured ? <span>Featured</span> : null}
                   </div>
-                    <Link href={`/blogs/${normalizeSlug(String(blog.slug || blog.title || ""))}`} className="mt-5 inline-flex rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white transition hover:bg-[#1D4ED8]">
+                  <Link href={`/blogs/${normalizeSlug(String(blog.slug || blog.title || ""))}`} className="mt-5 inline-flex rounded-full bg-primary px-4 py-2 text-sm font-semibold text-white shadow-md shadow-blue-500/20 transition hover:brightness-110">
                     Read Article
                   </Link>
                 </article>
               </div>
             ))
           ) : (
-            <div className="rounded-[30px] border border-dashed border-[rgb(var(--border))] bg-white/80 p-8 text-center text-text-muted md:col-span-2 xl:col-span-3">
+            <div className="rounded-[30px] border border-dashed border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-8 text-center text-text-muted md:col-span-2 xl:col-span-3">
               <p className="text-lg font-semibold text-text-main">{emptyTitle}</p>
               <p className="mt-2 text-sm leading-7">{emptyDescription}</p>
             </div>

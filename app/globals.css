@@ -10,19 +10,19 @@
 :root {
   color-scheme: light;
 
-  --background: 248 250 252;
-  --section: 255 255 255;
+  --background: 245 247 250;
+  --section: 237 241 245;
   --card: 255 255 255;
-  --cardHover: 241 245 249;
-  --surface: 255 255 255;
+  --cardHover: 249 250 252;
+  --surface: 249 250 252;
 
-  --textMain: 15 23 42;
-  --textMuted: 71 85 105;
+  --textMain: 24 33 45;
+  --textMuted: 82 97 116;
 
-  --border: 226 232 240;
+  --border: 220 227 235;
 
-  --primary: 37 99 235;
-  --secondary: 99 102 241;
+  --primary: 40 105 199;
+  --secondary: 40 105 199;
 
   --success: 22 163 74;
   --danger: 220 38 38;
@@ -41,7 +41,7 @@
   --admin-sidebar: 255 255 255;
   --admin-topbar: 255 255 255;
   --admin-card: 255 255 255;
-  --admin-input: 248 250 252;
+  --admin-input: 245 247 250;
   --admin-modal: 255 255 255;
 
   --admin-text: var(--textMain);
@@ -51,32 +51,32 @@
   --admin-danger: var(--danger);
   --admin-success: var(--success);
 
-  --portfolio-radius: 1.5rem;
+  --portfolio-radius: 1.25rem;
 
   --portfolio-shadow:
-    0 18px 50px rgba(15, 23, 42, 0.07);
+    0 4px 16px rgba(24, 33, 45, 0.05);
 
   --portfolio-shadow-hover:
-    0 24px 60px rgba(15, 23, 42, 0.12);
+    0 8px 24px rgba(24, 33, 45, 0.08);
 
-  --theme-primary: #2563eb;
-  --theme-accent: #14b8a6;
-  --theme-radius: 1.5rem;
+  --theme-primary: #2869C7;
+  --theme-accent: #2869C7;
+  --theme-radius: 1.25rem;
   --theme-font: Inter;
-    /* Extended theme tokens */
-  --input-bg: 248 250 252;
-  --input-border: 203 213 225;
-  --placeholder: 148 163 184;
 
-  --overlay: 15 23 42;
-  --overlay-opacity: 0.45;
+  --input-bg: 255 255 255;
+  --input-border: 220 227 235;
+  --placeholder: 117 130 150;
 
-  --shadow-color: 15 23 42;
-  --muted-bg: 241 245 249;
-  --surface-hover: 241 245 249;
+  --overlay: 24 33 45;
+  --overlay-opacity: 0.4;
 
-  --heading-color: 15 23 42;
-  --link-color: 37 99 235;
+  --shadow-color: 24 33 45;
+  --muted-bg: 237 241 245;
+  --surface-hover: 237 241 245;
+
+  --heading-color: 24 33 45;
+  --link-color: 40 105 199;
 }
 
 /* =========================================
@@ -270,32 +270,32 @@ svg {
 
 html.dark {
   color-scheme: dark;
-  --input-bg: 25 31 49;
-  --input-border: 55 65 81;
-  --placeholder: 107 114 128;
+  --input-bg: 27 34 44;
+  --input-border: 48 58 71;
+  --placeholder: 126 137 152;
 
   --overlay: 0 0 0;
-  --overlay-opacity: 0.7;
+  --overlay-opacity: 0.6;
 
   --shadow-color: 0 0 0;
-  --muted-bg: 20 25 40;
-  --surface-hover: 25 31 49;
+  --muted-bg: 21 26 33;
+  --surface-hover: 34 43 54;
 
-  --heading-color: 248 250 252;
-  --link-color: 96 165 250;
-  --background: 8 10 18;
-  --section: 12 15 26;
-  --card: 17 21 35;
-  --cardHover: 25 31 49;
-  --surface: 20 25 40;
+  --heading-color: 244 246 248;
+  --link-color: 105 167 248;
+  --background: 16 19 24;
+  --section: 21 26 33;
+  --card: 27 34 44;
+  --cardHover: 34 43 54;
+  --surface: 34 43 54;
 
-  --textMain: 241 245 249;
-  --textMuted: 156 163 184;
+  --textMain: 244 246 248;
+  --textMuted: 166 176 190;
 
-  --border: 43 51 70;
+  --border: 48 58 71;
 
-  --primary: 96 165 250;
-  --secondary: 167 139 250;
+  --primary: 105 167 248;
+  --secondary: 105 167 248;
 
   --success: 74 222 128;
   --danger: 248 113 113;
@@ -308,14 +308,14 @@ html.dark {
   --text-main: var(--textMain);
   --text-muted: var(--textMuted);
 
-  --primary-foreground: 8 10 18;
+  --primary-foreground: 16 19 24;
 
   --admin-bg: var(--background);
-  --admin-sidebar: 12 15 26;
-  --admin-topbar: 17 21 35;
-  --admin-card: 17 21 35;
-  --admin-input: 25 31 49;
-  --admin-modal: 17 21 35;
+  --admin-sidebar: 21 26 33;
+  --admin-topbar: 27 34 44;
+  --admin-card: 27 34 44;
+  --admin-input: 21 26 33;
+  --admin-modal: 27 34 44;
 
   --admin-text: var(--textMain);
   --admin-text-muted: var(--textMuted);
@@ -325,10 +325,10 @@ html.dark {
   --admin-success: var(--success);
 
   --portfolio-shadow:
-    0 18px 50px rgba(0, 0, 0, 0.22);
+    0 4px 16px rgba(0, 0, 0, 0.25);
 
   --portfolio-shadow-hover:
-    0 24px 60px rgba(0, 0, 0, 0.35);
+    0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 /* =========================================
@@ -348,21 +348,14 @@ body {
   color: rgb(var(--text-main));
   background-color: rgb(var(--page-bg));
 
-  background-image:
-    linear-gradient(
-      180deg,
-      rgb(var(--section-bg)),
-      rgb(var(--page-bg))
-    );
-
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 
   font-family: var(--theme-font), Inter, sans-serif;
 
   transition:
-    background-color 350ms ease,
-    color 350ms ease;
+    background-color 200ms ease,
+    color 200ms ease;
 }
 
 section[id] {

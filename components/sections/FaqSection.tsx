@@ -89,14 +89,7 @@ export function FaqSection({
       aria-labelledby="faq-heading"
       className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8"
     >
-      <div className="relative overflow-hidden rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--section))] p-5 shadow-[0_18px_55px_rgba(15,23,42,0.06)] transition-colors duration-300 sm:rounded-[32px] sm:p-8 lg:p-10">
-
-        {/* Decorative accent */}
-        <div
-          aria-hidden="true"
-          className="pointer-events-none absolute -right-24 -top-28 h-72 w-72 rounded-full opacity-[0.07] blur-3xl"
-          style={{ background: "rgb(var(--primary))" }}
-        />
+      <div className="relative overflow-hidden rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--section))] p-5 shadow-sm transition-colors duration-300 sm:rounded-[28px] sm:p-8 lg:p-10">
 
         {/* Header */}
         <div className="relative">

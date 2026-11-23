@@ -113,9 +113,13 @@ export default function NeuralBrain({
       phase: Math.random() * Math.PI * 2,
     }));
 
+    const isDarkTheme = () =>
+      document.documentElement.classList.contains("dark");
+
     const resize = () => {
       const rect = canvas.getBoundingClientRect();
-      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const isMobileDevice = window.innerWidth < 768;
+      const dpr = Math.min(window.devicePixelRatio || 1, isMobileDevice ? 1.25 : 2);
 
       width = rect.width;
       height = rect.height;
@@ -220,12 +224,16 @@ export default function NeuralBrain({
 
         ctx.closePath();
 
-        ctx.fillStyle = `rgba(20, 24, 32, ${alpha * 1.5})`;
+        const dark = isDarkTheme();
+        ctx.fillStyle = dark
+          ? `rgba(20, 24, 32, ${alpha * 1.5})`
+          : `rgba(226, 232, 240, ${alpha * 1.8})`;
         ctx.fill();
       }
     };
 
     const drawWireframe = () => {
+      const dark = isDarkTheme();
       for (const face of wireFaces) {
         if (!Array.isArray(face) || face.length < 2) continue;
 
@@ -252,7 +260,9 @@ export default function NeuralBrain({
           ctx.lineTo(points[i].x, points[i].y);
         }
 
-        ctx.strokeStyle = `rgba(110, 120, 140, ${depthAlpha * lineBrightness})`;
+        ctx.strokeStyle = dark
+          ? `rgba(110, 120, 140, ${depthAlpha * lineBrightness})`
+          : `rgba(71, 85, 105, ${depthAlpha * lineBrightness * 1.3})`;
 
         ctx.lineWidth = Math.max(
           0.25,
@@ -264,6 +274,7 @@ export default function NeuralBrain({
     };
 
     const drawNodes = () => {
+      const dark = isDarkTheme();
       for (const node of pulseNodes) {
         const point = project(node.point);
 
@@ -299,13 +310,21 @@ export default function NeuralBrain({
           glowRadius
         );
 
-       glow.addColorStop(
-  0,
-  `rgba(235, 240, 248, ${0.4 * nodeBrightness + hover * 0.35})`
-);
-
-glow.addColorStop(0.3, "rgba(110, 120, 140, 0.15)");
-glow.addColorStop(1, "rgba(40, 45, 55, 0)");
+        if (dark) {
+          glow.addColorStop(
+            0,
+            `rgba(235, 240, 248, ${0.4 * nodeBrightness + hover * 0.35})`
+          );
+          glow.addColorStop(0.3, "rgba(110, 120, 140, 0.15)");
+          glow.addColorStop(1, "rgba(40, 45, 55, 0)");
+        } else {
+          glow.addColorStop(
+            0,
+            `rgba(37, 99, 235, ${0.4 * nodeBrightness + hover * 0.35})`
+          );
+          glow.addColorStop(0.3, "rgba(99, 102, 241, 0.15)");
+          glow.addColorStop(1, "rgba(226, 232, 240, 0)");
+        }
 
         ctx.beginPath();
         ctx.arc(point.x, point.y, glowRadius, 0, Math.PI * 2);
@@ -315,10 +334,9 @@ glow.addColorStop(1, "rgba(40, 45, 55, 0)");
         ctx.beginPath();
         ctx.arc(point.x, point.y, radius, 0, Math.PI * 2);
 
-        ctx.fillStyle = `rgba(235, 240, 248, ${Math.min(
-  1,
-  nodeBrightness * breathing
-)})`;
+        ctx.fillStyle = dark
+          ? `rgba(235, 240, 248, ${Math.min(1, nodeBrightness * breathing)})`
+          : `rgba(37, 99, 235, ${Math.min(1, nodeBrightness * breathing)})`;
 
         ctx.fill();
       }
@@ -455,8 +473,21 @@ glow.addColorStop(1, "rgba(40, 45, 55, 0)");
       }
     };
 
+    let isIntersecting = true;
+    const intersectionObserver = new IntersectionObserver(([entry]) => {
+      isIntersecting = entry.isIntersecting;
+      if (isIntersecting && !document.hidden) {
+        lastTime = 0;
+        cancelAnimationFrame(animationId);
+        animationId = requestAnimationFrame(render);
+      } else {
+        cancelAnimationFrame(animationId);
+      }
+    });
+    intersectionObserver.observe(canvas);
+
     const onVisibilityChange = () => {
-      if (document.hidden) {
+      if (document.hidden || !isIntersecting) {
         cancelAnimationFrame(animationId);
       } else {
         lastTime = 0;
@@ -488,6 +519,7 @@ glow.addColorStop(1, "rgba(40, 45, 55, 0)");
       cancelAnimationFrame(animationId);
 
       resizeObserver.disconnect();
+      intersectionObserver.disconnect();
 
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);

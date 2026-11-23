@@ -9,7 +9,7 @@ import { AiAssistant } from "@/components/site/AiAssistant";
 import { AnalyticsTracker } from "@/components/site/AnalyticsTracker";
 import { GlobalSearch } from "@/components/site/GlobalSearch";
 import { SiteDataProvider } from "@/components/site/SiteDataProvider";
-// import { ThemeProvider } from "@/components/site/ThemeProvider";
+import { ThemeProvider } from "@/components/site/ThemeProvider";
 import { getSiteData } from "@/src/lib/site-data";
 import "./globals.css";
 import { WebsiteLoader } from "@/components/site/WebsiteLoader";
@@ -113,11 +113,18 @@ export default async function RootLayout({
 
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{var key="portfolio-theme-mode";var stored=localStorage.getItem(key);var dark=false;if(stored==="dark"){dark=true;}else if(stored==="light"){dark=false;}else{dark=window.matchMedia("(prefers-color-scheme: dark)").matches;}if(dark){document.documentElement.classList.add("dark");document.documentElement.dataset.theme="dark";document.documentElement.style.colorScheme="dark";}else{document.documentElement.classList.remove("dark");document.documentElement.dataset.theme="light";document.documentElement.style.colorScheme="light";}}catch(e){}})();`,
+          }}
+        />
+      </head>
       <body className="font-sans">
           <WebsiteLoader />
 
         <SiteDataProvider data={siteData}>
-          {/* <ThemeProvider> */}
+          <ThemeProvider>
             <Script
               src={`https://www.googletagmanager.com/gtag/js?id=${gaMeasurementId}`}
               strategy="lazyOnload"
@@ -139,7 +146,7 @@ export default async function RootLayout({
             <AiAssistant />
             <Analytics />
             <SpeedInsights />
-          {/* </ThemeProvider> */}
+          </ThemeProvider>
         </SiteDataProvider>
       </body>
     </html>

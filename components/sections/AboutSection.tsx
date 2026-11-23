@@ -47,27 +47,19 @@ export function AboutSection() {
   return (
     <AnimatedSection
       id="about"
-      className="relative overflow-hidden bg-[rgb(var(--page-bg))] py-24 sm:py-32"
+      className="relative overflow-hidden bg-[rgb(var(--page-bg))] py-20 sm:py-28"
     >
-      {/* BACKGROUND */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -left-48 top-20 h-[450px] w-[450px] rounded-full bg-blue-500/[0.06] blur-[130px]" />
-        <div className="absolute -right-48 bottom-0 h-[400px] w-[400px] rounded-full bg-violet-500/[0.06] blur-[130px]" />
-      </div>
-
       <div className="section-wrap relative z-10">
         <div className="grid items-start gap-6 lg:grid-cols-[1.15fr_0.85fr]">
 
           {/* MAIN ABOUT PANEL */}
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.65 }}
-            className="relative overflow-hidden rounded-[30px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-7 shadow-[0_24px_70px_rgba(15,23,42,0.07)] sm:p-10"
+            transition={{ duration: 0.5 }}
+            className="relative overflow-hidden rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-7 shadow-sm sm:p-10"
           >
-            <div className="pointer-events-none absolute -right-20 -top-20 h-72 w-72 rounded-full bg-primary/[0.09] blur-[90px]" />
-
             <div className="relative">
               <div className="mb-8 flex items-center justify-between gap-3">
                 <Badge className="border border-primary/20 bg-primary/10 text-primary">
@@ -119,11 +111,11 @@ export function AboutSection() {
 
           {/* CORE PHILOSOPHY */}
           <motion.div
-            initial={reduceMotion ? false : { opacity: 0, y: 24 }}
+            initial={reduceMotion ? false : { opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
-            transition={{ duration: 0.65, delay: 0.1 }}
-            className="rounded-[30px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 shadow-[0_20px_60px_rgba(15,23,42,0.06)] sm:p-7"
+            transition={{ duration: 0.5, delay: 0.08 }}
+            className="rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 shadow-sm sm:p-7"
           >
             <div className="flex items-center justify-between">
               <div>

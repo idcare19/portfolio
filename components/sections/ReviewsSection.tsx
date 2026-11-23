@@ -184,7 +184,7 @@ export function ReviewsSection() {
   }
 
   return (
-    <AnimatedSection id="reviews" className="bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,252,1))] py-24">
+    <AnimatedSection id="reviews" className="bg-[rgb(var(--section-bg))] py-24">
       <div className="section-wrap">
         <SectionHeader
           eyebrow={data.eyebrow}
@@ -198,7 +198,7 @@ export function ReviewsSection() {
               type="button"
               onClick={() => scrollRail(-1)}
               disabled={!canScrollPrev}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-white text-text-main transition hover:border-[#93C5FD] hover:text-[#1D4ED8] disabled:cursor-not-allowed disabled:opacity-80"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main transition hover:border-primary/40 hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Scroll reviews left"
             >
               <ChevronLeft className="h-4 w-4" />
@@ -207,7 +207,7 @@ export function ReviewsSection() {
               type="button"
               onClick={() => scrollRail(1)}
               disabled={!canScrollNext}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-white text-text-main transition hover:border-[#93C5FD] hover:text-[#1D4ED8] disabled:cursor-not-allowed disabled:opacity-80"
+              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main transition hover:border-primary/40 hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
               aria-label="Scroll reviews right"
             >
               <ChevronRight className="h-4 w-4" />
@@ -215,8 +215,8 @@ export function ReviewsSection() {
           </div>
 
           <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-8 bg-gradient-to-r from-[#F8FAFC] to-transparent md:block" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-8 bg-gradient-to-l from-[#F8FAFC] to-transparent md:block" />
+            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-8 bg-gradient-to-r from-[rgb(var(--section-bg))] to-transparent md:block" />
+            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-8 bg-gradient-to-l from-[rgb(var(--section-bg))] to-transparent md:block" />
 
             <div
               ref={railRef}
@@ -238,9 +238,9 @@ export function ReviewsSection() {
                 return (
                   <article
                     key={`${review.clientName}-${index}`}
-                    className="glass flex-shrink-0 snap-start rounded-[30px] p-6 shadow-[0_18px_42px_rgba(15,23,42,0.06)] transition-transform duration-200 hover:-translate-y-0.5 w-[calc(100%-1rem)] sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)]"
+                    className="glass flex-shrink-0 snap-start rounded-[30px] p-6 shadow-[0_18px_42px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 w-[calc(100%-1rem)] sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)]"
                   >
-                    <Quote className="h-5 w-5 text-[#1D4ED8]" />
+                    <Quote className="h-5 w-5 text-primary" />
                     <p className="mt-3 text-sm leading-relaxed text-text-muted">&quot;{review.quote}&quot;</p>
 
                     <div className="mt-5 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
@@ -255,7 +255,7 @@ export function ReviewsSection() {
                           href={href}
                           target={href.startsWith("http") ? "_blank" : undefined}
                           rel={href.startsWith("http") ? "noreferrer" : undefined}
-                          className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-[#BFDBFE] bg-[#EFF6FF] px-3 py-1.5 text-xs font-semibold text-[#1D4ED8] transition-colors duration-200 hover:border-[#93C5FD] hover:bg-[#DBEAFE] sm:w-auto"
+                          className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary transition-colors duration-200 hover:bg-primary/20 sm:w-auto"
                         >
                           Visit Site <ExternalLink className="h-3.5 w-3.5" />
                         </Link>

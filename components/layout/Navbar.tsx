@@ -6,6 +6,7 @@ import { Menu, X, ArrowUpRight, Github, Command } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 import { usePathname } from "next/navigation";
 import { getManagedNavItems } from "@/lib/section-controls";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 export function Navbar() {
   const portfolioData = useSiteDataContext();
@@ -241,6 +242,8 @@ export function Navbar() {
 
           {/* CTA */}
           <div className="hidden items-center gap-2 lg:flex">
+            <ThemeToggle />
+
             <a
               href={githubHref}
               className="flex h-10 w-10 items-center justify-center rounded-xl border border-[rgb(var(--border))] text-text-muted transition-all hover:border-primary/30 hover:bg-primary/5 hover:text-primary"
@@ -263,17 +266,21 @@ export function Navbar() {
             </a>
           </div>
 
-          {/* MOBILE MENU BUTTON */}
-          <button
-            type="button"
-            onClick={() => setOpen((value) => !value)}
-            aria-expanded={open}
-            aria-controls="mobile-navbar-menu"
-            aria-label={open ? "Close menu" : "Open menu"}
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main transition-all hover:border-primary/40 hover:text-primary lg:hidden"
-          >
-            {open ? <X size={19} /> : <Menu size={19} />}
-          </button>
+          {/* MOBILE CONTROLS */}
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeToggle />
+
+            <button
+              type="button"
+              onClick={() => setOpen((value) => !value)}
+              aria-expanded={open}
+              aria-controls="mobile-navbar-menu"
+              aria-label={open ? "Close menu" : "Open menu"}
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main transition-all hover:border-primary/40 hover:text-primary"
+            >
+              {open ? <X size={19} /> : <Menu size={19} />}
+            </button>
+          </div>
         </div>
 
         {/* MOBILE MENU */}

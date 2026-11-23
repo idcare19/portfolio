@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useMemo, useState } from "react";
@@ -40,23 +39,14 @@ function normalizeCategory(category?: string) {
   const value = (category || "").trim().toLowerCase();
 
   if (!value) return "Other Skills";
-
   if (["frontend", "ui", "client"].includes(value)) return "Frontend";
-
   if (["backend", "server", "api"].includes(value)) return "Backend";
-
   if (["database", "db", "data"].includes(value)) return "Database";
-
   if (["tools", "tooling", "devops", "cms"].includes(value)) return "Tools";
-
-  if (
-    ["frameworks", "workflow", "frameworks & workflow"].includes(value)
-  ) {
+  if (["frameworks", "workflow", "frameworks & workflow"].includes(value)) {
     return "Frameworks & Workflow";
   }
-
   if (["core", "core skills"].includes(value)) return "Core Skills";
-
   if (["currently learning", "learning"].includes(value)) {
     return "Currently Learning";
   }
@@ -73,6 +63,9 @@ const categoryIcons: Record<string, typeof Code2> = {
   "Core Skills": BrainCircuit,
   "Other Skills": Sparkles,
 };
+
+const FOCUS_RING =
+  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/60 focus-visible:ring-offset-2 focus-visible:ring-offset-[rgb(var(--page-bg))]";
 
 export function SkillsSection() {
   const section = useSectionData("skills");
@@ -92,8 +85,7 @@ export function SkillsSection() {
     return rawSkills
       .filter(
         (item: SkillItem) =>
-          Boolean(item?.name || item?.title) &&
-          item.isEnabled !== false
+          Boolean(item?.name || item?.title) && item.isEnabled !== false
       )
       .map((item: SkillItem) => ({
         ...item,
@@ -148,21 +140,13 @@ export function SkillsSection() {
     : [];
 
   const resumeUrl = String(siteData.owner?.resumeUrl || "").trim();
-
   const totalSkills = skills.length;
 
   return (
     <AnimatedSection
       id="skills"
-      className="relative overflow-hidden bg-[rgb(var(--page-bg))] py-24 sm:py-32"
+      className="relative overflow-hidden bg-[rgb(var(--page-bg))] py-16 sm:py-24"
     >
-      {/* BACKGROUND */}
-      <div className="pointer-events-none absolute inset-0 overflow-hidden">
-        <div className="absolute -right-40 top-10 h-[400px] w-[400px] rounded-full bg-blue-500/[0.07] blur-[120px]" />
-
-        <div className="absolute -left-40 bottom-10 h-[400px] w-[400px] rounded-full bg-violet-500/[0.06] blur-[120px]" />
-      </div>
-
       <div className="section-wrap relative z-10">
         <SectionHeader
           eyebrow={data.eyebrow}
@@ -171,45 +155,45 @@ export function SkillsSection() {
         />
 
         {/* OVERVIEW */}
-        <div className="mb-8 flex flex-col justify-between gap-5 rounded-[26px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 sm:flex-row sm:items-center sm:p-6">
+        <div className="mb-6 flex flex-col justify-between gap-5 rounded-[26px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 sm:flex-row sm:items-center sm:p-6">
           <div className="flex items-center gap-4">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary">
               <Code2 size={23} />
             </span>
 
             <div>
-              <p className="text-sm font-bold text-text-main">
+              <p className="text-base font-semibold text-text-main">
                 Technology ecosystem
               </p>
-              <p className="mt-1 text-xs text-text-muted">
+              <p className="mt-0.5 text-sm text-text-muted">
                 Technologies and tools I work with
               </p>
             </div>
           </div>
 
           <div className="flex gap-3">
-            <div className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3">
-              <p className="text-xl font-bold text-text-main">
+            <div className="min-w-[96px] rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3">
+              <p className="text-2xl font-bold tabular-nums text-text-main">
                 {totalSkills}
               </p>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-text-muted">
-                Technologies
-              </p>
+              <p className="text-xs text-text-muted">Technologies</p>
             </div>
 
-            <div className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3">
-              <p className="text-xl font-bold text-text-main">
+            <div className="min-w-[96px] rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3">
+              <p className="text-2xl font-bold tabular-nums text-text-main">
                 {groups.length}
               </p>
-              <p className="text-[9px] font-bold uppercase tracking-wider text-text-muted">
-                Categories
-              </p>
+              <p className="text-xs text-text-muted">Categories</p>
             </div>
           </div>
         </div>
 
         {/* CATEGORY FILTERS */}
-        <div className="mb-8 flex flex-wrap gap-2">
+        <div
+          role="group"
+          aria-label="Filter skills by category"
+          className="-mx-4 mb-6 flex gap-2 overflow-x-auto px-4 pb-1 sm:mx-0 sm:flex-wrap sm:overflow-visible sm:px-0 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+        >
           {categories.map((category) => {
             const selected = activeCategory === category;
 
@@ -219,9 +203,9 @@ export function SkillsSection() {
                 type="button"
                 onClick={() => setActiveCategory(category)}
                 aria-pressed={selected}
-                className={`rounded-xl border px-4 py-2.5 text-xs font-bold transition-all duration-300 ${
+                className={`shrink-0 whitespace-nowrap rounded-xl border px-4 py-2.5 text-sm font-semibold transition-colors duration-200 ${FOCUS_RING} ${
                   selected
-                    ? "border-primary bg-primary text-white shadow-lg shadow-blue-500/20"
+                    ? "border-primary bg-primary text-white shadow-md shadow-primary/25"
                     : "border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-muted hover:border-primary/40 hover:text-text-main"
                 }`}
               >
@@ -232,64 +216,50 @@ export function SkillsSection() {
         </div>
 
         {/* SKILL GROUPS */}
-        <motion.div
-          layout
-          className="grid items-start gap-5 lg:grid-cols-2"
-        >
-          {visibleGroups.map((group, groupIndex) => {
+        <div className="grid items-start gap-5 lg:grid-cols-2">
+          {visibleGroups.map((group) => {
             const Icon = categoryIcons[group.title] || Layers3;
 
             return (
               <motion.div
-                layout
                 key={group.title}
-                initial={reduceMotion ? false : { opacity: 0, y: 20 }}
+                initial={reduceMotion ? false : { opacity: 0, y: 12 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{
-                  duration: 0.4,
-                  delay: groupIndex * 0.05,
-                }}
-                className="group rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 shadow-[0_18px_45px_rgba(15,23,42,0.045)] transition-all duration-300 hover:-translate-y-1 hover:border-primary/25 hover:shadow-[0_25px_60px_rgba(37,99,235,0.09)] sm:p-6"
+                transition={{ duration: 0.3 }}
+                className="rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 shadow-[0_18px_45px_rgba(15,23,42,0.05)] dark:shadow-[0_18px_45px_rgba(0,0,0,0.35)] sm:p-6"
               >
                 {/* GROUP HEADER */}
-                <div className="mb-6 flex items-center justify-between gap-3">
+                <div className="mb-5 flex items-center justify-between gap-3">
                   <div className="flex items-center gap-3">
                     <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] text-primary">
                       <Icon size={19} />
                     </span>
-
-                    <div>
-                      <p className="text-[9px] font-bold uppercase tracking-[0.2em] text-text-muted">
-                        Skill category
-                      </p>
-                      <h3 className="mt-1 text-base font-bold text-text-main">
-                        {group.title}
-                      </h3>
-                    </div>
+                    <h3 className="text-lg font-semibold text-text-main">
+                      {group.title}
+                    </h3>
                   </div>
 
-                  <span className="rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-3 py-1.5 text-xs font-bold tabular-nums text-text-muted">
-                    {String(group.items.length).padStart(2, "0")}
+                  <span
+                    className="rounded-lg border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-2.5 py-1 text-sm font-semibold tabular-nums text-text-muted"
+                    aria-label={`${group.items.length} skills`}
+                  >
+                    {group.items.length}
                   </span>
                 </div>
 
                 {/* SKILL ITEMS */}
                 <div className="grid gap-2.5 sm:grid-cols-2">
-                  {group.items.map((skill, index) => (
-                    <motion.div
+                  {group.items.map((skill) => (
+                    <div
                       key={`${group.title}-${skill.name}`}
-                      initial={
-                        reduceMotion ? false : { opacity: 0, scale: 0.96 }
-                      }
-                      animate={{ opacity: 1, scale: 1 }}
-                      transition={{
-                        duration: 0.25,
-                        delay: index * 0.025,
-                      }}
-                      className="group/skill flex min-w-0 items-center gap-3 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-3 transition-all duration-300 hover:border-primary/30 hover:bg-[rgb(var(--card-hover))]"
+                      className="group/skill flex min-w-0 items-center gap-3 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] p-3 transition-colors duration-200 hover:border-primary/40 hover:bg-primary/5"
                     >
                       <span
-                        className="flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] transition-transform duration-300 group-hover/skill:scale-105"
+                        className={`flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[rgb(var(--border))] ${
+                          skill.iconUrl
+                            ? "bg-white"
+                            : "bg-[rgb(var(--card-bg))]"
+                        }`}
                         style={{
                           color: skill.iconColor || "rgb(var(--primary))",
                         }}
@@ -316,75 +286,51 @@ export function SkillsSection() {
                       </span>
 
                       <div className="min-w-0 flex-1">
-                        <p className="truncate text-sm font-bold text-text-main">
+                        <p className="truncate text-sm font-semibold text-text-main">
                           {skill.title || skill.name}
                         </p>
-
                         {skill.summary ? (
-                          <p className="mt-1 truncate text-[11px] text-text-muted">
+                          <p className="mt-0.5 truncate text-xs text-text-muted">
                             {skill.summary}
                           </p>
-                        ) : (
-                          <p className="mt-1 text-[10px] text-text-muted">
-                            {group.title}
-                          </p>
-                        )}
+                        ) : null}
                       </div>
 
                       <ArrowUpRight
                         size={14}
-                        className="shrink-0 text-text-muted opacity-0 transition-all duration-300 group-hover/skill:translate-x-0.5 group-hover/skill:-translate-y-0.5 group-hover/skill:opacity-100"
+                        aria-hidden="true"
+                        className="shrink-0 text-text-muted opacity-0 transition-opacity duration-200 group-hover/skill:opacity-100"
                       />
-                    </motion.div>
+                    </div>
                   ))}
                 </div>
               </motion.div>
             );
           })}
-        </motion.div>
+        </div>
 
         {/* LEARNING */}
         {learningItems.length > 0 ? (
-          <div className="relative mt-7 overflow-hidden rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 sm:p-8">
-            <div className="pointer-events-none absolute -right-20 -top-20 h-60 w-60 rounded-full bg-violet-500/[0.08] blur-[90px]" />
-
-            <div className="relative">
-              <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-center">
-                <div className="flex items-center gap-3">
-                  <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-violet-500/10 text-violet-500">
-                    <GraduationCap size={23} />
-                  </span>
-
-                  <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-text-muted">
-                      Beyond the current stack
-                    </p>
-                    <h3 className="mt-1 text-xl font-bold text-text-main">
-                      {data.learningTitle || "Currently Exploring"}
-                    </h3>
-                  </div>
-                </div>
-
-                <span className="w-fit rounded-full border border-violet-500/20 bg-violet-500/10 px-3 py-2 text-[10px] font-bold uppercase tracking-wider text-violet-500">
-                  Always Learning
-                </span>
-              </div>
-
-              <div className="mt-7 flex flex-wrap gap-2">
-                {learningItems.map((item: string, index: number) => (
-                  <motion.span
-                    key={`${item}-${index}`}
-                    initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.05 }}
-                    className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-2.5 text-xs font-semibold text-text-main transition-colors hover:border-violet-500/40"
-                  >
-                    {item}
-                  </motion.span>
-                ))}
-              </div>
+          <div className="mt-6 rounded-[24px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 shadow-sm sm:p-8">
+            <div className="flex items-center gap-3">
+              <span className="flex h-12 w-12 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                <GraduationCap size={23} />
+              </span>
+              <h3 className="text-xl font-semibold text-text-main">
+                {data.learningTitle || "Currently Exploring"}
+              </h3>
             </div>
+
+            <ul className="mt-6 flex flex-wrap gap-2">
+              {learningItems.map((item: string, index: number) => (
+                <li
+                  key={`${item}-${index}`}
+                  className="rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-2.5 text-sm font-medium text-text-main transition-colors hover:border-primary/40"
+                >
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
         ) : null}
 
@@ -395,11 +341,12 @@ export function SkillsSection() {
               href={resumeUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="group inline-flex min-h-12 items-center gap-3 rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-6 py-3 text-sm font-bold text-text-main transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:text-primary"
+              className={`group inline-flex min-h-12 items-center gap-3 rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-6 py-3 text-sm font-semibold text-text-main transition-colors duration-200 hover:border-primary/40 hover:text-primary ${FOCUS_RING}`}
             >
               View My Resume
               <ArrowUpRight
                 size={16}
+                aria-hidden="true"
                 className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5"
               />
             </a>

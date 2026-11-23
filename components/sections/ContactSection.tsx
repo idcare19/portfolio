@@ -11,6 +11,21 @@ import { useState } from "react";
 import { Github, Linkedin, Mail, MapPin, Send, Timer } from "lucide-react";
 import { hasContent } from "@/lib/has-content";
 
+const INPUT_CLASS =
+  "min-h-14 w-full rounded-[18px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3 text-sm text-text-main outline-none ring-primary/40 transition-all duration-300 ease-out placeholder:text-text-muted/70 focus:border-primary focus:ring-2";
+
+const INFO_CARD_CLASS =
+  "rounded-[18px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-4 shadow-sm backdrop-blur";
+
+const INFO_LABEL_CLASS =
+  "flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-text-muted";
+
+const DETAIL_ITEMS = [
+  { key: "email", label: "Email", Icon: Mail },
+  { key: "github", label: "GitHub", Icon: Github },
+  { key: "linkedin", label: "LinkedIn", Icon: Linkedin },
+];
+
 export function ContactSection() {
   const section = useSectionData("contact");
   const data = section.data as Record<string, any>;
@@ -80,19 +95,19 @@ export function ContactSection() {
   }
 
   return (
-    <AnimatedSection id="contact" className="bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.1),transparent_34%),linear-gradient(180deg,rgba(248,250,252,1),rgba(255,255,255,1))] py-10 sm:py-14">
+    <AnimatedSection id="contact" className="bg-[rgb(var(--page-bg))] py-10 sm:py-14">
       <div className="section-wrap">
         {hasHeader ? <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} /> : null}
 
         <div className="mx-auto max-w-[1050px]">
-          <div className="grid overflow-hidden rounded-[38px] border border-[rgb(var(--border))] bg-white shadow-[0_32px_84px_rgba(15,23,42,0.12)] lg:grid-cols-[0.92fr_1.08fr]">
-            <div className="relative overflow-hidden border-b border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(219,234,254,1),rgba(191,219,254,0.56))] p-6 sm:p-8 lg:border-b-0 lg:border-r">
-              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.72),transparent_22%),radial-gradient(circle_at_bottom_left,rgba(59,130,246,0.18),transparent_24%),linear-gradient(135deg,rgba(255,255,255,0.08),transparent_45%)]" />
+          <div className="grid overflow-hidden rounded-[38px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] shadow-[0_32px_84px_rgba(15,23,42,0.12)] dark:shadow-[0_32px_84px_rgba(0,0,0,0.5)] lg:grid-cols-[0.92fr_1.08fr]">
+            <div className="relative overflow-hidden border-b border-[rgb(var(--border))] bg-primary/10 p-6 sm:p-8 lg:border-b-0 lg:border-r">
+              <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(37,99,235,0.12),transparent_35%)]" />
               <div className="relative flex h-full flex-col gap-5">
                 <div className="space-y-3">
                   {hasContent(availabilityLabel) ? <Badge>{availabilityLabel}</Badge> : null}
-                  {hasContent(data.cardTitle) ? <h3 className="text-2xl font-semibold tracking-tight text-slate-950 sm:text-[2rem]">{String(data.cardTitle)}</h3> : null}
-                  {hasContent(data.cardDescription) ? <p className="max-w-xl text-sm leading-7 text-slate-700">{String(data.cardDescription)}</p> : null}
+                  {hasContent(data.cardTitle) ? <h3 className="text-2xl font-semibold tracking-tight text-text-main sm:text-[2rem]">{String(data.cardTitle)}</h3> : null}
+                  {hasContent(data.cardDescription) ? <p className="max-w-xl text-sm leading-7 text-text-muted">{String(data.cardDescription)}</p> : null}
                 </div>
 
                 <div className="grid gap-3">
@@ -106,12 +121,12 @@ export function ContactSection() {
                       <a
                         key={label}
                         href={social.href}
-                        className="flex items-center gap-3 rounded-[18px] border border-white/60 bg-white/84 px-4 py-3 text-sm text-slate-600 shadow-[0_12px_24px_rgba(37,99,235,0.08)] backdrop-blur transition hover:-translate-y-0.5 hover:border-blue-300 hover:text-blue-700"
+                        className="flex items-center gap-3 rounded-[18px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-3 text-sm text-text-muted shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-primary/40 hover:text-primary"
                       >
-                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-blue-600/10 text-blue-700">{icon}</span>
+                        <span className="inline-flex h-9 w-9 items-center justify-center rounded-full bg-primary/10 text-primary">{icon}</span>
                         <span className="min-w-0 flex-1">
-                          <span className="block font-medium text-slate-950">{label}</span>
-                          <span className="block truncate text-slate-600">{value}</span>
+                          <span className="block font-medium text-text-main">{label}</span>
+                          <span className="block truncate text-text-muted">{value}</span>
                         </span>
                       </a>
                     );
@@ -120,66 +135,54 @@ export function ContactSection() {
 
                 <div className="grid gap-3 sm:grid-cols-2">
                   {hasContent(responseTimeValue) ? (
-                    <div className="rounded-[18px] border border-white/60 bg-white/86 p-4 shadow-[0_12px_24px_rgba(37,99,235,0.08)] backdrop-blur">
-                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                        <Timer className="h-4 w-4 text-blue-700" />
+                    <div className={INFO_CARD_CLASS}>
+                      <div className={INFO_LABEL_CLASS}>
+                        <Timer className="h-4 w-4 text-primary" />
                         {responseTimeLabel || "Response Time"}
                       </div>
-                      <p className="mt-2 text-sm font-semibold text-slate-950">{responseTimeValue}</p>
+                      <p className="mt-2 text-sm font-semibold text-text-main">{responseTimeValue}</p>
                     </div>
                   ) : null}
                   {hasContent(locationValue) ? (
-                    <div className="rounded-[18px] border border-white/60 bg-white/86 p-4 shadow-[0_12px_24px_rgba(37,99,235,0.08)] backdrop-blur">
-                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                        <MapPin className="h-4 w-4 text-blue-700" />
+                    <div className={INFO_CARD_CLASS}>
+                      <div className={INFO_LABEL_CLASS}>
+                        <MapPin className="h-4 w-4 text-primary" />
                         {locationLabel || "Location"}
                       </div>
-                      <p className="mt-2 text-sm font-semibold text-slate-950">{locationValue}</p>
+                      <p className="mt-2 text-sm font-semibold text-text-main">{locationValue}</p>
                     </div>
                   ) : null}
                 </div>
 
                 <div className="grid gap-3 sm:grid-cols-2">
-                  {hasContent(String(socials.find((item: any) => String(item.label || "").toLowerCase().includes("email"))?.value || "")) ? (
-                    <div className="rounded-[18px] border border-white/60 bg-white/86 p-4 shadow-[0_12px_24px_rgba(37,99,235,0.08)] backdrop-blur">
-                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                        <Mail className="h-4 w-4 text-blue-700" />
-                        Email
+                  {DETAIL_ITEMS.map(({ key, label, Icon }) => {
+                    const value = String(
+                      socials.find((item: any) => String(item.label || "").toLowerCase().includes(key))?.value || ""
+                    );
+                    if (!hasContent(value)) return null;
+                    return (
+                      <div key={key} className={INFO_CARD_CLASS}>
+                        <div className={INFO_LABEL_CLASS}>
+                          <Icon className="h-4 w-4 text-primary" />
+                          {label}
+                        </div>
+                        <p className="mt-2 truncate text-sm font-semibold text-text-main">{value}</p>
                       </div>
-                      <p className="mt-2 truncate text-sm font-semibold text-slate-950">{String(socials.find((item: any) => String(item.label || "").toLowerCase().includes("email"))?.value || "")}</p>
-                    </div>
-                  ) : null}
-                  {hasContent(String(socials.find((item: any) => String(item.label || "").toLowerCase().includes("github"))?.value || "")) ? (
-                    <div className="rounded-[18px] border border-white/60 bg-white/86 p-4 shadow-[0_12px_24px_rgba(37,99,235,0.08)] backdrop-blur">
-                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                        <Github className="h-4 w-4 text-blue-700" />
-                        GitHub
-                      </div>
-                      <p className="mt-2 truncate text-sm font-semibold text-slate-950">{String(socials.find((item: any) => String(item.label || "").toLowerCase().includes("github"))?.value || "")}</p>
-                    </div>
-                  ) : null}
-                  {hasContent(String(socials.find((item: any) => String(item.label || "").toLowerCase().includes("linkedin"))?.value || "")) ? (
-                    <div className="rounded-[18px] border border-white/60 bg-white/86 p-4 shadow-[0_12px_24px_rgba(37,99,235,0.08)] backdrop-blur">
-                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                        <Linkedin className="h-4 w-4 text-blue-700" />
-                        LinkedIn
-                      </div>
-                      <p className="mt-2 truncate text-sm font-semibold text-slate-950">{String(socials.find((item: any) => String(item.label || "").toLowerCase().includes("linkedin"))?.value || "")}</p>
-                    </div>
-                  ) : null}
+                    );
+                  })}
                   {hasContent(String(data.availabilityValue || "")) ? (
-                    <div className="rounded-[18px] border border-white/60 bg-white/86 p-4 shadow-[0_12px_24px_rgba(37,99,235,0.08)] backdrop-blur sm:col-span-2">
-                      <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.16em] text-slate-500">
-                        <Mail className="h-4 w-4 text-blue-700" />
+                    <div className={`${INFO_CARD_CLASS} sm:col-span-2`}>
+                      <div className={INFO_LABEL_CLASS}>
+                        <Mail className="h-4 w-4 text-primary" />
                         Availability
                       </div>
-                      <p className="mt-2 text-sm font-semibold text-slate-950">{String(data.availabilityValue)}</p>
+                      <p className="mt-2 text-sm font-semibold text-text-main">{String(data.availabilityValue)}</p>
                     </div>
                   ) : null}
                 </div>
 
-                <div className="mt-auto rounded-[22px] border border-white/60 bg-white/86 p-4 shadow-[0_16px_32px_rgba(37,99,235,0.08)] backdrop-blur">
-                  <p className="text-sm leading-6 text-slate-700">{ctaText || "Let's build something together."}</p>
+                <div className="mt-auto rounded-[22px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-4 shadow-sm backdrop-blur">
+                  <p className="text-sm leading-6 text-text-muted">{ctaText || "Let's build something together."}</p>
                   {hasResume ? (
                     <div className="mt-4">
                       <Button href={resumeUrl} variant="secondary" target="_blank" download className="w-full sm:w-auto">
@@ -191,11 +194,11 @@ export function ContactSection() {
               </div>
             </div>
 
-            <div className="border-t border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,252,0.98))] p-6 sm:p-8 lg:border-l lg:border-t-0">
+            <div className="border-t border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-6 sm:p-8 lg:border-l lg:border-t-0">
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="contact-name" className="mb-2 block text-sm font-semibold text-slate-900">{nameLabel || "Name"}</label>
+                    <label htmlFor="contact-name" className="mb-2 block text-sm font-semibold text-text-main">{nameLabel || "Name"}</label>
                     <input
                       id="contact-name"
                       type="text"
@@ -203,11 +206,11 @@ export function ContactSection() {
                       onChange={(event) => setName(event.target.value)}
                       required
                       placeholder={namePlaceholder || "Your name"}
-                      className="min-h-14 w-full rounded-[18px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-3 text-sm text-text-main outline-none ring-blue-500/40 transition-all duration-300 ease-out placeholder:text-text-muted/70 focus:border-blue-300 focus:ring-2"
+                      className={INPUT_CLASS}
                     />
                   </div>
                   <div>
-                    <label htmlFor="contact-email" className="mb-2 block text-sm font-semibold text-slate-900">{emailLabel || "Email"}</label>
+                    <label htmlFor="contact-email" className="mb-2 block text-sm font-semibold text-text-main">{emailLabel || "Email"}</label>
                     <input
                       id="contact-email"
                       type="email"
@@ -215,27 +218,27 @@ export function ContactSection() {
                       onChange={(event) => setEmail(event.target.value)}
                       required
                       placeholder={emailPlaceholder || "you@example.com"}
-                      className="min-h-14 w-full rounded-[18px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-3 text-sm text-text-main outline-none ring-blue-500/40 transition-all duration-300 ease-out placeholder:text-text-muted/70 focus:border-blue-300 focus:ring-2"
+                      className={INPUT_CLASS}
                     />
                   </div>
                 </div>
 
                 {subjectEnabled ? (
                   <div>
-                    <label htmlFor="contact-subject" className="mb-2 block text-sm font-semibold text-slate-900">{subjectLabel || "Subject"}</label>
+                    <label htmlFor="contact-subject" className="mb-2 block text-sm font-semibold text-text-main">{subjectLabel || "Subject"}</label>
                     <input
                       id="contact-subject"
                       type="text"
                       value={subject}
                       onChange={(event) => setSubject(event.target.value)}
                       placeholder={subjectPlaceholder || "How can I help?"}
-                      className="min-h-14 w-full rounded-[18px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-3 text-sm text-text-main outline-none ring-blue-500/40 transition-all duration-300 ease-out placeholder:text-text-muted/70 focus:border-blue-300 focus:ring-2"
+                      className={INPUT_CLASS}
                     />
                   </div>
                 ) : null}
 
                 <div>
-                  <label htmlFor="contact-message" className="mb-2 block text-sm font-semibold text-slate-900">{messageLabel || "Message"}</label>
+                  <label htmlFor="contact-message" className="mb-2 block text-sm font-semibold text-text-main">{messageLabel || "Message"}</label>
                   <textarea
                     id="contact-message"
                     rows={8}
@@ -243,7 +246,7 @@ export function ContactSection() {
                     onChange={(event) => setMessage(event.target.value)}
                     required
                     placeholder={messagePlaceholder || "Tell me about your project..."}
-                    className="min-h-56 w-full rounded-[22px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-3 text-sm text-text-main outline-none ring-blue-500/40 transition-all duration-300 ease-out placeholder:text-text-muted/70 focus:border-blue-300 focus:ring-2"
+                    className="min-h-56 w-full rounded-[22px] border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3 text-sm text-text-main outline-none ring-primary/40 transition-all duration-300 ease-out placeholder:text-text-muted/70 focus:border-primary focus:ring-2"
                   />
                 </div>
 
@@ -253,7 +256,15 @@ export function ContactSection() {
                 </Button>
 
                 {submitState ? (
-                  <p className={`text-sm ${submitState.type === "success" ? "text-emerald-700" : "text-rose-600"}`} role="status" aria-live="polite">
+                  <p
+                    className={`text-sm ${
+                      submitState.type === "success"
+                        ? "text-emerald-700 dark:text-emerald-400"
+                        : "text-rose-600 dark:text-rose-400"
+                    }`}
+                    role="status"
+                    aria-live="polite"
+                  >
                     {submitState.text}
                   </p>
                 ) : null}

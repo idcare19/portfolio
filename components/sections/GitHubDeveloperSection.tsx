@@ -289,7 +289,7 @@ export function GitHubDeveloperSection() {
                         <div className="min-w-0 flex-1">
                           <div className="flex flex-wrap items-center gap-3">
                             <h3 className="text-3xl font-semibold tracking-tight text-text-main">{displayName}</h3>
-                            {displayHandle && displayHandle !== displayName ? <Badge className="bg-[#EFF6FF] text-[#1D4ED8]">@{displayHandle.replace(/^@/, "")}</Badge> : null}
+                            {displayHandle && displayHandle !== displayName ? <Badge>@{displayHandle.replace(/^@/, "")}</Badge> : null}
                           </div>
                           {displayBio ? <p className="mt-3 max-w-2xl text-sm leading-7 text-text-muted sm:text-base">{displayBio}</p> : null}
                           <div className="mt-5 flex flex-wrap gap-3">
@@ -321,7 +321,7 @@ export function GitHubDeveloperSection() {
 
               <div className="space-y-4">
                 {useLiveGitHubAPI && showContributionCalendar ? (
-                  <div className="rounded-[28px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,0.95),rgba(248,250,252,0.95))] p-5">
+                  <div className="rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 shadow-sm">
                     <div className="flex items-center justify-between gap-3">
                       <div>
                         <p className="text-sm font-semibold text-text-main">Contribution Calendar</p>
@@ -335,8 +335,8 @@ export function GitHubDeveloperSection() {
                           <div
                             key={day.date}
                             title={`${day.date}: ${day.count} contributions`}
-                            className={`aspect-square rounded-xl border border-white/60 ${
-                              day.level === 0 ? "bg-slate-100" : day.level === 1 ? "bg-emerald-100" : day.level === 2 ? "bg-emerald-300" : day.level === 3 ? "bg-emerald-500" : "bg-emerald-700"
+                            className={`aspect-square rounded-xl border border-[rgb(var(--border))]/40 ${
+                              day.level === 0 ? "bg-[rgb(var(--page-bg))]" : day.level === 1 ? "bg-emerald-500/20" : day.level === 2 ? "bg-emerald-500/40" : day.level === 3 ? "bg-emerald-500/70" : "bg-emerald-500"
                             } shadow-sm`}
                           />
                         ))}
@@ -346,7 +346,7 @@ export function GitHubDeveloperSection() {
                 ) : null}
 
                 {useLiveGitHubAPI && config.showInsights ? (
-                  <div className="rounded-[28px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,0.95),rgba(248,250,252,0.95))] p-5">
+                  <div className="rounded-[28px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 shadow-sm">
                     <div className="flex items-center justify-between gap-3">
                       <div>
                         <p className="text-sm font-semibold text-text-main">GitHub Insights</p>

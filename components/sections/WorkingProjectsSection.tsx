@@ -30,7 +30,7 @@ export function WorkingProjectsSection() {
   }
 
   return (
-    <AnimatedSection id="working" className="bg-[linear-gradient(180deg,rgba(255,255,255,1),rgba(248,250,252,1))] py-24">
+    <AnimatedSection id="working" className="bg-[rgb(var(--page-bg))] py-24">
       <div className="section-wrap">
         <SectionHeader
           eyebrow={data.eyebrow}
@@ -41,7 +41,7 @@ export function WorkingProjectsSection() {
         <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           {workingProjects.map((project, index) => (
             <div key={`${project.title}-${index}`}>
-              <article className="group h-full overflow-hidden rounded-[30px] border border-[rgb(var(--border))] bg-[linear-gradient(180deg,rgba(255,255,255,0.95),rgba(239,246,255,0.72))] p-5 shadow-[0_18px_42px_rgba(15,23,42,0.06)] transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_24px_56px_rgba(37,99,235,0.12)]">
+              <article className="group h-full overflow-hidden rounded-[30px] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5 shadow-[0_18px_42px_rgba(15,23,42,0.06)] transition-all duration-500 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_24px_56px_rgba(37,99,235,0.12)]">
                 <div className="flex items-center justify-between gap-3">
                   <Badge>{project.status || "In Progress"}</Badge>
                   <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-primary">

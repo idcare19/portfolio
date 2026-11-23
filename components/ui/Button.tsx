@@ -22,9 +22,9 @@ const base =
 
 const variants = {
   primary:
-    "bg-primary text-white shadow-[0_14px_30px_rgba(37,99,235,0.22)] hover:bg-[#1D4ED8] hover:shadow-[0_20px_40px_rgba(37,99,235,0.28)]",
+    "bg-primary text-white shadow-lg shadow-blue-500/20 hover:brightness-110 hover:shadow-xl hover:shadow-blue-500/30",
   secondary:
-    "border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main shadow-[0_10px_24px_rgba(15,23,42,0.06)] hover:bg-[rgb(var(--card-hover))] hover:shadow-[0_16px_30px_rgba(15,23,42,0.10)]",
+    "border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main shadow-sm hover:bg-[rgb(var(--card-hover))] hover:border-primary/30",
 };
 
 function MagneticInner({

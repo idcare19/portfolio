@@ -74,45 +74,19 @@ export function FooterSection() {
   return (
     <footer
       id="footer"
-      className="relative isolate overflow-hidden border-t border-white/10 bg-[#080B12] text-white"
+      className="relative isolate overflow-hidden border-t border-[rgb(var(--border))] bg-[rgb(var(--section-bg))] text-text-main transition-colors duration-300"
     >
-      {/* Ambient lighting */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-40 -top-48 h-[30rem] w-[30rem] rounded-full bg-blue-500/[0.09] blur-[110px]"
-      />
-
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-48 -left-40 h-[30rem] w-[30rem] rounded-full bg-indigo-500/[0.07] blur-[110px]"
-      />
-
-      {/* Grid texture */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.045]"
-        style={{
-          backgroundImage:
-            "linear-gradient(rgba(255,255,255,.18) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.18) 1px, transparent 1px)",
-          backgroundSize: "64px 64px",
-          maskImage:
-            "linear-gradient(to bottom, black, transparent 85%)",
-          WebkitMaskImage:
-            "linear-gradient(to bottom, black, transparent 85%)",
-        }}
-      />
-
       <div className="section-wrap relative py-16 sm:py-20 lg:py-24">
         {/* Top label */}
-        <div className="mb-14 flex items-center justify-between gap-4 border-b border-white/10 pb-6">
+        <div className="mb-14 flex items-center justify-between gap-4 border-b border-[rgb(var(--border))] pb-6">
           <div className="flex items-center gap-3">
-            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_12px_rgba(52,211,153,0.7)]" />
-            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/50">
+            <span className="h-2 w-2 rounded-full bg-emerald-500 shadow-[0_0_12px_rgba(16,185,129,0.7)]" />
+            <span className="text-[10px] font-bold uppercase tracking-[0.25em] text-text-muted">
               End of page · Beginning of something new
             </span>
           </div>
 
-          <span className="hidden text-[10px] font-semibold uppercase tracking-[0.2em] text-white/30 sm:block">
+          <span className="hidden text-[10px] font-semibold uppercase tracking-[0.2em] text-text-muted/60 sm:block">
             {String(currentYear)}
           </span>
         </div>
@@ -126,18 +100,18 @@ export function FooterSection() {
               aria-label="Back to homepage"
               className="group inline-flex items-center gap-3"
             >
-              <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/15 bg-white/[0.06] text-blue-300 shadow-[0_8px_30px_rgba(0,0,0,0.2)] transition-all duration-300 group-hover:-translate-y-1 group-hover:border-blue-400/40 group-hover:bg-blue-400/10">
+              <span className="flex h-12 w-12 items-center justify-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-primary shadow-sm transition-all duration-300 group-hover:-translate-y-1 group-hover:border-primary/40 group-hover:bg-primary/10">
                 <Sparkles className="h-5 w-5" />
               </span>
 
-              <span className="text-2xl font-bold tracking-tight text-white">
+              <span className="text-2xl font-bold tracking-tight text-text-main">
                 {footerBrandText || "Portfolio"}
-                <span className="text-blue-400">.</span>
+                <span className="text-primary">.</span>
               </span>
             </a>
 
             {footerIntro ? (
-              <p className="mt-7 max-w-md text-sm leading-8 text-white/55 sm:text-base">
+              <p className="mt-7 max-w-md text-sm leading-8 text-text-muted sm:text-base">
                 {footerIntro}
               </p>
             ) : null}
@@ -149,7 +123,7 @@ export function FooterSection() {
             ) : null}
 
             {copyrightText ? (
-              <p className="mt-8 max-w-md text-xs leading-6 text-white/35">
+              <p className="mt-8 max-w-md text-xs leading-6 text-text-muted/70">
                 {copyrightText}
               </p>
             ) : null}
@@ -157,7 +131,7 @@ export function FooterSection() {
 
           {/* Navigation */}
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/35">
+            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text-muted">
               {navLabel || "Explore"}
             </p>
 
@@ -172,10 +146,10 @@ export function FooterSection() {
                   <a
                     key={`${item.label}-${item.href}-${index}`}
                     href={item.href}
-                    className="group inline-flex items-center gap-2 text-sm text-white/60 transition-all duration-300 hover:translate-x-1 hover:text-white"
+                    className="group inline-flex items-center gap-2 text-sm text-text-muted transition-all duration-300 hover:translate-x-1 hover:text-text-main"
                   >
                     <span>{item.label}</span>
-                    <ArrowUpRight className="h-3.5 w-3.5 opacity-0 transition-all duration-300 group-hover:opacity-100" />
+                    <ArrowUpRight className="h-3.5 w-3.5 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:text-primary" />
                   </a>
                 );
               })}
@@ -184,7 +158,7 @@ export function FooterSection() {
 
           {/* Social links */}
           <div>
-            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-white/35">
+            <p className="text-[10px] font-bold uppercase tracking-[0.24em] text-text-muted">
               {socialsLabel || "Connect"}
             </p>
 
@@ -211,7 +185,7 @@ export function FooterSection() {
                     }
                     aria-label={social.label}
                     title={social.label}
-                    className="group flex h-12 w-12 items-center justify-center rounded-xl border border-white/10 bg-white/[0.04] text-white/55 transition-all duration-300 hover:-translate-y-1 hover:border-blue-400/40 hover:bg-blue-400/10 hover:text-blue-300"
+                    className="group flex h-12 w-12 items-center justify-center rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-muted transition-all duration-300 hover:-translate-y-1 hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
                   >
                     <Icon className="h-[18px] w-[18px] transition-transform duration-300 group-hover:scale-110" />
                   </a>
@@ -220,7 +194,7 @@ export function FooterSection() {
             </div>
 
             {currentAvailabilityLabel ? (
-              <p className="mt-7 max-w-xs text-sm leading-7 text-white/40">
+              <p className="mt-7 max-w-xs text-sm leading-7 text-text-muted/80">
                 {currentAvailabilityLabel}
               </p>
             ) : null}
@@ -228,22 +202,22 @@ export function FooterSection() {
         </div>
 
         {/* Closing statement */}
-        <div className="mt-20 border-y border-white/10 py-10 sm:py-12">
+        <div className="mt-20 border-y border-[rgb(var(--border))] py-10 sm:py-12">
           <div className="flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
             <div>
-              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-blue-300/70">
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-primary">
                 Keep building
               </p>
 
-              <h2 className="max-w-2xl text-3xl font-bold leading-tight tracking-tight text-white sm:text-4xl lg:text-5xl">
+              <h2 className="max-w-2xl text-3xl font-bold leading-tight tracking-tight text-text-main sm:text-4xl lg:text-5xl">
                 Ideas are just the
-                <span className="text-white/35"> beginning.</span>
+                <span className="text-text-muted/50"> beginning.</span>
               </h2>
             </div>
 
             <a
               href="#home"
-              className="group inline-flex w-fit items-center gap-3 rounded-full border border-white/15 bg-white/[0.05] px-5 py-3 text-xs font-semibold text-white/75 transition-all duration-300 hover:border-blue-400/40 hover:bg-blue-400/10 hover:text-white"
+              className="group inline-flex w-fit items-center gap-3 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-5 py-3 text-xs font-semibold text-text-main shadow-sm transition-all duration-300 hover:border-primary/40 hover:bg-primary/10 hover:text-primary"
             >
               {backToTop}
               <MoveUpRight className="h-4 w-4 transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1" />

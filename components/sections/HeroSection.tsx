@@ -11,6 +11,7 @@ import {
   useSiteDataContext,
 } from "@/components/site/SiteDataProvider";
 import { Button } from "@/components/ui/Button";
+import { useTheme } from "@/components/site/ThemeProvider";
 
 import NeuralBrain from "@/src/components/3d/NeuralBrain";
 
@@ -19,6 +20,7 @@ export function HeroSection() {
   const section = useSectionData("hero");
   const aboutSection = useSectionData("about");
   const reduceMotion = useReducedMotion();
+  const { isDark } = useTheme();
 
   const heroData = section.data as Record<string, any>;
 
@@ -55,22 +57,6 @@ export function HeroSection() {
       id="hero"
       className="relative isolate overflow-hidden bg-section-bg pb-20 pt-32 sm:pb-28 sm:pt-40"
     >
-      {/* BACKGROUND */}
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute left-1/2 top-0 h-[500px] w-[700px] -translate-x-1/2 rounded-full bg-blue-500/[0.07] blur-[120px]" />
-
-        <div className="absolute right-[-10%] top-[15%] h-[300px] w-[300px] rounded-full bg-violet-500/[0.08] blur-[100px]" />
-
-        <div
-          className="absolute inset-0 opacity-[0.035]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgb(100 116 139) 1px, transparent 1px), linear-gradient(90deg, rgb(100 116 139) 1px, transparent 1px)",
-            backgroundSize: "48px 48px",
-          }}
-        />
-      </div>
-
       <div className="section-wrap">
         <div className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
 
@@ -83,7 +69,7 @@ export function HeroSection() {
                 initial={reduceMotion ? false : { opacity: 0, y: 15 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
-                className="mb-7 inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))]/80 px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-text-muted shadow-sm backdrop-blur-xl"
+                className="mb-7 inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-4 py-2 text-xs font-semibold uppercase tracking-[0.16em] text-text-muted shadow-sm"
               >
                 <span className="h-2 w-2 animate-pulse rounded-full bg-emerald-500" />
                 {eyebrow}
@@ -169,79 +155,44 @@ export function HeroSection() {
           </div>
 
           {/* RIGHT VISUAL — NEURAL BRAIN */}
-          <motion.div
-            initial={reduceMotion ? false : { opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1 }}
-            className="relative mx-auto flex aspect-square w-full max-w-[560px] items-center justify-center lg:scale-110"
-          >
-            {/* Ambient glow */}
-            <div className="pointer-events-none absolute inset-[5%] rounded-full bg-blue-500/[0.08] blur-[80px]" />
-
-            <div className="pointer-events-none absolute inset-[8%] rounded-full border border-blue-500/20" />
-
-            <div className="pointer-events-none absolute inset-[16%] animate-spin rounded-full border border-dashed border-violet-500/25 [animation-duration:45s]" />
-
-            <div className="pointer-events-none absolute inset-[24%] rounded-full border border-white/[0.08]" />
+          <div className="relative mx-auto flex aspect-square w-full max-w-[560px] items-center justify-center lg:scale-110">
+            {/* Subtle solid geometric accent ring */}
+            <div className="pointer-events-none absolute inset-[8%] rounded-full border border-[rgb(var(--border))]/60" />
 
             {/* Brain renderer */}
             <div className="relative z-10 h-full w-full">
               <NeuralBrain
                 className="h-full w-full"
                 brainScale={1.15}
-                nodeSize={0.55}
-                nodeBrightness={1.08}
-                lineBrightness={0.55}
-                lineWidth={0.6}
-                pulseColor="#FFFFFF"
+                nodeSize={isDark ? 0.55 : 0.65}
+                nodeBrightness={isDark ? 1.08 : 0.85}
+                lineBrightness={isDark ? 0.55 : 0.45}
+                lineWidth={isDark ? 0.6 : 0.75}
+                pulseColor={isDark ? "#F4F6F8" : "#2869C7"}
                 backgroundColor="transparent"
-                particleColor="#D9DEE8"
+                particleColor={isDark ? "#A6B0BE" : "#758296"}
                 autoRotation
                 autoRotationSpeed={0.03}
                 pulseEnabled
                 pulseSpeed={1}
-                backgroundParticleCount={44}
+                backgroundParticleCount={isDark ? 36 : 28}
               />
             </div>
 
             {/* Floating label 1 */}
-            <motion.div
-              animate={
-                reduceMotion
-                  ? undefined
-                  : { y: [0, -10, 0] }
-              }
-              transition={{
-                duration: 5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="pointer-events-none absolute right-[2%] top-[18%] z-20 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))]/80 px-4 py-3 shadow-xl backdrop-blur-xl"
-            >
+            <div className="pointer-events-none absolute right-[2%] top-[18%] z-20 rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-3.5 py-2 shadow-sm">
               <span className="text-xs font-semibold tracking-wider text-primary">
                 AI & TECHNOLOGY
               </span>
-            </motion.div>
+            </div>
 
             {/* Floating label 2 */}
-            <motion.div
-              animate={
-                reduceMotion
-                  ? undefined
-                  : { y: [0, 10, 0] }
-              }
-              transition={{
-                duration: 6,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className="pointer-events-none absolute bottom-[17%] left-[0%] z-20 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))]/80 px-4 py-3 shadow-xl backdrop-blur-xl"
-            >
+            <div className="pointer-events-none absolute bottom-[17%] left-[0%] z-20 rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-3.5 py-2 shadow-sm">
               <span className="text-xs font-semibold tracking-wider text-text-main">
                 CREATIVE ENGINEERING
               </span>
-            </motion.div>
-          </motion.div>
+            </div>
+          </div>
         </div>
 
         {/* STATS */}

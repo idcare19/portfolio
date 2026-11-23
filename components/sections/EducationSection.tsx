@@ -38,12 +38,6 @@ export function EducationSection() {
       id="education"
       className="relative overflow-hidden bg-page-bg py-20 sm:py-24 lg:py-28"
     >
-      {/* Background accent */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -left-32 top-24 h-80 w-80 rounded-full bg-[rgb(var(--secondary))] opacity-[0.035] blur-3xl"
-      />
-
       <div className="section-wrap relative">
         <SectionHeader
           eyebrow={data.eyebrow || "Education"}

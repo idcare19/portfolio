@@ -2,10 +2,12 @@ import type { Config } from "tailwindcss";
 import defaultTheme from "tailwindcss/defaultTheme";
 
 const config: Config = {
+  darkMode: "class",
   content: [
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./data/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   theme: {
     extend: {
@@ -13,15 +15,15 @@ const config: Config = {
         sans: ["var(--font-inter)", ...defaultTheme.fontFamily.sans],
       },
       colors: {
-        "page-bg": "#F8FAFC",
-        "section-bg": "#FFFFFF",
-        "card-bg": "#FFFFFF",
-        "card-hover": "#F8FAFC",
-        primary: "#2563EB",
-        secondary: "#FFFFFF",
-        "text-main": "#0F172A",
-        "text-muted": "#475569",
-        border: "#E2E8F0",
+        "page-bg": "rgb(var(--page-bg))",
+        "section-bg": "rgb(var(--section-bg))",
+        "card-bg": "rgb(var(--card-bg))",
+        "card-hover": "rgb(var(--card-hover))",
+        primary: "rgb(var(--primary))",
+        secondary: "rgb(var(--secondary))",
+        "text-main": "rgb(var(--text-main))",
+        "text-muted": "rgb(var(--text-muted))",
+        border: "rgb(var(--border))",
         "admin-bg": "rgb(var(--admin-bg))",
         "admin-sidebar": "rgb(var(--admin-sidebar))",
         "admin-topbar": "rgb(var(--admin-topbar))",
@@ -53,7 +55,7 @@ const config: Config = {
       },
       backgroundImage: {
         "hero-gradient": "none",
-        "section-gradient": "linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%)",
+        "section-gradient": "linear-gradient(180deg, rgb(var(--section-bg)) 0%, rgb(var(--page-bg)) 100%)",
       },
     },
   },

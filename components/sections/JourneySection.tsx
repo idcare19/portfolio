@@ -48,12 +48,6 @@ export function JourneySection() {
       id="journey"
       className="relative overflow-hidden bg-section-bg py-20 sm:py-24 lg:py-28"
     >
-      {/* Background details */}
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute right-0 top-20 h-72 w-72 rounded-full bg-[rgb(var(--primary))] opacity-[0.035] blur-3xl"
-      />
-
       <div className="section-wrap relative">
         <SectionHeader
           eyebrow={eyebrow}
@@ -63,11 +57,9 @@ export function JourneySection() {
 
         {/* Section overview */}
         <div className="mx-auto mb-12 mt-10 grid max-w-5xl gap-4 sm:grid-cols-2">
-          <div className="portfolio-card group relative overflow-hidden p-5 sm:p-6">
-            <div className="absolute right-0 top-0 h-24 w-24 rounded-full bg-[rgb(var(--primary))] opacity-[0.06] blur-2xl transition-opacity duration-500 group-hover:opacity-20" />
-
+          <div className="portfolio-card group relative overflow-hidden p-5 sm:p-6 shadow-sm">
             <div className="relative flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-hover))] text-[rgb(var(--primary))]">
+              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-hover))] text-primary">
                 <BriefcaseBusiness className="h-5 w-5" />
               </div>
 
@@ -82,9 +74,7 @@ export function JourneySection() {
             </div>
           </div>
 
-          <div className="portfolio-card group relative overflow-hidden p-5 sm:p-6">
-            <div className="absolute right-0 top-0 h-24 w-24 rounded-full bg-[rgb(var(--success))] opacity-[0.06] blur-2xl transition-opacity duration-500 group-hover:opacity-20" />
-
+          <div className="portfolio-card group relative overflow-hidden p-5 sm:p-6 shadow-sm">
             <div className="relative flex items-center gap-4">
               <div className="relative flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-hover))] text-[rgb(var(--success))]">
                 <Radio className="h-5 w-5" />
