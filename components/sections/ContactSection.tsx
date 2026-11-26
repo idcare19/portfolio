@@ -20,7 +20,7 @@ import { SectionHeader } from "@/components/ui/SectionHeader";
 import { hasContent } from "@/lib/has-content";
 
 const INPUT_CLASS =
-  "min-h-14 w-full rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-4 py-3 text-sm text-text-main outline-none transition-colors placeholder:text-text-muted/70 focus:border-primary focus:ring-2 focus:ring-primary/30";
+  "min-h-12 w-full rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--page-bg))] px-3 py-2.5 text-sm text-text-main outline-none transition-colors placeholder:text-text-muted/70 focus:border-primary focus:ring-2 focus:ring-primary/30 sm:min-h-14 sm:px-4 sm:py-3";
 
 const INFO_CARD_CLASS =
   "rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-4";
@@ -164,7 +164,7 @@ export function ContactSection() {
   return (
     <AnimatedSection
       id="contact"
-      className="bg-[rgb(var(--page-bg))] py-16 sm:py-24"
+      className="bg-[rgb(var(--page-bg))] py-12 sm:py-24"
     >
       <div className="section-wrap">
         {hasHeader ? (
@@ -176,10 +176,10 @@ export function ContactSection() {
         ) : null}
 
         <div className="mx-auto max-w-[1050px]">
-          <div className="grid overflow-hidden rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] shadow-sm lg:grid-cols-[0.92fr_1.08fr]">
+          <div className="mx-2 grid overflow-hidden rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] shadow-sm sm:mx-0 sm:rounded-3xl lg:grid-cols-[0.92fr_1.08fr]">
 
             {/* LEFT: CONTACT INFORMATION */}
-            <div className="flex flex-col gap-6 border-b border-[rgb(var(--border))] bg-[rgb(var(--section-bg,var(--page-bg)))] p-6 sm:p-8 lg:border-b-0 lg:border-r">
+            <div className="flex flex-col gap-5 border-b border-[rgb(var(--border))] bg-[rgb(var(--section-bg,var(--page-bg)))] p-4 sm:gap-6 sm:p-8 lg:border-b-0 lg:border-r">
 
               <div className="space-y-3">
                 {hasContent(availabilityLabel) ? (
@@ -286,7 +286,7 @@ export function ContactSection() {
               ) : null}
 
               {/* CTA AND RESUME */}
-              <div className="mt-auto rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-5">
+              <div className="mt-auto rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] p-4 sm:p-5">
                 <p className="text-sm leading-6 text-text-muted">
                   {ctaText}
                 </p>
@@ -308,9 +308,9 @@ export function ContactSection() {
             </div>
 
             {/* RIGHT: CONTACT FORM */}
-            <div className="bg-[rgb(var(--card-bg))] p-6 sm:p-8">
+            <div className="bg-[rgb(var(--card-bg))] p-4 sm:p-8">
               <form
-                className="space-y-5"
+                className="space-y-4 sm:space-y-5"
                 onSubmit={handleSubmit}
               >
                 <div className="grid gap-4 sm:grid-cols-2">
@@ -390,14 +390,14 @@ export function ContactSection() {
                     onChange={(event) => setMessage(event.target.value)}
                     required
                     placeholder={messagePlaceholder}
-                    className={`${INPUT_CLASS} min-h-40 resize-y`}
+                    className={`${INPUT_CLASS} min-h-32 resize-y sm:min-h-40`}
                   />
                 </div>
 
              <button
   type="submit"
   disabled={submitting}
-  className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-6 py-3.5 text-base font-semibold text-white transition-colors hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:max-w-[360px]"
+  className="inline-flex w-full items-center justify-center rounded-xl bg-primary px-4 py-3 text-sm font-semibold text-white transition-colors hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50 sm:max-w-[360px] sm:px-6 sm:py-3.5 sm:text-base"
 >
   <Send className="mr-2 h-4 w-4" />
   {submitting

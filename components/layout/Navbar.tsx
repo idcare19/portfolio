@@ -12,7 +12,10 @@ export function Navbar() {
   const portfolioData = useSiteDataContext();
   const shell = portfolioData.shell;
   const pathname = usePathname();
+  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
   const isHomePage = pathname === "/";
+
+  if (isAdminRoute) return null;
 
   const navItems = useMemo(
     () =>

@@ -10,8 +10,13 @@ export function BackButton() {
   const hasPageBackButton =
     pathname.startsWith("/projects/") ||
     pathname.startsWith("/completed-projects/");
+  const isAdminOrAuthRoute =
+    pathname === "/admin" ||
+    pathname.startsWith("/admin/") ||
+    pathname === "/login" ||
+    pathname.startsWith("/login/");
 
-  if (pathname === "/" || hasPageBackButton) return null;
+  if (pathname === "/" || hasPageBackButton || isAdminOrAuthRoute) return null;
 
   return (
     <div className="fixed inset-x-0 top-24 z-[80] pointer-events-none">

@@ -65,7 +65,7 @@ export function HeroSection() {
   return (
     <AnimatedSection
       id="hero"
-      className="relative isolate overflow-hidden bg-section-bg pb-20 pt-32 sm:pb-28 sm:pt-40"
+      className="relative isolate overflow-hidden bg-section-bg pb-20 pt-16 sm:pb-28 sm:pt-40"
     >
       <div className="section-wrap">
         <div className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
