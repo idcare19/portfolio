@@ -1075,89 +1075,89 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6b08013fad5a22ee2bd559ac",
+      "id": "6b0810f9ce97a2775104d1a6",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
       "content": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients...",
       "coverImage": "",
-      "author": "Abhishek",
+      "author": "",
       "tags": [
         "portfolio",
         "web development",
         "career"
       ],
       "category": "General",
-      "status": "draft",
+      "status": "published",
       "isFeatured": false,
-      "published": false,
-      "isEnabled": false,
+      "published": true,
+      "isEnabled": true,
       "seoTitle": "How to build a portfolio that converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-11-26T09:51:50.138Z",
+      "publishedAt": "2026-11-26T10:58:56.987Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Nov 26 2026 09:51:59 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-26T09:51:50.138Z",
+      "createdAt": "Thu Nov 26 2026 10:59:05 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T10:58:56.987Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6b08013fad5a22ee2bd559ad",
+      "id": "6b0810f9ce97a2775104d1a7",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
       "content": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code...",
       "coverImage": "",
-      "author": "Abhishek",
+      "author": "",
       "tags": [
         "frontend",
         "tips",
         "javascript"
       ],
       "category": "General",
-      "status": "draft",
+      "status": "published",
       "isFeatured": false,
-      "published": false,
-      "isEnabled": false,
+      "published": true,
+      "isEnabled": true,
       "seoTitle": "10 tips for frontend developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-11-26T09:51:50.138Z",
+      "publishedAt": "2026-11-26T10:58:56.987Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Nov 26 2026 09:51:59 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-26T09:51:50.138Z",
+      "createdAt": "Thu Nov 26 2026 10:59:05 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T10:58:56.987Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6b08013fad5a22ee2bd559ae",
+      "id": "6b0810f9ce97a2775104d1a8",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
       "content": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices...",
       "coverImage": "",
-      "author": "Abhishek",
+      "author": "",
       "tags": [
         "mongodb",
         "database",
         "backend"
       ],
       "category": "General",
-      "status": "draft",
+      "status": "published",
       "isFeatured": false,
-      "published": false,
-      "isEnabled": false,
+      "published": true,
+      "isEnabled": true,
       "seoTitle": "MongoDB best practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-11-26T09:51:50.138Z",
+      "publishedAt": "2026-11-26T10:58:56.987Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Nov 26 2026 09:51:59 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-26T09:51:50.138Z",
+      "createdAt": "Thu Nov 26 2026 10:59:05 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T10:58:56.987Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1203,11 +1203,11 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-26T10:58:56.987Z",
-      "lastGitHubSync": "2026-11-26T10:59:01.077Z"
+      "lastMongoUpdate": "2026-11-26T13:11:51.599Z",
+      "lastGitHubSync": "2026-11-26T13:11:55.556Z"
     },
     "popupAnnouncement": {
-      "enabled": false,
+      "enabled": true,
       "title": "Updates ",
       "message": "Due to new updates you can see some blank data just ignore that for some time , But you can contact me.",
       "buttonText": "Contact",
@@ -1220,7 +1220,7 @@
       "endDate": ""
     },
     "maintenanceMode": {
-      "enabled": false,
+      "enabled": true,
       "title": "Website Under Maintenance",
       "subtitle": "We are performing a quick upgrade. Please check back soon.",
       "estimatedReturn": "Expected back in 2 hours",
@@ -1244,7 +1244,7 @@
       "whitelistAdmin": true
     },
     "topNoticeBar": {
-      "enabled": false,
+      "enabled": true,
       "message": "Open for freelance and long-term projects.",
       "ctaText": "Let’s Talk",
       "ctaLink": "https://wa.me/918929261986",
@@ -1252,7 +1252,7 @@
     },
     "versionInfo": {
       "currentVersion": "3.0.2",
-      "showUpdateMessage": false,
+      "showUpdateMessage": true,
       "updateMessage": "New update available",
       "changelogShort": "Admin panel + Git-based CMS added",
       "showBadge": false
@@ -1694,7 +1694,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-26T10:58:56.987Z",
+  "updatedAt": "2026-11-26T13:11:51.599Z",
   "sections": {
     "hero": {
       "id": "hero",
