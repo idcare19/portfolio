@@ -1075,7 +1075,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6b08302077a22992cae91a55",
+      "id": "6b08321178c1d6bcc1ba708a",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1094,17 +1094,17 @@
       "isEnabled": true,
       "seoTitle": "How to build a portfolio that converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-11-26T13:11:51.599Z",
+      "publishedAt": "2026-11-26T13:20:08.653Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Nov 26 2026 13:12:00 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-26T13:11:51.599Z",
+      "createdAt": "Thu Nov 26 2026 13:20:17 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T13:20:08.653Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6b08302077a22992cae91a56",
+      "id": "6b08321178c1d6bcc1ba708b",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1123,17 +1123,17 @@
       "isEnabled": true,
       "seoTitle": "10 tips for frontend developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-11-26T13:11:51.599Z",
+      "publishedAt": "2026-11-26T13:20:08.653Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Nov 26 2026 13:12:00 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-26T13:11:51.599Z",
+      "createdAt": "Thu Nov 26 2026 13:20:17 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T13:20:08.653Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6b08302077a22992cae91a57",
+      "id": "6b08321178c1d6bcc1ba708c",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1152,12 +1152,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB best practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-11-26T13:11:51.599Z",
+      "publishedAt": "2026-11-26T13:20:08.653Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Nov 26 2026 13:12:00 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-26T13:11:51.599Z",
+      "createdAt": "Thu Nov 26 2026 13:20:17 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T13:20:08.653Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1203,8 +1203,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-26T13:20:08.653Z",
-      "lastGitHubSync": "2026-11-26T13:20:12.702Z"
+      "lastMongoUpdate": "2026-11-26T13:20:36.140Z",
+      "lastGitHubSync": "2026-11-26T13:20:40.264Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1694,7 +1694,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-26T13:20:08.653Z",
+  "updatedAt": "2026-11-26T13:20:36.140Z",
   "sections": {
     "hero": {
       "id": "hero",
