@@ -1306,7 +1306,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6b083cedba79ca4f75126a50",
+      "id": "6b083d4a65afc4973944194d",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Seven changes that turn a portfolio into a client magnet.",
@@ -1325,17 +1325,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Developer Portfolio That Converts Visitors",
       "seoDescription": "Practical tips for a developer portfolio that wins clients: clear positioning, outcome-focused case studies, fewer projects, fast pages and easy contact.",
-      "publishedAt": "2026-11-26T14:06:27.784Z",
+      "publishedAt": "2026-11-26T14:08:01.385Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Nov 26 2026 14:06:37 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-26T14:06:27.784Z",
+      "createdAt": "Thu Nov 26 2026 14:08:10 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T14:08:01.385Z",
       "scheduledFor": "",
       "markdown": "A portfolio that converts does one job: it helps a visitor decide to contact you. Most developer portfolios fail not because the work is weak, but because the page never makes that decision easy.\n\n## 1. Say who you help, in one line\nLead with what you build and for whom, for example \"Full-stack developer building SaaS products and business websites\". A visitor should understand your value within five seconds, before they scroll.\n\n## 2. Show outcomes, not just screenshots\nFor each project, explain the problem, your role and what changed. \"Reduced page load time by optimizing images and adding lazy loading\" says more than a pretty mockup. Only claim numbers you can back up.\n\n## 3. Show fewer, better projects\nThree well-explained projects beat fifteen thin ones. Put the work closest to the jobs you want at the top, and move older or weaker work out of sight.\n\n## 4. Be honest about your role\nFor team or client work, say what you personally built. If a project is confidential, describe the type of work without exposing private details. Honesty is easier to trust than inflated claims.\n\n## 5. Make contacting you effortless\nPut a clear call to action in the header and again at the bottom of every section that matters. Offer one obvious route, such as an email address or a short enquiry form, and say what happens next.\n\n## 6. Treat speed and SEO as part of the design\nCompress images, lazy-load below-the-fold content and keep titles and meta descriptions specific. A slow portfolio quietly tells visitors how you build websites.\n\n## 7. Keep it alive\nUpdate the portfolio whenever you finish something. Add a short article or case study now and then; it gives search engines and visitors a reason to come back.\n\n## A quick checklist\n- Can a stranger tell what you do in five seconds?\n- Does every project say what problem it solved?\n- Is there one clear way to contact you?\n- Does the page load quickly on a phone?\n\nIf you can answer yes to all four, your portfolio is already ahead of most."
     },
     {
-      "id": "6b083cedba79ca4f75126a51",
+      "id": "6b083d4a65afc4973944194e",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Ten habits for cleaner, faster frontend code.",
@@ -1354,17 +1354,17 @@
       "isEnabled": true,
       "seoTitle": "10 Practical Tips for Frontend Developers",
       "seoDescription": "Ten frontend development tips: semantic HTML, accessibility, small components, TypeScript, performance, image optimization, states and testing.",
-      "publishedAt": "2026-11-26T14:06:27.784Z",
+      "publishedAt": "2026-11-26T14:08:01.385Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Nov 26 2026 14:06:37 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-26T14:06:27.784Z",
+      "createdAt": "Thu Nov 26 2026 14:08:10 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T14:08:01.385Z",
       "scheduledFor": "",
       "markdown": "Frontend work changes quickly, but the habits that produce good interfaces stay fairly stable. These ten are worth building into your routine.\n\n## 1. Start with semantic HTML\nUse real headings, buttons, lists and landmarks. You get accessibility, keyboard support and better SEO almost for free.\n\n## 2. Learn the platform before the framework\nKnow how CSS layout, the DOM, events and fetch behave. Frameworks like React and Next.js are much easier when the fundamentals are solid.\n\n## 3. Keep components small and focused\nIf a component needs a long explanation, split it. Small components are easier to test, reuse and review.\n\n## 4. Type your data\nTypeScript catches a whole class of bugs at the boundary between your UI and your API. Define types for API responses early.\n\n## 5. Design mobile first\nStart with the smallest screen, then add layout complexity as space grows. It forces you to prioritize content.\n\n## 6. Optimize images\nImages are usually the heaviest part of a page. Use modern formats, correct dimensions and lazy loading for anything below the fold.\n\n## 7. Measure performance\nUse Lighthouse and Core Web Vitals instead of guessing. Fix the biggest bottleneck first, then measure again.\n\n## 8. Handle every state\nEvery data-driven view has loading, empty, error and success states. Designing all four makes an app feel finished.\n\n## 9. Get comfortable with the network tab\nMany \"frontend bugs\" are really wrong requests or unexpected responses. Reading the network tab saves hours.\n\n## 10. Test the flows that matter\nYou do not need to test everything. Cover sign-in, checkout, form submission and other critical paths first.\n\nPick one or two of these each week and apply them to a real project. Small, steady improvements compound quickly."
     },
     {
-      "id": "6b083cedba79ca4f75126a52",
+      "id": "6b083d4a65afc4973944194f",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "Ten MongoDB practices for speed and maintainability.",
@@ -1383,12 +1383,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices: Schema, Indexing & Performance",
       "seoDescription": "MongoDB best practices for schema design, indexing, pagination, validation, connection handling and security, with simple rules you can apply today.",
-      "publishedAt": "2026-11-26T14:06:27.784Z",
+      "publishedAt": "2026-11-26T14:08:01.385Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Thu Nov 26 2026 14:06:37 GMT+0000 (Coordinated Universal Time)",
-      "updatedAt": "2026-11-26T14:06:27.784Z",
+      "createdAt": "Thu Nov 26 2026 14:08:10 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T14:08:01.385Z",
       "scheduledFor": "",
       "markdown": "MongoDB is flexible, but flexibility without a plan leads to slow queries and messy data. These practices keep things predictable as your application grows.\n\n## 1. Model for how you query\nDesign documents around your most common reads. If a screen always needs an order together with its items, store them together.\n\n## 2. Choose between embedding and referencing\nEmbed data that is read together and bounded in size. Reference data that is shared, large or changes independently.\n\n## 3. Avoid unbounded arrays\nAn array that grows forever will eventually hurt performance and hit document size limits. Move growing lists into their own collection.\n\n## 4. Index for your queries\nWithout an index, MongoDB scans the whole collection. For compound indexes, follow the equality, sort, range (ESR) order. Do not over-index either, since every index slows writes.\n\n## 5. Use projection\nReturn only the fields you need. Smaller payloads mean faster responses and less memory use.\n\n## 6. Paginate with ranges, not large skips\nLarge skip values get slower as the offset grows. Page using an indexed field, such as the last seen _id or a timestamp.\n\n## 7. Validate your schema\nUse schema validation to enforce required fields and types, so bad data is rejected at the door.\n\n## 8. Reuse database connections\nCreate the client once and reuse it. In serverless environments, cache the connection to avoid exhausting your connection limit.\n\n## 9. Check queries with explain()\nRun explain() on slow queries to confirm they use the index you expect, then fix what it shows.\n\n## 10. Secure and back up\nUse least-privilege database users, keep credentials out of source code, restrict network access and test restoring your backups.\n\nGood MongoDB design is mostly about understanding your access patterns first. Get that right and the rest becomes much easier."
     }
@@ -1434,8 +1434,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-26T14:08:01.385Z",
-      "lastGitHubSync": "2026-11-26T14:08:05.938Z"
+      "lastMongoUpdate": "2026-11-26T14:11:29.508Z",
+      "lastGitHubSync": "2026-11-26T14:11:33.888Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1925,7 +1925,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-26T14:08:01.385Z",
+  "updatedAt": "2026-11-26T14:11:29.508Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -3469,7 +3469,7 @@
         {
           "title": "Deployment & Maintenance",
           "description": "Supporting deployments, updates and production maintenance.",
-          "metric": "—",
+          "metric": "3+",
           "icon": "upload-cloud",
           "category": "Deployment",
           "date": "2026",
