@@ -17,6 +17,7 @@ import { WebsiteLoader } from "@/components/site/WebsiteLoader";
 import { StructuredData } from "@/components/seo/StructuredData";
 import { Navbar } from "@/components/layout/Navbar";
 import { BackButton } from "@/components/layout/BackButton";
+import { WelcomeBackPopup } from "@/components/layout/controls/WelcomeBackPopup";
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -111,7 +112,6 @@ export default async function RootLayout({
 }) {
   const siteData = await getSiteData();
   const shouldShowPopup = Boolean(siteData.websiteControl?.popupAnnouncement?.enabled);
-  const hasTopNotice = Boolean(siteData.websiteControl?.topNoticeBar?.enabled);
 
   return (
     <html lang="en" className={inter.variable} suppressHydrationWarning>
@@ -155,7 +155,8 @@ export default async function RootLayout({
             <AnalyticsTracker />
             <Navbar />
             <BackButton />
-            <div className={hasTopNotice ? "pt-20 sm:pt-16" : undefined}>{children}</div>
+            <div>{children}</div>
+            <WelcomeBackPopup />
             {shouldShowPopup ? <GlobalPopupWrapper /> : null}
             <GlobalSearch />
             <AiAssistant />

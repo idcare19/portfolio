@@ -1,5 +1,6 @@
 import { Clock3, MessageCircle, Wrench } from "lucide-react";
 import { getPortfolioData } from "@/data/portfolio";
+import { MaintenanceCountdown } from "@/components/site/MaintenanceCountdown";
 
 export default async function MaintenancePage() {
   const portfolioData = await getPortfolioData();
@@ -15,10 +16,10 @@ export default async function MaintenancePage() {
 
       <section
         aria-labelledby="maintenance-title"
-        className="relative w-full max-w-2xl overflow-hidden rounded-[1.75rem] border border-[rgb(var(--border))] bg-white shadow-[0_30px_80px_-20px_rgba(15,23,42,0.18)]"
+        className="relative w-full max-w-2xl overflow-hidden rounded-[1.75rem] border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] shadow-[0_30px_80px_-20px_rgba(15,23,42,0.18)] dark:shadow-black/40"
       >
         {/* Live status strip: the one memorable element */}
-        <div className="flex items-center justify-between gap-3 border-b border-[rgb(var(--border))] bg-slate-50/80 px-6 py-3.5 sm:px-8">
+        <div className="flex items-center justify-between gap-3 border-b border-[rgb(var(--border))] bg-slate-50/80 px-6 py-3.5 dark:bg-slate-900/70 sm:px-8">
           <div className="flex items-center gap-2.5 text-sm font-medium">
             <span className="relative flex h-2.5 w-2.5">
               <span className="absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-60 motion-safe:animate-ping" />
@@ -53,13 +54,13 @@ export default async function MaintenancePage() {
           ) : null}
 
           {m.estimatedReturn ? (
-            <div className="mt-8 flex items-center gap-4 rounded-2xl border border-[rgb(var(--border))] bg-slate-50 p-4">
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white text-primary shadow-sm ring-1 ring-[rgb(var(--border))]">
+            <div className="mt-8 flex items-center gap-4 rounded-2xl border border-[rgb(var(--border))] bg-slate-50 p-4 dark:bg-slate-900/70">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-white text-primary shadow-sm ring-1 ring-[rgb(var(--border))] dark:bg-slate-800">
                 <Clock3 className="h-5 w-5" />
               </span>
               <div>
                 <p className="text-xs text-[rgb(var(--text-muted))]">Expected back</p>
-                <p className="text-base font-semibold">{m.estimatedReturn}</p>
+                <MaintenanceCountdown value={m.estimatedReturn} />
               </div>
             </div>
           ) : null}
@@ -77,7 +78,7 @@ export default async function MaintenancePage() {
               {m.whatsappLink ? (
                 <a
                   href={m.whatsappLink}
-                  className="inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600"
+                  className="inline-flex items-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-5 py-3 text-sm font-semibold text-emerald-700 transition-colors hover:bg-emerald-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-emerald-600 dark:border-emerald-400/30 dark:bg-emerald-950/40 dark:text-emerald-300 dark:hover:bg-emerald-900/50"
                 >
                   <MessageCircle className="h-4 w-4" />
                   Chat on WhatsApp

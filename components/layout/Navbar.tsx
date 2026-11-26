@@ -15,7 +15,7 @@ export function Navbar() {
   const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
   const isHomePage = pathname === "/";
 
-  if (isAdminRoute) return null;
+  if (isAdminRoute || pathname === "/maintenance") return null;
 
   const navItems = useMemo(
     () =>
