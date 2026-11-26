@@ -176,7 +176,7 @@ export async function getPublicProjects() {
   const items = Array.isArray(data.sections?.projects?.items) ? data.sections.projects.items : [];
   const seen = new Map<string, number>();
   return items
-    .filter((project: any) => project?.isEnabled !== false)
+    .filter((project: any) => project?.isEnabled !== false && project?.draft !== true && project?.published !== false && !isConfidentialProject(project))
     .map((project: any, index: number) => {
       const normalized = normalizeProject(project, index);
       return {

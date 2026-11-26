@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://portfolio-delta-dusky-86.vercel.app";
+const siteUrl = "https://idcare19.me";
 
 export default function robots(): MetadataRoute.Robots {
   return {
@@ -8,13 +8,12 @@ export default function robots(): MetadataRoute.Robots {
       {
         userAgent: "*",
         allow: "/",
-        disallow: ["/api/", "/*?*utm_*"],
+        disallow: ["/api/", "/admin", "/admin/", "/maintenance", "/login", "/*?*utm_*"],
       },
-      {
-        userAgent: ["Googlebot", "Bingbot"],
-        allow: "/",
-        disallow: ["/api/"],
-      },
+      // Search crawlers may discover public pages; private application routes stay closed.
+      { userAgent: ["Googlebot", "Bingbot"], allow: "/", disallow: ["/api/", "/admin", "/admin/", "/login"] },
+      // Search fetchers and model-training crawlers are separate controls.
+      { userAgent: ["OAI-SearchBot", "ChatGPT-User", "GPTBot", "ClaudeBot", "Claude-SearchBot", "PerplexityBot", "Google-Extended"], allow: "/", disallow: ["/api/", "/admin", "/admin/"] },
     ],
     sitemap: `${siteUrl}/sitemap.xml`,
     host: siteUrl,

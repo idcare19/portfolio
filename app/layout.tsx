@@ -13,6 +13,7 @@ import { ThemeProvider } from "@/components/site/ThemeProvider";
 import { getSiteData } from "@/src/lib/site-data";
 import "./globals.css";
 import { WebsiteLoader } from "@/components/site/WebsiteLoader";
+import { StructuredData } from "@/components/seo/StructuredData";
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -30,9 +31,7 @@ const inter = Inter({
   ],
 });
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ??
-  "https://portfolio-delta-dusky-86.vercel.app";
+const siteUrl = "https://idcare19.me";
 
 const gaMeasurementId = "G-TV1QZVQRL8";
 
@@ -66,7 +65,7 @@ export async function generateMetadata(): Promise<Metadata> {
       "React Developer",
       "Node.js Developer",
     ],
-    authors: [{ name: owner.name, url: emailHref }],
+    authors: [{ name: owner.name, url: siteUrl }],
     robots: {
       index: true,
       follow: true,
@@ -78,9 +77,7 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-video-preview": -1,
       },
     },
-    alternates: {
-      canonical: "/",
-    },
+    alternates: { canonical: "/" },
     openGraph: {
       title: `${owner.name} (${owner.username}) | ${owner.role}`,
       description: owner.tagline,
@@ -88,11 +85,13 @@ export async function generateMetadata(): Promise<Metadata> {
       type: "website",
       locale: "en_IN",
       siteName: `${owner.name} Portfolio`,
+      images: [{ url: "/projects/logo.png", alt: `${owner.name} portfolio` }],
     },
     twitter: {
       card: "summary_large_image",
       title: `${owner.name} (${owner.username}) | ${owner.role}`,
       description: owner.tagline,
+      images: ["/projects/logo.png"],
     },
     icons: {
       icon: [{ url: "/projects/logo.png", type: "image/png" }],
@@ -121,6 +120,7 @@ export default async function RootLayout({
         />
       </head>
       <body className="font-sans">
+          <StructuredData site={siteData} />
           <WebsiteLoader />
 
         <SiteDataProvider data={siteData}>

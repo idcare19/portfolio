@@ -16,7 +16,8 @@ export function DeferredSection({
   className,
   rootMargin = "120px 0px",
 }: DeferredSectionProps) {
-  const [visible, setVisible] = useState(false);
+  // Keep meaningful portfolio content in the initial server-rendered HTML.
+  const [visible, setVisible] = useState(true);
   const placeholderRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

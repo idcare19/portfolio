@@ -4,6 +4,7 @@ import { ShareButtons } from "@/components/site/ShareButtons";
 import { ViewCounter } from "@/components/site/ViewCounter";
 import { extractToc, normalizeSlug } from "@/lib/content-utils";
 import { getPublishedBlogs } from "@/lib/portfolio/repository";
+import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -18,6 +19,16 @@ type BlogDetail = {
   content: string;
   readingTimeMinutes?: number;
 };
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug: rawSlug } = await params;
+  const slug = normalizeSlug(rawSlug);
+  const blogs = (await getPublishedBlogs()) as BlogDetail[];
+  const blog = blogs.find((item) => normalizeSlug(item.slug) === slug);
+  if (!blog) return { title: "Blog Not Found", robots: { index: false, follow: false } };
+  const description = blog.excerpt || blog.content.slice(0, 155);
+  return { title: blog.title, description, alternates: { canonical: `/blogs/${blog.slug}` }, openGraph: { type: "article", title: blog.title, description, url: `https://idcare19.me/blogs/${blog.slug}` } };
+}
 
 export default async function BlogDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug: rawSlug } = await params;
