@@ -2,41 +2,41 @@
   "owner": {
     "name": "Abhishek",
     "username": "idcare19.me",
-    "identityLine": "Remote & Freelance Ready",
+    "identityLine": "Full-Stack Developer · India · Remote",
     "introLine": "Hi, I'm Abhishek",
-    "role": "Building fast, scalable and premium full-stack web applications",
-    "tagline": "I build modern full-stack applications with scalable architecture, clean UI systems, and performance-focused user experiences using technologies like Next.js, Appwrite, and modern frontend frameworks.",
+    "role": "Full-Stack Developer building web applications, SaaS products and business websites",
+    "tagline": "I build responsive web applications, SaaS products and business websites using Next.js, React, TypeScript, Django and modern databases. I work across frontend interfaces, backend APIs and data-driven features, with a focus on maintainable architecture, usability and performance.",
     "location": "India",
     "badges": [
-      "Open for Freelance & Internship Opportunities Available for Projects and Collaborations Currently Available for Freelance Work Open to Internships",
-      "Freelance & Tech Collaborations"
+      "Available for Freelance Projects",
+      "Open to Remote Opportunities"
     ],
     "profileImage": "/projects/logo.png",
     "resumeUrl": "https://drive.google.com/file/d/1ahGcTHEjC_ufmtYjXMkdtDM3BzeMDbUb/view?usp=drivesdk"
   },
   "nav": [
     {
-      "label": "about",
+      "label": "About",
       "href": "#about"
     },
     {
-      "label": "achievements",
+      "label": "Achievements",
       "href": "#achievements"
     },
     {
-      "label": "skills",
+      "label": "Skills",
       "href": "#skills"
     },
     {
-      "label": "services",
+      "label": "Services",
       "href": "#services"
     },
     {
-      "label": "reviews",
+      "label": "Reviews",
       "href": "#reviews"
     },
     {
-      "label": "contact",
+      "label": "Contact",
       "href": "#contact"
     }
   ],
@@ -223,27 +223,27 @@
     }
   ],
   "heroTech": [
-    "HTML",
-    "CSS",
-    "JavaScript",
-    "React",
     "Next.js",
-    "Node.js"
+    "React",
+    "TypeScript",
+    "Django",
+    "Python",
+    "PostgreSQL"
   ],
   "about": {
     "intro": "I turn ideas into premium web products with clear structure, thoughtful interactions, and strong performance. My focus is responsive UI, smooth motion, and production-ready front-end quality.",
     "stats": [
       {
-        "label": "Projects Completed",
-        "value": "20+"
+        "label": "Featured Personal Projects",
+        "value": "2"
       },
       {
-        "label": "Technologies Learned",
+        "label": "Listed Client & Team Projects",
+        "value": "6"
+      },
+      {
+        "label": "Core Technologies",
         "value": "10+"
-      },
-      {
-        "label": "Months of Learning",
-        "value": "12+"
       }
     ]
   },
@@ -397,9 +397,9 @@
       ]
     },
     {
-      "title": "Prodonto â€“ AI Dental Healthcare Platform",
+      "title": "Prodonto – AI Dental Healthcare Platform",
       "timeline": "Internship Project",
-      "role": "Frontend Developer â€¢ API Integration â€¢ Dashboard Development",
+      "role": "Frontend Developer • API Integration • Dashboard Development",
       "link": "",
       "workDone": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
       "isEnabled": true,
@@ -411,7 +411,7 @@
       "shortDescription": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
       "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows.  I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
       "liveDemoUrl": "",
-      "myRole": "Frontend Developer â€¢ API Integration â€¢ Dashboard Development",
+      "myRole": "Frontend Developer • API Integration • Dashboard Development",
       "projectType": "Client",
       "slug": "prodonto-ai-dental-healthcare-platform",
       "confidentialProject": false,
@@ -434,7 +434,7 @@
       "customFields": []
     },
     {
-      "title": "Sania Enterprises â€“ API Integration & Frontend Fixes",
+      "title": "Sania Enterprises – API Integration & Frontend Fixes",
       "timeline": "19/04/2026",
       "role": "Frontend Developer ",
       "link": "Https://Saniaenterprises.in",
@@ -453,7 +453,7 @@
       "order": 3
     },
     {
-      "title": "Guruji Taxi â€“ API Integration & Frontend Fixes",
+      "title": "Guruji Taxi – API Integration & Frontend Fixes",
       "timeline": "20/04/2026",
       "role": "Frontend Developer ",
       "link": "Https://gurujitaxi.com",
@@ -492,7 +492,7 @@
       "order": 5
     },
     {
-      "title": "Medical Seva â€“ Static Website Development",
+      "title": "Medical Seva – Static Website Development",
       "timeline": "23/04/2026",
       "role": "Frontend Developer",
       "link": "https://medicalseva.in/",
@@ -552,12 +552,12 @@
     {
       "role": "Project Manager & Full Stack Developer",
       "period": "2026 - Present",
-      "summary": "Leading web development projects at Parvati & Sons, managing frontend improvements, performance optimization, feature updates, deployment workflows, and overall website maintenance while contributing to full-stack development and UI/UX enhancements."
+      "summary": "Contributing to web application development and project delivery at Parvati & Sons, including frontend and backend features, API integration, debugging, deployment support and coordination of development work."
     }
   ],
   "education": [],
   "journeyNow": {
-    "currentWork": "Parvati & Sons â€” Project Manager & Full Stack Developer",
+    "currentWork": "Parvati & Sons — Project Manager & Full-Stack Developer",
     "ongoingMilestones": [
       "Managing website development tasks and project workflow",
       "Coordinating frontend improvements and feature implementation",
@@ -588,20 +588,20 @@
   "services": [
     {
       "id": "service-1",
-      "title": "Full Stack Development",
-      "description": "End-to-end product engineering.",
+      "title": "Full-Stack Web Development",
+      "description": "Custom web applications and SaaS products built across frontend interfaces, backend APIs and database integrations.",
       "icon": "code"
     },
     {
       "id": "service-2",
-      "title": "UI/UX Implementation",
-      "description": "Fast, responsive, premium interfaces.",
+      "title": "Frontend & UI Implementation",
+      "description": "Responsive, accessible interfaces with clean layouts, reusable components and thoughtful interactions.",
       "icon": "layout"
     },
     {
       "id": "service-1776865311808",
-      "title": "Fixing Website ",
-      "description": "Fixing website bugs, layout issues, responsiveness problems, broken sections, and improving overall performance for a smoother user experience.",
+      "title": "Website Bug Fixing & Optimization",
+      "description": "Fix broken sections, layout and responsiveness issues, integrate APIs and improve website loading performance.",
       "icon": "wrench"
     }
   ],
@@ -1065,8 +1065,8 @@
       "apisIntegrations": "REST API, WebSockets, Cloudinary, Resend Email",
       "aiMlUsed": "AI Wait-Time Prediction",
       "architectureNotes": "Multi-tenant SaaS architecture with Django REST APIs, Redis-powered WebSockets, JWT authentication, PostgreSQL database, and modular frontend using Next.js.",
-      "techBadges": "Full Stack â€¢ AI â€¢ SaaS â€¢ Real-Time â€¢ Enterprise â€¢ WebSockets",
-      "metaTitle": "SmartQueue AI â€“ AI-Powered Real-Time Queue Management SaaS",
+      "techBadges": "Full Stack • AI • SaaS • Real-Time • Enterprise • WebSockets",
+      "metaTitle": "SmartQueue AI – AI-Powered Real-Time Queue Management SaaS",
       "metaDescription": "SmartQueue AI is a modern AI-powered queue management platform featuring QR check-ins, live token tracking, WebSockets, analytics, notifications, and intelligent wait-time prediction for clinics, hospitals, banks, and service centers.",
       "solution": "SmartQueue AI provides a fully digital queue management platform where customers join queues using QR codes, receive live updates, AI-generated wait-time predictions, and notifications while staff manage operations through real-time dashboards."
     }
@@ -1075,89 +1075,89 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6ae9aae27495579615a87f53",
+      "id": "6b08013fad5a22ee2bd559ac",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
       "content": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients...",
       "coverImage": "",
-      "author": "",
+      "author": "Abhishek",
       "tags": [
         "portfolio",
         "web development",
         "career"
       ],
       "category": "General",
-      "status": "published",
+      "status": "draft",
       "isFeatured": false,
-      "published": true,
-      "isEnabled": true,
-      "seoTitle": "How to Build a Portfolio That Converts",
+      "published": false,
+      "isEnabled": false,
+      "seoTitle": "How to build a portfolio that converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-11-03T09:35:21.761Z",
+      "publishedAt": "2026-11-26T09:51:50.138Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 15:05:30 GMT+0530 (India Standard Time)",
-      "updatedAt": "2026-11-03T09:35:21.761Z",
+      "createdAt": "Thu Nov 26 2026 09:51:59 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T09:51:50.138Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6ae9aae27495579615a87f54",
+      "id": "6b08013fad5a22ee2bd559ad",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
       "content": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code...",
       "coverImage": "",
-      "author": "",
+      "author": "Abhishek",
       "tags": [
         "frontend",
         "tips",
         "javascript"
       ],
       "category": "General",
-      "status": "published",
+      "status": "draft",
       "isFeatured": false,
-      "published": true,
-      "isEnabled": true,
-      "seoTitle": "10 Tips for Frontend Developers",
+      "published": false,
+      "isEnabled": false,
+      "seoTitle": "10 tips for frontend developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-11-03T09:35:21.761Z",
+      "publishedAt": "2026-11-26T09:51:50.138Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 15:05:30 GMT+0530 (India Standard Time)",
-      "updatedAt": "2026-11-03T09:35:21.761Z",
+      "createdAt": "Thu Nov 26 2026 09:51:59 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T09:51:50.138Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6ae9aae27495579615a87f55",
+      "id": "6b08013fad5a22ee2bd559ae",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
       "content": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices...",
       "coverImage": "",
-      "author": "",
+      "author": "Abhishek",
       "tags": [
         "mongodb",
         "database",
         "backend"
       ],
       "category": "General",
-      "status": "published",
+      "status": "draft",
       "isFeatured": false,
-      "published": true,
-      "isEnabled": true,
-      "seoTitle": "MongoDB Best Practices",
+      "published": false,
+      "isEnabled": false,
+      "seoTitle": "MongoDB best practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-11-03T09:35:21.761Z",
+      "publishedAt": "2026-11-26T09:51:50.138Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 15:05:30 GMT+0530 (India Standard Time)",
-      "updatedAt": "2026-11-03T09:35:21.761Z",
+      "createdAt": "Thu Nov 26 2026 09:51:59 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T09:51:50.138Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1193,18 +1193,18 @@
     }
   ],
   "websiteSettings": {
-    "seoTitle": "Abhishek | Full Stack Developer",
-    "metaDescription": "Portfolio of Abhishek with modern full-stack projects and services.",
+    "seoTitle": "Abhishek | Full-Stack Developer in India",
+    "metaDescription": "Abhishek is a full-stack developer in India building web applications, SaaS products and business websites with Next.js, React, TypeScript, Django and PostgreSQL.",
     "favicon": "/projects/logo.png",
     "logo": "/projects/logo.png",
-    "footerText": "Â© 2026 Abhishek. All rights reserved.",
+    "footerText": "© 2026 Abhishek. Full-Stack Developer.",
     "themeMode": "dark"
   },
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-26T09:51:50.138Z",
-      "lastGitHubSync": "2026-11-26T09:51:54.459Z"
+      "lastMongoUpdate": "2026-11-26T10:58:56.987Z",
+      "lastGitHubSync": "2026-11-26T10:59:01.077Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1246,7 +1246,7 @@
     "topNoticeBar": {
       "enabled": false,
       "message": "Open for freelance and long-term projects.",
-      "ctaText": "Letâ€™s Talk",
+      "ctaText": "Let’s Talk",
       "ctaLink": "https://wa.me/918929261986",
       "colorStyle": "rose"
     },
@@ -1542,7 +1542,7 @@
       "brandBadgePrefix": "Version"
     },
     "footer": {
-      "copyrightText": "Â© 2026 Abhishek. All rights reserved.",
+      "copyrightText": "© 2026 Abhishek. All rights reserved.",
       "backToTopLabel": "Back to top",
       "quickLinks": [],
       "ctaLabel": "Let's work together",
@@ -1694,7 +1694,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-23T08:14:55.020Z",
+  "updatedAt": "2026-11-26T10:58:56.987Z",
   "sections": {
     "hero": {
       "id": "hero",
@@ -1713,39 +1713,39 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "Remote & Freelance Ready",
-        "title": "Hi, I'm Abhishek",
-        "animatedRole": "Building fast, scalable and premium full-stack web applications",
-        "description": "I build modern full-stack applications with scalable architecture, clean UI systems, and performance-focused user experiences using technologies like Next.js, Appwrite, and modern frontend frameworks.",
+        "eyebrow": "Full-Stack Developer · India · Remote",
+        "title": "Abhishek — Full-Stack Developer",
+        "animatedRole": "Web Applications · SaaS Products · Business Websites",
+        "description": "I build responsive web applications and SaaS products with Next.js, React, TypeScript and Django. From frontend experiences to backend APIs and database design, I turn product requirements into reliable web software.",
         "primaryCtaLabel": "",
         "primaryCtaHref": "",
         "secondaryCtaLabel": "",
         "secondaryCtaHref": "",
         "badges": [
-          "Open for Freelance & Internship Opportunities Available for Projects and Collaborations Currently Available for Freelance Work Open to Internships",
-          "Freelance & Tech Collaborations"
+          "Available for Freelance Projects",
+          "Open to Remote Opportunities"
         ],
         "stats": [
           {
-            "label": "Projects Completed",
-            "value": "20+"
+            "label": "Featured Personal Projects",
+            "value": "2"
           },
           {
-            "label": "Technologies Learned",
+            "label": "Listed Client & Team Projects",
+            "value": "6"
+          },
+          {
+            "label": "Core Technologies",
             "value": "10+"
-          },
-          {
-            "label": "Months of Learning",
-            "value": "12+"
           }
         ],
         "techStack": [
-          "HTML",
-          "CSS",
-          "JavaScript",
-          "React",
           "Next.js",
-          "Node.js"
+          "React",
+          "TypeScript",
+          "Django",
+          "Python",
+          "PostgreSQL"
         ]
       },
       "items": [],
@@ -1769,22 +1769,22 @@
       "settings": {},
       "data": {
         "eyebrow": "About",
-        "title": "Building modern products with clean execution",
-        "description": "A quick overview of who I am and how I build.",
+        "title": "About Abhishek",
+        "description": "Full-stack developer in India building responsive web applications, SaaS products and reliable digital experiences.",
         "intro": "I turn ideas into premium web products with clear structure, thoughtful interactions, and strong performance. My focus is responsive UI, smooth motion, and production-ready front-end quality."
       },
       "items": [
         {
-          "label": "Projects Completed",
-          "value": "20+"
+          "label": "Featured Personal Projects",
+          "value": "2"
         },
         {
-          "label": "Technologies Learned",
+          "label": "Listed Client & Team Projects",
+          "value": "6"
+        },
+        {
+          "label": "Core Technologies",
           "value": "10+"
-        },
-        {
-          "label": "Months of Learning",
-          "value": "12+"
         }
       ],
       "showOnHomepage": true
@@ -1807,8 +1807,8 @@
       "settings": {},
       "data": {
         "eyebrow": "Skills",
-        "title": "Tools I use to build",
-        "description": "My core technologies, workflow tools, and current learning stack.",
+        "title": "Full-Stack Development Skills",
+        "description": "Explore the frontend, backend, database and deployment technologies I use to build modern web applications.",
         "learningTitle": "Currently Learning",
         "learningItems": [
           "App Security",
@@ -2077,8 +2077,8 @@
       "settings": {},
       "data": {
         "eyebrow": "Projects",
-        "title": "Featured work",
-        "description": "Selected projects, client work, and production-ready builds.",
+        "title": "Featured Web Development Projects",
+        "description": "Explore selected full-stack, AI and SaaS projects, including project details, technology stacks and development work.",
         "homepageLimit": "6",
         "homepageButtonText": "View More Projects"
       },
@@ -2230,8 +2230,8 @@
           "apisIntegrations": "REST API, WebSockets, Cloudinary, Resend Email",
           "aiMlUsed": "AI Wait-Time Prediction",
           "architectureNotes": "Multi-tenant SaaS architecture with Django REST APIs, Redis-powered WebSockets, JWT authentication, PostgreSQL database, and modular frontend using Next.js.",
-          "techBadges": "Full Stack â€¢ AI â€¢ SaaS â€¢ Real-Time â€¢ Enterprise â€¢ WebSockets",
-          "metaTitle": "SmartQueue AI â€“ AI-Powered Real-Time Queue Management SaaS",
+          "techBadges": "Full Stack • AI • SaaS • Real-Time • Enterprise • WebSockets",
+          "metaTitle": "SmartQueue AI – AI-Powered Real-Time Queue Management SaaS",
           "metaDescription": "SmartQueue AI is a modern AI-powered queue management platform featuring QR check-ins, live token tracking, WebSockets, analytics, notifications, and intelligent wait-time prediction for clinics, hospitals, banks, and service centers.",
           "solution": "SmartQueue AI provides a fully digital queue management platform where customers join queues using QR codes, receive live updates, AI-generated wait-time predictions, and notifications while staff manage operations through real-time dashboards."
         }
@@ -2256,8 +2256,8 @@
       "settings": {},
       "data": {
         "eyebrow": "Currently Working",
-        "title": "Live work in progress",
-        "description": "Projects I am actively building or improving right now."
+        "title": "Current Development Projects",
+        "description": "A look at products and web applications currently being developed, improved or maintained."
       },
       "items": [],
       "showOnHomepage": true
@@ -2280,8 +2280,8 @@
       "settings": {},
       "data": {
         "eyebrow": "Completed Projects",
-        "title": "Projects I worked on",
-        "description": "A clear record of completed work and what I delivered."
+        "title": "Client Projects & Development Experience",
+        "description": "Selected client and team projects covering web development, API integration, responsive interfaces and website performance."
       },
       "items": [
         {
@@ -2361,9 +2361,9 @@
           ]
         },
         {
-          "title": "Prodonto â€“ AI Dental Healthcare Platform",
+          "title": "Prodonto – AI Dental Healthcare Platform",
           "timeline": "Internship Project",
-          "role": "Frontend Developer â€¢ API Integration â€¢ Dashboard Development",
+          "role": "Frontend Developer • API Integration • Dashboard Development",
           "link": "",
           "workDone": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
           "isEnabled": true,
@@ -2375,7 +2375,7 @@
           "shortDescription": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
           "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows.  I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
           "liveDemoUrl": "",
-          "myRole": "Frontend Developer â€¢ API Integration â€¢ Dashboard Development",
+          "myRole": "Frontend Developer • API Integration • Dashboard Development",
           "projectType": "Client",
           "slug": "prodonto-ai-dental-healthcare-platform",
           "confidentialProject": false,
@@ -2398,7 +2398,7 @@
           "customFields": []
         },
         {
-          "title": "Sania Enterprises â€“ API Integration & Frontend Fixes",
+          "title": "Sania Enterprises – API Integration & Frontend Fixes",
           "timeline": "19/04/2026",
           "role": "Frontend Developer ",
           "link": "Https://Saniaenterprises.in",
@@ -2417,7 +2417,7 @@
           "order": 3
         },
         {
-          "title": "Guruji Taxi â€“ API Integration & Frontend Fixes",
+          "title": "Guruji Taxi – API Integration & Frontend Fixes",
           "timeline": "20/04/2026",
           "role": "Frontend Developer ",
           "link": "Https://gurujitaxi.com",
@@ -2456,7 +2456,7 @@
           "order": 5
         },
         {
-          "title": "Medical Seva â€“ Static Website Development",
+          "title": "Medical Seva – Static Website Development",
           "timeline": "23/04/2026",
           "role": "Frontend Developer",
           "link": "https://medicalseva.in/",
@@ -2495,8 +2495,8 @@
       "settings": {},
       "data": {
         "eyebrow": "Reviews",
-        "title": "Client feedback",
-        "description": "What people say about my execution and communication."
+        "title": "Client Reviews & Testimonials",
+        "description": "Feedback from clients and collaborators. Testimonials will appear here when submitted and approved."
       },
       "items": [],
       "showOnHomepage": true
@@ -2519,10 +2519,10 @@
       "settings": {},
       "data": {
         "eyebrow": "",
-        "title": "Experience",
-        "description": "",
+        "title": "Professional Experience",
+        "description": "My work in full-stack development, project coordination, frontend engineering and production website maintenance.",
         "currentWorkTitle": "",
-        "currentWork": "Parvati & Sons â€” Project Manager & Full Stack Developer",
+        "currentWork": "Parvati & Sons — Project Manager & Full-Stack Developer",
         "milestones": [
           "Managing website development tasks and project workflow",
           "Coordinating frontend improvements and feature implementation",
@@ -2537,7 +2537,7 @@
         {
           "role": "Project Manager & Full Stack Developer",
           "period": "2026 - Present",
-          "summary": "Leading web development projects at Parvati & Sons, managing frontend improvements, performance optimization, feature updates, deployment workflows, and overall website maintenance while contributing to full-stack development and UI/UX enhancements."
+          "summary": "Contributing to web application development and project delivery at Parvati & Sons, including frontend and backend features, API integration, debugging, deployment support and coordination of development work."
         }
       ],
       "showOnHomepage": false
@@ -2560,8 +2560,8 @@
       "settings": {},
       "data": {
         "eyebrow": "Services",
-        "title": "How I can help",
-        "description": "Flexible development support for websites, SaaS, and product ideas."
+        "title": "Education",
+        "description": "Academic background and relevant learning details."
       },
       "items": [],
       "showOnHomepage": false
@@ -2584,26 +2584,26 @@
       "settings": {},
       "data": {
         "eyebrow": "Services",
-        "title": "How I can help",
-        "description": "Flexible development support for websites, SaaS, and product ideas."
+        "title": "Web Development Services",
+        "description": "Full-stack web development, frontend implementation, API integration, website bug fixing and performance optimization."
       },
       "items": [
         {
           "id": "service-1",
-          "title": "Full Stack Development",
-          "description": "End-to-end product engineering.",
+          "title": "Full-Stack Web Development",
+          "description": "Custom web applications and SaaS products built across frontend interfaces, backend APIs and database integrations.",
           "icon": "code"
         },
         {
           "id": "service-2",
-          "title": "UI/UX Implementation",
-          "description": "Fast, responsive, premium interfaces.",
+          "title": "Frontend & UI Implementation",
+          "description": "Responsive, accessible interfaces with clean layouts, reusable components and thoughtful interactions.",
           "icon": "layout"
         },
         {
           "id": "service-1776865311808",
-          "title": "Fixing Website ",
-          "description": "Fixing website bugs, layout issues, responsiveness problems, broken sections, and improving overall performance for a smoother user experience.",
+          "title": "Website Bug Fixing & Optimization",
+          "description": "Fix broken sections, layout and responsiveness issues, integrate APIs and improve website loading performance.",
           "icon": "wrench"
         }
       ],
@@ -2626,12 +2626,12 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "eyebrow": "Contact",
-        "title": "Letâ€™s talk about your next project",
-        "description": "Reach out for freelance, internship, or collaboration opportunities.",
-        "cardTitle": "",
-        "cardDescription": "",
-        "formTitle": ""
+        "eyebrow": "Get in touch",
+        "title": "Have a Web Project in Mind?",
+        "description": "Tell me about your website, SaaS product or application. I’m open to freelance projects and remote collaborations.",
+        "cardTitle": "Let’s build something useful",
+        "cardDescription": "Share your goals, requirements and timeline. I’ll get back to you to discuss the next steps.",
+        "formTitle": "Send a project enquiry"
       },
       "items": [
         {
@@ -2670,8 +2670,8 @@
       "settings": {},
       "data": {
         "eyebrow": "GitHub Live",
-        "title": "Live developer activity",
-        "description": "Latest repositories, commits, languages, and GitHub stats."
+        "title": "Web Development Articles & Guides",
+        "description": "Practical articles about full-stack development, frontend engineering, web performance and software projects."
       },
       "items": [
         {
@@ -2681,17 +2681,17 @@
           "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
           "content": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients...",
           "coverImage": "",
-          "author": "",
+          "author": "Abhishek",
           "tags": [
             "portfolio",
             "web development",
             "career"
           ],
           "category": "General",
-          "status": "published",
+          "status": "draft",
           "isFeatured": false,
-          "published": true,
-          "isEnabled": true,
+          "published": false,
+          "isEnabled": false,
           "seoTitle": "How to Build a Portfolio That Converts",
           "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
           "publishedAt": "2026-08-15T12:09:26.458Z",
@@ -2710,17 +2710,17 @@
           "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
           "content": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code...",
           "coverImage": "",
-          "author": "",
+          "author": "Abhishek",
           "tags": [
             "frontend",
             "tips",
             "javascript"
           ],
           "category": "General",
-          "status": "published",
+          "status": "draft",
           "isFeatured": false,
-          "published": true,
-          "isEnabled": true,
+          "published": false,
+          "isEnabled": false,
           "seoTitle": "10 Tips for Frontend Developers",
           "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
           "publishedAt": "2026-08-15T12:09:26.458Z",
@@ -2739,17 +2739,17 @@
           "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
           "content": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices...",
           "coverImage": "",
-          "author": "",
+          "author": "Abhishek",
           "tags": [
             "mongodb",
             "database",
             "backend"
           ],
           "category": "General",
-          "status": "published",
+          "status": "draft",
           "isFeatured": false,
-          "published": true,
-          "isEnabled": true,
+          "published": false,
+          "isEnabled": false,
           "seoTitle": "MongoDB Best Practices",
           "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
           "publishedAt": "2026-08-15T12:09:26.458Z",
@@ -2782,8 +2782,8 @@
       "settings": {},
       "data": {
         "eyebrow": "FAQ",
-        "title": "Frequently Asked Questions",
-        "description": "Find answers to the most common questions about my experience, projects, services, technologies, and how we can work together."
+        "title": "Full-Stack Developer FAQs",
+        "description": "Answers about my development skills, project experience, technologies, services and remote collaboration."
       },
       "items": [
         {
@@ -2821,7 +2821,7 @@
         },
         {
           "question": "What technologies do you work with?",
-          "answer": "My primary stack includes Next.js, React, Django, Python, PostgreSQL, Tailwind CSS, JavaScript, REST APIs, Git, GitHub, Vercel, and Render.",
+          "answer": "My development toolkit includes Next.js, React, JavaScript, TypeScript, Django, Python, PostgreSQL, Tailwind CSS, REST APIs, Git and GitHub. I also work with deployment and hosting platforms such as Vercel and Render.",
           "category": "Technology",
           "icon": "code",
           "tags": [
@@ -2838,7 +2838,7 @@
         },
         {
           "question": "Have you worked on real client projects?",
-          "answer": "Yes. During my internship at Parvati and Sons, I contributed to multiple production-ready client projects. Some implementation details cannot be shared due to confidentiality agreements.",
+          "answer": "Yes. I have contributed to client and team projects involving frontend development, API integration, responsive UI, website maintenance and performance improvements. Some project details are kept private where required.",
           "category": "Experience",
           "icon": "building",
           "tags": [
@@ -2886,7 +2886,7 @@
         },
         {
           "question": "Do you build complete full-stack applications?",
-          "answer": "Yes. I build complete applications including frontend, backend APIs, authentication, databases, admin dashboards, deployment, and ongoing maintenance.",
+          "answer": "I work across frontend interfaces, backend APIs, authentication flows, database integration and deployment workflows, depending on the project requirements.",
           "category": "Services",
           "icon": "layers",
           "tags": [
@@ -2902,7 +2902,7 @@
         },
         {
           "question": "Can you work remotely with international clients?",
-          "answer": "Yes. I am comfortable collaborating remotely with clients and distributed teams using GitHub and modern development workflows.",
+          "answer": "Yes. I am open to remote collaboration and can coordinate work through GitHub, written updates and modern development workflows.",
           "category": "Availability",
           "icon": "globe",
           "tags": [
@@ -2967,8 +2967,8 @@
       "settings": {},
       "data": {
         "eyebrow": "Highlights",
-        "title": "Achievements",
-        "description": "A collection of key milestones, production projects, technologies, and professional accomplishments that reflect my growth as a full-stack developer."
+        "title": "Development Projects & Milestones",
+        "description": "Selected project work, client contributions and technical milestones from my web development journey."
       },
       "items": [
         {
@@ -2985,9 +2985,9 @@
           "customFields": []
         },
         {
-          "title": "Projects Completed",
-          "description": "Built and contributed to full-stack, SaaS, AI, business websites, dashboards, and production-ready web applications.",
-          "metric": "20+",
+          "title": "Selected Projects & Contributions",
+          "description": "A selection of personal, client and collaborative projects documented in this portfolio.",
+          "metric": "6",
           "icon": "rocket",
           "category": "Projects",
           "date": "2026",
@@ -3013,9 +3013,9 @@
           "id": "item-copy-1783351698733-copy-1783351734043"
         },
         {
-          "title": "Internship Experience",
-          "description": "Gained real-world internship experience by working on live client projects, collaborating with teams, and handling frontend development responsibilities.",
-          "metric": "1 Year",
+          "title": "Professional Development Experience",
+          "description": "Professional experience contributing to web development, client delivery and collaborative software projects.",
+          "metric": "2026–Present",
           "icon": "user-check",
           "category": "Experience",
           "date": "2026",
@@ -3027,9 +3027,9 @@
           "id": "item-copy-1783351698733-copy-1783351734043-copy-1783351772623"
         },
         {
-          "title": "Live Deployments",
-          "description": "Deployed and maintained projects using platforms like Vercel, Render, custom domains, and cloud-hosted databases.",
-          "metric": "10+",
+          "title": "Deployment & Maintenance",
+          "description": "Experience supporting deployments, website updates and production maintenance across web projects.",
+          "metric": "—",
           "icon": "upload-cloud",
           "category": "Deployment",
           "date": "2026",
@@ -3061,8 +3061,8 @@
       "settings": {},
       "data": {
         "eyebrow": "Experience",
-        "title": "Companies Worked With",
-        "description": ""
+        "title": "Companies & Project Collaborations",
+        "description": "Teams and organizations I have worked with through web development, freelance assignments and client projects."
       },
       "items": [
         {
@@ -3071,7 +3071,7 @@
           "websiteUrl": "https://www.parvatiandsons.in/",
           "relationshipType": "Employer",
           "industry": "Software Development & Digital Solutions",
-          "description": "Currently working as Project Manager & Full Stack Developer. Managing interns, developing scalable web applications, and handling client projects.",
+          "description": "Working as Project Manager & Full Stack Developer, contributing to web application development, project coordination, frontend improvements and client delivery.",
           "startDate": "April 2026",
           "endDate": "Current",
           "confidential": false,
@@ -3087,7 +3087,7 @@
           "websiteUrl": "https://prodonto.in",
           "relationshipType": "Client Project (via Parvati and Sons)",
           "industry": "Healthcare SaaS",
-          "description": "Contributed to frontend development, API integration, dashboards, and responsive UI through Parvati and Sons.",
+          "description": "Contributed to frontend development, API integration, dashboard modules and responsive user interfaces on a healthcare SaaS project.",
           "startDate": "May 2026",
           "endDate": "July 2026",
           "confidential": false,
@@ -3103,7 +3103,7 @@
           "websiteUrl": "https://www.tsssoftware.com/",
           "relationshipType": "Client",
           "industry": "Softwares",
-          "description": "Leading cloud-based ERP and enterprise software development company delivering scalable solutions like HRMS, POS, IMS, and custom business automation tools for 200+ clients across 20+ industries.",
+          "description": "Worked on software and ERP-related development tasks as part of a professional team.",
           "startDate": "24/7/2026",
           "endDate": "",
           "confidential": false,
@@ -3119,7 +3119,7 @@
           "websiteUrl": "https://digitalsphereseo.my.canva.site/digital-sphere-digital-marketing-agency-digital-marketing-service-in-india-uttarakhand-rudrapur-",
           "relationshipType": "Freelance Client",
           "industry": "Digital Marketing & Web Development",
-          "description": "Worked with Digital Sphere as a freelance developer on 1â€“2 project-based assignments. Contributed to responsive website development, frontend improvements, bug fixing, API integration support, and deployment-related updates for client work.",
+          "description": "Completed project-based freelance development work involving responsive website implementation, frontend improvements and bug fixing.",
           "startDate": "2026",
           "endDate": "Project-based",
           "confidential": false,
@@ -3135,7 +3135,7 @@
           "websiteUrl": "https://dhawantravel.com",
           "relationshipType": "Client Project (via Parvati and Sons)",
           "industry": "Travel & Tourism",
-          "description": "Optimized website speed, improved Core Web Vitals, image optimization, lazy loading, and frontend performance.",
+          "description": "Contributed website performance improvements, including image optimization, lazy loading and frontend refinements.",
           "startDate": "May 2026",
           "endDate": "May 2026",
           "confidential": false,
@@ -3151,7 +3151,7 @@
           "websiteUrl": "https://gurujitaxi.com",
           "relationshipType": "Client Project (via Parvati and Sons)",
           "industry": "Transportation",
-          "description": "Description: Worked on frontend improvements, API integration, responsive UI, and performance optimization while contributing to a client project delivered through Parvati and Sons.",
+          "description": "Contributed frontend updates, API integration, responsive UI improvements and website maintenance.",
           "startDate": "May 2026",
           "endDate": "May 2026",
           "confidential": false,
@@ -3167,7 +3167,7 @@
           "websiteUrl": "https://saniaenterprises.in",
           "relationshipType": "Client Project (via Parvati and Sons)",
           "industry": "Business Services",
-          "description": "Enhanced frontend functionality, integrated APIs, improved responsiveness, and optimized the user experience as part of a client engagement managed by Parvati and Sons.",
+          "description": "Worked on API-driven content, frontend fixes, responsive layouts and user experience improvements.",
           "startDate": "April 2026",
           "endDate": "April 2026",
           "confidential": false,
@@ -3216,15 +3216,15 @@
       "settings": {},
       "data": {
         "eyebrow": "Credentials",
-        "title": "Certificates",
-        "description": "Certifications, courses, and learning milestones that support my full-stack development journey."
+        "title": "Web Development Certificates",
+        "description": "Relevant web development training, credentials and learning milestones."
       },
       "items": [
         {
           "certificateTitle": "Full Stack Web Development",
           "issuer": "Sithub",
-          "certificateImage": " https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
-          "credentialUrl": " https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
+          "certificateImage": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
+          "credentialUrl": "https://res.cloudinary.com/dxkmhw778/image/upload/v1783352698/portfolio/wbgseuz5nkk7u28m4ubq.png",
           "credentialId": "SIT320736",
           "issueDate": "15 March 2026",
           "expiryDate": "No Expiry",
@@ -3257,8 +3257,8 @@
       "settings": {},
       "data": {
         "eyebrow": "Open Source",
-        "title": "Open Source",
-        "description": ""
+        "title": "Open-Source Projects",
+        "description": "Explore public code, repositories and contributions on GitHub."
       },
       "items": [],
       "showOnHomepage": false
@@ -3300,7 +3300,7 @@
       "textBlocks": [],
       "settings": {},
       "data": {
-        "copyrightText": "",
+        "copyrightText": "© 2026 Abhishek. All rights reserved.",
         "ctaLabel": "",
         "ctaHref": ""
       },
