@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
+
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { GlobalPopupWrapper } from "@/components/layout/controls/GlobalPopupWrapper";
@@ -14,6 +15,8 @@ import { getSiteData } from "@/src/lib/site-data";
 import "./globals.css";
 import { WebsiteLoader } from "@/components/site/WebsiteLoader";
 import { StructuredData } from "@/components/seo/StructuredData";
+import { Navbar } from "@/components/layout/Navbar";
+import { BackButton } from "@/components/layout/BackButton";
 const inter = Inter({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
@@ -150,6 +153,8 @@ export default async function RootLayout({
 
             <TopNoticeBar />
             <AnalyticsTracker />
+            <Navbar />
+            <BackButton />
             <div className={hasTopNotice ? "pt-20 sm:pt-16" : undefined}>{children}</div>
             {shouldShowPopup ? <GlobalPopupWrapper /> : null}
             <GlobalSearch />

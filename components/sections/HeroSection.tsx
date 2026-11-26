@@ -2,6 +2,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import dynamic from "next/dynamic";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 
 import { AnimatedSection } from "@/components/effects/AnimatedSection";
@@ -13,7 +14,12 @@ import {
 import { Button } from "@/components/ui/Button";
 import { useTheme } from "@/components/site/ThemeProvider";
 
-import NeuralBrain from "@/src/components/3d/NeuralBrain";
+import TechText from "@/components/effects/TechText";
+
+const NeuralBrain = dynamic(() => import("@/src/components/3d/NeuralBrain"), {
+  ssr: false,
+  loading: () => <div className="h-full w-full" aria-hidden="true" />,
+});
 
 export function HeroSection() {
   const portfolioData = useSiteDataContext();
@@ -38,7 +44,10 @@ export function HeroSection() {
 
   const hasResume = Boolean(resumeUrl && resumeUrl !== "#");
 
-  const title = String(heroData.title || "Hi, I'm Abhishek");
+  const ownerName = String(portfolioData.owner?.name || "Developer").trim();
+  const title = String(
+    portfolioData.owner?.introLine || heroData.title || `Hi, I'm ${ownerName}`
+  ).trim();
 
   const description = String(
     heroData.description || portfolioData.owner?.tagline || ""
@@ -51,6 +60,7 @@ export function HeroSection() {
   const animatedRole = String(
     heroData.animatedRole || portfolioData.owner?.role || ""
   );
+  const wordmark = ownerName || title;
 
   return (
     <AnimatedSection
@@ -83,7 +93,24 @@ export function HeroSection() {
               transition={{ duration: 0.8 }}
               className="max-w-4xl text-5xl font-bold leading-[1.05] tracking-[-0.055em] text-text-main sm:text-6xl lg:text-[76px]"
             >
-              {title}
+              <span className="sr-only">{title}</span>
+              <span className="mt-1 block h-[1.15em] max-w-full text-text-main" aria-hidden="true">
+                <TechText
+                  text={wordmark}
+                  fontWeight={700}
+                  fontSize={76}
+                  align="left"
+                  color="currentColor"
+                  accentColor="rgb(var(--primary))"
+                  reveal="letter"
+                  reach={170}
+                  specks={12}
+                  intro="none"
+                  clickKick
+                  guides={false}
+                  className="h-full"
+                />
+              </span>
 
               {animatedRole && (
                 <span className="mt-4 block min-h-[1.15em] text-gradient-animated">

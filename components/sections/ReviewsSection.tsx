@@ -20,6 +20,10 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
 import { useCallback, useEffect, useRef, useState, type PointerEvent, type WheelEvent } from "react";
+import {
+  ThreeDScrollTriggerContainer,
+  ThreeDScrollTriggerRow,
+} from "@/components/lightswind/ThreeDScrollTrigger";
 
 const reviewIconMap: Record<string, LucideIcon> = {
   code2: Code2,
@@ -191,6 +195,28 @@ export function ReviewsSection() {
           title={data.title}
           description={data.description}
         />
+
+        {reviews.length > 0 && (
+          <ThreeDScrollTriggerContainer
+            className="mb-8 mt-8 rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))]/70 py-4 backdrop-blur-sm"
+            aria-label="Scrolling client feedback"
+          >
+            <ThreeDScrollTriggerRow
+              baseVelocity={2.2}
+              direction={1}
+              tiltEffect
+              className="[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
+            >
+              {[...reviews, ...reviews].map((review, index) => (
+                <article key={`${review.clientName}-${index}`} className="mx-2 w-[280px] shrink-0 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--surface))] p-4 shadow-sm sm:w-[340px]">
+                  <Quote className="h-4 w-4 text-primary" />
+                  <p className="mt-2 line-clamp-3 text-sm leading-6 text-text-muted">&quot;{review.quote}&quot;</p>
+                  <p className="mt-3 text-xs font-semibold text-text-main">{review.clientName}</p>
+                </article>
+              ))}
+            </ThreeDScrollTriggerRow>
+          </ThreeDScrollTriggerContainer>
+        )}
 
         <div>
           <div className="mb-3 hidden items-center justify-end gap-2 md:flex">

@@ -2,7 +2,6 @@
 import nextDynamic from "next/dynamic";
 
 import { DeferredSection } from "@/components/layout/DeferredSection";
-import { Navbar } from "@/components/layout/Navbar";
 import { ScrollProgress } from "@/components/layout/ScrollProgress";
 import { DynamicSectionRenderer } from "@/components/sections/DynamicSectionRenderer";
 
@@ -72,8 +71,6 @@ export default async function HomePage() {
     <SceneManagerProvider enabled>
       <main className="relative min-h-screen overflow-clip bg-page-bg">
         <ScrollProgress />
-
-        <Navbar />
 
         <div className="relative z-10">
           {sections.map((section) => {

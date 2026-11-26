@@ -331,6 +331,28 @@ html.dark {
     0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
+/* Keep legacy utility classes theme-aware across older pages. */
+html.dark .bg-white,
+html.dark .bg-white\/90,
+html.dark .bg-white\/95,
+html.dark .bg-white\/85 {
+  background-color: rgb(var(--card-bg)) !important;
+}
+
+html.dark .bg-slate-100,
+html.dark .bg-slate-200 {
+  background-color: rgb(var(--surface)) !important;
+}
+
+html.dark .bg-slate-950 {
+  background-color: rgb(var(--page-bg)) !important;
+}
+
+html.dark .text-slate-900,
+html.dark .text-slate-700 {
+  color: rgb(var(--text-main)) !important;
+}
+
 /* =========================================
    BASE
 ========================================= */
@@ -449,6 +471,20 @@ html.dark .panel {
 
 .hero-blob {
   @apply pointer-events-none absolute rounded-full;
+}
+
+.tech-text {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  touch-action: pan-y;
+  user-select: none;
+}
+
+.tech-text-canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
 }
 
 .deferred-section {

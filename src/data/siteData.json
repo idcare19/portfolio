@@ -28,6 +28,14 @@
       "href": "#skills"
     },
     {
+      "label": "services",
+      "href": "#services"
+    },
+    {
+      "label": "reviews",
+      "href": "#reviews"
+    },
+    {
       "label": "contact",
       "href": "#contact"
     }
@@ -88,7 +96,7 @@
       "label": "Services",
       "order": 6,
       "visible": true,
-      "showInNav": false,
+      "showInNav": true,
       "showOnHomepage": true,
       "locked": false,
       "deleted": false
@@ -137,7 +145,7 @@
       "id": "reviews",
       "label": "Reviews",
       "order": 11,
-      "visible": false,
+      "visible": true,
       "showInNav": true,
       "showOnHomepage": true,
       "locked": false,
@@ -389,9 +397,9 @@
       ]
     },
     {
-      "title": "Prodonto – AI Dental Healthcare Platform",
+      "title": "Prodonto â€“ AI Dental Healthcare Platform",
       "timeline": "Internship Project",
-      "role": "Frontend Developer • API Integration • Dashboard Development",
+      "role": "Frontend Developer â€¢ API Integration â€¢ Dashboard Development",
       "link": "",
       "workDone": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
       "isEnabled": true,
@@ -403,7 +411,7 @@
       "shortDescription": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
       "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows.  I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
       "liveDemoUrl": "",
-      "myRole": "Frontend Developer • API Integration • Dashboard Development",
+      "myRole": "Frontend Developer â€¢ API Integration â€¢ Dashboard Development",
       "projectType": "Client",
       "slug": "prodonto-ai-dental-healthcare-platform",
       "confidentialProject": false,
@@ -426,7 +434,7 @@
       "customFields": []
     },
     {
-      "title": "Sania Enterprises – API Integration & Frontend Fixes",
+      "title": "Sania Enterprises â€“ API Integration & Frontend Fixes",
       "timeline": "19/04/2026",
       "role": "Frontend Developer ",
       "link": "Https://Saniaenterprises.in",
@@ -445,7 +453,7 @@
       "order": 3
     },
     {
-      "title": "Guruji Taxi – API Integration & Frontend Fixes",
+      "title": "Guruji Taxi â€“ API Integration & Frontend Fixes",
       "timeline": "20/04/2026",
       "role": "Frontend Developer ",
       "link": "Https://gurujitaxi.com",
@@ -484,7 +492,7 @@
       "order": 5
     },
     {
-      "title": "Medical Seva – Static Website Development",
+      "title": "Medical Seva â€“ Static Website Development",
       "timeline": "23/04/2026",
       "role": "Frontend Developer",
       "link": "https://medicalseva.in/",
@@ -549,7 +557,7 @@
   ],
   "education": [],
   "journeyNow": {
-    "currentWork": "Parvati & Sons — Project Manager & Full Stack Developer",
+    "currentWork": "Parvati & Sons â€” Project Manager & Full Stack Developer",
     "ongoingMilestones": [
       "Managing website development tasks and project workflow",
       "Coordinating frontend improvements and feature implementation",
@@ -1057,8 +1065,8 @@
       "apisIntegrations": "REST API, WebSockets, Cloudinary, Resend Email",
       "aiMlUsed": "AI Wait-Time Prediction",
       "architectureNotes": "Multi-tenant SaaS architecture with Django REST APIs, Redis-powered WebSockets, JWT authentication, PostgreSQL database, and modular frontend using Next.js.",
-      "techBadges": "Full Stack • AI • SaaS • Real-Time • Enterprise • WebSockets",
-      "metaTitle": "SmartQueue AI – AI-Powered Real-Time Queue Management SaaS",
+      "techBadges": "Full Stack â€¢ AI â€¢ SaaS â€¢ Real-Time â€¢ Enterprise â€¢ WebSockets",
+      "metaTitle": "SmartQueue AI â€“ AI-Powered Real-Time Queue Management SaaS",
       "metaDescription": "SmartQueue AI is a modern AI-powered queue management platform featuring QR check-ins, live token tracking, WebSockets, analytics, notifications, and intelligent wait-time prediction for clinics, hospitals, banks, and service centers.",
       "solution": "SmartQueue AI provides a fully digital queue management platform where customers join queues using QR codes, receive live updates, AI-generated wait-time predictions, and notifications while staff manage operations through real-time dashboards."
     }
@@ -1067,7 +1075,7 @@
   "contactMessages": [],
   "blogs": [
     {
-      "id": "6ae9aae27495579615a87f53",
+      "id": "6b08013fad5a22ee2bd559ac",
       "slug": "how-to-build-a-portfolio-that-converts",
       "title": "How to build a portfolio that converts",
       "excerpt": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
@@ -1086,17 +1094,17 @@
       "isEnabled": true,
       "seoTitle": "How to Build a Portfolio That Converts",
       "seoDescription": "Learn the key strategies to create a portfolio website that turns visitors into clients and opportunities.",
-      "publishedAt": "2026-11-03T09:35:21.761Z",
+      "publishedAt": "2026-11-26T09:51:50.138Z",
       "order": 1,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 15:05:30 GMT+0530 (India Standard Time)",
-      "updatedAt": "2026-11-03T09:35:21.761Z",
+      "createdAt": "Thu Nov 26 2026 09:51:59 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T09:51:50.138Z",
       "scheduledFor": "",
       "markdown": "Building a portfolio that stands out requires more than just showcasing your work. In this guide, we'll explore the essential elements that make a portfolio convert visitors into clients..."
     },
     {
-      "id": "6ae9aae27495579615a87f54",
+      "id": "6b08013fad5a22ee2bd559ad",
       "slug": "10-tips-for-frontend-developers",
       "title": "10 tips for frontend developers",
       "excerpt": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
@@ -1115,17 +1123,17 @@
       "isEnabled": true,
       "seoTitle": "10 Tips for Frontend Developers",
       "seoDescription": "Essential tips that every frontend developer should know to improve their workflow and code quality.",
-      "publishedAt": "2026-11-03T09:35:21.761Z",
+      "publishedAt": "2026-11-26T09:51:50.138Z",
       "order": 2,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 15:05:30 GMT+0530 (India Standard Time)",
-      "updatedAt": "2026-11-03T09:35:21.761Z",
+      "createdAt": "Thu Nov 26 2026 09:51:59 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T09:51:50.138Z",
       "scheduledFor": "",
       "markdown": "Frontend development is constantly evolving. These 10 tips will help you stay ahead of the curve and write better code..."
     },
     {
-      "id": "6ae9aae27495579615a87f55",
+      "id": "6b08013fad5a22ee2bd559ae",
       "slug": "mongodb-best-practices",
       "title": "MongoDB best practices",
       "excerpt": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
@@ -1144,12 +1152,12 @@
       "isEnabled": true,
       "seoTitle": "MongoDB Best Practices",
       "seoDescription": "A comprehensive guide to MongoDB best practices for performance, scalability, and maintainability.",
-      "publishedAt": "2026-11-03T09:35:21.761Z",
+      "publishedAt": "2026-11-26T09:51:50.138Z",
       "order": 3,
       "readingTimeMinutes": 1,
       "relatedSlugs": [],
-      "createdAt": "Tue Nov 03 2026 15:05:30 GMT+0530 (India Standard Time)",
-      "updatedAt": "2026-11-03T09:35:21.761Z",
+      "createdAt": "Thu Nov 26 2026 09:51:59 GMT+0000 (Coordinated Universal Time)",
+      "updatedAt": "2026-11-26T09:51:50.138Z",
       "scheduledFor": "",
       "markdown": "MongoDB is a powerful NoSQL database, but to get the most out of it, you need to follow these best practices..."
     }
@@ -1189,14 +1197,14 @@
     "metaDescription": "Portfolio of Abhishek with modern full-stack projects and services.",
     "favicon": "/projects/logo.png",
     "logo": "/projects/logo.png",
-    "footerText": "© 2026 Abhishek. All rights reserved.",
+    "footerText": "Â© 2026 Abhishek. All rights reserved.",
     "themeMode": "dark"
   },
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-23T08:14:55.020Z",
-      "lastGitHubSync": "2026-11-23T08:14:59.363Z"
+      "lastMongoUpdate": "2026-11-26T09:51:50.138Z",
+      "lastGitHubSync": "2026-11-26T09:51:54.459Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1238,7 +1246,7 @@
     "topNoticeBar": {
       "enabled": false,
       "message": "Open for freelance and long-term projects.",
-      "ctaText": "Let’s Talk",
+      "ctaText": "Letâ€™s Talk",
       "ctaLink": "https://wa.me/918929261986",
       "colorStyle": "rose"
     },
@@ -1534,7 +1542,7 @@
       "brandBadgePrefix": "Version"
     },
     "footer": {
-      "copyrightText": "© 2026 Abhishek. All rights reserved.",
+      "copyrightText": "Â© 2026 Abhishek. All rights reserved.",
       "backToTopLabel": "Back to top",
       "quickLinks": [],
       "ctaLabel": "Let's work together",
@@ -1686,7 +1694,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-23T08:14:55.020Z",
+  "updatedAt": "Thu Nov 26 2026 09:51:56 GMT+0000 (Coordinated Universal Time)",
   "sections": {
     "hero": {
       "id": "hero",
@@ -2222,8 +2230,8 @@
           "apisIntegrations": "REST API, WebSockets, Cloudinary, Resend Email",
           "aiMlUsed": "AI Wait-Time Prediction",
           "architectureNotes": "Multi-tenant SaaS architecture with Django REST APIs, Redis-powered WebSockets, JWT authentication, PostgreSQL database, and modular frontend using Next.js.",
-          "techBadges": "Full Stack • AI • SaaS • Real-Time • Enterprise • WebSockets",
-          "metaTitle": "SmartQueue AI – AI-Powered Real-Time Queue Management SaaS",
+          "techBadges": "Full Stack â€¢ AI â€¢ SaaS â€¢ Real-Time â€¢ Enterprise â€¢ WebSockets",
+          "metaTitle": "SmartQueue AI â€“ AI-Powered Real-Time Queue Management SaaS",
           "metaDescription": "SmartQueue AI is a modern AI-powered queue management platform featuring QR check-ins, live token tracking, WebSockets, analytics, notifications, and intelligent wait-time prediction for clinics, hospitals, banks, and service centers.",
           "solution": "SmartQueue AI provides a fully digital queue management platform where customers join queues using QR codes, receive live updates, AI-generated wait-time predictions, and notifications while staff manage operations through real-time dashboards."
         }
@@ -2353,9 +2361,9 @@
           ]
         },
         {
-          "title": "Prodonto – AI Dental Healthcare Platform",
+          "title": "Prodonto â€“ AI Dental Healthcare Platform",
           "timeline": "Internship Project",
-          "role": "Frontend Developer • API Integration • Dashboard Development",
+          "role": "Frontend Developer â€¢ API Integration â€¢ Dashboard Development",
           "link": "",
           "workDone": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
           "isEnabled": true,
@@ -2367,7 +2375,7 @@
           "shortDescription": "Contributed to a production-grade dental healthcare platform  by working on frontend development, API integration, responsive UI, dashboard modules, and user-facing workflows while following confidentiality guidelines.",
           "longDescription": "Prodonto is a healthcare SaaS platform focused on digital dental workflows.  I contributed to frontend development, API integration, responsive layouts, dashboard modules, and user-facing flows. Due to confidentiality, detailed business logic, internal architecture, source code, and sensitive media are not disclosed.",
           "liveDemoUrl": "",
-          "myRole": "Frontend Developer • API Integration • Dashboard Development",
+          "myRole": "Frontend Developer â€¢ API Integration â€¢ Dashboard Development",
           "projectType": "Client",
           "slug": "prodonto-ai-dental-healthcare-platform",
           "confidentialProject": false,
@@ -2390,7 +2398,7 @@
           "customFields": []
         },
         {
-          "title": "Sania Enterprises – API Integration & Frontend Fixes",
+          "title": "Sania Enterprises â€“ API Integration & Frontend Fixes",
           "timeline": "19/04/2026",
           "role": "Frontend Developer ",
           "link": "Https://Saniaenterprises.in",
@@ -2409,7 +2417,7 @@
           "order": 3
         },
         {
-          "title": "Guruji Taxi – API Integration & Frontend Fixes",
+          "title": "Guruji Taxi â€“ API Integration & Frontend Fixes",
           "timeline": "20/04/2026",
           "role": "Frontend Developer ",
           "link": "Https://gurujitaxi.com",
@@ -2448,7 +2456,7 @@
           "order": 5
         },
         {
-          "title": "Medical Seva – Static Website Development",
+          "title": "Medical Seva â€“ Static Website Development",
           "timeline": "23/04/2026",
           "role": "Frontend Developer",
           "link": "https://medicalseva.in/",
@@ -2473,7 +2481,7 @@
       "id": "reviews",
       "label": "Reviews",
       "renderer": "reviews",
-      "enabled": false,
+      "enabled": true,
       "order": 11,
       "layout": "default",
       "status": "published",
@@ -2514,7 +2522,7 @@
         "title": "Experience",
         "description": "",
         "currentWorkTitle": "",
-        "currentWork": "Parvati & Sons — Project Manager & Full Stack Developer",
+        "currentWork": "Parvati & Sons â€” Project Manager & Full Stack Developer",
         "milestones": [
           "Managing website development tasks and project workflow",
           "Coordinating frontend improvements and feature implementation",
@@ -2567,7 +2575,7 @@
       "layout": "default",
       "status": "published",
       "nav": {
-        "show": false,
+        "show": true,
         "href": "#services",
         "label": "services"
       },
@@ -2619,7 +2627,7 @@
       "settings": {},
       "data": {
         "eyebrow": "Contact",
-        "title": "Let’s talk about your next project",
+        "title": "Letâ€™s talk about your next project",
         "description": "Reach out for freelance, internship, or collaboration opportunities.",
         "cardTitle": "",
         "cardDescription": "",
@@ -3111,7 +3119,7 @@
           "websiteUrl": "https://digitalsphereseo.my.canva.site/digital-sphere-digital-marketing-agency-digital-marketing-service-in-india-uttarakhand-rudrapur-",
           "relationshipType": "Freelance Client",
           "industry": "Digital Marketing & Web Development",
-          "description": "Worked with Digital Sphere as a freelance developer on 1–2 project-based assignments. Contributed to responsive website development, frontend improvements, bug fixing, API integration support, and deployment-related updates for client work.",
+          "description": "Worked with Digital Sphere as a freelance developer on 1â€“2 project-based assignments. Contributed to responsive website development, frontend improvements, bug fixing, API integration support, and deployment-related updates for client work.",
           "startDate": "2026",
           "endDate": "Project-based",
           "confidential": false,
