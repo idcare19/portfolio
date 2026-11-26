@@ -69,7 +69,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
 
   return (
     <div className="space-y-4">
-      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+      <section className="rounded-[30px] border border-admin-border bg-admin-card p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Content Source Control</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <div className="space-y-1">
@@ -115,7 +115,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         </div>
       </section>
 
-      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+      <section className="rounded-[30px] border border-admin-border bg-admin-card p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Global Popup Announcement</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={control.popupAnnouncement.enabled} onChange={(e) => setControl({ popupAnnouncement: { ...control.popupAnnouncement, enabled: e.target.checked } })} /> Enable popup</label>
@@ -132,7 +132,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         </div>
       </section>
 
-      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+      <section className="rounded-[30px] border border-admin-border bg-admin-card p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Maintenance / Downtime Mode</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={control.maintenanceMode.enabled} onChange={(e) => setControl({ maintenanceMode: { ...control.maintenanceMode, enabled: e.target.checked } })} /> Enable maintenance mode</label>
@@ -147,7 +147,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         </div>
       </section>
 
-      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+      <section className="rounded-[30px] border border-admin-border bg-admin-card p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Top Notice Bar</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <label className="inline-flex items-center gap-2 text-sm"><input type="checkbox" checked={control.topNoticeBar.enabled} onChange={(e) => setControl({ topNoticeBar: { ...control.topNoticeBar, enabled: e.target.checked } })} /> Enable notice bar</label>
@@ -158,7 +158,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         </div>
       </section>
 
-      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+      <section className="rounded-[30px] border border-admin-border bg-admin-card p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Version / Update Message</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <input className="rounded-xl border border-admin-border bg-admin-input text-admin-text px-3 py-2" value={control.versionInfo.currentVersion} onChange={(e) => setControl({ versionInfo: { ...control.versionInfo, currentVersion: e.target.value } })} placeholder="Current version" />
@@ -169,7 +169,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         </div>
       </section>
 
-      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+      <section className="rounded-[30px] border border-admin-border bg-admin-card p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Homepage Projects</h2>
         <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
           <select
@@ -223,7 +223,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
         </div>
       </section>
 
-      <section className="rounded-[30px] border border-admin-border bg-[linear-gradient(180deg,rgba(255,255,255,0.98),rgba(245,247,255,0.96))] p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
+      <section className="rounded-[30px] border border-admin-border bg-admin-card p-5 shadow-[0_18px_50px_rgba(15,23,42,0.08)]">
         <h2 className="text-lg font-semibold text-admin-text">Homepage Display Controls</h2>
         <p className="mt-1 text-sm text-admin-text-muted">Configure cards shown on the homepage and the button that links to each full page.</p>
         <div className="mt-4 space-y-4">
@@ -237,7 +237,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
                 </div>
                 <div className="mt-3 grid grid-cols-1 gap-3 md:grid-cols-2">
                   <select
-                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
                     value={String(value.limit ?? value.itemsLimit ?? "all")}
                     onChange={(e) => updateSectionHomepage(section.id, { limit: e.target.value === "all" ? "all" : Number(e.target.value), itemsLimit: e.target.value === "all" ? "all" : Number(e.target.value) })}
                   >
@@ -250,7 +250,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
                     <option value="12">12</option>
                   </select>
                   <select
-                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
                     value={String(value.viewMoreMode || "navigate")}
                     onChange={(e) => updateSectionHomepage(section.id, { viewMoreMode: e.target.value as "navigate" | "load-more" })}
                   >
@@ -268,7 +268,7 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
                   <input
                     type="number"
                     min={1}
-                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
                     value={String(value.initialItems ?? 3)}
                     onChange={(e) => updateSectionHomepage(section.id, { initialItems: Number(e.target.value) || 3 })}
                     placeholder="Initial items"
@@ -276,25 +276,25 @@ export function WebsiteControlEditor({ data, onChange, status, actions }: Props)
                   <input
                     type="number"
                     min={1}
-                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
                     value={String(value.loadCount ?? 3)}
                     onChange={(e) => updateSectionHomepage(section.id, { loadCount: Number(e.target.value) || 3 })}
                     placeholder="Load count"
                   />
                   <input
-                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text"
+                    className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text"
                     value={String(value.viewMoreButtonText || `View More ${section.label}`)}
                     onChange={(e) => updateSectionHomepage(section.id, { viewMoreButtonText: e.target.value })}
                     placeholder={`View More ${section.label}`}
                   />
                   <input
-                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text md:col-span-2"
+                    className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2"
                     value={String(value.fullPageUrl || section.url)}
                     onChange={(e) => updateSectionHomepage(section.id, { fullPageUrl: e.target.value })}
                     placeholder={section.url}
                   />
                   <input
-                    className="rounded-xl border border-admin-border bg-white px-3 py-2 text-admin-text md:col-span-2"
+                    className="rounded-xl border border-admin-border bg-admin-input px-3 py-2 text-admin-text md:col-span-2"
                     value={Array.isArray(value.manualItemOrder) ? value.manualItemOrder.join(", ") : ""}
                     onChange={(e) =>
                       updateSectionHomepage(section.id, {
