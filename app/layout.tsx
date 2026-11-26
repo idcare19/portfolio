@@ -118,6 +118,16 @@ export default async function RootLayout({
             __html: `(function(){try{var key="portfolio-theme-mode";var stored=localStorage.getItem(key);var dark=false;if(stored==="dark"){dark=true;}else if(stored==="light"){dark=false;}else{dark=window.matchMedia("(prefers-color-scheme: dark)").matches;}if(dark){document.documentElement.classList.add("dark");document.documentElement.dataset.theme="dark";document.documentElement.style.colorScheme="dark";}else{document.documentElement.classList.remove("dark");document.documentElement.dataset.theme="light";document.documentElement.style.colorScheme="light";}}catch(e){}})();`,
           }}
         />
+        <script
+          type="text/javascript"
+          dangerouslySetInnerHTML={{
+            __html: `(function(c,l,a,r,i,t,y){
+              c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+              t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+              y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+            })(window, document, "clarity", "script", "zjju4hmjwd");`,
+          }}
+        />
       </head>
       <body className="font-sans">
           <StructuredData site={siteData} />
