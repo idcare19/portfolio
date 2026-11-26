@@ -1195,8 +1195,8 @@
   "websiteControl": {
     "dataSource": "auto",
     "syncStatus": {
-      "lastMongoUpdate": "2026-11-20T15:49:31.273Z",
-      "lastGitHubSync": "2026-11-20T15:49:32.932Z"
+      "lastMongoUpdate": "2026-11-23T08:14:55.020Z",
+      "lastGitHubSync": "2026-11-23T08:14:59.363Z"
     },
     "popupAnnouncement": {
       "enabled": false,
@@ -1686,7 +1686,7 @@
     "showGitHubIcons": true,
     "showLanguageColors": true
   },
-  "updatedAt": "2026-11-20T15:49:31.273Z",
+  "updatedAt": "2026-11-23T08:14:55.020Z",
   "sections": {
     "hero": {
       "id": "hero",
