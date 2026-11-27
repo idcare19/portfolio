@@ -4,9 +4,8 @@ import { AnimatedSection } from "@/components/effects/AnimatedSection";
 import { useSectionData, useSiteDataContext } from "@/components/site/SiteDataProvider";
 import { SectionHeader } from "@/components/ui/SectionHeader";
 import {
+  ArrowRight,
   Briefcase,
-  ChevronLeft,
-  ChevronRight,
   Code2,
   ExternalLink,
   Globe,
@@ -18,8 +17,13 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { filterHomepageItems, getHomepageButtonLabel, getHomepageDisplayConfig, shouldShowViewMore, debugHomepageDisplay } from "@/lib/homepage-display-controls";
-import { useCallback, useEffect, useRef, useState, type PointerEvent, type WheelEvent } from "react";
+import {
+  filterHomepageItems,
+  getHomepageButtonLabel,
+  getHomepageDisplayConfig,
+  shouldShowViewMore,
+  debugHomepageDisplay,
+} from "@/lib/homepage-display-controls";
 import {
   ThreeDScrollTriggerContainer,
   ThreeDScrollTriggerRow,
@@ -48,6 +52,65 @@ function normalizeHref(value?: string) {
   return "";
 }
 
+type Review = {
+  clientName: string;
+  roleCompany?: string;
+  website?: string;
+  quote: string;
+  icon?: string;
+};
+
+function ReviewCard({ review, hidden = false }: { review: Review; hidden?: boolean }) {
+  const ReviewIcon = getReviewIcon(review.icon);
+  const href = normalizeHref(review.website);
+  const isExternal = href.startsWith("http");
+
+  return (
+    <article
+      aria-hidden={hidden || undefined}
+      className="glass group relative flex h-[236px] w-[min(85vw,23rem)] flex-shrink-0 snap-start flex-col overflow-hidden whitespace-normal rounded-[28px] p-6 shadow-[0_18px_42px_rgba(15,23,42,0.06)] isolate transition-[transform,box-shadow,border-color] duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-[0_24px_52px_rgba(37,99,235,0.12)] sm:w-[24rem]"
+    >
+      {/* Oversized quote mark as a quiet background accent */}
+      <Quote
+        aria-hidden
+        className="pointer-events-none absolute -right-2 -top-2 -z-10 h-24 w-24 rotate-6 text-primary/[0.07]"
+      />
+
+      <p className="relative z-10 line-clamp-4 flex-1 text-[15px] leading-relaxed text-text-main">
+        &ldquo;{review.quote}&rdquo;
+      </p>
+
+      <div className="relative z-10 mt-4 flex items-center justify-between gap-3 border-t border-[rgb(var(--border))] pt-4">
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="grid h-10 w-10 shrink-0 place-items-center rounded-full bg-primary text-white shadow-[0_8px_18px_-6px_rgba(37,99,235,0.55)]">
+            <ReviewIcon className="h-4.5 w-4.5" />
+          </span>
+          <div className="min-w-0">
+            <p className="truncate text-sm font-semibold text-text-main">{review.clientName}</p>
+            {review.roleCompany ? (
+              <p className="truncate text-xs text-text-muted">{review.roleCompany}</p>
+            ) : null}
+          </div>
+        </div>
+
+        {href ? (
+          <Link
+            href={href}
+            target={isExternal ? "_blank" : undefined}
+            rel={isExternal ? "noreferrer" : undefined}
+            tabIndex={hidden ? -1 : undefined}
+            aria-label={`Visit ${review.clientName}'s site`}
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary transition-colors duration-200 hover:bg-primary hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary"
+          >
+            Visit
+            <ExternalLink className="h-3.5 w-3.5" />
+          </Link>
+        ) : null}
+      </div>
+    </article>
+  );
+}
+
 export function ReviewsSection() {
   const section = useSectionData("reviews");
   const pathname = usePathname();
@@ -55,11 +118,22 @@ export function ReviewsSection() {
   const reviewItems = Array.isArray(section.items) ? section.items : [];
   const homepageSettings = getHomepageDisplayConfig(useSiteDataContext(), "reviews");
   const isHomepage = pathname === "/";
-  const fullReviews = filterHomepageItems(reviewItems, { showOnlyFeatured: false, manualItemOrder: undefined, limit: undefined, itemsLimit: undefined });
-  const visibleReviews = isHomepage ? filterHomepageItems(reviewItems, { ...homepageSettings, limit: homepageSettings.limit ?? homepageSettings.itemsLimit ?? 6 }) : fullReviews;
+  const fullReviews = filterHomepageItems(reviewItems, {
+    showOnlyFeatured: false,
+    manualItemOrder: undefined,
+    limit: undefined,
+    itemsLimit: undefined,
+  });
+  const visibleReviews = isHomepage
+    ? filterHomepageItems(reviewItems, {
+        ...homepageSettings,
+        limit: homepageSettings.limit ?? homepageSettings.itemsLimit ?? 6,
+      })
+    : fullReviews;
   const showMore = isHomepage && shouldShowViewMore(fullReviews, visibleReviews, homepageSettings);
   debugHomepageDisplay("reviews", reviewItems.length, visibleReviews.length, homepageSettings);
-  const reviews = reviewItems.length
+
+  const reviews: Review[] = reviewItems.length
     ? visibleReviews.map((item: any) => ({
         clientName: item.clientName,
         roleCompany: item.roleCompany,
@@ -68,235 +142,45 @@ export function ReviewsSection() {
         icon: item.image,
       }))
     : [];
-  const railRef = useRef<HTMLDivElement | null>(null);
-  const dragState = useRef<{ active: boolean; startX: number; startLeft: number }>({
-    active: false,
-    startX: 0,
-    startLeft: 0,
-  });
-  const [canScrollPrev, setCanScrollPrev] = useState(false);
-  const [canScrollNext, setCanScrollNext] = useState(false);
-  const [hasOverflow, setHasOverflow] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
-
-  const syncScrollButtons = useCallback(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-
-    const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
-    setHasOverflow(maxScroll > 4);
-    setCanScrollPrev(rail.scrollLeft > 4);
-    setCanScrollNext(rail.scrollLeft < maxScroll - 4);
-  }, []);
-
-  useEffect(() => {
-    const rail = railRef.current;
-    if (!rail) return;
-
-    syncScrollButtons();
-
-    const onScroll = () => syncScrollButtons();
-    rail.addEventListener("scroll", onScroll, { passive: true });
-    window.addEventListener("resize", onScroll, { passive: true });
-
-    return () => {
-      rail.removeEventListener("scroll", onScroll);
-      window.removeEventListener("resize", onScroll);
-    };
-  }, [syncScrollButtons]);
-
-  const scrollRail = useCallback((direction: -1 | 1, loopAtEdge = false) => {
-    const rail = railRef.current;
-    if (!rail) return;
-
-    const maxScroll = Math.max(0, rail.scrollWidth - rail.clientWidth);
-    if (maxScroll <= 4) return;
-
-    const offset = Math.max(260, rail.clientWidth * 0.78);
-    if (direction > 0) {
-      const nextLeft = rail.scrollLeft + offset;
-      if (loopAtEdge && nextLeft >= maxScroll - 4) {
-        rail.scrollTo({ left: 0, behavior: "smooth" });
-        return;
-      }
-      rail.scrollBy({ left: offset, behavior: "smooth" });
-      return;
-    }
-
-    const prevLeft = rail.scrollLeft - offset;
-    if (loopAtEdge && prevLeft <= 4) {
-      rail.scrollTo({ left: maxScroll, behavior: "smooth" });
-      return;
-    }
-
-    rail.scrollBy({ left: -offset, behavior: "smooth" });
-  }, []);
-
-  useEffect(() => {
-    if (!hasOverflow || isHovering || dragState.current.active) return;
-
-    const interval = setInterval(() => {
-      scrollRail(1, true);
-    }, 3200);
-
-    return () => clearInterval(interval);
-  }, [hasOverflow, isHovering, scrollRail]);
-
-  function handleWheel(event: WheelEvent<HTMLDivElement>) {
-    const rail = railRef.current;
-    if (!rail) return;
-
-    const hasHorizontalOverflow = rail.scrollWidth - rail.clientWidth > 4;
-    if (!hasHorizontalOverflow) return;
-
-    const dominantDelta = Math.abs(event.deltaY) >= Math.abs(event.deltaX) ? event.deltaY : event.deltaX;
-    if (dominantDelta === 0) return;
-
-    rail.scrollLeft += dominantDelta;
-    event.preventDefault();
-  }
-
-  function handlePointerDown(event: PointerEvent<HTMLDivElement>) {
-    const rail = railRef.current;
-    if (!rail) return;
-
-    dragState.current = {
-      active: true,
-      startX: event.clientX,
-      startLeft: rail.scrollLeft,
-    };
-
-    event.preventDefault();
-    rail.setPointerCapture(event.pointerId);
-  }
-
-  function handlePointerMove(event: PointerEvent<HTMLDivElement>) {
-    if (!dragState.current.active) return;
-    const rail = railRef.current;
-    if (!rail) return;
-
-    const delta = event.clientX - dragState.current.startX;
-    rail.scrollLeft = dragState.current.startLeft - delta;
-  }
-
-  function handlePointerUp(event: PointerEvent<HTMLDivElement>) {
-    const rail = railRef.current;
-    if (rail?.hasPointerCapture(event.pointerId)) {
-      rail.releasePointerCapture(event.pointerId);
-    }
-    dragState.current.active = false;
-  }
 
   return (
     <AnimatedSection id="reviews" className="bg-[rgb(var(--section-bg))] py-24">
       <div className="section-wrap">
-        <SectionHeader
-          eyebrow={data.eyebrow}
-          title={data.title}
-          description={data.description}
-        />
+        <SectionHeader eyebrow={data.eyebrow} title={data.title} description={data.description} />
 
-        {reviews.length > 0 && (
-          <ThreeDScrollTriggerContainer
-            className="mb-8 mt-8 rounded-3xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))]/70 py-4 backdrop-blur-sm"
-            aria-label="Scrolling client feedback"
+        <ThreeDScrollTriggerContainer className="relative" aria-label="Client reviews">
+          <ThreeDScrollTriggerRow
+            baseVelocity={2.2}
+            direction={1}
+            tiltEffect
+            className="[mask-image:linear-gradient(to_right,transparent,black_5%,black_95%,transparent)]"
           >
-            <ThreeDScrollTriggerRow
-              baseVelocity={2.2}
-              direction={1}
-              tiltEffect
-              className="[mask-image:linear-gradient(to_right,transparent,black_8%,black_92%,transparent)]"
-            >
-              {[...reviews, ...reviews].map((review, index) => (
-                <article key={`${review.clientName}-${index}`} className="mx-2 w-[280px] shrink-0 rounded-2xl border border-[rgb(var(--border))] bg-[rgb(var(--surface))] p-4 shadow-sm sm:w-[340px]">
-                  <Quote className="h-4 w-4 text-primary" />
-                  <p className="mt-2 line-clamp-3 text-sm leading-6 text-text-muted">&quot;{review.quote}&quot;</p>
-                  <p className="mt-3 text-xs font-semibold text-text-main">{review.clientName}</p>
-                </article>
-              ))}
-            </ThreeDScrollTriggerRow>
-          </ThreeDScrollTriggerContainer>
-        )}
-
-        <div>
-          <div className="mb-3 hidden items-center justify-end gap-2 md:flex">
-            <button
-              type="button"
-              onClick={() => scrollRail(-1)}
-              disabled={!canScrollPrev}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main transition hover:border-primary/40 hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Scroll reviews left"
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </button>
-            <button
-              type="button"
-              onClick={() => scrollRail(1)}
-              disabled={!canScrollNext}
-              className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] text-text-main transition hover:border-primary/40 hover:text-primary disabled:cursor-not-allowed disabled:opacity-50"
-              aria-label="Scroll reviews right"
-            >
-              <ChevronRight className="h-4 w-4" />
-            </button>
-          </div>
-
-          <div className="relative">
-            <div className="pointer-events-none absolute inset-y-0 left-0 z-10 hidden w-8 bg-gradient-to-r from-[rgb(var(--section-bg))] to-transparent md:block" />
-            <div className="pointer-events-none absolute inset-y-0 right-0 z-10 hidden w-8 bg-gradient-to-l from-[rgb(var(--section-bg))] to-transparent md:block" />
-
-            <div
-              ref={railRef}
-              onWheel={handleWheel}
-              onPointerDown={handlePointerDown}
-              onPointerMove={handlePointerMove}
-              onPointerUp={handlePointerUp}
-              onPointerCancel={handlePointerUp}
-              onPointerLeave={handlePointerUp}
-              onMouseEnter={() => setIsHovering(true)}
-              onMouseLeave={() => setIsHovering(false)}
-              className="reviews-scroll -mx-2 flex snap-x snap-mandatory gap-4 overflow-x-auto overflow-y-hidden px-2 pb-2 touch-pan-x md:cursor-grab md:gap-5 md:active:cursor-grabbing sm:-mx-4 sm:px-4"
-            >
+            <div className="flex gap-5 px-2 py-4 whitespace-normal">
               <div aria-hidden className="w-[4px] shrink-0" />
-              {reviews.map((review, index) => {
-                const ReviewIcon = getReviewIcon(review.icon);
-                const href = normalizeHref(review.website);
-
-                return (
-                  <article
-                    key={`${review.clientName}-${index}`}
-                    className="glass flex-shrink-0 snap-start rounded-[30px] p-6 shadow-[0_18px_42px_rgba(15,23,42,0.06)] transition-all duration-300 hover:-translate-y-0.5 hover:border-primary/30 w-[calc(100%-1rem)] sm:w-[calc(50%-1rem)] lg:w-[calc(33.333%-1rem)]"
-                  >
-                    <Quote className="h-5 w-5 text-primary" />
-                    <p className="mt-3 text-sm leading-relaxed text-text-muted">&quot;{review.quote}&quot;</p>
-
-                    <div className="mt-5 flex flex-col items-start justify-between gap-3 sm:flex-row sm:items-center">
-                      <p className="inline-flex items-center gap-2 text-sm font-semibold text-text-main">
-                        <span className="inline-flex h-6 w-6 items-center justify-center rounded-full bg-primary text-white">
-                          <ReviewIcon className="h-3.5 w-3.5" />
-                        </span>
-                        {review.clientName}
-                      </p>
-                      {href ? (
-                        <Link
-                          href={href}
-                          target={href.startsWith("http") ? "_blank" : undefined}
-                          rel={href.startsWith("http") ? "noreferrer" : undefined}
-                          className="inline-flex w-full items-center justify-center gap-1.5 rounded-full border border-primary/20 bg-primary/10 px-3 py-1.5 text-xs font-semibold text-primary transition-colors duration-200 hover:bg-primary/20 sm:w-auto"
-                        >
-                          Visit Site <ExternalLink className="h-3.5 w-3.5" />
-                        </Link>
-                      ) : review.roleCompany ? (
-                        <p className="text-xs font-semibold text-text-muted">{review.roleCompany}</p>
-                      ) : null}
-                    </div>
-                  </article>
-                );
-              })}
+              {/* Second copy keeps the loop seamless; hidden from screen readers and Tab */}
+              {[...reviews, ...reviews].map((review, index) => (
+                <ReviewCard
+                  key={`${review.clientName}-${index}`}
+                  review={review}
+                  hidden={index >= reviews.length}
+                />
+              ))}
               <div aria-hidden className="w-[2rem] shrink-0" />
             </div>
-            {isHomepage && showMore ? <div className="mt-8 flex justify-center"><Link href={homepageSettings.fullPageUrl || "/reviews"} className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white">{getHomepageButtonLabel(homepageSettings)}</Link></div> : null}
+          </ThreeDScrollTriggerRow>
+        </ThreeDScrollTriggerContainer>
+
+        {isHomepage && showMore ? (
+          <div className="mt-10 flex justify-center">
+            <Link
+              href={homepageSettings.fullPageUrl || "/reviews"}
+              className="group inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-[0_12px_28px_-8px_rgba(37,99,235,0.5)] transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
+            >
+              {getHomepageButtonLabel(homepageSettings)}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
+            </Link>
           </div>
-        </div>
+        ) : null}
       </div>
     </AnimatedSection>
   );
