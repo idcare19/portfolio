@@ -153,6 +153,10 @@ export function FooterSection() {
                   </a>
                 );
               })}
+              {["Full-stack developer India|/full-stack-developer-india", "Next.js developer India|/nextjs-developer-india", "Django developer India|/django-developer-india", "Freelance web developer|/freelance-web-developer", "SaaS development|/saas-development", "Blog|/blog", "GitHub|https://github.com/idcare19"].map((entry) => {
+                const [label, href] = entry.split("|");
+                return <a key={href} href={href} className="group inline-flex items-center gap-2 text-sm text-text-muted transition-all duration-300 hover:translate-x-1 hover:text-text-main"><span>{label}</span><ArrowUpRight className="h-3.5 w-3.5 opacity-0 transition-all duration-300 group-hover:opacity-100 group-hover:text-primary" /></a>;
+              })}
             </nav>
           </div>
 

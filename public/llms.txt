@@ -1,0 +1,39 @@
+# Abhishek (idcare19)
+
+Abhishek, also known as idcare19, is a full-stack developer from India working remotely. He builds web apps, SaaS products and business websites with Next.js, React, TypeScript and Django, from interface to API to database. He is open to freelance projects and remote opportunities.
+
+## Services
+
+- Full-stack web application development
+- SaaS product development from discovery to launch
+- Next.js and React frontend development
+- Django and Django REST API development
+- Business websites, dashboards, integrations and performance improvements
+
+## Technology
+
+Next.js, React, TypeScript, JavaScript, Django, Django REST Framework, Python, FastAPI, PostgreSQL, Redis, MySQL, Tailwind CSS, Docker, Git, GitHub and Vercel.
+
+## Contact
+
+For freelance or remote work, use the contact form on the website or email personal@idcare19.me.
+
+## Links
+
+- Website: https://www.idcare19.me/
+- About: https://www.idcare19.me/about
+- Projects: https://www.idcare19.me/projects
+- Blog: https://www.idcare19.me/blog
+- Resume: https://drive.google.com/file/d/1ahGcTHEjC_ufmtYjXMkdtDM3BzeMDbUb/view?usp=drivesdk
+- GitHub: https://github.com/idcare19
+- LinkedIn: https://www.linkedin.com/in/abhishek2103
+- X: https://x.com/idcare19
+- Instagram: https://www.instagram.com/idcare19/
+
+## Key projects
+
+- VisionSuite AI: face-recognition attendance and real-time object detection platform.
+- SmartQueue AI: queue management with QR check-ins, live tracking and AI wait-time prediction.
+- Ekam-OS: enterprise workflow platform with role-based portals, dashboards and notifications.
+
+See https://www.idcare19.me/projects for current project details and case studies.

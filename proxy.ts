@@ -14,6 +14,12 @@ function isExcludedPath(pathname: string) {
 export async function proxy(request: NextRequest) {
   const pathname = request.nextUrl.pathname;
 
+  if (request.nextUrl.hostname === "idcare19.me") {
+    const canonicalUrl = request.nextUrl.clone();
+    canonicalUrl.hostname = "www.idcare19.me";
+    return NextResponse.redirect(canonicalUrl, 308);
+  }
+
   if (pathname.startsWith("/admin")) {
     const isLoginPage = pathname === "/admin/login";
     const hasSessionCookie = Boolean(request.cookies.get("admin_session")?.value);

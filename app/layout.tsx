@@ -35,7 +35,11 @@ const inter = Inter({
   ],
 });
 
-const siteUrl = "https://idcare19.me";
+const siteUrl = "https://www.idcare19.me";
+const profileImageUrl = `${siteUrl}/idcare19.jpg`;
+const ogImageUrl = `${siteUrl}/opengraph-image`;
+const seoTitle = "Abhishek (idcare19.me) | Full-Stack Developer for web apps, SaaS products and business websites";
+const seoDescription = "Abhishek (idcare19) is a full-stack developer from India building web apps and SaaS products with Next.js, React, TypeScript and Django. Open to freelance projects and remote opportunities.";
 
 const gaMeasurementId = "G-TV1QZVQRL8";
 
@@ -51,8 +55,8 @@ export async function generateMetadata(): Promise<Metadata> {
   return {
     metadataBase: new URL(siteUrl),
     applicationName: `${owner.name} | ${owner.username}`,
-    title: `${owner.name} (${owner.username}) | ${owner.role}`,
-    description: owner.tagline,
+    title: seoTitle,
+    description: seoDescription,
     generator: "Next.js",
     category: "portfolio",
     creator: owner.name,
@@ -81,21 +85,21 @@ export async function generateMetadata(): Promise<Metadata> {
         "max-video-preview": -1,
       },
     },
-    alternates: { canonical: "/" },
+    alternates: { canonical: siteUrl, languages: { "en-IN": siteUrl } },
     openGraph: {
-      title: `${owner.name} (${owner.username}) | ${owner.role}`,
-      description: owner.tagline,
+      title: seoTitle,
+      description: seoDescription,
       url: siteUrl,
       type: "website",
       locale: "en_IN",
       siteName: `${owner.name} Portfolio`,
-      images: [{ url: "/projects/logo.png", alt: `${owner.name} portfolio` }],
+      images: [{ url: ogImageUrl, width: 1200, height: 630, alt: "Abhishek (idcare19) — Full-Stack Developer" }],
     },
     twitter: {
       card: "summary_large_image",
-      title: `${owner.name} (${owner.username}) | ${owner.role}`,
-      description: owner.tagline,
-      images: ["/projects/logo.png"],
+      title: seoTitle,
+      description: seoDescription,
+      images: [ogImageUrl],
     },
     icons: {
       icon: [{ url: "/projects/logo.png", type: "image/png" }],

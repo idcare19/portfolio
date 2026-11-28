@@ -16,8 +16,9 @@ export function DeferredSection({
   className,
   rootMargin = "120px 0px",
 }: DeferredSectionProps) {
-  // Only the hero is eager; below-the-fold sections mount as they approach the viewport.
-  const [visible, setVisible] = useState(id === "home" || id === "services");
+  // Keep section copy in the initial HTML for search and AI crawlers. The
+  // section components still own their visual animations and interactions.
+  const [visible, setVisible] = useState(true);
   const placeholderRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {

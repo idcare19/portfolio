@@ -12,9 +12,9 @@ import {
   useSiteDataContext,
 } from "@/components/site/SiteDataProvider";
 import { Button } from "@/components/ui/Button";
-import { useTheme } from "@/components/site/ThemeProvider";
 
 import TechText from "@/components/effects/TechText";
+import { useTheme } from "@/components/site/ThemeProvider";
 
 const NeuralBrain = dynamic(() => import("@/src/components/3d/NeuralBrain"), {
   ssr: false,
@@ -65,7 +65,7 @@ export function HeroSection() {
   return (
     <AnimatedSection
       id="hero"
-      className="relative isolate overflow-hidden bg-section-bg pb-20 pt-16 sm:pb-28 sm:pt-40"
+      className="relative isolate overflow-hidden bg-page-bg pb-20 pt-16 sm:pb-28 sm:pt-40"
     >
       <div className="section-wrap">
         <div className="grid items-center gap-14 lg:grid-cols-[1.15fr_0.85fr] lg:gap-10">
@@ -183,10 +183,7 @@ export function HeroSection() {
 
           {/* RIGHT VISUAL — NEURAL BRAIN */}
           <div className="relative mx-auto flex aspect-square w-full max-w-[560px] items-center justify-center lg:scale-110">
-            {/* Subtle solid geometric accent ring */}
             <div className="pointer-events-none absolute inset-[8%] rounded-full border border-[rgb(var(--border))]/60" />
-
-            {/* Brain renderer */}
             <div className="relative z-10 h-full w-full">
               <NeuralBrain
                 className="h-full w-full"
@@ -204,20 +201,6 @@ export function HeroSection() {
                 pulseSpeed={1}
                 backgroundParticleCount={isDark ? 36 : 28}
               />
-            </div>
-
-            {/* Floating label 1 */}
-            <div className="pointer-events-none absolute right-[2%] top-[18%] z-20 rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-3.5 py-2 shadow-sm">
-              <span className="text-xs font-semibold tracking-wider text-primary">
-                AI & TECHNOLOGY
-              </span>
-            </div>
-
-            {/* Floating label 2 */}
-            <div className="pointer-events-none absolute bottom-[17%] left-[0%] z-20 rounded-xl border border-[rgb(var(--border))] bg-[rgb(var(--card-bg))] px-3.5 py-2 shadow-sm">
-              <span className="text-xs font-semibold tracking-wider text-text-main">
-                CREATIVE ENGINEERING
-              </span>
             </div>
           </div>
         </div>

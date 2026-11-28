@@ -180,12 +180,6 @@ export function Navbar() {
             onClick={() => handleNavClick(homeHref)}
             className="group flex min-w-0 items-center gap-3"
           >
-            {/* <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-primary text-sm font-black text-white shadow-lg shadow-blue-500/20 transition-transform duration-300 group-hover:rotate-[-6deg] group-hover:scale-105">
-              {(portfolioData.owner.username || "A")
-                .charAt(0)
-                .toUpperCase()}
-            </span> */}
-
             <span className="min-w-0">
               <span className="block truncate text-sm font-bold tracking-tight text-text-main sm:text-base">
                 {portfolioData.owner.username}

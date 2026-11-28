@@ -74,9 +74,23 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
   const gallery = project.galleryImages.length ? project.galleryImages : project.uiScreenshots.length ? project.uiScreenshots : project.image ? [project.image] : [];
   const confidential = isConfidential(project);
   const liveUrlHidden = confidential ? "Live URL withheld due to confidentiality agreement." : "";
+  const projectSchema = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: project.title,
+    description: project.fullDescription || project.longDescription || project.shortDescription,
+    applicationCategory: "BusinessApplication",
+    operatingSystem: "Web",
+    url: project.liveDemoUrl || `https://www.idcare19.me/projects/${project.slug}`,
+    image: project.coverImage || project.image || undefined,
+    author: { "@type": "Person", name: "Abhishek", url: "https://www.idcare19.me" },
+    programmingLanguage: project.techStack,
+  };
 
   return (
-    <main className="min-h-screen bg-page-bg py-24">
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectSchema).replace(/</g, "\\u003c") }} />
+      <main className="min-h-screen bg-page-bg py-24">
       <div className="section-wrap space-y-10">
         <Link href="/projects" className="inline-flex items-center gap-2 text-sm font-semibold text-primary">
           <ArrowLeft className="h-4 w-4" />
@@ -214,6 +228,7 @@ export default async function ProjectDetailPage({ params }: { params: Promise<Pa
           {nextProject ? <Link href={`/projects/${nextProject.slug}`} className="inline-flex items-center gap-2 rounded-full border border-[rgb(var(--border))] bg-white px-5 py-2.5 text-sm font-semibold text-text-main">Next Project <ArrowRight className="h-4 w-4" /></Link> : null}
         </section>
       </div>
-    </main>
+      </main>
+    </>
   );
 }
